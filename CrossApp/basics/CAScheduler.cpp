@@ -72,47 +72,51 @@ void Timer::update(float dt)
     {
         _elapsed = 0;
         _timesExecuted = 0;
-        return;
     }
-    
-    // accumulate elapsed time
-    _elapsed += dt;
-    
-    // deal with delay
-    if (_useDelay)
+    else
     {
-        if (_elapsed < _delay)
-        {
-            return;
-        }
-        trigger(_interval);
-        _elapsed = _elapsed - _delay;
-        _timesExecuted += 1;
-        _useDelay = false;
-        // after delay, the rest time should compare with interval
-        if (!_runForever && _timesExecuted > _repeat)
-        {    //unschedule timer
-            cancel();
-        }
-        return;
-    }
-    
-    // if _interval == 0, should trigger once every frame
-    float interval = (_interval > 0) ? _interval : _elapsed;
-    if (_elapsed >= interval || interval <= 0.0167)
-    {
-        trigger(interval); 
-        _elapsed -= interval;
-        _timesExecuted += 1;
         
-        if (!_runForever && _timesExecuted > _repeat)
+        // accumulate elapsed time
+        _elapsed += dt;
+        
+        if (_runForever && !_useDelay)
         {
-            cancel();
+            if (_elapsed >= _interval || _interval <= 0.017)
+            {
+                trigger(MIN(_elapsed, 0.05f));
+            }
+            _elapsed = 0;
         }
-    } 
+        else
+        {
+            if (_useDelay)
+            {
+                if (_useDelay >= _delay)
+                {
+                    _elapsed = _elapsed - _delay;
+                    trigger(MIN(_elapsed, 0.05f));
+                    _timesExecuted += 1;
+                    _useDelay = false;
+                }
+            }
+            else
+            {
+                if (_elapsed >= _interval)
+                {
+                    trigger(MIN(_elapsed, 0.05f));
+                    _elapsed = 0;
+                    _timesExecuted += 1;
+                }
+            }
+            
+            if (!_runForever && _timesExecuted > _repeat)
+            {
+                cancel();
+            }
+        }
+    }
 }
 
-// TimerTargetSelector
 
 TimerTargetSelector::TimerTargetSelector()
 : _target(nullptr)
