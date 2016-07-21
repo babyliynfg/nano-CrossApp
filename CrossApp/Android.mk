@@ -1,0 +1,234 @@
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := CrossApp_static
+
+LOCAL_MODULE_FILENAME := libCrossApp
+
+ifeq ($(USE_ARM_MODE),1)
+LOCAL_ARM_MODE := arm
+endif
+
+
+LOCAL_SRC_FILES := \
+CrossApp.cpp \
+animation/CAViewAnimation.cpp \
+animation/CAAnimation.cpp \
+basics/CAApplication.cpp \
+basics/CAAutoreleasePool.cpp \
+basics/CACamera.cpp \
+basics/CALayout.cpp \
+basics/CAPoint.cpp \
+basics/CASize.cpp \
+basics/CARect.cpp \
+basics/CAPoint3D.cpp \
+basics/CAVec4.cpp \
+basics/CAObject.cpp \
+basics/CAResponder.cpp \
+basics/CAScheduler.cpp \
+basics/CAFPSImages.c \
+basics/CAIndexPath.cpp \
+basics/CAThread.cpp \
+cocoa/CCNS.cpp \
+cocoa/CCSet.cpp \
+cocoa/CACalendar.cpp \
+control/CABar.cpp \
+control/CAButton.cpp \
+control/CAControl.cpp \
+control/CAProgress.cpp \
+control/CASegmentedControl.cpp \
+control/CASlider.cpp \
+control/CASwitch.cpp \
+control/CAPageControl.cpp \
+control/CAStepper.cpp \
+controller/CABarItem.cpp \
+controller/CAViewController.cpp \
+controller/CADrawerController.cpp \
+controller/CAFont.cpp \
+dispatcher/CAKeypadDelegate.cpp \
+dispatcher/CAKeypadDispatcher.cpp \
+dispatcher/CATouchDispatcher.cpp \
+dispatcher/CATouch.cpp \
+images/CAImage.cpp \
+images/CAImageCache.cpp \
+images/CAGif.cpp \
+images/gif_lib/dgif_lib.c \
+images/gif_lib/gif_err.c \
+images/gif_lib/gif_font.c \
+images/gif_lib/gif_hash.c \
+images/gif_lib/gifalloc.c \
+images/gif_lib/quantize.c \
+shaders/CAGLProgram.cpp \
+shaders/CAShaderCache.cpp \
+shaders/ccGLStateCache.cpp \
+shaders/ccShaders.cpp \
+support/md5.cpp \
+support/CANotificationCenter.cpp \
+support/CAPointExtension.cpp \
+support/CAProfiling.cpp \
+support/base64.cpp \
+support/ccUTF8.cpp \
+support/ConvertUTF.cpp \
+support/ConvertUTFWrapper.cpp \
+support/ccUtils.cpp \
+support/CAUIEditorParser.cpp \
+support/data_support/ccCArray.cpp \
+support/image_support/TGAlib.cpp \
+support/tinyxml2/tinyxml2.cpp \
+support/user_default/CAUserDefault.cpp \
+support/user_default/CAUserDefaultAndroid.cpp \
+support/zip_support/ZipUtils.cpp \
+support/zip_support/ioapi.cpp \
+support/zip_support/unzip.cpp \
+support/network/HttpClient.cpp \
+support/network/DownloadManager.cpp \
+support/network/WebSocket.cpp \
+support/LocalStorage/LocalStorageAndroid.cpp \
+support/Json/CSContentJsonDictionary.cpp \
+support/Json/lib_json/json_value.cpp \
+support/Json/lib_json/json_reader.cpp \
+support/Json/lib_json/json_writer.cpp \
+support/sqlite3/sqlite3.c \
+support/device/Device_android/CADevice.cpp \
+view/CABatchView.cpp \
+view/CAClippingView.cpp \
+view/CAImageView.cpp \
+view/CALabel.cpp \
+view/CARenderImage.cpp \
+view/CAScale9ImageView.cpp \
+view/CACell.cpp \
+view/CAScrollView.cpp \
+view/CAListView.cpp \
+view/CATableView.cpp \
+view/CACollectionView.cpp \
+view/CAAutoCollectionView.cpp \
+view/CAWaterfallView.cpp \
+view/CAView.cpp \
+view/CAWindow.cpp \
+view/CAAlertView.cpp \
+view/CAPageView.cpp \
+view/CAPickerView.cpp \
+view/CADatePickerView.cpp \
+view/CAActivityIndicatorView.cpp \
+view/CAPullToRefreshView.cpp \
+view/CATextEditHelper.cpp \
+view/CAWebView.cpp \
+view/CADrawView.cpp \
+view/CADrawingPrimitives.cpp \
+view/CAGifView.cpp \
+view/CARichLabel.cpp \
+math/CAAffineTransform.cpp \
+math/CAVertex.cpp \
+math/Mat4.cpp \
+math/MathUtil.cpp \
+math/Quaternion.cpp \
+math/TransformUtils.cpp \
+kazmath/src/aabb.c \
+kazmath/src/mat3.c \
+kazmath/src/mat4.c \
+kazmath/src/neon_matrix_impl.c \
+kazmath/src/plane.c \
+kazmath/src/quaternion.c \
+kazmath/src/ray2.c \
+kazmath/src/utility.c \
+kazmath/src/vec2.c \
+kazmath/src/vec3.c \
+kazmath/src/vec4.c \
+kazmath/src/GL/mat4stack.c \
+kazmath/src/GL/matrix.c \
+platform/CCSAXParser.cpp \
+platform/CCFileUtils.cpp \
+platform/platform.cpp \
+platform/CAFreeTypeFont.cpp \
+platform/CAFTRichFont.cpp \
+platform/CAEmojiFont.cpp \
+platform/CAFTFontCache.cpp \
+platform/CCEGLViewProtocol.cpp \
+platform/CATempTypeFont.cpp \
+platform/android/CADensityDpi.cpp \
+platform/android/CCEGLView.cpp \
+platform/android/CAAccelerometer.cpp \
+platform/android/CCApplication.cpp \
+platform/android/CCCommon.cpp \
+platform/android/CCFileUtilsAndroid.cpp \
+platform/android/CAWebViewImpl.cpp \
+platform/android/CATextField.cpp \
+platform/android/CATextView.cpp \
+platform/android/CAClipboard.cpp \
+platform/android/jni/Java_org_CrossApp_lib_CrossAppHelper.cpp \
+platform/android/jni/Java_org_CrossApp_lib_CrossAppRenderer.cpp \
+platform/android/jni/Java_org_CrossApp_lib_CrossAppAccelerometer.cpp \
+platform/android/jni/JniHelper.cpp \
+platform/android/jni/TouchesJni.cpp \
+platform/android/jni/Java_org_CrossApp_lib_CrossAppSDL.cpp \
+script_support/JSViewController.cpp \
+script_support/CCScriptSupport.cpp \
+
+
+
+LOCAL_EXPORT_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/kazmath/include \
+                    $(LOCAL_PATH)/platform/android \
+                    $(LOCAL_PATH)/support/network \
+                    $(LOCAL_PATH)/support/LocalStorage \
+                    $(LOCAL_PATH)/support/Json \
+                    $(LOCAL_PATH)/support/Json/lib_json \
+
+LOCAL_C_INCLUDES := $(LOCAL_PATH) \
+                    $(LOCAL_PATH)/kazmath/include \
+                    $(LOCAL_PATH)/platform/android \
+                    $(LOCAL_PATH)/support/network \
+                    $(LOCAL_PATH)/support/LocalStorage \
+                    $(LOCAL_PATH)/support/Json \
+                    $(LOCAL_PATH)/support/Json/lib_json \
+
+LOCAL_LDLIBS := -lGLESv2 \
+                -llog \
+                -lz
+
+LOCAL_EXPORT_LDLIBS := -lGLESv2 \
+                       -llog \
+                       -lz
+
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_jpeg_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_png_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_tiff_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_webp_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_freetype_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_curl_static
+LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_libsdl_static
+
+
+LOCAL_SRC_FILES += video/CAVideoPlayerControlView.cpp \
+                   video/CAVideoPlayerDecoder.cpp \
+                   video/CAVideoPlayerRender.cpp \
+                   video/CAVideoPlayerView.cpp
+
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avcodec_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avformat_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avresample_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avutil_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_swresample_static
+LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_swscale_static
+
+
+
+# define the macro to compile through support/zip_support/ioapi.c
+LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS -fexceptions
+LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
+
+
+include $(BUILD_STATIC_LIBRARY)
+
+
+$(call import-module,jpeg/prebuilt/android)
+$(call import-module,png/prebuilt/android)
+$(call import-module,tiff/prebuilt/android)
+$(call import-module,webp/prebuilt/android)
+$(call import-module,freetype/prebuilt/android)
+$(call import-module,curl/prebuilt/android)
+$(call import-module,websockets/prebuilt/android)
+$(call import-module,FFmpeg/prebuilt/android)
+$(call import-module,SDL/prebuilt/android)
