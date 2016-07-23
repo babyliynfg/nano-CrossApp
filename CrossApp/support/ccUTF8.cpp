@@ -1,7 +1,7 @@
 
 
 #include "ccUTF8.h"
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "ConvertUTF.h"
 
 NS_CC_BEGIN

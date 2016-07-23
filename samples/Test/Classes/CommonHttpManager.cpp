@@ -137,7 +137,7 @@ CommonHttpManager::CommonHttpManager()
     }
     
 
-    std::string fullPath = CCFileUtils::sharedFileUtils()->getWritablePath() + "cartoon_house_url.db";
+    std::string fullPath = FileUtils::getInstance()->getWritablePath() + "crossapp_url.db";
     localStorageInit(fullPath.c_str());
     CommonImageCacheManager::getInstance();
 }
@@ -284,7 +284,7 @@ void CommonHttpManager::get_image(const std::string& url,CAObject* pTarget,SEL_C
     }
     else
     {
-        std::string imagePath = CCFileUtils::sharedFileUtils()->getWritablePath() + "image/" + key;
+        std::string imagePath = FileUtils::getInstance()->getWritablePath() + "image/" + key;
         
         unsigned long pSize = 0;
 
@@ -426,7 +426,7 @@ void CommonHttpResponseCallBack::update(float dt)
     
     if (image == NULL)
     {
-        key = CCFileUtils::sharedFileUtils()->getWritablePath() + "image/" + key;
+        key = FileUtils::getInstance()->getWritablePath() + "image/" + key;
         image = CAImageCache::sharedImageCache()->imageForKey(key);
     }
     
@@ -638,8 +638,8 @@ void CommonHttpResponseCallBack::onResponseImage(CAHttpClient* client, CAHttpRes
 
         if (m_eGetImageType != HttpGetImageNoAllCache)
         {
-            std::string imagePath = CCFileUtils::sharedFileUtils()->getWritablePath() + "image/";
-            CCFileUtils::sharedFileUtils()->createDirectory(imagePath.c_str());
+            std::string imagePath = FileUtils::getInstance()->getWritablePath() + "image/";
+            FileUtils::getInstance()->createDirectory(imagePath.c_str());
             FILE *fp = fopen(string(imagePath + key).c_str(), "wb+");
             if (fp)
             {
@@ -760,7 +760,7 @@ void CommonUrlImageView::setImageAndUrl(CAImage* image, const std::string& url)
 
 void CommonUrlImageView::setUrlOnlyReadCache(const std::string& url)
 {
-    std::string imagePath = CCFileUtils::sharedFileUtils()->getWritablePath() + "image/" + MD5(url).md5();
+    std::string imagePath = FileUtils::getInstance()->getWritablePath() + "image/" + MD5(url).md5();
     
     unsigned long pSize = 0;
     

@@ -2,7 +2,7 @@
 #ifndef __CC_FILEUTILS_ANDROID_H__
 #define __CC_FILEUTILS_ANDROID_H__
 
-#include "platform/CCFileUtils.h"
+#include "platform/CAFileUtils.h"
 #include "platform/CCPlatformMacros.h"
 #include "ccTypes.h"
 #include "ccTypeInfo.h"
@@ -11,37 +11,40 @@
 
 NS_CC_BEGIN
 
-/**
- * @addtogroup platform
- * @{
- */
+class ZipFile;
 
-//! @brief  Helper class to handle file operations
-class CC_DLL CCFileUtilsAndroid : public CCFileUtils
+class CC_DLL FileUtilsAndroid : public FileUtils
 {
-    friend class CCFileUtils;
-    CCFileUtilsAndroid();
+    friend class FileUtils;
 public:
-    virtual ~CCFileUtilsAndroid();
-
-    /* override funtions */
-    bool init();
-    virtual unsigned char* getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize);
-    virtual std::string getWritablePath();
-    virtual bool isFileExist(const std::string& strFilePath);
-    virtual bool isAbsolutePath(const std::string& strPath);
-    
-    /** This function is android specific. It is used for CCTextureCache::addImageAsync(). 
-     Don't use it in your codes.
+    FileUtilsAndroid();
+    /**
+     * @js NA
+     * @lua NA
      */
-    unsigned char* getFileDataForAsync(const char* pszFileName, const char* pszMode, unsigned long * pSize);
+    virtual ~FileUtilsAndroid();
+
+    static ZipFile* getObbFile() { return obbfile; }
+    
+    /* override functions */
+    bool init() override;
+    
+    virtual unsigned char* getFileData(const std::string& filename, const char* mode, unsigned long *size);
+    unsigned char* getFileDataForAsync(const std::string& filename, const char* mode, unsigned long *size, bool forAsync);
+    virtual std::string getNewFilename(const std::string &filename) const;
+    
+    virtual std::string getWritablePath();
+    virtual bool isAbsolutePath(const std::string& strPath) const;
     
 private:
+    virtual bool isFileExistInternal(const std::string& strFilePath) const;
+    virtual bool isDirectoryExistInternal(const std::string& dirPath) const;
+    
     unsigned char* doGetFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize, bool forAsync);
+    
+    static ZipFile* obbfile;
 };
 
-// end of platform group
-/// @}
 
 NS_CC_END
 

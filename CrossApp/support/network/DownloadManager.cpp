@@ -97,7 +97,7 @@ CADownloadManager::CADownloadManager()
 :m_pDelegate(NULL)
 ,m_nDownloadMaxCount(1)
 {
-	std::string fullPath = CCFileUtils::sharedFileUtils()->getWritablePath() + "downloadMgr.db";
+	std::string fullPath = FileUtils::getInstance()->getWritablePath() + "downloadMgr.db";
 
 	int nRet = sqlite3_open(fullPath.c_str(), (sqlite3**)&m_mpSqliteDB);
 	CCAssert(nRet == SQLITE_OK, "");
@@ -1071,10 +1071,10 @@ bool CADownloadResponse::createDirectory(const char *path)
 
 void CADownloadResponse::setSearchPath()
 {
-    vector<string> searchPaths = CCFileUtils::sharedFileUtils()->getSearchPaths();
+    vector<string> searchPaths = FileUtils::getInstance()->getSearchPaths();
     vector<string>::iterator iter = searchPaths.begin();
     searchPaths.insert(iter, _fileName);
-    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+    FileUtils::getInstance()->setSearchPaths(searchPaths);
 }
 
 int CADownloadResponseProgressFunc(void *ptr, double totalToDownload, double nowDownloaded, double totalToUpLoad, double nowUpLoaded)

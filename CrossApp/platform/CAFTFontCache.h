@@ -9,7 +9,7 @@
 #ifndef __CC_PLATFORM_CAFTFONTCACHE_H
 #define __CC_PLATFORM_CAFTFONTCACHE_H
 
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "images/CAImage.h"
 #include <vector>
 

@@ -1,7 +1,7 @@
 
 #include "CAUserDefault.h"
 #include "platform/CCPlatformConfig.h"
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
 #include "platform/android/jni/Java_org_CrossApp_lib_CrossAppHelper.h"
@@ -14,7 +14,7 @@
 #define XML_FILE_NAME "UserDefault.xml"
 
 #ifdef KEEP_COMPATABILITY
-#include "platform/CCFileUtils.h"
+#include "platform/CAFileUtils.h"
 #include "../tinyxml2/tinyxml2.h"
 #endif
 
@@ -52,7 +52,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
         *doc = xmlDoc;
         unsigned long nSize;
-        const char* pXmlBuffer = (const char*)CCFileUtils::sharedFileUtils()->getFileData(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
+        const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
         //const char* pXmlBuffer = (const char*)data.getBuffer();
         if(NULL == pXmlBuffer)
         {

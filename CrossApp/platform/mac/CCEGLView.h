@@ -3,7 +3,7 @@
 #ifndef __CC_EGLVIEW_MAC_H__
 #define __CC_EGLVIEW_MAC_H__
 
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "platform/CCEGLViewProtocol.h"
 
 NS_CC_BEGIN

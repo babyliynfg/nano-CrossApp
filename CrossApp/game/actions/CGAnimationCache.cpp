@@ -177,7 +177,7 @@ void AnimationCache::addAnimationsWithDictionary(const CAValueMap& dictionary,co
         const CAValueVector& spritesheets = properties.at("spritesheets").asValueVector();
 
         for(const auto &value : spritesheets) {
-            std::string path = CCFileUtils::sharedFileUtils()->fullPathFromRelativeFile(value.asString().c_str(),plist.c_str());
+            std::string path = FileUtils::getInstance()->fullPathFromRelativeFile(value.asString().c_str(),plist.c_str());
             CGSpriteFrameCache::getInstance()->addSpriteFramesWithFile(path);
         }
     }
@@ -199,8 +199,8 @@ void AnimationCache::addAnimationsWithFile(const std::string& plist)
 {
     CCASSERT( plist.size()>0, "Invalid texture file name");
 
-    std::string path = CCFileUtils::sharedFileUtils()->fullPathForFilename(plist);
-    CAValueMap dict =  CCFileUtils::sharedFileUtils()->getValueMapFromFile(path);
+    std::string path = FileUtils::getInstance()->fullPathForFilename(plist);
+    CAValueMap dict =  FileUtils::getInstance()->getValueMapFromFile(path);
 
     CCASSERT( !dict.empty(), "CCAnimationCache: File could not be found");
 

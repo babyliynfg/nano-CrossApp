@@ -10,7 +10,7 @@
 #define CAGyroDelegate_h
 
 
-#include "CCCommon.h"
+#include "CACommon.h"
 
 NS_CC_BEGIN
 

@@ -10,7 +10,7 @@
 
 #include "basics/CAApplication.h"
 #include "platform/CAFileUtils.h"
-#include "platform/CCSAXParser.h"
+#include "platform/CASAXParser.h"
 
 NS_CC_BEGIN
 

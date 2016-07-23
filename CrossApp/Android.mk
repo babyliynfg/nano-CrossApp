@@ -10,6 +10,11 @@ ifeq ($(USE_ARM_MODE),1)
 LOCAL_ARM_MODE := arm
 endif
 
+ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
+MATHNEONFILE := math/MathUtil.cpp.neon
+else
+MATHNEONFILE := math/MathUtil.cpp
+endif
 
 LOCAL_SRC_FILES := \
 CrossApp.cpp \
@@ -24,6 +29,7 @@ basics/CASize.cpp \
 basics/CARect.cpp \
 basics/CAPoint3D.cpp \
 basics/CAVec4.cpp \
+basics/CAValue.cpp \
 basics/CAObject.cpp \
 basics/CAResponder.cpp \
 basics/CAScheduler.cpp \
@@ -121,9 +127,9 @@ view/CARichLabel.cpp \
 math/CAAffineTransform.cpp \
 math/CAVertex.cpp \
 math/Mat4.cpp \
-math/MathUtil.cpp \
 math/Quaternion.cpp \
 math/TransformUtils.cpp \
+$(MATHNEONFILE) \
 kazmath/src/aabb.c \
 kazmath/src/mat3.c \
 kazmath/src/mat4.c \
@@ -137,8 +143,8 @@ kazmath/src/vec3.c \
 kazmath/src/vec4.c \
 kazmath/src/GL/mat4stack.c \
 kazmath/src/GL/matrix.c \
-platform/CCSAXParser.cpp \
-platform/CCFileUtils.cpp \
+platform/CASAXParser.cpp \
+platform/CAFileUtils.cpp \
 platform/platform.cpp \
 platform/CAFreeTypeFont.cpp \
 platform/CAFTRichFont.cpp \
@@ -150,7 +156,7 @@ platform/android/CADensityDpi.cpp \
 platform/android/CCEGLView.cpp \
 platform/android/CAAccelerometer.cpp \
 platform/android/CCApplication.cpp \
-platform/android/CCCommon.cpp \
+platform/android/CACommon.cpp \
 platform/android/CCFileUtilsAndroid.cpp \
 platform/android/CAWebViewImpl.cpp \
 platform/android/CATextField.cpp \
@@ -162,6 +168,23 @@ platform/android/jni/Java_org_CrossApp_lib_CrossAppAccelerometer.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/TouchesJni.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppSDL.cpp \
+game/CGNode.cpp \
+game/CGSprite.cpp \
+game/CGSpriteFrame.cpp \
+game/CGSpriteFrameCache.cpp \
+game/CGSpriteBatchNode.cpp \
+game/CGProgressTimer.cpp \
+game/actions/CGAnimation.cpp \
+game/actions/CGAnimationCache.cpp \
+game/actions/CGAction.cpp \
+game/actions/CGActionCamera.cpp \
+game/actions/CGActionCatmullRom.cpp \
+game/actions/CGActionEase.cpp \
+game/actions/CGActionTween.cpp \
+game/actions/CGActionInstant.cpp \
+game/actions/CGActionManager.cpp \
+game/actions/CGActionInterval.cpp \
+game/actions/CGTweenFunction.cpp \
 script_support/JSViewController.cpp \
 script_support/CCScriptSupport.cpp \
 
@@ -216,9 +239,15 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_swscale_static
 
 
 # define the macro to compile through support/zip_support/ioapi.c
-LOCAL_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS -fexceptions
-LOCAL_EXPORT_CFLAGS := -Wno-psabi -DUSE_FILE32API -D__STDC_CONSTANT_MACROS
-
+LOCAL_CFLAGS   :=  -Wno-psabi
+LOCAL_CFLAGS   +=  -DUSE_FILE32API
+LOCAL_CFLAGS   +=  -fexceptions
+LOCAL_CFLAGS   +=  -D__STDC_CONSTANT_MACROS
+LOCAL_CPPFLAGS := -Wno-deprecated-declarations
+LOCAL_EXPORT_CFLAGS := -Wno-psabi
+LOCAL_EXPORT_CFLAGS += -DUSE_FILE32API
+LOCAL_EXPORT_CFLAGS += -D__STDC_CONSTANT_MACROS
+LOCAL_EXPORT_CPPFLAGS := -Wno-deprecated-declarations
 
 include $(BUILD_STATIC_LIBRARY)
 

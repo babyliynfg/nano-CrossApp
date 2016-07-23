@@ -22,7 +22,7 @@ tu_file* CCGameSWF_file_opener (const char* url_or_path)
 {
     assert(url_or_path);
     unsigned long pSize = 0;
-    unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(url_or_path, "rb", &pSize);
+    unsigned char* data = FileUtils::getInstance()->getFileData(url_or_path, "rb", &pSize);
     return new tu_file(tu_file::memory_buffer, (int)pSize, data);
 }
 

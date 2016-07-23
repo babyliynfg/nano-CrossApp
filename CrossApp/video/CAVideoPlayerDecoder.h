@@ -14,7 +14,7 @@
 #include <map>
 #include <vector>
 #include "images/CAImage.h"
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 
 
 NS_CC_BEGIN

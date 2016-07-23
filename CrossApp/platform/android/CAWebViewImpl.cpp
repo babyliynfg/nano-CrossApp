@@ -2,7 +2,7 @@
 #include "CAWebViewImpl.h"
 #include "view/CAWebView.h"
 #include "basics/CAApplication.h"
-#include "platform/CCFileUtils.h"
+#include "platform/CAFileUtils.h"
 #include "platform/CADensityDpi.h"
 #include "platform/android/jni/JniHelper.h"
 #include <jni.h>
@@ -250,7 +250,7 @@ void setWebViewVisibleJNI(const int index, const bool visible) {
 
 std::string getUrlStringByFileName(const std::string &fileName) {
     const std::string basePath("file:///android_asset/");
-	std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+	std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
     const std::string assetsPath("assets/");
 
     std::string urlString;

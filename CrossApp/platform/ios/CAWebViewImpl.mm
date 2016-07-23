@@ -330,7 +330,7 @@ void CAWebViewImpl::loadURL(const std::string &url)
 
 void CAWebViewImpl::loadFile(const std::string &fileName)
 {
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(fileName);
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(fileName);
     [WebViewWrapper loadFile:fullPath];
 }
 

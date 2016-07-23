@@ -141,8 +141,8 @@ bool CAGLProgram::initWithPrecompiledProgramByteArray(const GLchar* vShaderByteA
 
 bool CAGLProgram::initWithVertexShaderFilename(const char* vShaderFilename, const char* fShaderFilename)
 {
-    const GLchar * vertexSource = (GLchar*) CCFileUtils::sharedFileUtils()->getFileString(vShaderFilename).c_str();
-    const GLchar * fragmentSource = (GLchar*) CCFileUtils::sharedFileUtils()->getFileString(fShaderFilename).c_str();
+    const GLchar * vertexSource = (GLchar*) FileUtils::getInstance()->getFileString(vShaderFilename).c_str();
+    const GLchar * fragmentSource = (GLchar*) FileUtils::getInstance()->getFileString(fShaderFilename).c_str();
 
     return initWithVertexShaderByteArray(vertexSource, fragmentSource);
 }

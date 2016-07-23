@@ -3,7 +3,7 @@
 #include <stack>
 #include "ccMacros.h"
 #include "basics/CAApplication.h"
-#include "platform/CCSAXParser.h"
+#include "platform/CASAXParser.h"
 #include "support/ccUtils.h"
 #include "support/tinyxml2/tinyxml2.h"
 #include "support/zip_support/unzip.h"
@@ -38,18 +38,18 @@ class DictMaker : public SAXDelegator
 {
 public:
     SAXResult _resultType;
-    ValueMap _rootDict;
-    ValueVector _rootArray;
+    CAValueMap _rootDict;
+    CAValueVector _rootArray;
 
     std::string _curKey;   ///< parsed key
-    std::string _curValue; // parsed value
+    std::string _curValue; // parsed CAValue
     SAXState _state;
 
-    ValueMap*  _curDict;
-    ValueVector* _curArray;
+    CAValueMap*  _curDict;
+    CAValueVector* _curArray;
 
-    std::stack<ValueMap*> _dictStack;
-    std::stack<ValueVector*> _arrayStack;
+    std::stack<CAValueMap*> _dictStack;
+    std::stack<CAValueVector*> _arrayStack;
     std::stack<SAXState>  _stateStack;
 
 public:
@@ -62,7 +62,7 @@ public:
     {
     }
 
-    ValueMap dictionaryWithContentsOfFile(const std::string& fileName)
+    CAValueMap dictionaryWithContentsOfFile(const std::string& fileName)
     {
         _resultType = SAX_RESULT_DICT;
         SAXParser parser;
@@ -74,7 +74,7 @@ public:
         return _rootDict;
     }
 
-    ValueMap dictionaryWithDataOfFile(const char* filedata, int filesize)
+    CAValueMap dictionaryWithDataOfFile(const char* filedata, int filesize)
     {
         _resultType = SAX_RESULT_DICT;
         SAXParser parser;
@@ -86,7 +86,7 @@ public:
         return _rootDict;
     }
 
-    ValueVector arrayWithContentsOfFile(const std::string& fileName)
+    CAValueVector arrayWithContentsOfFile(const std::string& fileName)
     {
         _resultType = SAX_RESULT_ARRAY;
         SAXParser parser;
@@ -94,7 +94,7 @@ public:
         CCASSERT(parser.init("UTF-8"), "The file format isn't UTF-8");
         parser.setDelegator(this);
 
-        parser.parse(fileName);
+        parser.parse(fileName.c_str());
         return _rootArray;
     }
 
@@ -121,15 +121,15 @@ public:
             if (SAX_ARRAY == preState)
             {
                 // add a new dictionary into the array
-                _curArray->push_back(Value(ValueMap()));
+                _curArray->push_back(CAValue(CAValueMap()));
                 _curDict = &(_curArray->rbegin())->asValueMap();
             }
             else if (SAX_DICT == preState)
             {
                 // add a new dictionary into the pre dictionary
                 CCASSERT(! _dictStack.empty(), "The state is wrong!");
-                ValueMap* preDict = _dictStack.top();
-                (*preDict)[_curKey] = Value(ValueMap());
+                CAValueMap* preDict = _dictStack.top();
+                (*preDict)[_curKey] = CAValue(CAValueMap());
                 _curDict = &(*preDict)[_curKey].asValueMap();
             }
 
@@ -169,14 +169,14 @@ public:
 
             if (preState == SAX_DICT)
             {
-                (*_curDict)[_curKey] = Value(ValueVector());
+                (*_curDict)[_curKey] = CAValue(CAValueVector());
                 _curArray = &(*_curDict)[_curKey].asValueVector();
             }
             else if (preState == SAX_ARRAY)
             {
                 CCASSERT(! _arrayStack.empty(), "The state is wrong!");
-                ValueVector* preArray = _arrayStack.top();
-                preArray->push_back(Value(ValueVector()));
+                CAValueVector* preArray = _arrayStack.top();
+                preArray->push_back(CAValue(CAValueVector()));
                 _curArray = &(_curArray->rbegin())->asValueVector();
             }
             // record the array state
@@ -216,22 +216,22 @@ public:
         {
             if (SAX_ARRAY == curState)
             {
-                _curArray->push_back(Value(true));
+                _curArray->push_back(CAValue(true));
             }
             else if (SAX_DICT == curState)
             {
-                (*_curDict)[_curKey] = Value(true);
+                (*_curDict)[_curKey] = CAValue(true);
             }
         }
         else if (sName == "false")
         {
             if (SAX_ARRAY == curState)
             {
-                _curArray->push_back(Value(false));
+                _curArray->push_back(CAValue(false));
             }
             else if (SAX_DICT == curState)
             {
-                (*_curDict)[_curKey] = Value(false);
+                (*_curDict)[_curKey] = CAValue(false);
             }
         }
         else if (sName == "string" || sName == "integer" || sName == "real")
@@ -239,20 +239,20 @@ public:
             if (SAX_ARRAY == curState)
             {
                 if (sName == "string")
-                    _curArray->push_back(Value(_curValue));
+                    _curArray->push_back(CAValue(_curValue));
                 else if (sName == "integer")
-                    _curArray->push_back(Value(atoi(_curValue.c_str())));
+                    _curArray->push_back(CAValue(atoi(_curValue.c_str())));
                 else
-                    _curArray->push_back(Value(utils::atof(_curValue.c_str())));
+                    _curArray->push_back(CAValue(CrossApp::atof(_curValue.c_str())));
             }
             else if (SAX_DICT == curState)
             {
                 if (sName == "string")
-                    (*_curDict)[_curKey] = Value(_curValue);
+                    (*_curDict)[_curKey] = CAValue(_curValue);
                 else if (sName == "integer")
-                    (*_curDict)[_curKey] = Value(atoi(_curValue.c_str()));
+                    (*_curDict)[_curKey] = CAValue(atoi(_curValue.c_str()));
                 else
-                    (*_curDict)[_curKey] = Value(utils::atof(_curValue.c_str()));
+                    (*_curDict)[_curKey] = CAValue(CrossApp::atof(_curValue.c_str()));
             }
 
             _curValue.clear();
@@ -295,20 +295,20 @@ public:
     }
 };
 
-ValueMap FileUtils::getValueMapFromFile(const std::string& filename)
+CAValueMap FileUtils::getValueMapFromFile(const std::string& filename)
 {
     const std::string fullPath = fullPathForFilename(filename);
     DictMaker tMaker;
     return tMaker.dictionaryWithContentsOfFile(fullPath);
 }
 
-ValueMap FileUtils::getValueMapFromData(const char* filedata, int filesize)
+CAValueMap FileUtils::getValueMapFromData(const char* filedata, int filesize)
 {
     DictMaker tMaker;
     return tMaker.dictionaryWithDataOfFile(filedata, filesize);
 }
 
-ValueVector FileUtils::getValueVectorFromFile(const std::string& filename)
+CAValueVector FileUtils::getValueVectorFromFile(const std::string& filename)
 {
     const std::string fullPath = fullPathForFilename(filename);
     DictMaker tMaker;
@@ -319,18 +319,18 @@ ValueVector FileUtils::getValueVectorFromFile(const std::string& filename)
 /*
  * forward statement
  */
-static tinyxml2::XMLElement* generateElementForArray(const ValueVector& array, tinyxml2::XMLDocument *doc);
-static tinyxml2::XMLElement* generateElementForDict(const ValueMap& dict, tinyxml2::XMLDocument *doc);
+static tinyxml2::XMLElement* generateElementForArray(const CAValueVector& array, tinyxml2::XMLDocument *doc);
+static tinyxml2::XMLElement* generateElementForDict(const CAValueMap& dict, tinyxml2::XMLDocument *doc);
 
 /*
  * Use tinyxml2 to write plist files
  */
-bool FileUtils::writeToFile(const ValueMap& dict, const std::string &fullPath)
+bool FileUtils::writeToFile(const CAValueMap& dict, const std::string &fullPath)
 {
     return writeValueMapToFile(dict, fullPath);
 }
 
-bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& fullPath)
+bool FileUtils::writeValueMapToFile(const CAValueMap& dict, const std::string& fullPath)
 {
     tinyxml2::XMLDocument *doc = new (std::nothrow)tinyxml2::XMLDocument();
     if (nullptr == doc)
@@ -370,7 +370,7 @@ bool FileUtils::writeValueMapToFile(const ValueMap& dict, const std::string& ful
     return ret;
 }
 
-bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::string& fullPath)
+bool FileUtils::writeValueVectorToFile(const CAValueVector& vecData, const std::string& fullPath)
 {
     tinyxml2::XMLDocument *doc = new (std::nothrow)tinyxml2::XMLDocument();
     if (nullptr == doc)
@@ -413,10 +413,10 @@ bool FileUtils::writeValueVectorToFile(const ValueVector& vecData, const std::st
 /*
  * Generate tinyxml2::XMLElement for Object through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForObject(const Value& value, tinyxml2::XMLDocument *doc)
+static tinyxml2::XMLElement* generateElementForObject(const CAValue& value, tinyxml2::XMLDocument *doc)
 {
     // object is String
-    if (value.getType() == Value::Type::STRING)
+    if (value.getType() == CAValue::Type::STRING)
     {
         tinyxml2::XMLElement* node = doc->NewElement("string");
         tinyxml2::XMLText* content = doc->NewText(value.asString().c_str());
@@ -425,7 +425,7 @@ static tinyxml2::XMLElement* generateElementForObject(const Value& value, tinyxm
     }
 
     // object is integer
-    if (value.getType() == Value::Type::INTEGER)
+    if (value.getType() == CAValue::Type::INTEGER)
     {
         tinyxml2::XMLElement* node = doc->NewElement("integer");
         tinyxml2::XMLText* content = doc->NewText(value.asString().c_str());
@@ -434,7 +434,7 @@ static tinyxml2::XMLElement* generateElementForObject(const Value& value, tinyxm
     }
 
     // object is real
-    if (value.getType() == Value::Type::FLOAT || value.getType() == Value::Type::DOUBLE)
+    if (value.getType() == CAValue::Type::FLOAT || value.getType() == CAValue::Type::DOUBLE)
     {
         tinyxml2::XMLElement* node = doc->NewElement("real");
         tinyxml2::XMLText* content = doc->NewText(value.asString().c_str());
@@ -443,17 +443,17 @@ static tinyxml2::XMLElement* generateElementForObject(const Value& value, tinyxm
     }
 
     //object is bool
-    if (value.getType() == Value::Type::BOOLEAN) {
+    if (value.getType() == CAValue::Type::BOOLEAN) {
         tinyxml2::XMLElement* node = doc->NewElement(value.asString().c_str());
         return node;
     }
 
     // object is Array
-    if (value.getType() == Value::Type::VECTOR)
+    if (value.getType() == CAValue::Type::VECTOR)
         return generateElementForArray(value.asValueVector(), doc);
 
     // object is Dictionary
-    if (value.getType() == Value::Type::MAP)
+    if (value.getType() == CAValue::Type::MAP)
         return generateElementForDict(value.asValueMap(), doc);
 
     CCLOG("This type cannot appear in property list");
@@ -463,7 +463,7 @@ static tinyxml2::XMLElement* generateElementForObject(const Value& value, tinyxm
 /*
  * Generate tinyxml2::XMLElement for Dictionary through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForDict(const ValueMap& dict, tinyxml2::XMLDocument *doc)
+static tinyxml2::XMLElement* generateElementForDict(const CAValueMap& dict, tinyxml2::XMLDocument *doc)
 {
     tinyxml2::XMLElement* rootNode = doc->NewElement("dict");
 
@@ -484,7 +484,7 @@ static tinyxml2::XMLElement* generateElementForDict(const ValueMap& dict, tinyxm
 /*
  * Generate tinyxml2::XMLElement for Array through a tinyxml2::XMLDocument
  */
-static tinyxml2::XMLElement* generateElementForArray(const ValueVector& array, tinyxml2::XMLDocument *pDoc)
+static tinyxml2::XMLElement* generateElementForArray(const CAValueVector& array, tinyxml2::XMLDocument *pDoc)
 {
     tinyxml2::XMLElement* rootNode = pDoc->NewElement("array");
 
@@ -574,8 +574,7 @@ void FileUtils::purgeCachedEntries()
 std::string FileUtils::getFileString(const std::string& pszFilePath)
 {
     std::string data;
-    
-    size_t pSize = 0;
+    unsigned long pSize = 0;
     unsigned char* pData = this->getFileData(pszFilePath, "rb", &pSize);
     
     if (pSize > 0)
@@ -586,10 +585,9 @@ std::string FileUtils::getFileString(const std::string& pszFilePath)
     return data;
 }
 
-unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, size_t *size)
+unsigned char* FileUtils::getFileData(const std::string& filename, const char* mode, unsigned long *size)
 {
     unsigned char * buffer = nullptr;
-    CCASSERT(!filename.empty() && size != nullptr && mode != nullptr, "Invalid parameters.");
     *size = 0;
     do
     {
@@ -616,7 +614,7 @@ unsigned char* FileUtils::getFileData(const std::string& filename, const char* m
     return buffer;
 }
 
-unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, size_t *size)
+unsigned char* FileUtils::getFileDataFromZip(const std::string& zipFilePath, const std::string& filename, unsigned long *size)
 {
     unsigned char * buffer = nullptr;
     unzFile file = nullptr;
@@ -741,7 +739,7 @@ std::string FileUtils::fullPathForFilename(const std::string &filename) const
     }
 
     if(isPopupNotify()){
-        CCLOG("cocos2d: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
+        CCLOG("CrossApp: fullPathForFilename: No file found at %s. Possible missing file.", filename.c_str());
     }
 
     // The file wasn't found, return empty string.
@@ -883,7 +881,7 @@ void FileUtils::loadFilenameLookupDictionaryFromFile(const std::string &filename
             int version = metadata["version"].asInt();
             if (version != 1)
             {
-                CCLOG("cocos2d: ERROR: Invalid filenameLookup dictionary version: %d. Filename: %s", version, filename.c_str());
+                CCLOG("CrossApp: ERROR: Invalid filenameLookup dictionary version: %d. Filename: %s", version, filename.c_str());
                 return;
             }
             setFilenameLookupDictionary( dict["filenames"].asValueMap());

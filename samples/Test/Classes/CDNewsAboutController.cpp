@@ -154,7 +154,7 @@ CDNewsAboutController::~CDNewsAboutController()
 
 void CDNewsAboutController::viewDidLoad()
 {
-    temp_Path = CCFileUtils::sharedFileUtils()->getWritablePath() + "image";
+    temp_Path = FileUtils::getInstance()->getWritablePath() + "image";
     if (p_TableView!=NULL)
     {
         this->getView()->removeSubview(p_TableView);

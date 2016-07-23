@@ -1,5 +1,5 @@
 #include "basics/CAApplication.h"
-#include "platform/CCFileUtils.h"
+#include "platform/CAFileUtils.h"
 #include "ccTypes.h"
 #include "support/CANotificationCenter.h"
 #include "JniHelper.h"

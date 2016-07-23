@@ -28,7 +28,6 @@ CC_DLL unsigned long ccNextPOT(unsigned long value);
 
 CC_DLL std::vector<std::string> Parse2StrVector(const std::string& str, const std::string& strDelimiter, bool bIncludeEmptyStr = false);
 
-double CC_DLL atof(const char* str);
 }
 
 #endif // __SUPPORT_CC_UTILS_H__

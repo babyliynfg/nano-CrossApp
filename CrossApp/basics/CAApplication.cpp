@@ -357,7 +357,7 @@ void CAApplication::purgeCachedData(void)
     {
         CAImageCache::sharedImageCache()->removeUnusedImages();
     }
-    CCFileUtils::sharedFileUtils()->purgeCachedEntries();
+    FileUtils::getInstance()->purgeCachedEntries();
 }
 
 float CAApplication::getZEye(void)
@@ -571,7 +571,7 @@ void CAApplication::purgeDirector()
     ccDrawFree();
     CAImageCache::purgeSharedImageCache();
     CAShaderCache::purgeSharedShaderCache();
-    CCFileUtils::purgeFileUtils();
+    FileUtils::destroyInstance();
 
     // CrossApp specific data structures
     CAUserDefault::purgeSharedUserDefault();
@@ -665,7 +665,7 @@ void CAApplication::createStatsLabel()
     {
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
         ImageCache->removeImageForKey("cc_fps_images");
-        CCFileUtils::sharedFileUtils()->purgeCachedEntries();
+        FileUtils::getInstance()->purgeCachedEntries();
     }
 
     unsigned char *data = NULL;

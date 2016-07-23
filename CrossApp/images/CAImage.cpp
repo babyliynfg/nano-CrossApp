@@ -1314,9 +1314,9 @@ CAImage* CAImage::createWithRawData(const unsigned char * data,
 
 bool CAImage::initWithImageFile(const std::string& file)
 {
-    std::string fullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(file.c_str());
+    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(file.c_str());
     unsigned long pSize = 0;
-    unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &pSize);
+    unsigned char* data = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &pSize);
     bool bRet = initWithImageData(data, pSize);
 	delete[]data;
 	return bRet;
@@ -1325,7 +1325,7 @@ bool CAImage::initWithImageFile(const std::string& file)
 bool CAImage::initWithImageFileThreadSafe(const std::string& fullPath)
 {
     unsigned long pSize = 0;
-    unsigned char* data = CCFileUtils::sharedFileUtils()->getFileData(fullPath.c_str(), "rb", &pSize);
+    unsigned char* data = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &pSize);
     bool ret = false;
     
     do

@@ -1,7 +1,7 @@
 
 #include "CAUserDefault.h"
-#include "platform/CCCommon.h"
-#include "platform/CCFileUtils.h"
+#include "platform/CACommon.h"
+#include "platform/CAFileUtils.h"
 #include "../tinyxml2/tinyxml2.h"
 
 #if (CC_TARGET_PLATFORM != CC_PLATFORM_IOS && CC_TARGET_PLATFORM != CC_PLATFORM_ANDROID)
@@ -36,7 +36,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
 		*doc = xmlDoc;
 		//CCFileData data(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str(),"rt");
 		unsigned long nSize;
-		const char* pXmlBuffer = (const char*)CCFileUtils::sharedFileUtils()->getFileData(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
+		const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
 		//const char* pXmlBuffer = (const char*)data.getBuffer();
 		if(NULL == pXmlBuffer)
 		{
@@ -376,7 +376,7 @@ void CAUserDefault::initXMLFilePath()
 {
     if (! m_sbIsFilePathInitialized)
     {
-        m_sFilePath += CCFileUtils::sharedFileUtils()->getWritablePath() + XML_FILE_NAME;
+        m_sFilePath += FileUtils::getInstance()->getWritablePath() + XML_FILE_NAME;
         m_sbIsFilePathInitialized = true;
     }    
 }

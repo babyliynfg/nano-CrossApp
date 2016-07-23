@@ -157,9 +157,9 @@
 
 
 // platform
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "platform/CAFileUtils.h"
-#include "platform/CCSAXParser.h"
+#include "platform/CASAXParser.h"
 #include "platform/platform.h"
 #include "platform/CCPlatformConfig.h"
 #include "platform/CCPlatformMacros.h"
@@ -240,7 +240,7 @@
 #include "game/actions/CGActionInstant.h"
 #include "game/actions/CGActionManager.h"
 #include "game/actions/CGActionInterval.h"
-
+#include "game/actions/CGTweenFunction.h"
 
 
 NS_CC_BEGIN

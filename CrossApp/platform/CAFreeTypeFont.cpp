@@ -1221,21 +1221,21 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
     
     if (path.compare("fonts/") != 0)
     {
-        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
+        pBuffer = FileUtils::getInstance()->getFileData(path.c_str(), "rb", size);
         if (pBuffer == NULL)
         {
             for (unsigned int i = 6; i < path.length(); ++i)
             {
                 path[i] = toupper(path[i]);
             }
-            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(path.c_str(), "rb", size);
+            pBuffer = FileUtils::getInstance()->getFileData(path.c_str(), "rb", size);
         }
     }
     
     if (pBuffer == NULL)
     {
         const char* fontName = "fonts/Regular.ttf";
-        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+        pBuffer = FileUtils::getInstance()->getFileData(fontName, "rb", size);
         ttfIndex = 0;
     }
     
@@ -1247,12 +1247,12 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
         strcat(sTTFont,"\\fonts\\simhei.ttf");
 		const char* pFontName = sTTFont;
 
-        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(pFontName, "rb", size);
+        pBuffer = FileUtils::getInstance()->getFileData(pFontName, "rb", size);
         
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_MAC)
         
         const char* fontName = "/System/Library/Fonts/STHeiti Light.ttc";
-        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+        pBuffer = FileUtils::getInstance()->getFileData(fontName, "rb", size);
 		ttfIndex = 1;
         s_fontOffsetType = 1;
         
@@ -1280,12 +1280,12 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
             s_fontOffsetType = 1;
         }
         
-        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+        pBuffer = FileUtils::getInstance()->getFileData(fontName, "rb", size);
 
         if (pBuffer == NULL)
         {
             fontName = "/System/Library/Fonts/STHeiti Light.ttc";
-            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+            pBuffer = FileUtils::getInstance()->getFileData(fontName, "rb", size);
             ttfIndex = 1;
             s_fontOffsetType = 1;
         }
@@ -1293,12 +1293,12 @@ unsigned char* CAFreeTypeFont::loadFont(const std::string& pFontName, unsigned l
 #elif (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
         
         const char* fontName = "/system/fonts/DroidSansFallback.ttf";
-        pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+        pBuffer = FileUtils::getInstance()->getFileData(fontName, "rb", size);
         
         if (pBuffer == NULL)
         {
             fontName = "/system/fonts/NotoSansHans-Regular.otf";
-            pBuffer = CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", size);
+            pBuffer = FileUtils::getInstance()->getFileData(fontName, "rb", size);
         }
 #endif
 	}

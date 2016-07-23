@@ -11,7 +11,7 @@
 
 #define FT_CONFIG_OPTION_USE_PNG
 
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "images/CAImage.h"
 #include <map>
 #include <string>

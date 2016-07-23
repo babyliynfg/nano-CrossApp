@@ -2,7 +2,7 @@
 #include "ccMacros.h"
 #include "game/actions/CGActionCatmullRom.h"
 #include "game/CGNode.h"
-
+#include "view/CADrawingPrimitives.h"
 using namespace std;
 
 NS_CC_BEGIN;
@@ -162,28 +162,6 @@ void PointArray::reverseInline()
         p2->x = x;
         p2->y = y;
     }
-}
-
-// CatmullRom Spline formula:
-DPoint ccCardinalSplineAt(DPoint &p0, DPoint &p1, DPoint &p2, DPoint &p3, float tension, float t)
-{
-    float t2 = t * t;
-    float t3 = t2 * t;
-    
-    /*
-     * Formula: s(-ttt + 2tt - t)P1 + s(-ttt + tt)P2 + (2ttt - 3tt + 1)P2 + s(ttt - 2tt + t)P3 + (-2ttt + 3tt)P3 + s(ttt - tt)P4
-     */
-    float s = (1 - tension) / 2;
-	
-    float b1 = s * ((-t3 + (2 * t2)) - t);                      // s(-t3 + 2 t2 - t)P1
-    float b2 = s * (-t3 + t2) + (2 * t3 - 3 * t2 + 1);          // s(-t3 + t2)P2 + (2 t3 - 3 t2 + 1)P2
-    float b3 = s * (t3 - 2 * t2 + t) + (-2 * t3 + 3 * t2);      // s(t3 - 2 t2 + t)P3 + (-2 t3 + 3 t2)P3
-    float b4 = s * (t3 - t2);                                   // s(t3 - t2)P4
-    
-    float x = (p0.x*b1 + p1.x*b2 + p2.x*b3 + p3.x*b4);
-    float y = (p0.y*b1 + p1.y*b2 + p2.y*b3 + p3.y*b4);
-	
-	return DPoint(x,y);
 }
 
 /* Implementation of CardinalSplineTo

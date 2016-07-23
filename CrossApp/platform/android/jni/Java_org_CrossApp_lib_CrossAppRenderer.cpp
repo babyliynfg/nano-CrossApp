@@ -1,16 +1,16 @@
 #include "basics/CAApplication.h"
-#include "platform/CCFileUtils.h"
-#include "ccTypes.h"
+#include "platform/CAFileUtils.h"
 #include "support/CANotificationCenter.h"
-#include "JniHelper.h"
 #include "platform/android/CCApplication.h"
+#include "platform/android/CCEGLView.h"
+#include "JniHelper.h"
 #include <jni.h>
 
 using namespace CrossApp;
 
 extern "C" {
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeRender(JNIEnv* env) {
-        CrossApp::CAApplication::getApplication()->mainLoop();
+        CAApplication::getApplication()->mainLoop();
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeOnPause() {
@@ -20,20 +20,20 @@ extern "C" {
     }
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeOnResume() {
-        if (CrossApp::CAApplication::getApplication()->getOpenGLView()) {
+        if (CAApplication::getApplication()->getOpenGLView()) {
             CCApplication::sharedApplication()->applicationWillEnterForeground();
         }
     }
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeChanged(JNIEnv*  env, jobject thiz, jint w, jint h) {
-        if (CrossApp::CAApplication::getApplication()->getOpenGLView())
+        if (CAApplication::getApplication()->getOpenGLView())
         {
-            CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize((int)w, (int)h);
+            CCEGLView::sharedOpenGLView()->setFrameSize((float)(int)w, (float)(int)h);
         }
     }
     
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppRenderer_nativeChangedOrientation(JNIEnv*  env, jobject thiz, jint type) {
-        CrossApp::CCEGLView::sharedOpenGLView()->setStatusBarOrientation((CAInterfaceOrientation)((int)type));
+        CCEGLView::sharedOpenGLView()->setStatusBarOrientation((CAInterfaceOrientation)((int)type));
     }
 
 }

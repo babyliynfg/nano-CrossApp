@@ -1,11 +1,4 @@
-// tu_file.cpp	-- Ignacio Castaño, Thatcher Ulrich <tu@tulrich.com> 2003
 
-// This source code has been donated to the Public Domain.  Do
-// whatever you want with it.
-
-// A file class that can be customized with callbacks.
-
-//#include "../../../platform/CCCommon.h"
 #include "tu_file.h"
 #include "utility.h"
 #include "container.h"

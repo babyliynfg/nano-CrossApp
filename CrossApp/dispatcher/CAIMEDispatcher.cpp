@@ -1,7 +1,7 @@
 
 
 #include "CAIMEDispatcher.h"
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include <list>
 
 NS_CC_BEGIN

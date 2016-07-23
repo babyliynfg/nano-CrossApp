@@ -7,7 +7,7 @@
 #define _USE_MATH_DEFINES
 #endif
 
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "CCStdC.h"
 
 #ifndef CCAssert

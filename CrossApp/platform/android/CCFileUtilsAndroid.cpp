@@ -1,70 +1,138 @@
 
 #include "CCFileUtilsAndroid.h"
 #include "support/zip_support/ZipUtils.h"
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "jni/Java_org_CrossApp_lib_CrossAppHelper.h"
+#include "platform/CCPlatformConfig.h"
+#include <stdlib.h>
+#include <sys/stat.h>
+
+#define  LOG_TAG    "FileUtilsAndroid.cpp"
+#define  LOGD(...)  __android_log_print(ANDROID_LOG_DEBUG,LOG_TAG,__VA_ARGS__)
 
 using namespace std;
 
 NS_CC_BEGIN
 
-// record the zip on the resource path
-static ZipFile *s_pZipFile = NULL;
+ZipFile* FileUtilsAndroid::obbfile = nullptr;
 
-CCFileUtils* CCFileUtils::sharedFileUtils()
+FileUtils* FileUtils::getInstance()
 {
-    if (s_sharedFileUtils == NULL)
+    if (s_sharedFileUtils == nullptr)
     {
-        s_sharedFileUtils = new CCFileUtilsAndroid();
-        s_sharedFileUtils->init();
-        std::string resourcePath = getApkPath();
-        s_pZipFile = new ZipFile(resourcePath, "assets/");
+        s_sharedFileUtils = new FileUtilsAndroid();
+        if (!s_sharedFileUtils->init())
+        {
+            delete s_sharedFileUtils;
+            s_sharedFileUtils = nullptr;
+            CCLOG("ERROR: Could not init CCFileUtilsAndroid");
+        }
     }
     return s_sharedFileUtils;
 }
 
-CCFileUtilsAndroid::CCFileUtilsAndroid()
+FileUtilsAndroid::FileUtilsAndroid()
 {
 }
 
-CCFileUtilsAndroid::~CCFileUtilsAndroid()
+FileUtilsAndroid::~FileUtilsAndroid()
 {
-    CC_SAFE_DELETE(s_pZipFile);
+    if (obbfile)
+    {
+        delete obbfile;
+        obbfile = nullptr;
+    }
 }
 
-bool CCFileUtilsAndroid::init()
+bool FileUtilsAndroid::init()
 {
-    m_strDefaultResRootPath = "assets/";
-    return CCFileUtils::init();
+    _defaultResRootPath = "assets/";
+    
+    std::string assetsPath(getApkPath());
+    obbfile = new ZipFile(assetsPath, "assets/");
+    
+    return FileUtils::init();
 }
 
-bool CCFileUtilsAndroid::isFileExist(const std::string& strFilePath)
+std::string FileUtilsAndroid::getNewFilename(const std::string &filename) const
 {
-    if (0 == strFilePath.length())
+    std::string newFileName = FileUtils::getNewFilename(filename);
+//    // ../xxx do not fix this path
+//    auto pos = newFileName.find("../");
+//    if (pos == std::string::npos || pos == 0)
+//    {
+//        return newFileName;
+//    }
+//    
+//    std::vector<std::string> v(3);
+//    v.resize(0);
+//    auto change = false;
+//    size_t size = newFileName.size();
+//    size_t idx = 0;
+//    bool noexit = true;
+//    while (noexit)
+//    {
+//        pos = newFileName.find('/', idx);
+//        std::string tmp;
+//        if (pos == std::string::npos)
+//        {
+//            tmp = newFileName.substr(idx, size - idx);
+//            noexit = false;
+//        }else
+//        {
+//            tmp = newFileName.substr(idx, pos - idx + 1);
+//        }
+//        auto t = v.size();
+//        if (t > 0 && v[t-1].compare("../") != 0 &&
+//            (tmp.compare("../") == 0 || tmp.compare("..") == 0))
+//        {
+//            v.pop_back();
+//            change = true;
+//        }else
+//        {
+//            v.push_back(tmp);
+//        }
+//        idx = pos + 1;
+//    }
+//    
+//    if (change)
+//    {
+//        newFileName.clear();
+//        for (auto &s : v)
+//        {
+//            newFileName.append(s);
+//        }
+//    }
+    return newFileName;
+}
+
+bool FileUtilsAndroid::isFileExistInternal(const std::string& strFilePath) const
+{
+    if (strFilePath.empty())
     {
         return false;
     }
-
+    
     bool bFound = false;
     
-    // Check whether file exists in apk.
     if (strFilePath[0] != '/')
     {
         std::string strPath = strFilePath;
-        if (strPath.find(m_strDefaultResRootPath) != 0)
-        {// Didn't find "assets/" at the beginning of the path, adding it.
-            strPath.insert(0, m_strDefaultResRootPath);
+        
+        if (strFilePath.find(_defaultResRootPath) != 0)
+        {
+            strPath.insert(0, _defaultResRootPath);
         }
-
-        if (s_pZipFile->fileExists(strPath))
+        
+        if (obbfile && obbfile->fileExists(strPath))
         {
             bFound = true;
-        } 
+        }
     }
     else
     {
         FILE *fp = fopen(strFilePath.c_str(), "r");
-        if(fp)
+        if (fp)
         {
             bFound = true;
             fclose(fp);
@@ -73,31 +141,51 @@ bool CCFileUtilsAndroid::isFileExist(const std::string& strFilePath)
     return bFound;
 }
 
-bool CCFileUtilsAndroid::isAbsolutePath(const std::string& strPath)
+bool FileUtilsAndroid::isDirectoryExistInternal(const std::string& dirPath) const
 {
-    // On Android, there are two situations for full path.
-    // 1) Files in APK, e.g. assets/path/path/file.png
-    // 2) Files not in APK, e.g. /data/data/org.CrossApp.hellocpp/cache/path/path/file.png, or /sdcard/path/path/file.png.
-    // So these two situations need to be checked on Android.
-    if (strPath[0] == '/' || strPath.find(m_strDefaultResRootPath) == 0)
+    if (dirPath.empty())
     {
-        return true;
+        return false;
+    }
+    
+    const char* s = dirPath.c_str();
+    bool startWithAssets = (dirPath.find("assets/") == 0);
+    int lenOfAssets = 7;
+    
+    std::string tmpStr;
+    
+    // find absolute path in flash memory
+    if (s[0] == '/')
+    {
+        CCLOG("find in flash memory dirPath(%s)", s);
+        struct stat st;
+        if (stat(s, &st) == 0)
+        {
+            return S_ISDIR(st.st_mode);
+        }
+    }
+    
+    // find it in apk's assets dir
+    // Found "assets/" at the beginning of the path and we don't want it
+    CCLOG("find in apk dirPath(%s)", s);
+    if (startWithAssets)
+    {
+        s += lenOfAssets;
     }
     return false;
 }
 
-
-unsigned char* CCFileUtilsAndroid::getFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize)
-{    
-    return doGetFileData(pszFileName, pszMode, pSize, false);
-}
-
-unsigned char* CCFileUtilsAndroid::getFileDataForAsync(const char* pszFileName, const char* pszMode, unsigned long * pSize)
+unsigned char* FileUtilsAndroid::getFileData(const std::string& filename, const char* mode, unsigned long *size)
 {
-    return doGetFileData(pszFileName, pszMode, pSize, true);
+    return doGetFileData(filename.c_str(), mode, size, false);
 }
 
-unsigned char* CCFileUtilsAndroid::doGetFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize, bool forAsync)
+unsigned char* FileUtilsAndroid::getFileDataForAsync(const std::string& filename, const char* mode, unsigned long *size, bool forAsync)
+{
+    return doGetFileData(filename.c_str(), mode, size, true);
+}
+
+unsigned char* FileUtilsAndroid::doGetFileData(const char* pszFileName, const char* pszMode, unsigned long * pSize, bool forAsync)
 {
     unsigned char * pData = 0;
     
@@ -112,11 +200,11 @@ unsigned char* CCFileUtilsAndroid::doGetFileData(const char* pszFileName, const 
     {
         if (forAsync)
         {
-            pData = s_pZipFile->getFileData(fullPath.c_str(), pSize, s_pZipFile->_dataThread);
+            pData = obbfile->getFileData(fullPath.c_str(), pSize, obbfile->_dataThread);
         }
         else
         {
-            pData = s_pZipFile->getFileData(fullPath.c_str(), pSize);
+            pData = obbfile->getFileData(fullPath.c_str(), pSize);
         }
     }
     else
@@ -124,7 +212,7 @@ unsigned char* CCFileUtilsAndroid::doGetFileData(const char* pszFileName, const 
         do
         {
             // read rrom other path than user set it
-	        //CCLOG("GETTING FILE ABSOLUTE DATA: %s", pszFileName);
+            //CCLOG("GETTING FILE ABSOLUTE DATA: %s", pszFileName);
             FILE *fp = fopen(fullPath.c_str(), pszMode);
             CC_BREAK_IF(!fp);
             
@@ -153,17 +241,31 @@ unsigned char* CCFileUtilsAndroid::doGetFileData(const char* pszFileName, const 
     return pData;
 }
 
-string CCFileUtilsAndroid::getWritablePath()
+
+bool FileUtilsAndroid::isAbsolutePath(const std::string& strPath) const
+{
+    // On Android, there are two situations for full path.
+    // 1) Files in APK, e.g. assets/path/path/file.png
+    // 2) Files not in APK, e.g. /data/data/org.cocos2dx.hellocpp/cache/path/path/file.png, or /sdcard/path/path/file.png.
+    // So these two situations need to be checked on Android.
+    if (strPath[0] == '/' || strPath.find(_defaultResRootPath) == 0)
+    {
+        return true;
+    }
+    return false;
+}
+
+string FileUtilsAndroid::getWritablePath()
 {
     // Fix for Nexus 10 (Android 4.2 multi-user environment)
     // the path is retrieved through Java Context.getCacheDir() method
     string dir("");
     string tmp = getFileDirectoryJNI();
-
+    
     if (tmp.length() > 0)
     {
-        dir.append(tmp).append("/");
-
+        dir.append(tmp).append("/CrossApp/");
+        
         return dir;
     }
     else
@@ -173,3 +275,4 @@ string CCFileUtilsAndroid::getWritablePath()
 }
 
 NS_CC_END
+

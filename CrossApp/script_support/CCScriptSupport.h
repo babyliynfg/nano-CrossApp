@@ -3,7 +3,7 @@
 #ifndef __SCRIPT_SUPPORT_H__
 #define __SCRIPT_SUPPORT_H__
 
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "cocoa/CCSet.h"
 #include <map>
 #include <string>

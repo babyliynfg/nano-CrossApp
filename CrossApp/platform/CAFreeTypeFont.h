@@ -9,7 +9,7 @@
 #ifndef __CC_PLATFORM_CAFREETYPEFONT_H
 #define __CC_PLATFORM_CAFREETYPEFONT_H
 
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "platform/CAFTFontCache.h"
 #include "images/CAImage.h"
 #include <map>

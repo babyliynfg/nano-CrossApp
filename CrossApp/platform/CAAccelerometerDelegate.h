@@ -3,7 +3,7 @@
 #ifndef __CAACCELEROMETER_DELEGATE_H__
 #define __CAACCELEROMETER_DELEGATE_H__
 
-#include "CCCommon.h"
+#include "CACommon.h"
 
 NS_CC_BEGIN
 /**

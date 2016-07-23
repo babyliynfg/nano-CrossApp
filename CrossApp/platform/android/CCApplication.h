@@ -1,7 +1,7 @@
 #ifndef __CC_APPLICATION_ANDROID_H__
 #define __CC_APPLICATION_ANDROID_H__
 
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "platform/CCApplicationProtocol.h"
 #include "ccTypes.h"
 

@@ -2,7 +2,7 @@
 #include "CCEGLView.h"
 #include "basics/CAApplication.h"
 #include <algorithm>
-#include "platform/CCFileUtils.h"
+#include "platform/CAFileUtils.h"
 /**
 @brief    This function change the PVRFrame show/hide setting in register.
 @param  bEnable If true show the PVRFrame window, otherwise hide.
@@ -172,7 +172,7 @@ void CCApplication::setResourceRootPath(const std::string& rootResDir)
     {
         m_resourceRootPath += '/';
     }
-    CCFileUtils* pFileUtils = CCFileUtils::sharedFileUtils();
+    FileUtils* pFileUtils = FileUtils::getInstance();
     std::vector<std::string> searchPaths = pFileUtils->getSearchPaths();
     searchPaths.insert(searchPaths.begin(), m_resourceRootPath);
     pFileUtils->setSearchPaths(searchPaths);

@@ -482,7 +482,7 @@ float CAValue::asFloat() const
 
     if (_type == Type::STRING)
     {
-        return CrossApp::atof(_field.strVal->c_str());
+        return atof(_field.strVal->c_str());
     }
 
     if (_type == Type::INTEGER)
@@ -518,7 +518,7 @@ double CAValue::asDouble() const
 
     if (_type == Type::STRING)
     {
-        return static_cast<double>(CrossApp::atof(_field.strVal->c_str()));
+        return static_cast<double>(atof(_field.strVal->c_str()));
     }
 
     if (_type == Type::INTEGER)

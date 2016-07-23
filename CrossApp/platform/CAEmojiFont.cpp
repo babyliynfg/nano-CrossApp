@@ -65,7 +65,7 @@ unsigned char* CAEmojiFont::loadEmojiFontBuffer(unsigned long& size)
 #endif
 
 	fontName = "fonts/NotoColorEmoji.ttf";
-	return CCFileUtils::sharedFileUtils()->getFileData(fontName, "rb", &size);
+	return FileUtils::getInstance()->getFileData(fontName, "rb", &size);
 }
 
 bool CAEmojiFont::initEmojiFont()

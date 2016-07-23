@@ -304,9 +304,6 @@ public:
 
 };
 
-/** Returns the Cardinal Spline position for a given set of control points, tension and time */
-extern CC_DLL DPoint ccCardinalSplineAt(DPoint &p0, DPoint &p1, DPoint &p2, DPoint &p3, float tension, float t);
-
 // end of actions group
 /// @}
 

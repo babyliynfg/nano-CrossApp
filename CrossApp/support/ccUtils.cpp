@@ -38,25 +38,4 @@ CC_DLL std::vector<std::string> Parse2StrVector(const std::string& str, const st
 	return strVector;
 }
 
-#define MAX_ITOA_BUFFER_SIZE 256
-    double atof(const char* str)
-    {
-        if (str == nullptr)
-        {
-            return 0.0;
-        }
-        
-        char buf[MAX_ITOA_BUFFER_SIZE];
-        strncpy(buf, str, MAX_ITOA_BUFFER_SIZE);
-        
-        // strip string, only remain 7 numbers after '.'
-        char* dot = strchr(buf, '.');
-        if (dot != nullptr && dot - buf + 8 <  MAX_ITOA_BUFFER_SIZE)
-        {
-            dot[8] = '\0';
-        }
-        
-        return ::atof(buf);
-    }
-    
 }

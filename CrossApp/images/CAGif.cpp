@@ -65,8 +65,8 @@ bool CAGif::initWithFilePath(std::string filePath)
 {
     if(CAGif::init())
     {
-        std::string fileFullPath = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath.c_str());
-        s_pData = CCFileUtils::sharedFileUtils()->getFileData(fileFullPath.c_str(), "rb", &m_pDataSize);
+        std::string fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath.c_str());
+        s_pData = FileUtils::getInstance()->getFileData(fileFullPath.c_str(), "rb", &m_pDataSize);
         if(!s_pData || 0 == m_pDataSize)
         {
             return false;

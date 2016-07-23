@@ -3,7 +3,7 @@
 #ifndef __PLATFORM_ANDROID_CCACCELEROMETER_H__
 #define __PLATFORM_ANDROID_CCACCELEROMETER_H__
 
-#include "platform/CCCommon.h"
+#include "platform/CACommon.h"
 #include "platform/CAAccelerometerDelegate.h"
 
 namespace   CrossApp {

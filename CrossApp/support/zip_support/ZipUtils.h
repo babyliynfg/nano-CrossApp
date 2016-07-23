@@ -150,7 +150,7 @@ namespace CrossApp
     {
     public:
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
-        friend class CCFileUtilsAndroid;
+        friend class FileUtilsAndroid;
 #endif
         
         /**
