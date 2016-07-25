@@ -22,6 +22,7 @@ NS_CC_BEGIN
 CAButton::CAButton(const CAButtonType& buttonType)
 :m_bAllowsSelected(false)
 ,m_bSelected(false)
+,m_bBeforeTouchSelected(false)
 ,m_bTouchClick(false)
 ,m_color(CAColor_white)
 ,m_eButtonType(buttonType)
@@ -383,7 +384,7 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     {
         CC_BREAK_IF(m_eControlState != CAControlStateNormal && m_eControlState != CAControlStateSelected);
 
-        CAScheduler::schedule(schedule_selector(CAButton::setTouchLongPress), this, 0, 0, 0.5f);
+        this->performSelector(callfunc_selector(CAButton::setTouchLongPress), 0.5f);
         
         return this->setTouchBegin(point);
     }
@@ -403,12 +404,32 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     if (getBounds().containsPoint(point))
     {
+        m_bSelected = !m_bBeforeTouchSelected;
+        
         this->setTouchMoved(point);
-        this->setControlState(CAControlStateHighlighted);
+        
+        if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
+        {
+            if (m_bSelected)
+            {
+                this->setControlState(CAControlStateSelected);
+            }
+            else
+            {
+                this->setControlState(CAControlStateNormal);
+            }
+        }
+        else
+        {
+            this->setControlState(CAControlStateHighlighted);
+        }
     }
     else
     {
+        m_bSelected = m_bBeforeTouchSelected;
+        
         this->setTouchMovedOutSide(point);
+        
         if (m_bAllowsSelected && m_bSelected)
         {
             this->setControlState(CAControlStateSelected);
@@ -435,7 +456,7 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         
         if (m_bAllowsSelected)
         {
-            if (m_bSelected)
+            if (m_bSelected && getBounds().containsPoint(point))
             {
                 this->setControlState(CAControlStateSelected);
             }
@@ -633,6 +654,7 @@ bool CAButton::setTouchBegin(const DPoint& point)
 
     if (m_bAllowsSelected)
     {
+        m_bBeforeTouchSelected = m_bSelected;
         m_bSelected = !m_bSelected;
         
         if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
@@ -703,7 +725,7 @@ void CAButton::setTouchMovedOutSide(const DPoint& point)
     }
 }
 
-void CAButton::setTouchLongPress(float dt)
+void CAButton::setTouchLongPress()
 {
     if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
     {

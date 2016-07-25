@@ -149,6 +149,8 @@ protected:
     
     bool m_bDefineImageOffset;
     
+    bool m_bBeforeTouchSelected;
+    
 protected:
     
     void updateWithPreferredSize();
@@ -163,7 +165,7 @@ protected:
     
     bool setTouchBegin(const DPoint& point);
 
-    void setTouchLongPress(float dt);
+    void setTouchLongPress();
     
     void setContentSize(const DSize & var);
 

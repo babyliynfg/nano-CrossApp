@@ -79,7 +79,7 @@ void ButtonTest::viewDidLoad()
     btn5->setBackgroundViewForState(CAControlStateNormal, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_normal.png")));
     btn5->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_highlighted.png")));
     btn5->setBackgroundViewForState(CAControlStateSelected, CAScale9ImageView::createWithImage(CAImage::create("source_material/btn_rounded3D_selected.png")));
-    btn5->addTarget(this, CAControl_selector(ButtonTest::Buttoncallback), CAControlEventTouchDown);
+    btn5->addTarget(this, CAControl_selector(ButtonTest::Buttoncallback), CAControlEventTouchUpInSide);
     this->getView()->addSubview(btn5);
 
 }
