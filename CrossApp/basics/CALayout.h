@@ -20,7 +20,8 @@ public:
         L_C,
         R_W,
         R_C,
-        W_C = 5
+        W_C,
+        C_NW = 6
     }
     Type;
     
@@ -33,6 +34,8 @@ public:
     float width;
     
     float center;
+    
+    float normalizedWidth;
     
 public:
     
@@ -61,7 +64,8 @@ public:
         T_C,
         B_H,
         B_C,
-        H_C
+        H_C,
+        C_NH = 6
     }
     Type;
     
@@ -74,6 +78,8 @@ public:
     float height;
     
     float center;
+    
+    float normalizedHeight;
     
 public:
     
@@ -142,6 +148,12 @@ static inline DHorizontalLayout DHorizontalLayout_W_C(float width, float center)
     return DHorizontalLayout(width, center, DHorizontalLayout::W_C);
 }
 
+static inline DHorizontalLayout DHorizontalLayout_C_NW(float center, float normalizedWidth)
+{
+    return DHorizontalLayout(center, normalizedWidth, DHorizontalLayout::C_NW);
+}
+
+
 
 static inline DVerticalLayout DVerticalLayout_T_B(float top, float bottom)
 {
@@ -171,6 +183,11 @@ static inline DVerticalLayout DVerticalLayout_B_C(float bottom, float center)
 static inline DVerticalLayout DVerticalLayout_H_C(float height, float center)
 {
     return DVerticalLayout(height, center, DVerticalLayout::H_C);
+}
+
+static inline DVerticalLayout DVerticalLayout_C_NH(float center, float normalizedHeight)
+{
+    return DVerticalLayout(center, normalizedHeight, DVerticalLayout::C_NH);
 }
 
 const DHorizontalLayout DHorizontalLayouttZero  = DHorizontalLayout();
