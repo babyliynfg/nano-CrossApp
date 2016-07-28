@@ -43,7 +43,8 @@ public class CrossAppGPS {
 	private static Activity s_pContext;
 	public static LocationManager locationManager;
 	public static String provider;
-	private static final long serialVersionUID = -4582739827003032383L;   
+	private static final long serialVersionUID = -4582739827003032383L;
+	protected static final String TAG = "location";   
 	static Intent intent ;
 	public static void Init( final Activity context )
 	{
@@ -55,39 +56,63 @@ public class CrossAppGPS {
 	{
 
 		locationManager = (LocationManager) s_pContext.getSystemService(Context.LOCATION_SERVICE);
-
+		
+		Log.i("1111111111111", "22222222222222222");
+		
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
         	 intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
              s_pContext.startActivityForResult(intent,10);
+             Log.i("111111", "333333333333333");
             return;
         }    
     }
 	
 	public static  LocationListener locationListener = new LocationListener() { 
 
-		@Override 
-		public void onStatusChanged(String provider, int status, Bundle extras)
-		{ 
-		} 
-		
-		@Override 
-		public void onProviderEnabled(String provider) 
-		{ 
-		} 
-		
-		@Override 
-		public void onProviderDisabled(String provider)
-		{ 
-		} 
-		
-		@Override 
-		public void onLocationChanged(Location location) 
-		{ 
-            if (location != null)
-            {
-            	returnLocationInfo(getLocationInfo(location));
-            }    	  	
+        /**
+         * 位置信息变化时触发
+         */
+        public void onLocationChanged(Location location) {
+            //updateView(location);
+            Log.i(TAG, "时间："+location.getTime()); 
+            Log.i(TAG, "经度："+location.getLongitude()); 
+            Log.i(TAG, "纬度："+location.getLatitude()); 
+            Log.i(TAG, "海拔："+location.getAltitude()); 
+        }
+        
+        /**
+         * GPS状态变化时触发
+         */
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            switch (status) {
+            //GPS状态为可见时
+            case LocationProvider.AVAILABLE:
+                Log.i(TAG, "当前GPS状态为可见状态");
+                break;
+            //GPS状态为服务区外时
+            case LocationProvider.OUT_OF_SERVICE:
+                Log.i(TAG, "当前GPS状态为服务区外状态");
+                break;
+            //GPS状态为暂停服务时
+            case LocationProvider.TEMPORARILY_UNAVAILABLE:
+                Log.i(TAG, "当前GPS状态为暂停服务状态");
+                break;
+            }
+        }
+
+		@Override
+		public void onProviderDisabled(String arg0) {
+			// TODO Auto-generated method stub
+			
 		}
+
+		@Override
+		public void onProviderEnabled(String arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+ 
+
 	};
 	
     
@@ -143,7 +168,7 @@ public class CrossAppGPS {
 			public void run() {
 				locationManager.addGpsStatusListener(listener);
 		        
-				locationManager.requestLocationUpdates(provider, 6000,1, locationListener);			
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000,1, locationListener);			
 			}
 		});
 		
@@ -195,7 +220,7 @@ public class CrossAppGPS {
     	String bearing = Float.toString(location.getBearing());
     	
     	CrossAppLocationInfo mInfo = new CrossAppLocationInfo(longitude,latitude,altitude,speed,bearing);
-
+   
     	return mInfo;
 	}
 	

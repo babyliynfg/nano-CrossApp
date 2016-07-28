@@ -288,23 +288,6 @@ void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
 	}	
 }
 
-void JAVAUpdatingLocation()
-{
-    JniMethodInfo jmi;
-	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "startUpdatingLocation" , "()V"))
-	{
-        jmi.env->CallStaticObjectMethod(jmi.classID , jmi.methodID);
-	}
-}
-
-void JAVAStopUpdateLocation()
-{
-	JniMethodInfo jmi;
-	if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "stopUpdatingLocation", "()V"))
-	{
-		jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
-	}
-}
 
 void sendLocalNotification(const char* title, const char* content, int time)
 {
@@ -332,7 +315,7 @@ float getBatteryLevel()
 {
     return JAVAgetBattery();
 }
-
+static CALocationDelegate *locationDelegate = NULL;
 static CABlueToothDelegate *bluetoothdelegate =NULL;
     
 void initBlueTooth(CABlueToothDelegate *target)
@@ -369,6 +352,7 @@ void JAVAOpenAlbum(int type)
 	}
 }
     
+   
 CANetWorkType getNetWorkType()
 {
     return JAVAgetNetWorkType();
@@ -391,7 +375,25 @@ void JAVAOpenCamera(int type)
 		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
 	}
 }
-
+    
+void JAVAUpdatingLocation()
+{
+    JniMethodInfo jmi;
+    if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "startUpdatingLocation" , "()V"))
+    {
+        jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID);
+    }
+}
+    
+void JAVAStopUpdateLocation()
+{
+    JniMethodInfo jmi;
+    if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "stopUpdatingLocation", "()V"))
+    {
+        jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
+    }
+}
+    
 class ToMainThread:public CAObject
 {
 public:
@@ -413,7 +415,7 @@ public:
 static CAMediaDelegate *delegate = NULL;
 static ToMainThread *main = NULL;
 static const char *_path = NULL;
-static CALocationDelegate *locationDelegate = NULL;
+
 static CAWifiDelegate *wifidelegate = NULL;
 static CAAccelerometerDelegate* accelerometerDelegate = NULL;
 static CAGyroDelegate* gyroscopeDelegate = NULL;

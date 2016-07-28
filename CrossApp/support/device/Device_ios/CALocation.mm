@@ -44,7 +44,11 @@ static CALocation* m_pLocation = NULL;
 
 -(void)startUpdatingLocation
 {
-    [_locationManager startUpdatingLocation];
+    if ([CLLocationManager locationServicesEnabled]) {
+
+        [_locationManager startUpdatingLocation];
+    } else {
+    }
 }
 
 -(void)stopUpdatingLocation
@@ -63,10 +67,8 @@ static CALocation* m_pLocation = NULL;
 {
     CLLocation *curLocation = [locations lastObject];
 
-    
     if (CrossApp::CALocationDelegate *locationDelegate = (CrossApp::CALocationDelegate*)(self.sender))
     {
-        
         NSString *longitude = [[NSString alloc] initWithFormat:@"%g",curLocation.coordinate.longitude];
         NSString *latitude = [[NSString alloc] initWithFormat:@"%g",curLocation.coordinate.latitude];
         NSString *altitude = [[NSString alloc] initWithFormat:@"%g",curLocation.verticalAccuracy];

@@ -170,6 +170,7 @@ DVerticalLayout::DVerticalLayout(float var1, float var2, const Type& type)
             height = var1;
             center = var2;
         }
+            break;
         case C_NH:
         {
             center = var1;
