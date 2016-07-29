@@ -87,31 +87,10 @@ protected:
     std::string _key;
 };
 
-#if CC_ENABLE_SCRIPT_BINDING
-
-class CC_DLL TimerScriptHandler : public Timer
-{
-public:
-    bool initWithScriptHandler(int handler, float seconds);
-    inline int getScriptHandler() const { return _scriptHandler; };
-    
-    virtual void trigger(float dt) override;
-    virtual void cancel() override;
-    
-private:
-    int _scriptHandler;
-};
-
-#endif
-
 
 struct _listEntry;
 struct _hashSelectorEntry;
 struct _hashUpdateEntry;
-
-#if CC_ENABLE_SCRIPT_BINDING
-class SchedulerScriptHandlerEntry;
-#endif
 
 class CC_DLL CAScheduler : public CAObject
 {
@@ -158,10 +137,6 @@ public:
     void scheduleSelector(SEL_SCHEDULE selector, CAObject *target, float interval, bool paused);
 
     void scheduleSelectorUpdate(CAObject *target, int priority, bool paused);
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    unsigned int scheduleScriptFunc(unsigned int handler, float interval, bool paused);
-#endif
 
     void unscheduleSelector(const std::string& key, void *target);
 
@@ -174,10 +149,6 @@ public:
     void unscheduleSelectorAll();
 
     void unscheduleSelectorAllWithMinPriority(int minPriority);
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    void unscheduleScriptEntry(unsigned int scheduleScriptEntryID);
-#endif
 
     bool isScheduledSelector(const std::string& key, void *target);
 
@@ -197,6 +168,12 @@ public:
 
     void performFunctionInUIThread( const std::function<void()> &function);
 
+public:
+
+    unsigned int scheduleScriptFunc(unsigned int nHandler, float fInterval, bool bPaused);
+    
+    void unscheduleScriptEntry(unsigned int uScheduleScriptEntryID);
+    
 protected:
 
     void schedulePerFrame(const ccSchedulerFunc& callback, void *target, int priority, bool paused);
@@ -220,13 +197,10 @@ protected:
     bool _currentTargetSalvaged;
 
     bool _updateHashLocked;
-    
-#if CC_ENABLE_SCRIPT_BINDING
-    CAVector<SchedulerScriptHandlerEntry*> _scriptHandlerEntries;
-#endif
-    
+
     std::vector<std::function<void()> > _functionsToPerform;
     std::mutex _performMutex;
+    CAVector<CAObject*> m_obScriptHandlerEntries;
 };
 
 NS_CC_END

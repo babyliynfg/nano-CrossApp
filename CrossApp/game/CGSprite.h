@@ -37,9 +37,9 @@ public:
 
     static CGSprite* create(const std::string& pszFileName, const DRect& rect);
 
-    static CGSprite* createWithImage(CAImage *pTexture);
+    static CGSprite* createWithImage(CAImage *image);
 
-    static CGSprite* createWithImage(CAImage *pTexture, const DRect& rect);
+    static CGSprite* createWithImage(CAImage *image, const DRect& rect);
 
     static CGSprite* createWithSpriteFrame(CGSpriteFrame *pSpriteFrame);
 
@@ -51,11 +51,11 @@ public:
 
     virtual bool init();
 
-    virtual bool initWithImage(CAImage *pTexture);
+    virtual bool initWithImage(CAImage *image);
 
-    virtual bool initWithImage(CAImage *pTexture, const DRect& rect);
+    virtual bool initWithImage(CAImage *image, const DRect& rect);
 
-    virtual bool initWithImage(CAImage *pTexture, const DRect& rect, bool rotated);
+    virtual bool initWithImage(CAImage *image, const DRect& rect, bool rotated);
 
     virtual bool initWithSpriteFrame(CGSpriteFrame *pSpriteFrame);
 
