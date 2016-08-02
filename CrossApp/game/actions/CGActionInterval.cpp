@@ -2020,7 +2020,7 @@ void FadeTo::update(float time)
 {
     if (_target)
     {
-        _target->setAlpha((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
+        _target->setAlpha((float)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
     }
     /*_target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));*/
 }

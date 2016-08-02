@@ -395,7 +395,7 @@ unsigned int CGSpriteBatchNode::atlasIndexForChild(CGSprite *pobSprite, int nZ)
     return 0;
 }
 
-void CGSpriteBatchNode::insertChild(CGSprite *pSprite, unsigned int uIndex)
+void CGSpriteBatchNode::appendChild(CGSprite *pSprite, unsigned int uIndex)
 {
     pSprite->setBatchNode(this);
     pSprite->setAtlasIndex(uIndex);
@@ -426,7 +426,7 @@ void CGSpriteBatchNode::insertChild(CGSprite *pSprite, unsigned int uIndex)
     {
         CGSprite *sprite = (CGSprite*)(*itr);
         unsigned int idx = atlasIndexForChild(sprite, sprite->getZOrder());
-        this->insertChild(sprite, idx);
+        this->appendChild(sprite, idx);
     }
 }
 

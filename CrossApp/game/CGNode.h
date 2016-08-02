@@ -384,6 +384,9 @@ protected:
     BlendFunc                   m_sBlendFunc;
     
     CAView*                     m_pCAView;
+    CAView*                     m_pSuperviewCAView;
+    
+    friend class                CAView;
 };
 
 static bool compareChildrenZOrder(CGNode* one, CGNode* two)

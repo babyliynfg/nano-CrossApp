@@ -1,5 +1,5 @@
-#ifndef __CC_SPRITE_BATCH_NODE_H__
-#define __CC_SPRITE_BATCH_NODE_H__
+#ifndef __CGSpriteBatchNode_H__
+#define __CGSpriteBatchNode_H__
 
 #include "CGNode.h"
 #include "dispatcher/CAProtocols.h"
@@ -58,7 +58,7 @@ public:
 
     void removeChildAtIndex(unsigned int index, bool doCleanup);
 
-    void insertChild(CGSprite *child, unsigned int index);
+    void appendChild(CGSprite *child, unsigned int index);
     void appendChild(CGSprite* sprite);
     void removeSpriteFromAtlas(CGSprite *sprite);
 
@@ -120,4 +120,4 @@ protected:
 
 NS_CC_END
 
-#endif // __CC_SPRITE_BATCH_NODE_H__
+#endif // __CGSpriteBatchNode_H__

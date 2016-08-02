@@ -245,10 +245,7 @@ void CGSprite::setImageRect(const DRect& rect, bool rotated, const DSize& untrim
 {
     m_bRectRotated = rotated;
     
-    m_obContentSize = untrimmedSize;
-    m_obAnchorPointInPoints.x = m_obContentSize.width * m_obAnchorPoint.x;
-    m_obAnchorPointInPoints.y = m_obContentSize.height * m_obAnchorPoint.y;
-    
+    setContentSize(untrimmedSize);
     setVertexRect(rect);
     setImageCoords(rect);
     
@@ -826,8 +823,13 @@ void CGSprite::setImage(CAImage *image)
                 this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
             }
         }
-        
-        updateBlendFunc();
+        DRect rect = DRectZero;
+        if (image)
+        {
+            rect.size = image->getContentSize();
+        }
+        this->setImageRect(rect);
+        this->updateBlendFunc();
         this->updateDraw();
     }
 }

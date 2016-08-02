@@ -61,6 +61,7 @@ CGNode::CGNode(void)
 , _realAlpha(1.0f)
 , m_bDisplayRange(true)
 , m_bHasChildren(false)
+, m_pSuperviewCAView(NULL)
 , m_pCAView(NULL)
 {
     memset((void*)&m_sQuad, 0, sizeof(m_sQuad));
@@ -469,6 +470,11 @@ void CGNode::setContentSize(const DSize & contentSize)
         m_obAnchorPointInPoints.x = m_obContentSize.width * m_obAnchorPoint.x;
         m_obAnchorPointInPoints.y = m_obContentSize.height * m_obAnchorPoint.y;
         
+        if (m_pCAView)
+        {
+            m_pCAView->reViewlayout(m_obContentSize);
+        }
+        
         this->updateDraw();
     }
 }
@@ -832,6 +838,7 @@ void CGNode::onEnter()
     
     if (m_pCAView)
     {
+        m_pCAView->reViewlayout(m_obContentSize);
         m_pCAView->onEnter();
     }
     
@@ -904,11 +911,33 @@ Mat4 CGNode::getNodeToParentTransform(CGNode* ancestor) const
 {
     Mat4 t(this->getNodeToParentTransform());
     
-    for (CGNode *p = m_pParent;  p != nullptr && p != ancestor ; p = p->getParent())
+    CGNode *p = m_pParent;
+    if (p)
     {
-        t = p->getNodeToParentTransform() * t;
+        while (p)
+        {
+            t = p->getNodeToParentTransform() * t;
+            CC_BREAK_IF(!p->getParent());
+            p = p->getParent();
+            CC_BREAK_IF(p == ancestor);
+        }
+        
+        if (p && p != ancestor)
+        {
+            if (CAView *s = p->m_pSuperviewCAView)
+            {
+                t = s->getViewToSuperviewTransform(nullptr) * t;
+            }
+        }
     }
-    
+    else
+    {
+        if (CAView *s = m_pSuperviewCAView)
+        {
+            t = s->getViewToSuperviewTransform(nullptr) * t;
+        }
+    }
+
     return t;
 }
 
@@ -916,8 +945,32 @@ AffineTransform CGNode::getNodeToParentAffineTransform(CGNode* ancestor) const
 {
     AffineTransform t(this->getNodeToParentAffineTransform());
     
-    for (CGNode *p = m_pParent; p != nullptr && p != ancestor; p = p->getParent())
-        t = AffineTransformConcat(t, p->getNodeToParentAffineTransform());
+    CGNode *p = m_pParent;
+    if (p)
+    {
+        while (p)
+        {
+            t = AffineTransformConcat(t, p->getNodeToParentAffineTransform());
+            CC_BREAK_IF(!p->getParent());
+            p = p->getParent();
+            CC_BREAK_IF(p == ancestor);
+        }
+        
+        if (p && p != ancestor)
+        {
+            if (CAView *s = p->m_pSuperviewCAView)
+            {
+                t = AffineTransformConcat(t, s->getViewToSuperviewAffineTransform(nullptr));
+            }
+        }
+    }
+    else
+    {
+        if (CAView *s = m_pSuperviewCAView)
+        {
+            t = AffineTransformConcat(t, s->getViewToSuperviewAffineTransform(nullptr));
+        }
+    }
     
     return t;
 }
@@ -926,7 +979,19 @@ const Mat4& CGNode::getNodeToParentTransform() const
 {
     if (m_bTransformDirty)
     {
-        DSize size = this->m_pParent ? this->m_pParent->m_obContentSize : CAApplication::getApplication()->getWinSize();
+        DSize size;
+        if (this->m_pParent)
+        {
+            size = this->m_pParent->m_obContentSize;
+        }
+        else if (this->m_pSuperviewCAView)
+        {
+            size = this->m_pSuperviewCAView->m_obContentSize;
+        }
+        else
+        {
+            size = CAApplication::getApplication()->getWinSize();
+        }
         
         float x, y;
         if (m_bUsingNormalizedPosition)
@@ -1371,6 +1436,7 @@ void CGNode::setCAView(CrossApp::CAView *var)
 {
     if (m_bRunning && m_pCAView && m_pCAView->isRunning())
     {
+        m_pCAView->m_pParentCGNode = NULL;
         m_pCAView->onExitTransitionDidStart();
         m_pCAView->onExit();
     }
@@ -1381,6 +1447,7 @@ void CGNode::setCAView(CrossApp::CAView *var)
     
     if (m_bRunning && m_pCAView && !m_pCAView->isRunning())
     {
+        m_pCAView->m_pParentCGNode = this;
         m_pCAView->onEnter();
         m_pCAView->onEnterTransitionDidFinish();
     }

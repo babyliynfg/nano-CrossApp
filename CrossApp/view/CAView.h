@@ -470,6 +470,9 @@ protected:
     CAImage*                    m_pobImage;
     
     CGNode*                     m_pCGNode;
+    CGNode*                     m_pParentCGNode;
+    
+    friend class                CGNode;
     
     friend class                CARenderImage;
     

@@ -242,6 +242,8 @@ protected:
     bool initWithTiffData(const unsigned char * data, unsigned long dataLen);
     bool initWithWebpData(const unsigned char * data, unsigned long dataLen);
     bool initWithETCData(const unsigned char * data, unsigned long dataLen);
+    typedef struct sImageTGA tImageTGA;
+    bool initWithTGAData(tImageTGA* tgaData);
     
     bool saveImageToPNG(const std::string& filePath, bool isToRGB);
     bool saveImageToJPG(const std::string& filePath);

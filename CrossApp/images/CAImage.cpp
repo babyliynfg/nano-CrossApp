@@ -22,12 +22,6 @@
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAShaderCache.h"
-#include "support/image_support/TGAlib.h"
-#include "images/gif_lib/gif_lib.h"
-#include "images/gif_lib/gif_hash.h"
-#include "images/gif_lib/gif_lib_private.h"
-#include "images/gif_lib/GifUtils.h"
-
 #include <ctype.h>
 #include <cctype>
 #include <png.h>
@@ -35,7 +29,11 @@
 #include <tiffio.h>
 #include <decode.h>
 #include "etc1.h"
-
+#include "support/image_support/TGAlib.h"
+#include "images/gif_lib/gif_lib.h"
+#include "images/gif_lib/gif_hash.h"
+#include "images/gif_lib/gif_lib_private.h"
+#include "images/gif_lib/GifUtils.h"
 
 NS_CC_BEGIN
 
@@ -210,10 +208,13 @@ CAImage* CAImage::generateMipmapsWithImage(CAImage* image)
     
     return NULL;
 }
-
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 extern "C"
 {
-    
+    FILE *fopen$UNIX2003( const char *filename, const char *mode )
+    {
+        return fopen(filename, mode);
+    }
     size_t fwrite$UNIX2003( const void *a, size_t b, size_t c, FILE *d )
     {
         return fwrite(a, b, c, d);
@@ -224,7 +225,7 @@ extern "C"
         return strerror(errnum);
     }
 }
-
+#endif
 namespace
 {
     /*
@@ -1417,7 +1418,19 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
                 break;
             default:
             {
-                ret = false;
+                // load and detect image format
+                tImageTGA* tgaData = tgaLoadBuffer(unpackedData, unpackedLen);
+                
+                if (tgaData != nullptr && tgaData->status == TGA_OK)
+                {
+                    ret = initWithTGAData(tgaData);
+                }
+                else
+                {
+                    ret = false;
+                }
+                
+                free(tgaData);
                 break;
             }
         }
@@ -1831,9 +1844,116 @@ bool CAImage::initWithWebpData(const unsigned char * data, unsigned long dataLen
 
 bool CAImage::initWithETCData(const unsigned char * data, unsigned long dataLen)
 {
-
-    return false;
+//    const etc1_byte* header = static_cast<const etc1_byte*>(data);
+//    
+//    //check the data
+//    if (! etc1_pkm_is_valid(header))
+//    {
+//        return  false;
+//    }
+//    
+//    m_uPixelsWide = etc1_pkm_get_width(header);
+//    m_uPixelsHigh = etc1_pkm_get_height(header);
+//    
+//    if (0 == m_uPixelsWide || 0 == m_uPixelsHigh)
+//    {
+//        return false;
+//    }
+    
+//    if (CAConfiguration::getInstance()->supportsETC())
+//    {
+//        //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy.
+//#ifdef GL_ETC1_RGB8_OES
+//        _renderFormat = Texture2D::PixelFormat::ETC;
+//        _dataLen = dataLen - ETC_PKM_HEADER_SIZE;
+//        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
+//        memcpy(_data, static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, _dataLen);
+//        return true;
+//#endif
+//    }
+//    else
+//    {
+//        CCLOG("cocos2d: Hardware ETC1 decoder not present. Using software decoder");
+//        
+//        //if it is not gles or device do not support ETC, decode texture by software
+//        int bytePerPixel = 3;
+//        unsigned int stride = _width * bytePerPixel;
+//        _renderFormat = Texture2D::PixelFormat::RGB888;
+//        
+//        _dataLen =  _width * _height * bytePerPixel;
+//        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
+//        
+//        if (etc1_decode_image(static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, static_cast<etc1_byte*>(_data), _width, _height, bytePerPixel, stride) != 0)
+//        {
+//            _dataLen = 0;
+//            if (_data != nullptr)
+//            {
+//                free(_data);
+//            }
+//            return false;
+//        }
+//        
+//        return true;
+//    }
+//    return false;
 }
+
+bool CAImage::initWithTGAData(tImageTGA* tgaData)
+{
+    bool ret = false;
+    
+    do
+    {
+        CC_BREAK_IF(tgaData == nullptr);
+        
+        // tgaLoadBuffer only support type 2, 3, 10
+        if (2 == tgaData->type || 10 == tgaData->type)
+        {
+            // true color
+            // unsupported RGB555
+            if (tgaData->pixelDepth == 16)
+            {
+                m_ePixelFormat = PixelFormat_RGB5A1;
+            }
+            else if(tgaData->pixelDepth == 24)
+            {
+                m_ePixelFormat = PixelFormat_RGB888;
+            }
+            else if(tgaData->pixelDepth == 32)
+            {
+                m_ePixelFormat = PixelFormat_RGBA8888;
+            }
+            else
+            {
+                break;
+            }
+        }
+        else if(3 == tgaData->type)
+        {
+            // gray
+            if (8 == tgaData->pixelDepth)
+            {
+                m_ePixelFormat = PixelFormat_I8;
+            }
+            else
+            {
+                break;
+            }
+        }
+        
+        m_uPixelsWide = tgaData->width;
+        m_uPixelsHigh = tgaData->height;
+        m_pImageData = tgaData->imageData;
+        m_uImageDataLenght = m_uPixelsWide * m_uPixelsHigh * tgaData->pixelDepth / 8;
+        m_bHasPremultipliedAlpha = true;
+        
+        ret = true;
+        
+    }while(false);
+    
+    return ret;
+}
+
 
 
 bool CAImage::initWithRawData(const unsigned char * data,
