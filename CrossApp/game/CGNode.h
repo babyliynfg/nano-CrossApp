@@ -222,8 +222,8 @@ public:
     
     virtual void setViewToParentTransform(const Mat4& transform);
     
-    virtual const Mat4& getParentToViewTransform() const;
-    virtual AffineTransform getParentToViewAffineTransform() const;
+    virtual const Mat4& getParentToNodeTransform() const;
+    virtual AffineTransform getParentToNodeAffineTransform() const;
     
     
     virtual Mat4 getNodeToWorldTransform() const;

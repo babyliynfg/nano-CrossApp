@@ -1903,7 +1903,7 @@ const Mat4& CAView::getViewToSuperviewTransform() const
         }
         else if (this->m_pParentCGNode)
         {
-            height = this->m_pSuperview->m_obContentSize.height;
+            height = this->m_pParentCGNode->m_obContentSize.height;
         }
         else
         {
@@ -2136,33 +2136,38 @@ void CAView::updateTransform()
             
             DSize size = m_obContentSize;
             
-            float x1 = 0;
-            float y1 = 0;
-            
             AffineTransform affineToBatch;
             GLToCGAffine(m_tTransformToBatch.m.mat, &affineToBatch);
             
-            float x = affineToBatch.tx;
-            float y = affineToBatch.ty;
-            
-            float cr = affineToBatch.a;
-            float sr = affineToBatch.b;
-            float cr2 = affineToBatch.d;
-            float sr2 = -affineToBatch.c;
-            
-            x1 = x1 * cr - y1 * sr2 + x;
-            y1 = x1 * sr + y1 * cr2 + y;
-            
-            x1 = RENDER_IN_SUBPIXEL(x1);
-            y1 = RENDER_IN_SUBPIXEL(y1);
+            float x1 = 0;
+            float y1 = 0;
             
             float x2 = x1 + size.width;
             float y2 = y1 + size.height;
             
-            m_sQuad.bl.vertices = DPoint3D( x1, y1, m_fVertexZ );
-            m_sQuad.br.vertices = DPoint3D( x2, y1, m_fVertexZ );
-            m_sQuad.tl.vertices = DPoint3D( x1, y2, m_fVertexZ );
-            m_sQuad.tr.vertices = DPoint3D( x2, y2, m_fVertexZ );
+            float x = m_tTransformToBatch.m.mat[12];
+            float y = m_tTransformToBatch.m.mat[13];
+            
+            float cr = m_tTransformToBatch.m.mat[0];
+            float sr = m_tTransformToBatch.m.mat[1];
+            float cr2 = m_tTransformToBatch.m.mat[5];
+            float sr2 = -m_tTransformToBatch.m.mat[4];
+            float ax = x1 * cr - y1 * sr2 + x;
+            float ay = x1 * sr + y1 * cr2 + y;
+            
+            float bx = x2 * cr - y1 * sr2 + x;
+            float by = x2 * sr + y1 * cr2 + y;
+            
+            float cx = x2 * cr - y2 * sr2 + x;
+            float cy = x2 * sr + y2 * cr2 + y;
+            
+            float dx = x1 * cr - y2 * sr2 + x;
+            float dy = x1 * sr + y2 * cr2 + y;
+            
+            m_sQuad.bl.vertices = DPoint3D(RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), m_fVertexZ);
+            m_sQuad.br.vertices = DPoint3D(RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), m_fVertexZ);
+            m_sQuad.tl.vertices = DPoint3D(RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), m_fVertexZ);
+            m_sQuad.tr.vertices = DPoint3D(RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), m_fVertexZ);
         }
         
         if (m_pobImageAtlas)

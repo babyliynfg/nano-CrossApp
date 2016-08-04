@@ -67,13 +67,13 @@ void CABatchView::visit(void)
     CC_RETURN_IF(!m_bVisible);
     
     kmGLPushMatrix();
-    sortAllSubview();
-    transform();
-
-    draw();
+    
+    this->transform();
+    this->sortAllSubview();
+    this->draw();
 
     kmGLPopMatrix();
-    setOrderOfArrival(0);
+    this->setOrderOfArrival(0);
 
     CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryBatchSprite, "CABatchView - visit");
 

@@ -529,7 +529,17 @@ void CGNode::setShaderProgram(CAGLProgram *pShaderProgram)
 DRect CGNode::boundingBox()
 {
     DRect rect = DRect(0, 0, m_obContentSize.width, m_obContentSize.height);
-    return RectApplyAffineTransform(rect, getParentToViewAffineTransform());
+    rect = RectApplyAffineTransform(rect, getNodeToParentAffineTransform());
+    rect.origin.y += rect.size.height;
+    if (this->m_pParent)
+    {
+        rect.origin.y = this->m_pParent->m_obContentSize.height - rect.origin.y;
+    }
+    else
+    {
+        rect.origin.y = CAApplication::getApplication()->getWinSize().height - rect.origin.y;
+    }
+    return rect;
 }
 
 const char* CGNode::description()
@@ -1118,15 +1128,15 @@ void CGNode::setAdditionalTransform(Mat4* additionalTransform)
 }
 
 
-AffineTransform CGNode::getParentToViewAffineTransform() const
+AffineTransform CGNode::getParentToNodeAffineTransform() const
 {
     AffineTransform ret;
     
-    GLToCGAffine(getParentToViewTransform().m.mat,&ret);
+    GLToCGAffine(getParentToNodeTransform().m.mat,&ret);
     return ret;
 }
 
-const Mat4& CGNode::getParentToViewTransform() const
+const Mat4& CGNode::getParentToNodeTransform() const
 {
     if ( m_bInverseDirty )
     {
@@ -1203,7 +1213,6 @@ void CGNode::updateTransform()
         for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
             (*itr)->updateTransform();
     }
-
 }
 
 DRect CGNode::convertRectToNodeSpace(const CrossApp::DRect &worldRect)
@@ -1444,10 +1453,10 @@ void CGNode::setCAView(CrossApp::CAView *var)
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE(m_pCAView);
     m_pCAView = var;
+    m_pCAView->m_pParentCGNode = this;
     
     if (m_bRunning && m_pCAView && !m_pCAView->isRunning())
     {
-        m_pCAView->m_pParentCGNode = this;
         m_pCAView->onEnter();
         m_pCAView->onEnterTransitionDidFinish();
     }

@@ -41,16 +41,16 @@ public:
         return CGSpriteBatchNode::createWithImage(image, kDefaultSpriteBatchCapacity);
     }
 
-    static CGSpriteBatchNode* create(const char* fileImage, unsigned int capacity);
+    static CGSpriteBatchNode* create(const std::string& fileImage, unsigned int capacity);
     
-    static CGSpriteBatchNode* create(const char* fileImage)
+    static CGSpriteBatchNode* create(const std::string& fileImage)
     {
         return CGSpriteBatchNode::create(fileImage, kDefaultSpriteBatchCapacity);
     }
 
     bool initWithImage(CAImage *image, unsigned int capacity);
 
-    bool initWithFile(const char* fileImage, unsigned int capacity);
+    bool initWithFile(const std::string& fileImage, unsigned int capacity);
     
     bool init();
 

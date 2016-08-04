@@ -27,7 +27,7 @@ CGSpriteBatchNode* CGSpriteBatchNode::createWithImage(CAImage* image, unsigned i
 * creation with File Image
 */
 
-CGSpriteBatchNode* CGSpriteBatchNode::create(const char *fileImage, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
+CGSpriteBatchNode* CGSpriteBatchNode::create(const std::string& fileImage, unsigned int capacity/* = kDefaultSpriteBatchCapacity*/)
 {
     CGSpriteBatchNode *batchNode = new CGSpriteBatchNode();
     batchNode->initWithFile(fileImage, capacity);
@@ -68,7 +68,7 @@ bool CGSpriteBatchNode::init()
 /*
 * init with FileImage
 */
-bool CGSpriteBatchNode::initWithFile(const char* fileImage, unsigned int capacity)
+bool CGSpriteBatchNode::initWithFile(const std::string& fileImage, unsigned int capacity)
 {
     return initWithImage(CAImage::create(fileImage), capacity);
 }
@@ -92,16 +92,20 @@ void CGSpriteBatchNode::visit(void)
     CC_RETURN_IF(!m_bVisible);
     
     kmGLPushMatrix();
-    sortAllChildren();
-    transform();
     
-    draw();
+    this->transform();
+    this->sortAllChildren();
+    this->draw();
+
+    if (m_pCAView)
+    {
+        m_pCAView->visit();
+    }
     
     kmGLPopMatrix();
-    setOrderOfArrival(0);
+    this->setOrderOfArrival(0);
 
     CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryBatchSprite, "CGSpriteBatchNode - visit");
-
 }
 
 void CGSpriteBatchNode::insertChild(CGNode* child, int z)
