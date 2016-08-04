@@ -408,7 +408,7 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         
         this->setTouchMoved(point);
         
-        if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
+        if (m_bAllowsSelected && m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
         {
             if (m_bSelected)
             {
