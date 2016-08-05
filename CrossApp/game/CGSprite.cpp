@@ -27,7 +27,7 @@
 #include "ccMacros.h"
 #include <string.h>
 
-using namespace std;
+
 
 NS_CC_BEGIN
 

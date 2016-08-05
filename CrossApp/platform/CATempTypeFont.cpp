@@ -4,7 +4,7 @@
 #include "support/ccUTF8.h"
 
 
-using namespace std;
+
 
 NS_CC_BEGIN
 

@@ -4,7 +4,7 @@
 #include "platform/CAFTRichFont.h"
 #include "support/ccUTF8.h"
 #include "CAEmojiFont.h"
-using namespace std;
+
 
 NS_CC_BEGIN
 

@@ -10,7 +10,7 @@
 #include "platform/CAFileUtils.h"
 
 
-using namespace std;
+
 
 NS_CC_BEGIN
 
@@ -181,7 +181,7 @@ void CGSpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
 {
     CCAssert(!pszPlist.empty(), "plist filename should not be NULL");
     
-    string imageFileName("");
+    std::string imageFileName("");
     
     std::string fullPath = FileUtils::getInstance()->fullPathForFilename(pszPlist);
     if (fullPath.size() == 0)
@@ -196,7 +196,7 @@ void CGSpriteFrameCache::addSpriteFramesWithFile(const std::string& pszPlist)
         
         CAValueMap dict = FileUtils::getInstance()->getValueMapFromFile(fullPath);
         
-        string imagePath("");
+        std::string imagePath("");
         
         if (dict.find("metadata") != dict.end())
         {
@@ -303,7 +303,7 @@ void CGSpriteFrameCache::removeSpriteFramesFromFile(const std::string& plist)
     removeSpriteFramesFromDictionary(dict);
     
     // remove it from the cache
-    set<string>::iterator ret = m_pLoadedFileNames->find(plist);
+    std::set<std::string>::iterator ret = m_pLoadedFileNames->find(plist);
     if (ret != m_pLoadedFileNames->end())
     {
         m_pLoadedFileNames->erase(ret);

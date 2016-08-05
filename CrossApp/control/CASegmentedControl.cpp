@@ -15,7 +15,7 @@
 #include "view/CARenderImage.h"
 #include "platform/CADensityDpi.h"
 
-using namespace std;
+
 NS_CC_BEGIN
 
 CASegmentedControl::CASegmentedControl(unsigned int itemsCount)

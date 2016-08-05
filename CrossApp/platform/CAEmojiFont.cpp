@@ -6,7 +6,7 @@
 #include <string.h>
 #include "support/device/CADevice.h"
 
-using namespace std;
+
 
 NS_CC_BEGIN
 

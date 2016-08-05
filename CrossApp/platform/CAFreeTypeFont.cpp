@@ -6,7 +6,7 @@
 #include "CAEmojiFont.h"
 #include <string.h>
 #include "support/device/CADevice.h"
-using namespace std;
+
 
 NS_CC_BEGIN
 
@@ -20,7 +20,7 @@ struct StrICmpLess
 #endif
 	}
 };
-static map<std::string, FontBufferInfo, StrICmpLess> s_fontsNames;
+static std::map<std::string, FontBufferInfo, StrICmpLess> s_fontsNames;
 static FT_Library s_FreeTypeLibrary = NULL;
 
 
@@ -57,7 +57,7 @@ CAFreeTypeFont::~CAFreeTypeFont()
 
 void CAFreeTypeFont::destroyAllFontBuff()
 {
-	map<std::string, FontBufferInfo>::iterator it = s_fontsNames.begin();
+	std::map<std::string, FontBufferInfo>::iterator it = s_fontsNames.begin();
 	for (; it != s_fontsNames.end(); it++)
 	{
 		delete[]it->second.pBuffer;
@@ -785,8 +785,8 @@ FT_Error CAFreeTypeFont::addWord(const std::string& word)
 FT_Error CAFreeTypeFont::initGlyphs(const std::string& text)
 {
     std::string line(text);
-    vector<std::string> lines;
-    vector<std::string> words;
+    std::vector<std::string> lines;
+    std::vector<std::string> words;
 
 	size_t pos = 0;
     m_textWidth = 0;

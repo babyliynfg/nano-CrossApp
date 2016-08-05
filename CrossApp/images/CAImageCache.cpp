@@ -31,7 +31,7 @@
 using namespace concurrency;
 #endif
 
-using namespace std;
+
 
 NS_CC_BEGIN
 
@@ -234,8 +234,8 @@ void CAImageCache::addImageFullPathAsync(const std::string& path, CAObject *targ
     // lazy init
     if (s_pAsyncStructQueue == NULL)
     {
-        s_pAsyncStructQueue = new queue<AsyncStruct*>();
-        s_pImageQueue = new queue<ImageInfo*>();
+        s_pAsyncStructQueue = new std::queue<AsyncStruct*>();
+        s_pImageQueue = new std::queue<ImageInfo*>();
         
         pthread_mutex_init(&s_asyncStructQueueMutex, NULL);
         pthread_mutex_init(&s_ImageInfoMutex, NULL);

@@ -57,7 +57,7 @@ void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
         [album writeImageToPhoto:image];
 }
     
-vector<CAAddressBookRecord> getAddressBook()
+std::vector<CAAddressBookRecord> getAddressBook()
 {
     if (_addressBookArr.size()>0) {
         return _addressBookArr;

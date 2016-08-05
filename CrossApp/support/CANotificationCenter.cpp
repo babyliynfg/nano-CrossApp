@@ -2,7 +2,7 @@
 
 #include "CANotificationCenter.h"
 
-using namespace std;
+
 
 NS_CC_BEGIN
 
@@ -203,7 +203,7 @@ CANotificationObserver::CANotificationObserver(CAObject *target, SEL_CallFuncO s
     m_name = new char[strlen(name)+1];
     memset(m_name,0,strlen(name)+1);
     
-    string orig (name);
+    std::string orig (name);
     orig.copy(m_name,strlen(name),0);
     m_nHandler = 0;
 }

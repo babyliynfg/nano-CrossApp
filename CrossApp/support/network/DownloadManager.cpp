@@ -8,7 +8,7 @@
 #include "platform/CAFileUtils.h"
 #include "basics/CAScheduler.h"
 
-using namespace std;
+
 
 NS_CC_BEGIN;
 
@@ -679,7 +679,7 @@ public:
 		: _curl(NULL)
 		, m_headers(NULL)
 	{
-		_messageQueue = new list<Message*>();
+		_messageQueue = new std::list<Message*>();
 		pthread_mutex_init(&_messageQueueMutex, NULL);
 		CAScheduler::schedule(schedule_selector(DownloadResponseHelper::update), this, 0);
 	}
@@ -948,7 +948,7 @@ bool CADownloadResponse::checkDownloadStatus()
 
 bool CADownloadResponse::uncompress()
 {
-    string outFileName = _fileName;
+    std::string outFileName = _fileName;
     unzFile zipfile = unzOpen(outFileName.c_str());
     if (! zipfile)
     {
@@ -976,7 +976,7 @@ bool CADownloadResponse::uncompress()
             return false;
         }
         
-		string fullPath = _fileName;
+		std::string fullPath = _fileName;
 		fullPath = fullPath.substr(0, fullPath.find_last_of('.'));
 		fullPath += "/";
         createDirectory(fullPath.c_str());
@@ -1071,8 +1071,8 @@ bool CADownloadResponse::createDirectory(const char *path)
 
 void CADownloadResponse::setSearchPath()
 {
-    vector<string> searchPaths = FileUtils::getInstance()->getSearchPaths();
-    vector<string>::iterator iter = searchPaths.begin();
+    std::vector<std::string> searchPaths = FileUtils::getInstance()->getSearchPaths();
+    std::vector<std::string>::iterator iter = searchPaths.begin();
     searchPaths.insert(iter, _fileName);
     FileUtils::getInstance()->setSearchPaths(searchPaths);
 }
@@ -1125,7 +1125,7 @@ int CADownloadResponseProgressFunc(void *ptr, double totalToDownload, double now
 bool CADownloadResponse::downLoad()
 {
     // Create a file to save package.
-    string outFileName = _fileName + ".tmp";
+    std::string outFileName = _fileName + ".tmp";
 	_initialFileSize = _getLocalFileSize(outFileName.c_str());
     FILE *fp = fopen(outFileName.c_str(), "ab+");
     if (! fp)
@@ -1162,12 +1162,12 @@ unsigned long CADownloadResponse::getDownloadID() const
     return _download_id;
 }
 
-const string& CADownloadResponse::getDownloadUrl() const
+const std::string& CADownloadResponse::getDownloadUrl() const
 {
     return _downloadUrl;
 }
 
-const string& CADownloadResponse::getFileName() const
+const std::string& CADownloadResponse::getFileName() const
 {
     return _fileName;
 }

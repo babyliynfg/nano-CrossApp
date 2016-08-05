@@ -1,7 +1,7 @@
 
 #include "CAProfiling.h"
 
-using namespace std;
+
 
 NS_CC_BEGIN
 

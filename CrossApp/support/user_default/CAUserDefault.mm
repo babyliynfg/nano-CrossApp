@@ -17,7 +17,7 @@
 
 #define KEEP_COMPATABILITY
 
-using namespace std;
+
 
 NS_CC_BEGIN
 
@@ -26,7 +26,7 @@ NS_CC_BEGIN
  */
 
 CAUserDefault* CAUserDefault::m_spUserDefault = 0;
-string CAUserDefault::m_sFilePath = string("");
+std::string CAUserDefault::m_sFilePath;
 bool CAUserDefault::m_sbIsFilePathInitialized = false;
 
 #ifdef KEEP_COMPATABILITY
@@ -313,7 +313,7 @@ std::string CAUserDefault::getStringForKey(const char* pKey)
     return getStringForKey(pKey, "");
 }
 
-string CAUserDefault::getStringForKey(const char* pKey, const std::string & defaultValue)
+std::string CAUserDefault::getStringForKey(const char* pKey, const std::string & defaultValue)
 {
 #ifdef KEEP_COMPATABILITY
     tinyxml2::XMLDocument* doc = NULL;
@@ -322,7 +322,7 @@ string CAUserDefault::getStringForKey(const char* pKey, const std::string & defa
     {
         if (node->FirstChild())
         {
-            string ret = (const char*)node->FirstChild()->Value();
+            std::string ret = (const char*)node->FirstChild()->Value();
             
             // set value in NSUserDefaults
             setStringForKey(pKey, ret);
@@ -448,7 +448,7 @@ bool CAUserDefault::createXMLFile()
     return false;
 }
 
-const string& CAUserDefault::getXMLFilePath()
+const std::string& CAUserDefault::getXMLFilePath()
 {
     return m_sFilePath;
 }

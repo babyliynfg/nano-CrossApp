@@ -2,18 +2,18 @@
 
 #include "CCSet.h"
 
-using namespace std;
+
 
 NS_CC_BEGIN
 
 CCSet::CCSet(void)
 {
-    m_pSet = new set<CAObject *>;
+    m_pSet = new std::set<CAObject *>;
 }
 
 CCSet::CCSet(const CCSet &rSetObject)
 {
-    m_pSet = new set<CAObject *>(*rSetObject.m_pSet);
+    m_pSet = new std::set<CAObject *>(*rSetObject.m_pSet);
 
     // call retain of members
     CCSetIterator iter;

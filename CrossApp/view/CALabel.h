@@ -15,7 +15,7 @@
 #include "controller/CAFont.h"
 
 NS_CC_BEGIN
-using namespace std;
+
 class CALabelStyle;
 
 class CC_DLL CALabel : public CATouchView

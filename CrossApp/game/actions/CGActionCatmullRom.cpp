@@ -3,7 +3,7 @@
 #include "game/actions/CGActionCatmullRom.h"
 #include "game/CGNode.h"
 #include "view/CADrawingPrimitives.h"
-using namespace std;
+
 
 NS_CC_BEGIN;
 
@@ -74,7 +74,7 @@ const std::vector<DPoint*>* PointArray::getControlPoints() const
     return _controlPoints;
 }
 
-void PointArray::setControlPoints(vector<DPoint*> *controlPoints)
+void PointArray::setControlPoints(std::vector<DPoint*> *controlPoints)
 {
     CCASSERT(controlPoints != nullptr, "control points should not be nullptr");
     

@@ -32,7 +32,7 @@
 #define CC_DIRECTOR_STATS_POSITION CAApplication::getApplication()->getVisibleOrigin()
 #endif
 
-using namespace std;
+
 
 NS_CC_BEGIN
 

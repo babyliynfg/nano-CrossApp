@@ -2288,6 +2288,7 @@
 			buildSettings = {
 				DSTROOT = "/tmp/$(PROJECT_NAME).dst";
 				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2333,6 +2334,7 @@
 			buildSettings = {
 				DSTROOT = "/tmp/$(PROJECT_NAME).dst";
 				ENABLE_BITCODE = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CrossApp-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
