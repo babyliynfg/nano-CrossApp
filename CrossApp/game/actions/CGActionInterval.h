@@ -1120,7 +1120,7 @@ public:
      * @param opacity A certain opacity, the range is from 0 to 255.
      * @return An autoreleased FadeTo object.
      */
-    static FadeTo* create(float duration, GLubyte opacity);
+    static FadeTo* create(float duration, float opacity);
 
     //
     // Overrides
@@ -1141,7 +1141,7 @@ public:
      * initializes the action with duration and opacity 
      * @param duration in seconds
      */
-    bool initWithDuration(float duration, GLubyte opacity);
+    bool initWithDuration(float duration, float opacity);
 
 protected:
     float _toOpacity;

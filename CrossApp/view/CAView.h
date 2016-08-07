@@ -286,7 +286,7 @@ public:
     
     virtual float getDisplayedAlpha();
     
-    virtual void updateDisplayedAlpha(float SuperviewOpacity);
+    virtual void updateDisplayedAlpha(float superviewAlpha);
     
     virtual const CAColor4B& getColor(void);
     

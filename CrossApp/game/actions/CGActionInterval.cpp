@@ -1970,7 +1970,7 @@ FadeTo* FadeOut::reverse() const
 // FadeTo
 //
 
-FadeTo* FadeTo::create(float duration, GLubyte opacity)
+FadeTo* FadeTo::create(float duration, float opacity)
 {
     FadeTo *fadeTo = new (std::nothrow) FadeTo();
     fadeTo->initWithDuration(duration, opacity);
@@ -1979,7 +1979,7 @@ FadeTo* FadeTo::create(float duration, GLubyte opacity)
     return fadeTo;
 }
 
-bool FadeTo::initWithDuration(float duration, GLubyte opacity)
+bool FadeTo::initWithDuration(float duration, float opacity)
 {
     if (ActionInterval::initWithDuration(duration))
     {
@@ -2013,16 +2013,14 @@ void FadeTo::startWithTarget(CGNode *target)
     {
         _fromOpacity = target->getAlpha();
     }
-    /*_fromOpacity = target->getOpacity();*/
 }
 
 void FadeTo::update(float time)
 {
     if (_target)
     {
-        _target->setAlpha((float)(_fromOpacity + (_toOpacity - _fromOpacity) * time));
+        _target->setAlpha((_fromOpacity + (_toOpacity - _fromOpacity) * time));
     }
-    /*_target->setOpacity((GLubyte)(_fromOpacity + (_toOpacity - _fromOpacity) * time));*/
 }
 
 //

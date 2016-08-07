@@ -730,7 +730,6 @@ void CAImageAtlas::updateQuad(ccV3F_C4B_T2F_Quad *quad, unsigned int index)
     
     m_pQuads[index] = *quad;
     
-    
     m_bDirty = true;
     
 }

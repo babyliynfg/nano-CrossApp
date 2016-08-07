@@ -2461,9 +2461,9 @@ void CAView::setAlpha(float alpha)
     }
 }
 
-void CAView::updateDisplayedAlpha(float SuperviewAlpha)
+void CAView::updateDisplayedAlpha(float superviewAlpha)
 {
-	_displayedAlpha = _realAlpha * SuperviewAlpha;
+	_displayedAlpha = _realAlpha * superviewAlpha;
 	
     if (!m_obSubviews.empty())
     {

@@ -1304,14 +1304,14 @@ void CGNode::setAlpha(float alpha)
     
     _realAlpha = alpha;
     
-    float ParentAlpha = m_pParent ? m_pParent->getDisplayedAlpha() : 1.0f;
+    float parentAlpha = m_pParent ? m_pParent->getDisplayedAlpha() : 1.0f;
     
-    this->updateDisplayedAlpha(ParentAlpha);
+    this->updateDisplayedAlpha(parentAlpha);
 }
 
-void CGNode::updateDisplayedAlpha(float ParentAlpha)
+void CGNode::updateDisplayedAlpha(float parentAlpha)
 {
-    _displayedAlpha = _realAlpha * ParentAlpha;
+    _displayedAlpha = _realAlpha * parentAlpha;
     
     if (!m_obChildren.empty())
     {

@@ -820,14 +820,7 @@ void CGSprite::setImage(CAImage *image)
         m_pobImage = image;
         if (image)
         {
-            if (image->getPixelFormat() == CAImage::PixelFormat_A8)
-            {
-                this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
-            }
-            else
-            {
-                this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-            }
+            this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
         }
         DRect rect = DRectZero;
         if (image)

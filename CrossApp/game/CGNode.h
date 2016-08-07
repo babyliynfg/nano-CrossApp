@@ -273,7 +273,7 @@ public:
     
     virtual float getDisplayedAlpha();
     
-    virtual void updateDisplayedAlpha(float ParentOpacity);
+    virtual void updateDisplayedAlpha(float parentAlpha);
     
     virtual const CAColor4B& getColor(void);
     
