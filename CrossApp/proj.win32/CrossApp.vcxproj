@@ -33,7 +33,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0'">v120</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '12.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -62,6 +62,10 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSdk_71A_ExecutablePath);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSdk_71A_IncludePath);</IncludePath>
+    <LibraryWPath />
+    <ExcludePath>$(VC_IncludePath);$(WindowsSdk_71A_IncludePath);$(MSBuild_ExecutablePath);$(VC_LibraryPath_x86);</ExcludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LibraryPath>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\lib;$(LibraryPath)</LibraryPath>
@@ -74,7 +78,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\curl\include\win32;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include;$(ProjectDir)..\the_third_party\websockets\include\win32;$(ProjectDir)..\the_third_party\sdl\include;$(ProjectDir)..\the_third_party\FFmpeg\include;$(ProjectDir)..\kazmath\include;$(ProjectDir)..\support\Json;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;CROSSAPP_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;JSON_DLL_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CROSSAPPWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;CROSSAPP_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;JSON_DLL_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -99,7 +103,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\FFmpeg\prebuilt\win32\*.*" "$(OutDi
 xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;SDL2.lib;avcodec.lib;avformat.lib;avdevice.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;SDL2.lib;avcodec.lib;avformat.lib;avdevice.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -181,6 +185,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\basics\CAScheduler.cpp" />
     <ClCompile Include="..\basics\CASize.cpp" />
     <ClCompile Include="..\basics\CAThread.cpp" />
+    <ClCompile Include="..\basics\CAValue.cpp" />
     <ClCompile Include="..\basics\CAVec4.cpp" />
     <ClCompile Include="..\cocoa\CACalendar.cpp" />
     <ClCompile Include="..\cocoa\CCNS.cpp" />
@@ -204,6 +209,24 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\dispatcher\CAKeypadDispatcher.cpp" />
     <ClCompile Include="..\dispatcher\CATouch.cpp" />
     <ClCompile Include="..\dispatcher\CATouchDispatcher.cpp" />
+    <ClCompile Include="..\game\actions\CGAction.cpp" />
+    <ClCompile Include="..\game\actions\CGActionCamera.cpp" />
+    <ClCompile Include="..\game\actions\CGActionCatmullRom.cpp" />
+    <ClCompile Include="..\game\actions\CGActionEase.cpp" />
+    <ClCompile Include="..\game\actions\CGActionInstant.cpp" />
+    <ClCompile Include="..\game\actions\CGActionInterval.cpp" />
+    <ClCompile Include="..\game\actions\CGActionManager.cpp" />
+    <ClCompile Include="..\game\actions\CGActionProgressTimer.cpp" />
+    <ClCompile Include="..\game\actions\CGActionTween.cpp" />
+    <ClCompile Include="..\game\actions\CGAnimation.cpp" />
+    <ClCompile Include="..\game\actions\CGAnimationCache.cpp" />
+    <ClCompile Include="..\game\actions\CGTweenFunction.cpp" />
+    <ClCompile Include="..\game\CGNode.cpp" />
+    <ClCompile Include="..\game\CGProgressTimer.cpp" />
+    <ClCompile Include="..\game\CGSprite.cpp" />
+    <ClCompile Include="..\game\CGSpriteBatchNode.cpp" />
+    <ClCompile Include="..\game\CGSpriteFrame.cpp" />
+    <ClCompile Include="..\game\CGSpriteFrameCache.cpp" />
     <ClCompile Include="..\images\CAGif.cpp" />
     <ClCompile Include="..\images\CAImage.cpp" />
     <ClCompile Include="..\images\CAImageCache.cpp" />
@@ -220,22 +243,22 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\math\Quaternion.cpp" />
     <ClCompile Include="..\math\TransformUtils.cpp" />
     <ClCompile Include="..\platform\CAEmojiFont.cpp" />
+    <ClCompile Include="..\platform\CAFileUtils.cpp" />
     <ClCompile Include="..\platform\CAFreeTypeFont.cpp" />
     <ClCompile Include="..\platform\CAFTFontCache.cpp" />
     <ClCompile Include="..\platform\CAFTRichFont.cpp" />
+    <ClCompile Include="..\platform\CASAXParser.cpp" />
     <ClCompile Include="..\platform\CATempTypeFont.cpp" />
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp" />
-    <ClCompile Include="..\platform\CCFileUtils.cpp" />
-    <ClCompile Include="..\platform\CCSAXParser.cpp" />
     <ClCompile Include="..\platform\platform.cpp" />
     <ClCompile Include="..\platform\win32\CAAccelerometer.cpp" />
     <ClCompile Include="..\platform\win32\CAClipboard.cpp" />
+    <ClCompile Include="..\platform\win32\CACommon.cpp" />
     <ClCompile Include="..\platform\win32\CADensityDpi.cpp" />
     <ClCompile Include="..\platform\win32\CATextField.cpp" />
     <ClCompile Include="..\platform\win32\CATextView.cpp" />
     <ClCompile Include="..\platform\win32\CAWebViewImpl.cpp" />
     <ClCompile Include="..\platform\win32\CCApplication.cpp" />
-    <ClCompile Include="..\platform\win32\CCCommon.cpp" />
     <ClCompile Include="..\platform\win32\CCEGLView.cpp" />
     <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp" />
     <ClCompile Include="..\platform\win32\CCStdC.cpp" />
@@ -336,6 +359,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\basics\CASTLContainer.h" />
     <ClInclude Include="..\basics\CASyncQueue.h" />
     <ClInclude Include="..\basics\CAThread.h" />
+    <ClInclude Include="..\basics\CAValue.h" />
     <ClInclude Include="..\basics\CAVec4.h" />
     <ClInclude Include="..\ccConfig.h" />
     <ClInclude Include="..\ccMacros.h" />
@@ -365,6 +389,24 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\dispatcher\CAProtocols.h" />
     <ClInclude Include="..\dispatcher\CATouch.h" />
     <ClInclude Include="..\dispatcher\CATouchDispatcher.h" />
+    <ClInclude Include="..\game\actions\CGAction.h" />
+    <ClInclude Include="..\game\actions\CGActionCamera.h" />
+    <ClInclude Include="..\game\actions\CGActionCatmullRom.h" />
+    <ClInclude Include="..\game\actions\CGActionEase.h" />
+    <ClInclude Include="..\game\actions\CGActionInstant.h" />
+    <ClInclude Include="..\game\actions\CGActionInterval.h" />
+    <ClInclude Include="..\game\actions\CGActionManager.h" />
+    <ClInclude Include="..\game\actions\CGActionProgressTimer.h" />
+    <ClInclude Include="..\game\actions\CGActionTween.h" />
+    <ClInclude Include="..\game\actions\CGAnimation.h" />
+    <ClInclude Include="..\game\actions\CGAnimationCache.h" />
+    <ClInclude Include="..\game\actions\CGTweenFunction.h" />
+    <ClInclude Include="..\game\CGNode.h" />
+    <ClInclude Include="..\game\CGProgressTimer.h" />
+    <ClInclude Include="..\game\CGSprite.h" />
+    <ClInclude Include="..\game\CGSpriteBatchNode.h" />
+    <ClInclude Include="..\game\CGSpriteFrame.h" />
+    <ClInclude Include="..\game\CGSpriteFrameCache.h" />
     <ClInclude Include="..\images\CAGif.h" />
     <ClInclude Include="..\images\CAImage.h" />
     <ClInclude Include="..\images\CAImageCache.h" />
@@ -376,23 +418,25 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\math\MathUtil.h" />
     <ClInclude Include="..\math\Quaternion.h" />
     <ClInclude Include="..\math\TransformUtils.h" />
+    <ClInclude Include="..\platform\CAAccelerometerDelegate.h" />
     <ClInclude Include="..\platform\CAClipboard.h" />
+    <ClInclude Include="..\platform\CACommon.h" />
     <ClInclude Include="..\platform\CADensityDpi.h" />
     <ClInclude Include="..\platform\CAEmojiFont.h" />
+    <ClInclude Include="..\platform\CAFileUtils.h" />
     <ClInclude Include="..\platform\CAFreeTypeFont.h" />
     <ClInclude Include="..\platform\CAFTFontCache.h" />
     <ClInclude Include="..\platform\CAFTRichFont.h" />
+    <ClInclude Include="..\platform\CAGyroDelegate.h" />
+    <ClInclude Include="..\platform\CASAXParser.h" />
     <ClInclude Include="..\platform\CATempTypeFont.h" />
     <ClInclude Include="..\platform\CATextField.h" />
     <ClInclude Include="..\platform\CATextView.h" />
-    <ClInclude Include="..\platform\CCAccelerometerDelegate.h" />
     <ClInclude Include="..\platform\CCApplicationProtocol.h" />
     <ClInclude Include="..\platform\CCCommon.h" />
     <ClInclude Include="..\platform\CCEGLViewProtocol.h" />
-    <ClInclude Include="..\platform\CCFileUtils.h" />
     <ClInclude Include="..\platform\CCPlatformConfig.h" />
     <ClInclude Include="..\platform\CCPlatformMacros.h" />
-    <ClInclude Include="..\platform\CCSAXParser.h" />
     <ClInclude Include="..\platform\platform.h" />
     <ClInclude Include="..\platform\win32\CAAccelerometer.h" />
     <ClInclude Include="..\platform\win32\CAWebViewImpl.h" />

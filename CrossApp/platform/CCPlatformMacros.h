@@ -39,7 +39,7 @@ static __TYPE__* create()               \
 
 // namespace CrossApp {}
 #ifdef __cplusplus
-    #define NS_CC_BEGIN                     namespace CrossApp {
+	#define NS_CC_BEGIN                     namespace CrossApp {
     #define NS_CC_END                       }
     #define USING_NS_CC                     using namespace CrossApp
 #else

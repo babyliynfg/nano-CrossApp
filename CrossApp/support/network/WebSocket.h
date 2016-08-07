@@ -6,17 +6,13 @@
 #include <vector>
 #include <mutex>
 #include <memory>  // for std::shared_ptr
-
+#include "ccTypes.h"
 #include "platform/CCPlatformMacros.h"
 #include "CCStdC.h"
 
 struct lws;
 struct lws_context;
 struct lws_protocols;
-
-//#ifndef ssize_t
-//#define ssize_t size_t
-//#endif
 
 /**
  * @addtogroup network
@@ -65,7 +61,8 @@ public:
     {
         Data():bytes(nullptr), len(0), issued(0), isBinary(false), ext(nullptr){}
         char* bytes;
-        ssize_t len, issued;
+		ssize_t len;
+		ssize_t issued;
         bool isBinary;
         void* ext;
     };

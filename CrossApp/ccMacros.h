@@ -183,4 +183,50 @@ It should work same as apples CFSwapInt32LittleToHost(..)
  */
 #define CAAnimationFrameDisplayedNotification "CAAnimationFrameDisplayedNotification"
 
+/**
+* This header is used for defining event types using in CANotificationCenter
+*/
+
+// The application will come to foreground.
+// This message is used for reloading resources before come to foreground on Android.
+// This message is posted in main.cpp.
+#define EVENT_COME_TO_FOREGROUND    "event_come_to_foreground"
+
+// The application will come to background.
+// This message is used for doing something before coming to background, such as save CARenderImage.
+// This message is posted in CrossApp/platform/android/jni/MessageJni.cpp.
+#define EVENT_COME_TO_BACKGROUND    "event_come_to_background"
+
+#define LINE_WIDTH MAX(s_px_to_dip(1.0f) + 0.01f, 1.01f)
+
+
+#if CC_NODE_RENDER_SUBPIXEL
+#define RENDER_IN_SUBPIXEL
+#else
+#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
+#endif
+
+#if defined(__GNUC__) && ((__GNUC__ >= 5) || ((__GNUG__ == 4) && (__GNUC_MINOR__ >= 4))) \
+	|| (defined(__clang__) && (__clang_major__ >= 3)) || (_MSC_VER >= 1800)
+#define M_DISALLOW_COPY_AND_ASSIGN(TypeName) \
+	TypeName(const TypeName &) = delete; \
+	TypeName &operator =(const TypeName &) = delete;
+#else
+#define M_DISALLOW_COPY_AND_ASSIGN(TypeName) \
+	TypeName(const TypeName &); \
+	TypeName &operator =(const TypeName &);
+#endif
+
+
+#if !defined(M_REQUIRES_NULL_TERMINATION)
+#if defined(__APPLE_CC__) && (__APPLE_CC__ >= 5549)
+#define M_REQUIRES_NULL_TERMINATION __attribute__((sentinel(0,1)))
+#elif defined(__GNUC__)
+#define M_REQUIRES_NULL_TERMINATION __attribute__((sentinel))
+#else
+#define M_REQUIRES_NULL_TERMINATION
+#endif
+#endif
+
+
 #endif // __CCMACROS_H__

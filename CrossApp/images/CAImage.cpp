@@ -1873,7 +1873,6 @@ bool CAImage::initWithETCData(const unsigned char * data, unsigned long dataLen)
 //    }
 //    else
 //    {
-//        CCLOG("cocos2d: Hardware ETC1 decoder not present. Using software decoder");
 //        
 //        //if it is not gles or device do not support ETC, decode texture by software
 //        int bytePerPixel = 3;
@@ -1895,7 +1894,7 @@ bool CAImage::initWithETCData(const unsigned char * data, unsigned long dataLen)
 //        
 //        return true;
 //    }
-//    return false;
+    return false;
 }
 
 bool CAImage::initWithTGAData(tImageTGA* tgaData)
