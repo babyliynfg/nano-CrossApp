@@ -449,40 +449,6 @@ static void GLToClipTransform(kmMat4 *transformOut)
 	kmMat4Multiply(transformOut, &projection, &modelview);
 }
 
-DPoint CAApplication::convertToGL(const DPoint& uiPoint)
-{
-    kmMat4 transform;
-	GLToClipTransform(&transform);
-	
-	kmMat4 transformInv;
-	kmMat4Inverse(&transformInv, &transform);
-	
-	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
-	kmScalar zClip = transform.mat[14]/transform.mat[15];
-	
-    DSize glSize = m_pobOpenGLView->getDesignResolutionSize();
-	kmVec3 clipCoord = {2.0f*uiPoint.x/glSize.width - 1.0f, 1.0f - 2.0f*uiPoint.y/glSize.height, zClip};
-	
-	kmVec3 glCoord;
-	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
-	
-	return DPoint(glCoord.x, glCoord.y);
-}
-
-DPoint CAApplication::convertToUI(const DPoint& glPoint)
-{
-    kmMat4 transform;
-	GLToClipTransform(&transform);
-    
-	kmVec3 clipCoord;
-	// Need to calculate the zero depth from the transform.
-	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
-	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
-	
-	DSize glSize = m_pobOpenGLView->getDesignResolutionSize();
-	return DPoint(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
-}
-
 DSize CAApplication::getWinSize(void)
 {
     return m_obWinSizeInPoints;

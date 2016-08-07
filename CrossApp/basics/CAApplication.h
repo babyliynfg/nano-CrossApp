@@ -143,16 +143,6 @@ public:
      */
     DPoint getVisibleOrigin();
 
-    /** converts a UIKit coordinate to an OpenGL coordinate
-     Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
-     */
-    DPoint convertToGL(const DPoint& obPoint);
-
-    /** converts an OpenGL coordinate to a UIKit coordinate
-     Useful to convert node points to window points for calls such as glScissor
-     */
-    DPoint convertToUI(const DPoint& obPoint);
-
     /// XXX: missing description 
     float getZEye(void);
 
