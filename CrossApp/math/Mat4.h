@@ -6,7 +6,7 @@
 #include "math/CAMathBase.h"
 #include "basics/CAPoint3D.h"
 #include "basics/CAVec4.h"
-#include "kazmath/GL/matrix.h"
+#include "kazmath/mat4.h"
 #ifdef __SSE__
 #include <xmmintrin.h>
 #endif
