@@ -399,8 +399,6 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
-
-    CAScheduler::unschedule(schedule_selector(CAButton::setTouchLongPress), this);
     
     if (getBounds().containsPoint(point))
     {
@@ -447,9 +445,7 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
-    
-    CAScheduler::unschedule(schedule_selector(CAButton::setTouchLongPress), this);
-    
+        
     do
     {
         CC_BREAK_IF(this->getControlState() != CAControlStateHighlighted);
@@ -486,9 +482,7 @@ void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pE
 {
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
-    
-    CAScheduler::unschedule(schedule_selector(CAButton::setTouchLongPress), this);
-    
+        
     if (m_bAllowsSelected && m_bSelected)
     {
         this->setControlState(CAControlStateSelected);

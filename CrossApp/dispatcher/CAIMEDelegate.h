@@ -5,7 +5,7 @@
 
 #include <string>
 #include <utility>
-#include "basics/CAGeometry.h"
+#include "ccTypes.h"
 
 NS_CC_BEGIN
 

@@ -100,6 +100,12 @@
     <Filter Include="math">
       <UniqueIdentifier>{e61d24a2-c4ff-4ba6-92c1-742745170c9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="game">
+      <UniqueIdentifier>{0a46523d-a206-4484-8051-083b628406db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="game\actions">
+      <UniqueIdentifier>{559acc69-8cbf-4a43-ba8d-893f28d2e128}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\cocoa\CCNS.cpp">
@@ -111,16 +117,10 @@
     <ClCompile Include="..\platform\CCEGLViewProtocol.cpp">
       <Filter>platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\platform\CCSAXParser.cpp">
-      <Filter>platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\platform\platform.cpp">
       <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\win32\CCApplication.cpp">
-      <Filter>platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\win32\CCCommon.cpp">
       <Filter>platform\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\win32\CCEGLView.cpp">
@@ -197,9 +197,6 @@
     </ClCompile>
     <ClCompile Include="..\platform\win32\CCFileUtilsWin32.cpp">
       <Filter>platform\win32</Filter>
-    </ClCompile>
-    <ClCompile Include="..\platform\CCFileUtils.cpp">
-      <Filter>platform</Filter>
     </ClCompile>
     <ClCompile Include="..\support\ccUTF8.cpp">
       <Filter>support</Filter>
@@ -553,6 +550,72 @@
     <ClCompile Include="..\basics\CAVec4.cpp">
       <Filter>basics</Filter>
     </ClCompile>
+    <ClCompile Include="..\basics\CAValue.cpp">
+      <Filter>basics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CAFileUtils.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\CASAXParser.cpp">
+      <Filter>platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\platform\win32\CACommon.cpp">
+      <Filter>platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGAction.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionCamera.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionCatmullRom.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionEase.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionInstant.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionInterval.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionManager.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionProgressTimer.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGActionTween.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGAnimation.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGAnimationCache.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\actions\CGTweenFunction.cpp">
+      <Filter>game\actions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGNode.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGProgressTimer.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGSprite.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGSpriteBatchNode.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGSpriteFrame.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\game\CGSpriteFrameCache.cpp">
+      <Filter>game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -561,9 +624,6 @@
     <ClInclude Include="..\cocoa\CCSet.h">
       <Filter>cocoa</Filter>
     </ClInclude>
-    <ClInclude Include="..\platform\CCAccelerometerDelegate.h">
-      <Filter>platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CCApplicationProtocol.h">
       <Filter>platform</Filter>
     </ClInclude>
@@ -571,18 +631,6 @@
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\CCEGLViewProtocol.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCFileUtils.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCPlatformConfig.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCPlatformMacros.h">
-      <Filter>platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\platform\CCSAXParser.h">
       <Filter>platform</Filter>
     </ClInclude>
     <ClInclude Include="..\platform\platform.h">
@@ -1118,6 +1166,84 @@
     </ClInclude>
     <ClInclude Include="..\basics\CAVec4.h">
       <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\basics\CAValue.h">
+      <Filter>basics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAAccelerometerDelegate.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CACommon.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAFileUtils.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CAGyroDelegate.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CASAXParser.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformConfig.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\CCPlatformMacros.h">
+      <Filter>platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGAction.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionCamera.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionCatmullRom.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionEase.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionInstant.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionInterval.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionManager.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionProgressTimer.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGActionTween.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGAnimation.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGAnimationCache.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\actions\CGTweenFunction.h">
+      <Filter>game\actions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGNode.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGProgressTimer.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGSprite.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGSpriteBatchNode.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGSpriteFrame.h">
+      <Filter>game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\CGSpriteFrameCache.h">
+      <Filter>game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
