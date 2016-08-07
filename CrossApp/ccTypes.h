@@ -367,13 +367,13 @@ enum
 
 static const char* CAApplicationDidChangeStatusBarOrientationNotification = "CAApplicationDidChangeStatusBarOrientationNotification";
 
-
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
 #ifdef _WIN64
 typedef signed __int64    ssize_t;
 #else  /* _WIN64 */
 typedef _W64 signed int   ssize_t;
 #endif  /* _WIN64 */
-
+#endif
 
 NS_CC_END
 
