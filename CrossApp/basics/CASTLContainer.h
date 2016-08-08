@@ -235,9 +235,9 @@ public:
     
 	void pushBack(const CAVector<T>& other)
 	{
-		for (size_t i = 0; i < other.size(); i++)
+		for (auto it = other.begin(); it != other.end(); it++)
 		{
-			pushBack(other.at(i));
+			pushBack(*it);
 		}
 	}
     
@@ -505,7 +505,7 @@ public:
 	}
 	void pushBack(const CAList<T>& other)
 	{
-		for (CAList<T>::const_iterator it = other.begin(); it != other.end(); ++it)
+		for (auto it = other.begin(); it != other.end(); ++it)
 		{
 			pushBack(*it);
 		}
@@ -888,9 +888,17 @@ public:
     
     void pushBack(const CADeque<T>& other)
     {
-        for (size_t i = 0; i < other.size(); i++)
+        for (auto it = other.begin(); it != other.end(); it++)
         {
-            pushBack(other.at(i));
+            pushBack(*it);
+        }
+    }
+    
+    void pushFront(const CADeque<T>& other)
+    {
+        for (auto it = other.rbegin(); it != other.rend(); it++)
+        {
+            pushFront(*it);
         }
     }
     

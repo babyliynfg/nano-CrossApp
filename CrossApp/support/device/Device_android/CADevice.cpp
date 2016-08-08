@@ -442,7 +442,7 @@ void openAlbum(CAMediaDelegate* target)
     JAVAOpenAlbum(1);
 }
     
-vector<CAAddressBookRecord> getAddressBook()
+std::vector<CAAddressBookRecord> getAddressBook()
 {
     if (_addressBookArr.size() > 0 )
     {

@@ -890,8 +890,9 @@ void CGNode::onExitTransitionDidStart()
 void CGNode::onExit()
 {
     m_bRunning = false;
-    ActionManager::getInstance()->pauseTarget(this);
     CAScheduler::getScheduler()->pauseTarget(this);
+    ActionManager::getInstance()->pauseTarget(this);
+    
     if (!m_obChildren.empty())
     {
         CAVector<CGNode*>::iterator itr;
