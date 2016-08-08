@@ -456,6 +456,11 @@ void CABatchView::updateBlendFunc(void)
         m_blendFunc.src = GL_SRC_ALPHA;
         m_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
     }
+    else
+    {
+        m_blendFunc.src = CC_BLEND_SRC;
+        m_blendFunc.dst = CC_BLEND_DST;
+    }
 }
 
 void CABatchView::setBlendFunc(BlendFunc blendFunc)

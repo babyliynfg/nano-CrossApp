@@ -1456,7 +1456,6 @@ bool CAImage::initWithJpgData(const unsigned char *  data, unsigned long dataLen
     /* libjpeg data structure for storing one row, that is, scanline of an image */
     JSAMPROW row_pointer[1] = {0};
     unsigned long location = 0;
-    unsigned int i = 0;
     
     bool bRet = false;
     do
@@ -1465,7 +1464,8 @@ bool CAImage::initWithJpgData(const unsigned char *  data, unsigned long dataLen
         cinfo.err = jpeg_std_error(&jerr.pub);
         jerr.pub.error_exit = myErrorExit;
         /* Establish the setjmp return context for MyErrorExit to use. */
-        if (setjmp(jerr.setjmp_buffer)) {
+        if (setjmp(jerr.setjmp_buffer))
+        {
             /* If we get here, the JPEG code has signaled an error.
              * We need to clean up the JPEG object, close the input file, and return.
              */
@@ -1477,22 +1477,23 @@ bool CAImage::initWithJpgData(const unsigned char *  data, unsigned long dataLen
         jpeg_create_decompress( &cinfo );
         
 #ifndef CC_TARGET_QT5
-        jpeg_mem_src( &cinfo, const_cast<unsigned char*>(data), dataLen );
+        jpeg_mem_src(&cinfo, const_cast<unsigned char*>(data), dataLen);
 #endif /* CC_TARGET_QT5 */
         
         /* reading the image header which contains image information */
 #if (JPEG_LIB_VERSION >= 90)
         // libjpeg 0.9 adds stricter types.
-        jpeg_read_header( &cinfo, TRUE );
+        jpeg_read_header(&cinfo, TRUE);
 #else
-        jpeg_read_header( &cinfo, true );
+        jpeg_read_header(&cinfo, TRUE);
 #endif
         
         // we only support RGB or grayscale
         if (cinfo.jpeg_color_space == JCS_GRAYSCALE)
         {
             m_ePixelFormat = CAImage::PixelFormat_I8;
-        }else
+        }
+        else
         {
             cinfo.out_color_space = JCS_RGB;
             m_ePixelFormat = CAImage::PixelFormat_RGB888;
@@ -1504,12 +1505,8 @@ bool CAImage::initWithJpgData(const unsigned char *  data, unsigned long dataLen
         /* init image info */
         m_uPixelsWide  = cinfo.output_width;
         m_uPixelsHigh = cinfo.output_height;
-        m_bHasAlpha = false;
         m_bHasPremultipliedAlpha = false;
         m_nBitsPerComponent = 8;
-        
-        row_pointer[0] = static_cast<unsigned char*>(malloc(cinfo.output_width*cinfo.output_components * sizeof(unsigned char)));
-        CC_BREAK_IF(! row_pointer[0]);
         
         m_uImageDataLenght = cinfo.output_width*cinfo.output_height*cinfo.output_components;
         m_pImageData = static_cast<unsigned char*>(malloc(m_uImageDataLenght * sizeof(unsigned char)));
@@ -1517,13 +1514,11 @@ bool CAImage::initWithJpgData(const unsigned char *  data, unsigned long dataLen
         
         /* now actually read the jpeg into the raw buffer */
         /* read one scan line at a time */
-        while( cinfo.output_scanline < cinfo.output_height )
+        while (cinfo.output_scanline < cinfo.output_height)
         {
-            jpeg_read_scanlines( &cinfo, row_pointer, 1 );
-            for( i=0; i<cinfo.output_width*cinfo.output_components;i++)
-            {
-                m_pImageData[location++] = row_pointer[0][i];
-            }
+            row_pointer[0] = m_pImageData + location;
+            location += cinfo.output_width*cinfo.output_components;
+            jpeg_read_scanlines(&cinfo, row_pointer, 1);
         }
         
         /* When read image file with broken data, jpeg_finish_decompress() may cause error.
@@ -1536,11 +1531,7 @@ bool CAImage::initWithJpgData(const unsigned char *  data, unsigned long dataLen
         /* wrap up decompression, destroy objects, free pointers and close open files */
         bRet = true;
     } while (0);
-    
-    if (row_pointer[0] != NULL)
-    {
-        free(row_pointer[0]);
-    };
+
     return bRet;
 }
 
@@ -1548,7 +1539,7 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
 {
     // length of bytes to check if it is a valid png file
 #define PNGSIGSIZE  8
-    bool bRet = false;
+    bool ret = false;
     png_byte        header[PNGSIGSIZE]   = {0};
     png_structp     png_ptr     =   0;
     png_infop       info_ptr    = 0;
@@ -1570,7 +1561,7 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         info_ptr = png_create_info_struct(png_ptr);
         CC_BREAK_IF(!info_ptr);
         
-#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL)
+#if (CC_TARGET_PLATFORM != CC_PLATFORM_BADA && CC_TARGET_PLATFORM != CC_PLATFORM_NACL && CC_TARGET_PLATFORM != CC_PLATFORM_TIZEN)
         CC_BREAK_IF(setjmp(png_jmpbuf(png_ptr)));
 #endif
         
@@ -1615,6 +1606,7 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         {
             png_set_strip_16(png_ptr);
         }
+        // Expanded earlier for grayscale, now take care of palette and rgb
         if (bit_depth < 8)
         {
             png_set_packing(png_ptr);
@@ -1654,7 +1646,7 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         m_pImageData = static_cast<unsigned char*>(malloc(m_uImageDataLenght * sizeof(unsigned char)));
         if(!m_pImageData)
         {
-            if (row_pointers != NULL)
+            if (row_pointers != nullptr)
             {
                 free(row_pointers);
             }
@@ -1667,16 +1659,13 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         }
         png_read_image(png_ptr, row_pointers);
         
-        png_read_end(png_ptr, NULL);
-        
-        png_uint_32 channel = (png_uint_32)rowbytes/m_uPixelsWide;
+        png_read_end(png_ptr, nullptr);
         
         // premultiplied alpha for RGBA8888
-        if (channel == 4)
+        if (color_type == PNG_COLOR_TYPE_RGB_ALPHA)
         {
-            m_bHasAlpha = true;
             unsigned int* fourBytes = (unsigned int*)m_pImageData;
-            for(unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
+            for(int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
             {
                 unsigned char* p = m_pImageData + i * 4;
                 fourBytes[i] = (unsigned)(((unsigned)((unsigned char)(p[0]) * ((unsigned char)(p[3]) + 1)) >> 8) |
@@ -1689,23 +1678,23 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
         }
         else
         {
-            m_bHasAlpha = false;
             m_bHasPremultipliedAlpha = false;
         }
         
-        if (row_pointers != NULL)
+
+        if (row_pointers != nullptr)
         {
             free(row_pointers);
         }
         
-        bRet = true;
+        ret = true;
     } while (0);
     
     if (png_ptr)
     {
         png_destroy_read_struct(&png_ptr, (info_ptr) ? &info_ptr : 0, 0);
     }
-    return bRet;
+    return ret;
 }
 
 bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
@@ -1777,7 +1766,6 @@ bool CAImage::initWithTiffData(const unsigned char * data, unsigned long dataLen
         m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
         m_uPixelsWide = w;
         m_uPixelsHigh = h;
-        m_bHasAlpha = true;
         m_nBitsPerComponent = 8;
         
         m_uImageDataLenght = npixels * sizeof (uint32);
@@ -1820,7 +1808,6 @@ bool CAImage::initWithWebpData(const unsigned char * data, unsigned long dataLen
         m_ePixelFormat = CAImage::PixelFormat_RGBA8888;
         m_uPixelsWide    = config.input.width;
         m_uPixelsHigh   = config.input.height;
-        m_bHasAlpha = true;
         m_nBitsPerComponent = 8;
         
         m_uImageDataLenght = m_uPixelsWide * m_uPixelsHigh * 4;
@@ -1864,7 +1851,7 @@ bool CAImage::initWithETCData(const unsigned char * data, unsigned long dataLen)
 //    {
 //        //old opengl version has no define for GL_ETC1_RGB8_OES, add macro to make compiler happy.
 //#ifdef GL_ETC1_RGB8_OES
-//        _renderFormat = Texture2D::PixelFormat::ETC;
+//        _renderFormat = CAImage::PixelFormat_ETC;
 //        _dataLen = dataLen - ETC_PKM_HEADER_SIZE;
 //        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
 //        memcpy(_data, static_cast<const unsigned char*>(data) + ETC_PKM_HEADER_SIZE, _dataLen);
@@ -1877,7 +1864,7 @@ bool CAImage::initWithETCData(const unsigned char * data, unsigned long dataLen)
 //        //if it is not gles or device do not support ETC, decode texture by software
 //        int bytePerPixel = 3;
 //        unsigned int stride = _width * bytePerPixel;
-//        _renderFormat = Texture2D::PixelFormat::RGB888;
+//        _renderFormat = CAImage::PixelFormat_RGB888;
 //        
 //        _dataLen =  _width * _height * bytePerPixel;
 //        _data = static_cast<unsigned char*>(malloc(_dataLen * sizeof(unsigned char)));
@@ -1944,7 +1931,7 @@ bool CAImage::initWithTGAData(tImageTGA* tgaData)
         m_uPixelsHigh = tgaData->height;
         m_pImageData = tgaData->imageData;
         m_uImageDataLenght = m_uPixelsWide * m_uPixelsHigh * tgaData->pixelDepth / 8;
-        m_bHasPremultipliedAlpha = true;
+        m_bHasPremultipliedAlpha = false;
         
         ret = true;
         
@@ -1994,7 +1981,6 @@ bool CAImage::initWithRawData(const unsigned char * data,
         case PixelFormat_RGB5A1:
         case PixelFormat_AI88:
         {
-            m_bHasAlpha = true;
             m_bHasPremultipliedAlpha = true;
         }
             break;
@@ -2004,7 +1990,6 @@ bool CAImage::initWithRawData(const unsigned char * data,
         case PixelFormat_A8:
         default:
         {
-            m_bHasAlpha = false;
             m_bHasPremultipliedAlpha = false;
         }
             break;
@@ -2796,7 +2781,6 @@ CAImage* CAImage::copy()
     newImage->m_bMonochrome = this->m_bMonochrome;
     newImage->m_bHasMipmaps = this->m_bHasMipmaps;
     newImage->m_bHasPremultipliedAlpha = this->m_bHasPremultipliedAlpha;
-    newImage->m_bHasAlpha = this->m_bHasAlpha;
     newImage->m_nBitsPerComponent = this->m_nBitsPerComponent;
     newImage->m_uDataLenght = this->m_uDataLenght;
     
@@ -2968,7 +2952,45 @@ bool CAImage::isWebp(const unsigned char * data, unsigned long dataLen)
             memcmp(static_cast<const unsigned char*>(data) + 8, WEBP_WEBP, 4) == 0;
 }
 
+namespace
+{
+    typedef CAImage::PixelFormatInfoMap::value_type PixelFormatInfoMapValue;
+    static const PixelFormatInfoMapValue CAImagePixelFormatInfoTablesValue[] =
+    {
+        PixelFormatInfoMapValue(CAImage::PixelFormat_RGBA8888, CAImage::PixelFormatInfo(GL_BGRA, GL_BGRA, GL_UNSIGNED_BYTE, 32, false, true)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat_RGBA8888, CAImage::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, false, true)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat_RGBA4444, CAImage::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, false, true)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat_RGB5A1, CAImage::PixelFormatInfo(GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, false, true)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat_RGB565, CAImage::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, false, false)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat_RGB888, CAImage::PixelFormatInfo(GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, false, false)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat_A8, CAImage::PixelFormatInfo(GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, false, false)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat_I8, CAImage::PixelFormatInfo(GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, false, false)),
+        PixelFormatInfoMapValue(CAImage::PixelFormat_AI88, CAImage::PixelFormatInfo(GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, false, true)),
+    };
+}
 
+const CAImage::PixelFormatInfoMap CAImage::s_pixelFormatInfoTables
+        (CAImagePixelFormatInfoTablesValue, CAImagePixelFormatInfoTablesValue + sizeof(CAImagePixelFormatInfoTablesValue) / sizeof(CAImagePixelFormatInfoTablesValue[0]));
+
+const CAImage::PixelFormatInfoMap& CAImage::getPixelFormatInfoMap()
+{
+    return s_pixelFormatInfoTables;
+}
+
+int CAImage::getBitPerPixel()
+{
+    return CAImage::getPixelFormatInfoMap().at(m_ePixelFormat).bpp;
+}
+
+bool CAImage::hasAlpha()
+{
+    return CAImage::getPixelFormatInfoMap().at(m_ePixelFormat).alpha;
+}
+
+bool CAImage::isCompressed()
+{
+    return CAImage::getPixelFormatInfoMap().at(m_ePixelFormat).compressed;
+}
 
 void CAImage::reloadAllImages()
 {

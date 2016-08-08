@@ -2292,7 +2292,7 @@ void CAView::setImage(CAImage* image)
             }
         }
         
-        updateBlendFunc();
+        this->updateBlendFunc();
         this->updateDraw();
     }
 }
@@ -2546,7 +2546,7 @@ void CAView::updateColor(void)
 
 void CAView::updateBlendFunc(void)
 {
-    if (m_pobImage && ! m_pobImage->hasPremultipliedAlpha())
+    if (!m_pobImage || !m_pobImage->hasPremultipliedAlpha())
     {
         m_sBlendFunc.src = GL_SRC_ALPHA;
         m_sBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;

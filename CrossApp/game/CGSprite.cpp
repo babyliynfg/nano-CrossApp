@@ -797,7 +797,7 @@ void CGSprite::updateBlendFunc(void)
 {
     CCAssert (! m_pobBatchNode, "CGSprite: updateBlendFunc doesn't work when the sprite is rendered using a CGSpriteBatchNode");
     
-    if (! m_pobImage || ! m_pobImage->hasPremultipliedAlpha())
+    if (!m_pobImage || !m_pobImage->hasPremultipliedAlpha())
     {
         m_sBlendFunc.src = GL_SRC_ALPHA;
         m_sBlendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;

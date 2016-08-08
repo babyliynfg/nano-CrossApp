@@ -19,6 +19,7 @@
 #include "CCStdC.h"
 #include "gif_lib/gif_lib.h"
 #include <list>
+#include <map>
 
 NS_CC_BEGIN
 
@@ -64,6 +65,37 @@ public:
         UNKOWN//! Unknown format
     }
     Format;
+    
+    struct PixelFormatInfo {
+        
+        PixelFormatInfo(GLenum anInternalFormat, GLenum aFormat, GLenum aType, int aBpp, bool aCompressed, bool anAlpha)
+        : internalFormat(anInternalFormat)
+        , format(aFormat)
+        , type(aType)
+        , bpp(aBpp)
+        , compressed(aCompressed)
+        , alpha(anAlpha)
+        {}
+        
+        GLenum internalFormat;
+        GLenum format;
+        GLenum type;
+        int bpp;
+        bool compressed;
+        bool alpha;
+    };
+    
+    typedef std::map<CAImage::PixelFormat, const PixelFormatInfo> PixelFormatInfoMap;
+    
+    /**
+     Extension to set the Min / Mag filter
+     */
+    typedef struct _TexParams {
+        GLuint    minFilter;
+        GLuint    magFilter;
+        GLuint    wrapS;
+        GLuint    wrapT;
+    }TexParams;
     
     CAImage();
     
@@ -177,6 +209,12 @@ public:
     
     bool hasMipmaps();
     
+    int  getBitPerPixel();
+    
+    bool hasAlpha();
+    
+    bool isCompressed();
+    
     bool saveToFile(const std::string& fullPath, bool bIsToRGB = false);
     
     const char* getImageFileType();
@@ -186,8 +224,6 @@ public:
     static CAImage* CC_WHITE_IMAGE();
 
     virtual CAImage* copy();
-    
-    bool hasAlpha() { return m_bHasAlpha; }
     
     CAImage::Format detectFormat(const unsigned char * data, unsigned long dataLen);
     bool isPng(const unsigned char * data, unsigned long dataLen);
@@ -233,6 +269,8 @@ public:
     unsigned int getGifImageCounts();
     
     static void reloadAllImages();
+    
+    static const PixelFormatInfoMap& getPixelFormatInfoMap();
     
 protected:
     
@@ -324,8 +362,6 @@ protected:
     
     bool m_bHasMipmaps;
     
-    bool m_bHasAlpha;
-    
     bool m_bTextImage;
     
     int  m_nBitsPerComponent;
@@ -337,6 +373,8 @@ protected:
     unsigned char* m_pImageData;
     
     unsigned long m_uImageDataLenght;
+    
+    static const PixelFormatInfoMap s_pixelFormatInfoTables;
     
 	friend class CAFTRichFont;
     friend class CAFreeTypeFont;
