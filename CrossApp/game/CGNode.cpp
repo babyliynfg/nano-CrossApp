@@ -25,6 +25,12 @@ NS_CC_BEGIN;
 static int nodeCount = 0;
 
 static int s_globalOrderOfArrival = 1;
+static std::map<int, CGNode*> s_pMap;
+
+std::map<int, CGNode*>& CGNode::getInstanceMap()
+{
+    return s_pMap;
+}
 
 CGNode::CGNode(void)
 : m_fRotationX(0.0f)
@@ -72,13 +78,12 @@ CGNode::CGNode(void)
     
     this->updateRotationQuat();
     
-    //CCLog("CGNode = %d\n", ++nodeCount);
+    s_pMap[m_u__ID] = this;
+    CCLog("CGNode = %d\n", ++nodeCount);
 }
 
 CGNode::~CGNode(void)
 {
-    CAScheduler::getScheduler()->pauseTarget(this);
-    
     CC_SAFE_RELEASE(m_pCamera);
     CC_SAFE_RELEASE(m_pShaderProgram);
     
@@ -91,8 +96,13 @@ CGNode::~CGNode(void)
         }
     }
     m_obChildren.clear();
-    CC_SAFE_RELEASE(m_pCAView);
-    //CCLog("~CGNode = %d\n", --nodeCount);
+    if (m_pCAView)
+    {
+        m_pCAView->m_pParentCGNode = NULL;
+        m_pCAView->release();
+    }
+    s_pMap.erase(m_u__ID);
+    CCLog("~CGNode = %d\n", --nodeCount);
 }
 
 CGNode * CGNode::create(void)
@@ -891,7 +901,7 @@ void CGNode::onExit()
 {
     m_bRunning = false;
     CAScheduler::getScheduler()->pauseTarget(this);
-    ActionManager::getInstance()->pauseTarget(this);
+    this->stopAllActions();
     
     if (!m_obChildren.empty())
     {

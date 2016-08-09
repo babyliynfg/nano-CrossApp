@@ -125,7 +125,11 @@ CAView::~CAView(void)
     }
     m_obSubviews.clear();
     CC_SAFE_RELEASE(m_pobImage);
-    CC_SAFE_RELEASE(m_pCGNode);
+    if (m_pCGNode)
+    {
+        m_pCGNode->m_pSuperviewCAView = NULL;
+        m_pCGNode->release();
+    }
     //CCLog("~CAView = %d\n", --viewCount);
 }
 

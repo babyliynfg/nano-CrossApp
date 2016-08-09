@@ -20,7 +20,7 @@
 #include "basics/CASTLContainer.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAGLProgram.h"
-
+#include <map>
 #ifdef EMSCRIPTEN
 #include "base_nodes/CCGLBufferedNode.h"
 #endif // EMSCRIPTEN
@@ -387,6 +387,10 @@ protected:
     CAView*                     m_pSuperviewCAView;
     
     friend class                CAView;
+    
+public:
+    
+    static std::map<int, CGNode*>& getInstanceMap();
 };
 
 static bool compareChildrenZOrder(CGNode* one, CGNode* two)

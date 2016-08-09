@@ -1113,6 +1113,17 @@ public:
 		return _data.find(key) != _data.end();
 	}
 
+    iterator erase(iterator it)
+    {
+        if (_data.count(it->first) > 0)
+        {
+            CAObject* o = (CAObject*)it->second;
+            CC_SAFE_RELEASE_NULL(o);
+            return _data.erase(it);
+        }
+        return _data.end();
+    }
+    
 	bool erase(K key)
 	{
 		iterator it = _data.find(key);

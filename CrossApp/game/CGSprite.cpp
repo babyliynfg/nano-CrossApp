@@ -26,10 +26,9 @@
 #include "kazmath/GL/matrix.h"
 #include "ccMacros.h"
 #include <string.h>
-
-
-
 NS_CC_BEGIN
+
+static int spriteCount = 0;
 
 CGSprite::CGSprite(void)
 : m_bShouldBeHidden(false)
@@ -64,11 +63,14 @@ CGSprite::CGSprite(void)
     m_obOffsetPosition = DPointZero;
     
     m_bHasChildren = false;
+    
+    //CCLog("CGSprite = %d\n", ++spriteCount);
 }
 
 CGSprite::~CGSprite(void)
 {
     CC_SAFE_RELEASE(m_pobImage);
+    //CCLog("~CGSprite = %d\n", --spriteCount);
 }
 
 CGSprite* CGSprite::createWithImage(CAImage *image)
