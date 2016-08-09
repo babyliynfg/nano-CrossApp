@@ -188,7 +188,8 @@ void CAProgress::setProgress(float progress, bool animated)
 {
 	progress = MIN(1.0f, progress);
 	progress = MAX(0.0f, progress);
-
+    m_fProgress = progress;
+    
 	DPoint point = DPoint(this->getBounds().size.width * progress, 0);
 
 	if (animated)
@@ -219,8 +220,6 @@ void CAProgress::update(float dt)
 	DRect rect = DRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);
 
 	m_pProgressImageView->setFrame(rect);
-    
-	m_fProgress = rect.size.width / this->getBounds().size.width;
 }
 
 void CAProgress::animatedBegin()

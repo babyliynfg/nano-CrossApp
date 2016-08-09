@@ -73,7 +73,7 @@ protected:
     CAScale9ImageView* m_pTarckImageView;
     
 	CAScale9ImageView* m_pProgressImageView;
-
+    
 	float m_fProgress;
 
     CAView* m_pIndicator;
