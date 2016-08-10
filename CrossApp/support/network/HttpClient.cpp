@@ -388,7 +388,7 @@ void CAHttpClient::destroyInstance(int thread)
 {
     CCAssert(s_pHttpClient[thread], "");
     CAScheduler::unschedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), s_pHttpClient[thread]);
-    s_pHttpClient[thread]->release();
+    CC_SAFE_DELETE(s_pHttpClient[thread]);
 }
 
 void CAHttpClient::destroyAllInstance()

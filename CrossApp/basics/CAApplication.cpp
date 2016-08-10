@@ -118,10 +118,6 @@ CAApplication::~CAApplication(void)
     CC_SAFE_RELEASE(m_pKeypadDispatcher);
     CC_SAFE_DELETE(m_pAccelerometer);
 
-    
-    CAHttpClient::destroyAllInstance();
-    CADownloadManager::destroyInstance();
-    ActionManager::destroyInstance();
     // pop the autorelease pool
     CAPoolManager::sharedPoolManager()->pop();
     CAPoolManager::purgePoolManager();
@@ -538,7 +534,10 @@ void CAApplication::purgeDirector()
     CAImageCache::purgeSharedImageCache();
     CAShaderCache::purgeSharedShaderCache();
     FileUtils::destroyInstance();
-
+    CAHttpClient::destroyAllInstance();
+    CADownloadManager::destroyInstance();
+    ActionManager::destroyInstance();
+    
     // CrossApp specific data structures
     CAUserDefault::purgeSharedUserDefault();
     CANotificationCenter::purgeNotificationCenter();
