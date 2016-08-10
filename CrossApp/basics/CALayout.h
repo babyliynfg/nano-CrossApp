@@ -17,11 +17,9 @@ public:
     {
         L_R = 0,
         L_W,
-        L_C,
         R_W,
-        R_C,
         W_C,
-        C_NW = 6
+        NW_C = 4
     }
     Type;
     
@@ -61,11 +59,9 @@ public:
     {
         T_B = 0,
         T_H,
-        T_C,
         B_H,
-        B_C,
         H_C,
-        C_NH = 6
+        NH_C = 4
     }
     Type;
     
@@ -128,19 +124,9 @@ static inline DHorizontalLayout DHorizontalLayout_L_W(float left, float width)
     return DHorizontalLayout(left, width, DHorizontalLayout::L_W);
 }
 
-static inline DHorizontalLayout DHorizontalLayout_L_C(float left, float center)
-{
-    return DHorizontalLayout(left, center, DHorizontalLayout::L_C);
-}
-
 static inline DHorizontalLayout DHorizontalLayout_R_W(float right, float width)
 {
     return DHorizontalLayout(right, width, DHorizontalLayout::R_W);
-}
-
-static inline DHorizontalLayout DHorizontalLayout_R_C(float right, float center)
-{
-    return DHorizontalLayout(right, center, DHorizontalLayout::R_C);
 }
 
 static inline DHorizontalLayout DHorizontalLayout_W_C(float width, float center)
@@ -148,9 +134,9 @@ static inline DHorizontalLayout DHorizontalLayout_W_C(float width, float center)
     return DHorizontalLayout(width, center, DHorizontalLayout::W_C);
 }
 
-static inline DHorizontalLayout DHorizontalLayout_C_NW(float center, float normalizedWidth)
+static inline DHorizontalLayout DHorizontalLayout_NW_C(float normalizedWidth, float center)
 {
-    return DHorizontalLayout(center, normalizedWidth, DHorizontalLayout::C_NW);
+    return DHorizontalLayout(normalizedWidth, center, DHorizontalLayout::NW_C);
 }
 
 
@@ -165,19 +151,9 @@ static inline DVerticalLayout DVerticalLayout_T_H(float top, float height)
     return DVerticalLayout(top, height, DVerticalLayout::T_H);
 }
 
-static inline DVerticalLayout DVerticalLayout_T_C(float top, float center)
-{
-    return DVerticalLayout(top, center, DVerticalLayout::T_C);
-}
-
 static inline DVerticalLayout DVerticalLayout_B_H(float bottom, float height)
 {
     return DVerticalLayout(bottom, height, DVerticalLayout::B_H);
-}
-
-static inline DVerticalLayout DVerticalLayout_B_C(float bottom, float center)
-{
-    return DVerticalLayout(bottom, center, DVerticalLayout::B_C);
 }
 
 static inline DVerticalLayout DVerticalLayout_H_C(float height, float center)
@@ -185,9 +161,9 @@ static inline DVerticalLayout DVerticalLayout_H_C(float height, float center)
     return DVerticalLayout(height, center, DVerticalLayout::H_C);
 }
 
-static inline DVerticalLayout DVerticalLayout_C_NH(float center, float normalizedHeight)
+static inline DVerticalLayout DVerticalLayout_NH_C(float normalizedHeight, float center)
 {
-    return DVerticalLayout(center, normalizedHeight, DVerticalLayout::C_NH);
+    return DVerticalLayout(normalizedHeight, center, DVerticalLayout::NH_C);
 }
 
 const DHorizontalLayout DHorizontalLayouttZero  = DHorizontalLayout();

@@ -50,22 +50,10 @@ DHorizontalLayout::DHorizontalLayout(float var1, float var2, const Type& type)
             width = var2;
         }
             break;
-        case L_C:
-        {
-            left = var1;
-            center = var2;
-        }
-            break;
         case R_W:
         {
             right = var1;
             width = var2;
-        }
-            break;
-        case R_C:
-        {
-            right = var1;
-            center = var2;
         }
             break;
         case W_C:
@@ -74,10 +62,10 @@ DHorizontalLayout::DHorizontalLayout(float var1, float var2, const Type& type)
             center = var2;
         }
             break;
-        case C_NW:
+        case NW_C:
         {
-            center = var1;
-            normalizedWidth = var2;
+            normalizedWidth = var1;
+            center = var2;
         }
             break;
         default:
@@ -147,22 +135,10 @@ DVerticalLayout::DVerticalLayout(float var1, float var2, const Type& type)
             height = var2;
         }
             break;
-        case T_C:
-        {
-            top = var1;
-            center = var2;
-        }
-            break;
         case B_H:
         {
             bottom = var1;
             height = var2;
-        }
-            break;
-        case B_C:
-        {
-            bottom = var1;
-            center = var2;
         }
             break;
         case H_C:
@@ -171,10 +147,10 @@ DVerticalLayout::DVerticalLayout(float var1, float var2, const Type& type)
             center = var2;
         }
             break;
-        case C_NH:
+        case NH_C:
         {
-            center = var1;
-            normalizedHeight = var2;
+            normalizedHeight = var1;
+            center = var2;
         }
             break;
         default:

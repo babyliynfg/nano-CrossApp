@@ -912,19 +912,9 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.width = horizontalLayout.width;
                     point.x = horizontalLayout.left;
                 }
-                else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.width = (contentSize.width * horizontalLayout.center - horizontalLayout.left) * 2;
-                    point.x = horizontalLayout.left;
-                }
                 else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
                 {
                     size.width = horizontalLayout.width;
-                    point.x = contentSize.width - horizontalLayout.right - size.width;
-                }
-                else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.width = (contentSize.width * (1.0f - horizontalLayout.center) - horizontalLayout.right) * 2;;
                     point.x = contentSize.width - horizontalLayout.right - size.width;
                 }
                 else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
@@ -932,7 +922,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.width = horizontalLayout.width;
                     point.x = contentSize.width * horizontalLayout.center - size.width / 2;
                 }
-                else if (horizontalLayout.center < FLOAT_NONE && horizontalLayout.normalizedWidth < FLOAT_NONE)
+                else if (horizontalLayout.normalizedWidth < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
                 {
                     size.width = contentSize.width * horizontalLayout.normalizedWidth;
                     point.x = contentSize.width * horizontalLayout.center - size.width / 2;
@@ -952,19 +942,9 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.height = verticalLayout.height;
                     point.y = verticalLayout.top;
                 }
-                else if (verticalLayout.top < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.height = (contentSize.height * verticalLayout.center - verticalLayout.top) * 2;
-                    point.y = verticalLayout.top;
-                }
                 else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
                 {
                     size.height = verticalLayout.height;
-                    point.y = contentSize.height - verticalLayout.bottom - size.height;
-                }
-                else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.height = (contentSize.height * (1.0f - verticalLayout.center) - verticalLayout.bottom) * 2;
                     point.y = contentSize.height - verticalLayout.bottom - size.height;
                 }
                 else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
@@ -972,7 +952,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.height = verticalLayout.height;
                     point.y = contentSize.height * verticalLayout.center - size.height / 2;
                 }
-                else if (verticalLayout.center < FLOAT_NONE && verticalLayout.normalizedHeight < FLOAT_NONE)
+                else if (verticalLayout.normalizedHeight < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
                 {
                     size.height = contentSize.height * verticalLayout.normalizedHeight;
                     point.y = contentSize.height * verticalLayout.center - size.height / 2;
@@ -994,19 +974,9 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.width = horizontalLayout.width;
                     point.x = horizontalLayout.left;
                 }
-                else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.width = (contentSize.width * horizontalLayout.center - horizontalLayout.left) * 2;
-                    point.x = horizontalLayout.left;
-                }
                 else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
                 {
                     size.width = horizontalLayout.width;
-                    point.x = contentSize.width - horizontalLayout.right - size.width;
-                }
-                else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.width = (contentSize.width * (1.0f - horizontalLayout.center) - horizontalLayout.right) * 2;;
                     point.x = contentSize.width - horizontalLayout.right - size.width;
                 }
                 else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
@@ -1014,7 +984,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.width = horizontalLayout.width;
                     point.x = contentSize.width * horizontalLayout.center - size.width / 2;
                 }
-                else if (horizontalLayout.center < FLOAT_NONE && horizontalLayout.normalizedWidth < FLOAT_NONE)
+                else if (horizontalLayout.normalizedWidth < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
                 {
                     size.width = contentSize.width * horizontalLayout.normalizedWidth;
                     point.x = contentSize.width * horizontalLayout.center - size.width / 2;
@@ -1034,19 +1004,9 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.height = verticalLayout.height;
                     point.y = contentSize.height - verticalLayout.top - size.height;
                 }
-                else if (verticalLayout.top < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.height = (contentSize.height * verticalLayout.center - verticalLayout.top) * 2;
-                    point.y = contentSize.height - verticalLayout.top - size.height;
-                }
                 else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
                 {
                     size.height = verticalLayout.height;
-                    point.y = verticalLayout.bottom;
-                }
-                else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.height = (contentSize.height * (1.0f - verticalLayout.center) - verticalLayout.bottom) * 2;
                     point.y = verticalLayout.bottom;
                 }
                 else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
@@ -1054,7 +1014,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.height = verticalLayout.height;
                     point.y = contentSize.height * (1 - verticalLayout.center) - size.height / 2;
                 }
-                else if (verticalLayout.center < FLOAT_NONE && verticalLayout.normalizedHeight < FLOAT_NONE)
+                else if (verticalLayout.normalizedHeight < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
                 {
                     size.height = contentSize.height * verticalLayout.normalizedHeight;
                     point.y = contentSize.height * (1 - verticalLayout.center) - size.height / 2;
@@ -1076,19 +1036,9 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.height = horizontalLayout.width;
                     point.y = horizontalLayout.left;
                 }
-                else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.height = (contentSize.width * horizontalLayout.center - horizontalLayout.left) * 2;
-                    point.y = horizontalLayout.left;
-                }
                 else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
                 {
                     size.height = horizontalLayout.width;
-                    point.y = contentSize.width - horizontalLayout.right - size.width;
-                }
-                else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.height = (contentSize.width * (1.0f - horizontalLayout.center) - horizontalLayout.right) * 2;;
                     point.y = contentSize.width - horizontalLayout.right - size.width;
                 }
                 else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
@@ -1096,7 +1046,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.height = horizontalLayout.width;
                     point.y = contentSize.width * horizontalLayout.center - size.width / 2;
                 }
-                else if (horizontalLayout.center < FLOAT_NONE && horizontalLayout.normalizedWidth < FLOAT_NONE)
+                else if (horizontalLayout.normalizedWidth < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
                 {
                     size.height = contentSize.width * horizontalLayout.normalizedWidth;
                     point.y = contentSize.width * horizontalLayout.center - size.width / 2;
@@ -1116,19 +1066,9 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.width = verticalLayout.height;
                     point.x = contentSize.height - verticalLayout.top - size.height;
                 }
-                else if (verticalLayout.top < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.width = (contentSize.height * verticalLayout.center - verticalLayout.top) * 2;
-                    point.x = contentSize.height - verticalLayout.top - size.height;
-                }
                 else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
                 {
                     size.width = verticalLayout.height;
-                    point.x = verticalLayout.bottom;
-                }
-                else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.width = (contentSize.height * (1.0f - verticalLayout.center) - verticalLayout.bottom) * 2;
                     point.x = verticalLayout.bottom;
                 }
                 else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
@@ -1136,7 +1076,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.width = verticalLayout.height;
                     point.x = contentSize.height * (1 - verticalLayout.center) - size.height / 2;
                 }
-                else if (verticalLayout.center < FLOAT_NONE && verticalLayout.normalizedHeight < FLOAT_NONE)
+                else if (verticalLayout.normalizedHeight < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
                 {
                     size.width = contentSize.height * verticalLayout.normalizedHeight;
                     point.x = contentSize.height * (1 - verticalLayout.center) - size.height / 2;
@@ -1158,19 +1098,9 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.height = horizontalLayout.width;
                     point.y = contentSize.width - horizontalLayout.left - size.width;
                 }
-                else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.height = (contentSize.width * horizontalLayout.center - horizontalLayout.left) * 2;
-                    point.y = contentSize.width - horizontalLayout.left - size.width;
-                }
                 else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
                 {
                     size.height = horizontalLayout.width;
-                    point.y = horizontalLayout.right;
-                }
-                else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.height = (contentSize.width * (1.0f - horizontalLayout.center) - horizontalLayout.right) * 2;;
                     point.y = horizontalLayout.right;
                 }
                 else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
@@ -1178,7 +1108,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.height = horizontalLayout.width;
                     point.y = contentSize.width * (1 - horizontalLayout.center) - size.width / 2;
                 }
-                else if (horizontalLayout.center < FLOAT_NONE && horizontalLayout.normalizedWidth < FLOAT_NONE)
+                else if (horizontalLayout.normalizedWidth < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
                 {
                     size.height = contentSize.width * horizontalLayout.normalizedWidth;
                     point.y = contentSize.width * (1 - horizontalLayout.center) - size.width / 2;
@@ -1198,19 +1128,9 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.width = verticalLayout.height;
                     point.x = verticalLayout.top;
                 }
-                else if (verticalLayout.top < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.width = (contentSize.height * verticalLayout.center - verticalLayout.top) * 2;
-                    point.x = verticalLayout.top;
-                }
                 else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
                 {
                     size.width = verticalLayout.height;
-                    point.x = contentSize.height - verticalLayout.bottom - size.height;
-                }
-                else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.width = (contentSize.height * (1.0f - verticalLayout.center) - verticalLayout.bottom) * 2;
                     point.x = contentSize.height - verticalLayout.bottom - size.height;
                 }
                 else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
@@ -1218,7 +1138,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
                     size.width = verticalLayout.height;
                     point.x = contentSize.height * verticalLayout.center - size.height / 2;
                 }
-                else if (verticalLayout.center < FLOAT_NONE && verticalLayout.normalizedHeight < FLOAT_NONE)
+                else if (verticalLayout.normalizedHeight < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
                 {
                     size.width = contentSize.height * verticalLayout.normalizedHeight;
                     point.x = contentSize.height * verticalLayout.center - size.height / 2;
