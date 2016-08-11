@@ -293,7 +293,7 @@ public:
 	}
 	void updateFontSize()
 	{
-		m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_pCATextView->getTextFontSize());
+		m_iLineHeight = CAImage::getFontHeight(m_szFontName.c_str(), m_pCATextView->getFontSize());
 	}
 	
 	bool execCurSelCharRange()
@@ -318,7 +318,7 @@ public:
 		CAImage* image = g_AFTFontCache.initWithString(m_szText.c_str(),
 			m_pCATextView->getTextColor(),
 			m_szFontName.c_str(),
-			m_pCATextView->getTextFontSize(),
+			m_pCATextView->getFontSize(),
 			width,
 			0,
 			CATextAlignmentLeft,
@@ -458,7 +458,7 @@ public:
 	}
 	int getStringLength(const std::string &var)
 	{
-		return g_AFTFontCache.getStringWidth(m_szFontName.c_str(), m_pCATextView->getTextFontSize(), var);
+		return g_AFTFontCache.getStringWidth(m_szFontName.c_str(), m_pCATextView->getFontSize(), var);
 	}
 	std::pair<int, int> getLineAndPos(int iPos)
 	{
@@ -806,7 +806,7 @@ void CATextView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 }
 
 
-void CATextView::setTextFontSize(const int& var)
+void CATextView::setFontSize(const int& var)
 {
 	m_iFontSize = var;
 
@@ -814,7 +814,7 @@ void CATextView::setTextFontSize(const int& var)
     this->delayShowImage();
 }
 
-const int& CATextView::getTextFontSize()
+const int& CATextView::getFontSize()
 {
 	return m_iFontSize;
 }

@@ -917,7 +917,7 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 
 		if (const char* value = viewXml->Attribute("fontSize"))
 		{
-			textView->setTextFontSize(atoi(value));
+			textView->setFontSize(atoi(value));
 		}
 
 		if (const char* value = viewXml->Attribute("text"))

@@ -477,7 +477,7 @@ const CAColor4B& CATextView::getTextColor()
     return m_sTextColor;
 }
 
-void CATextView::setTextFontSize(const int &var)
+void CATextView::setFontSize(const int &var)
 {
     m_iFontSize = var;
     
@@ -486,7 +486,7 @@ void CATextView::setTextFontSize(const int &var)
     delayShowImage();
 }
 
-const int& CATextView::getTextFontSize()
+const int& CATextView::getFontSize()
 {
     return m_iFontSize;
 }
