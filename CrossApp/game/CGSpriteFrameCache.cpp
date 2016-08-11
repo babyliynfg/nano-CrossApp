@@ -153,7 +153,6 @@ void CGSpriteFrameCache::addSpriteFramesWithDictionary(CAValueMap& dictionary, C
         
         // add sprite frame
         m_obSpriteFrames.insert(spriteFrameName, spriteFrame);
-        spriteFrame->release();
     }
 }
 

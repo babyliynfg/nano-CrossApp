@@ -98,7 +98,7 @@ public:
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTextColor, TextColor);
     
     //fontSize
-    CC_PROPERTY_PASS_BY_REF(int, m_iFontSize, TextFontSize);
+    CC_PROPERTY_PASS_BY_REF(int, m_iFontSize, FontSize);
     
     //TextViewAlign
     CC_PROPERTY_PASS_BY_REF(TextViewAlign,m_eAlign,TextViewAlign);

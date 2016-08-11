@@ -133,12 +133,9 @@ bool CGSpriteFrame::hasAnchorPoint() const
 
 void CGSpriteFrame::setImage(CAImage * image)
 {
-    if( _image != image )
-    {
-        CC_SAFE_RETAIN(image);
-        CC_SAFE_RELEASE(_image);
-        _image = image;
-    }
+    CC_SAFE_RETAIN(image);
+    CC_SAFE_RELEASE(_image);
+    _image = image;
 }
 
 CAImage* CGSpriteFrame::getImage()

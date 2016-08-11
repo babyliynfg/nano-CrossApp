@@ -105,6 +105,8 @@ void CAActivityIndicatorView::onEnter()
 void CAActivityIndicatorView::onExit()
 {
     CAView::onExit();
+    
+    stopAnimating();
 }
 
 void CAActivityIndicatorView::visit()
@@ -118,13 +120,7 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
     
     if (m_style != CAActivityIndicatorViewStyleImage)
     {
-        this->removeSubview(m_pImageView);
-        CC_SAFE_RELEASE(m_pImageView);
-        
-        this->removeSubview(m_pBackView);
-        CC_SAFE_RELEASE(m_pBackView);
-        
-        DRect center = getBounds();
+        DRect center = this->getBounds();
         center.origin = center.size/2;
         CAImage* image = NULL;
         
@@ -157,13 +153,16 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
             default:
                 break;
         }
-        setTimesOneCycle(m_nTimesOneCycle);
         
+        this->setTimesOneCycle(m_nTimesOneCycle);
         
         CAImageView* imageView = CAImageView::createWithCenter(center);
-        imageView->retain();
         imageView->setImage(image);
         this->insertSubview(imageView, 1);
+        
+        this->removeSubview(m_pImageView);
+        CC_SAFE_RETAIN(imageView);
+        CC_SAFE_RELEASE_NULL(m_pImageView);
         m_pImageView = imageView;
     }
 }
@@ -244,8 +243,8 @@ void CAActivityIndicatorView::setActivityIndicatorView(CrossApp::CAView *var)
     m_style = CAActivityIndicatorViewStyleImage;
     
     this->removeSubview(m_pImageView);
-    CC_SAFE_RELEASE_NULL(m_pImageView);
     CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE_NULL(m_pImageView);
     m_pImageView = var;
     if (m_pImageView)
     {
@@ -264,8 +263,8 @@ CAView* CAActivityIndicatorView::getActivityIndicatorView()
 void CAActivityIndicatorView::setActivityBackView(CrossApp::CAView *var)
 {
     this->removeSubview(m_pBackView);
-    CC_SAFE_RELEASE_NULL(m_pBackView);
     CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE_NULL(m_pBackView);
     m_pBackView = var;
     
     if (m_pBackView)
@@ -283,7 +282,9 @@ CAView* CAActivityIndicatorView::getActivityBackView()
 void CAActivityIndicatorView::setContentSize(const DSize & var)
 {
     CAView::setContentSize(var);
+    
     this->setStyle(m_style);
+    
     if (m_pBackView)
     {
         m_pBackView->setCenterOrigin(getBounds().size/2);
