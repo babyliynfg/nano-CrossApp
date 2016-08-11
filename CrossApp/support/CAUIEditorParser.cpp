@@ -925,7 +925,6 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 			textView->setText(value);
 		}
 
-
 		if (const char* value = viewXml->Attribute("background"))
 		{
 			textView->setBackgroundImage(CAImage::create(value));
