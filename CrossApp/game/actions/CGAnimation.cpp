@@ -42,11 +42,11 @@ AnimationFrame::~AnimationFrame()
     CC_SAFE_RELEASE(_spriteFrame);
 }
 
-AnimationFrame* AnimationFrame::copy()
+AnimationFrame* AnimationFrame::clone() const
 {
     // no copy constructor
     auto frame = new (std::nothrow) AnimationFrame();
-    frame->initWithSpriteFrame(_spriteFrame->copy(),
+    frame->initWithSpriteFrame(_spriteFrame->clone(),
                                _delayUnits,
                                _userInfo);
 
@@ -163,7 +163,7 @@ float Animation::getDuration(void) const
     return _totalDelayUnits * _delayPerUnit;
 }
 
-Animation* Animation::copy()
+Animation* Animation::clone() const
 {
     // no copy constructor    
     auto a = new (std::nothrow) Animation();

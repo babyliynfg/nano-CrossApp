@@ -18,7 +18,6 @@ NS_CC_BEGIN
 
 #define kCAObjectTagInvalid -1
 
-class CAZone;
 class CAObject;
 class CAEvent;
 class CAView;
@@ -45,13 +44,13 @@ typedef int (CAObject::*SEL_Compare)(CAObject*);
 #define event_selector(_SELECTOR) (SEL_EventHandler)(&_SELECTOR)
 #define compare_selector(_SELECTOR) (SEL_Compare)(&_SELECTOR)
 
-class CC_DLL CACopying
+class CC_DLL CAClonable
 {
 public:
-    virtual CAObject* copyWithZone(CAZone* pZone);
+    virtual CAClonable* clone() const = 0;
 };
 
-class CC_DLL CAObject : public CACopying
+class CC_DLL CAObject
 {
 public:
 
@@ -79,8 +78,6 @@ public:
     
     CAObject* autorelease(void);
     
-    CAObject* copy(void);
-    
     bool isSingleReference(void) const;
     
     unsigned int retainCount(void) const;
@@ -105,18 +102,6 @@ public:
     
     friend class CAAutoreleasePool;
 };
-
-class CC_DLL CAZone
-{
-public:
-    
-    CAZone(CAObject *pObject = NULL);
-    
-public:
-    
-    CAObject *m_pCopyObject;
-};
-
 
 const float FLOAT_NONE = FLT_MAX;
 const int INT_NONE = 0x8FFFFFFF;

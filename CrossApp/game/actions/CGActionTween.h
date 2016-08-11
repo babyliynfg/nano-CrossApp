@@ -74,7 +74,7 @@ public:
     void startWithTarget(CGNode *target) override;
     void update(float dt) override;
     ActionTween* reverse() const override;
-	ActionTween *copy();
+	ActionTween *clone() const override;
     
 public:
     /** 

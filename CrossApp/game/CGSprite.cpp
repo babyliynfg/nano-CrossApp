@@ -64,6 +64,8 @@ CGSprite::CGSprite(void)
     
     m_bHasChildren = false;
     
+    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
+    
     //CCLog("CGSprite = %d\n", ++spriteCount);
 }
 
@@ -168,10 +170,9 @@ bool CGSprite::initWithImage(CAImage *image, const DRect& rect, bool rotated)
 {
     if (CGNode::init())
     {
-        setImage(image);
-        setImageRect(rect, rotated, rect.size);
-        
-        setBatchNode(NULL);
+        this->setImage(image);
+        this->setImageRect(rect, rotated, rect.size);
+        this->setBatchNode(NULL);
         
         return true;
     }
@@ -224,8 +225,8 @@ bool CGSprite::initWithSpriteFrame(CGSpriteFrame *pSpriteFrame)
 {
     CCAssert(pSpriteFrame != NULL, "");
     
-    bool bRet = initWithImage(pSpriteFrame->getImage(), pSpriteFrame->getRect());
-    setSpriteFrame(pSpriteFrame);
+    bool bRet = this->initWithImage(pSpriteFrame->getImage(), pSpriteFrame->getRect());
+    this->setSpriteFrame(pSpriteFrame);
     
     return bRet;
 }
@@ -239,7 +240,7 @@ bool CGSprite::initWithSpriteFrameName(const std::string& pszSpriteFrameName)
 
 void CGSprite::setImageRect(const DRect& rect)
 {
-    setImageRect(rect, false, rect.size);
+    this->setImageRect(rect, false, rect.size);
 }
 
 
@@ -247,9 +248,9 @@ void CGSprite::setImageRect(const DRect& rect, bool rotated, const DSize& untrim
 {
     m_bRectRotated = rotated;
     
-    setContentSize(untrimmedSize);
-    setVertexRect(rect);
-    setImageCoords(rect);
+    this->setContentSize(untrimmedSize);
+    this->setVertexRect(rect);
+    this->setImageCoords(rect);
     
     DPoint relativeOffset = m_obUnflippedOffsetPositionFromCenter;
     
@@ -378,7 +379,7 @@ void CGSprite::setImageCoords(const DRect& _rect)
 
 void CGSprite::updateTransform(void)
 {
-    if(m_pobImage && isDirty())
+    if(isDirty())
     {
         if(!m_bVisible || (m_pParent && m_pParent != m_pobBatchNode && ((CGSprite*)m_pParent)->m_bShouldBeHidden))
         {
@@ -722,9 +723,9 @@ void CGSprite::setSpriteFrame(CGSpriteFrame *pNewFrame)
     
     m_bRectRotated = pNewFrame->isRotated();
     
-    setImage(pNewFrame->getImage());
+    this->setImage(pNewFrame->getImage());
     
-    setImageRect(pNewFrame->getRect(), m_bRectRotated, pNewFrame->getOriginalSize());
+    this->setImageRect(pNewFrame->getRect(), m_bRectRotated, pNewFrame->getOriginalSize());
 }
 
 void CGSprite::setDisplayFrameWithAnimationName(const std::string& animationName, int frameIndex)
@@ -820,10 +821,6 @@ void CGSprite::setImage(CAImage *image)
         CC_SAFE_RETAIN(image);
         CC_SAFE_RELEASE(m_pobImage);
         m_pobImage = image;
-        if (image)
-        {
-            this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-        }
         DRect rect = DRectZero;
         if (image)
         {

@@ -20,7 +20,7 @@ enum {
 /** 
  * @brief Base class for Action objects.
  */
-class CC_DLL Action : public CAObject
+class CC_DLL Action : public CAObject, public CAClonable
 {
 public:
     /** Default tag used for all the actions. */
@@ -35,7 +35,7 @@ public:
      *
      * @return A clone action.
      */
-    virtual Action* copy()
+    virtual Action* clone() const
     {
         CC_ASSERT(0);
         return nullptr;
@@ -187,7 +187,7 @@ public:
         CC_ASSERT(0);
         return nullptr;
     }
-    virtual FiniteTimeAction* copy()
+    virtual FiniteTimeAction* clone() const
     {
         CC_ASSERT(0);
         return nullptr;
@@ -249,7 +249,7 @@ public:
     //
     // Override
     //
-    virtual Speed* copy();
+    virtual Speed* clone() const override;
     virtual Speed* reverse() const override;
     virtual void startWithTarget(CGNode* target) override;
     virtual void stop() override;
@@ -317,7 +317,7 @@ public:
     //
     // Override
     //
-    virtual Follow* copy();
+    virtual Follow* clone() const override;
     virtual Follow* reverse() const override;
     /**
      * @param dt in seconds.

@@ -31,7 +31,7 @@ bool ActionTween::initWithDuration(float duration, const std::string& key, float
     return false;
 }
 
-ActionTween *ActionTween::copy()
+ActionTween *ActionTween::clone() const
 {
     // no copy constructor    
     auto a = new (std::nothrow) ActionTween();

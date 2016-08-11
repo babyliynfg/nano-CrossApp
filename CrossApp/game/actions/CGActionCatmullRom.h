@@ -22,7 +22,7 @@ class Node;
  * @ingroup Actions
  * @js NA
  */
-class CC_DLL PointArray : public CAObject
+class CC_DLL PointArray : public CAObject, public CAClonable
 {
 public:
 
@@ -111,7 +111,7 @@ public:
      * @js NA
      * @lua NA
      */
-    virtual PointArray* copy();
+    virtual PointArray* clone() const override;
     /**
      * @js NA
      */
@@ -186,7 +186,7 @@ public:
     }
 
     // Overrides
-    virtual CardinalSplineTo *copy();
+    virtual CardinalSplineTo *clone() const override;
     virtual CardinalSplineTo* reverse() const override;
     virtual void startWithTarget(CGNode *target) override;
     
@@ -230,7 +230,7 @@ public:
     // Overrides
     virtual void startWithTarget(CGNode *target) override;
     virtual void updatePosition(DPoint &newPos) override;
-    virtual CardinalSplineBy *copy();
+    virtual CardinalSplineBy *clone() const override;
     virtual CardinalSplineBy* reverse() const override;
 
 protected:
@@ -267,7 +267,7 @@ public:
     bool initWithDuration(float dt, PointArray* points);
 
     // Override
-    virtual CatmullRomTo *copy();
+    virtual CatmullRomTo *clone() const override;
     virtual CatmullRomTo *reverse() const override;
 };
 
@@ -299,7 +299,7 @@ public:
     bool initWithDuration(float dt, PointArray* points);
 
     // Override
-    virtual CatmullRomBy *copy();
+    virtual CatmullRomBy *clone() const override;
     virtual CatmullRomBy *reverse() const override;
 
 };

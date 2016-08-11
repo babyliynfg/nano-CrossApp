@@ -14,7 +14,7 @@
 
 NS_CC_BEGIN
 
-static CGSpriteFrameCache *pSharedSpriteFrameCache = NULL;
+static CGSpriteFrameCache *pSharedSpriteFrameCache = nullptr;
 
 CGSpriteFrameCache* CGSpriteFrameCache::getInstance(void)
 {
@@ -96,7 +96,7 @@ void CGSpriteFrameCache::addSpriteFramesWithDictionary(CAValueMap& dictionary, C
                                                          DRect(x, y, w, h),
                                                          false,
                                                          DPoint(ox, oy),
-                                                         DSize((float)ow, (float)oh)
+                                                         DSize(ow, oh)
                                                          );
         }
         else if(format == 1 || format == 2)
@@ -143,9 +143,8 @@ void CGSpriteFrameCache::addSpriteFramesWithDictionary(CAValueMap& dictionary, C
                 m_obSpriteFramesAliases[oneAlias] = CAValue(spriteFrameName);
             }
 
-            // create frame
             spriteFrame = CGSpriteFrame::createWithImage(image,
-                                                         DRect(imageRect.origin.x, imageRect.origin.y, spriteSize.width, spriteSize.height),
+                                                         DRect(imageRect.origin, spriteSize),
                                                          imageRotated,
                                                          spriteOffset,
                                                          spriteSourceSize);
@@ -268,15 +267,11 @@ void CGSpriteFrameCache::removeUnusedSpriteFrames(void)
 
 void CGSpriteFrameCache::removeSpriteFrameByName(const std::string& pszName)
 {
-    // explicit nil handling
     if(pszName.empty() )
     {
         return;
     }
-    
-    // Is this an alias ?
     std::string key = m_obSpriteFramesAliases[pszName].asString();
-    
     if (!key.empty())
     {
         m_obSpriteFrames.erase(key);
@@ -286,8 +281,6 @@ void CGSpriteFrameCache::removeSpriteFrameByName(const std::string& pszName)
     {
         m_obSpriteFrames.erase(pszName);
     }
-    
-    // XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
     m_pLoadedFileNames->clear();
 }
 
@@ -351,15 +344,10 @@ CGSpriteFrame* CGSpriteFrameCache::getSpriteFrameByName(const std::string& pszNa
     CGSpriteFrame* frame = m_obSpriteFrames.getValue(pszName);
     if (!frame)
     {
-        // try alias dictionary
         std::string key = m_obSpriteFramesAliases[pszName].asString();
         if (!key.empty())
         {
             frame = m_obSpriteFrames.getValue(key);
-            if (!frame)
-            {
-                CCLOG("CrossApp:CGSpriteFrameCache: Frame '%s' not found", pszName.c_str());
-            }
         }
     }
     return frame;

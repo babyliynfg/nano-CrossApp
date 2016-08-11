@@ -19,7 +19,7 @@ void ActionCamera::startWithTarget(CGNode *target)
     ActionInterval::startWithTarget(target);
 }
 
-ActionCamera* ActionCamera::copy()
+ActionCamera* ActionCamera::clone() const
 {
 	// no copy constructor
 	auto a = new (std::nothrow) ActionCamera();
@@ -132,7 +132,7 @@ OrbitCamera * OrbitCamera::create(float t, float radius, float deltaRadius, floa
     return nullptr;
 }
 
-OrbitCamera* OrbitCamera::copy()
+OrbitCamera* OrbitCamera::clone() const
 {
     // no copy constructor	
     auto a = new (std::nothrow) OrbitCamera();

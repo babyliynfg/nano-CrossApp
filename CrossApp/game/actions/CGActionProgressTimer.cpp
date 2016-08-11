@@ -29,7 +29,7 @@ bool ProgressTo::initWithDuration(float duration, float percent)
     return false;
 }
 
-ProgressTo* ProgressTo::copy()
+ProgressTo* ProgressTo::clone() const
 {
     // no copy constructor    
     auto a = new (std::nothrow) ProgressTo();
@@ -79,7 +79,7 @@ bool ProgressFromTo::initWithDuration(float duration, float fromPercentage, floa
     return false;
 }
 
-ProgressFromTo* ProgressFromTo::copy()
+ProgressFromTo* ProgressFromTo::clone() const
 {
     // no copy constructor    
     auto a = new (std::nothrow) ProgressFromTo();

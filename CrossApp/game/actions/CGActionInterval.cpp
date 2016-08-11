@@ -17,7 +17,7 @@ class ExtraAction : public FiniteTimeAction
 {
 public:
     static ExtraAction* create();
-    virtual ExtraAction* copy();
+    virtual ExtraAction* clone() const override;
     virtual ExtraAction* reverse(void) const;
     virtual void update(float time);
     virtual void step(float dt);
@@ -32,7 +32,7 @@ ExtraAction* ExtraAction::create()
     }
     return ret;
 }
-ExtraAction* ExtraAction::copy()
+ExtraAction* ExtraAction::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) ExtraAction();
@@ -252,11 +252,11 @@ bool Sequence::initWithTwoActions(FiniteTimeAction *actionOne, FiniteTimeAction 
     return true;
 }
 
-Sequence* Sequence::copy()
+Sequence* Sequence::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) Sequence();
-    a->initWithTwoActions(_actions[0]->copy(), _actions[1]->copy() );
+    a->initWithTwoActions(_actions[0]->clone(), _actions[1]->clone() );
     a->autorelease();
     return a;
 }
@@ -393,11 +393,11 @@ bool Repeat::initWithAction(FiniteTimeAction *action, unsigned int times)
     return false;
 }
 
-Repeat* Repeat::copy()
+Repeat* Repeat::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) Repeat();
-    a->initWithAction( _innerAction->copy(), _times );
+    a->initWithAction( _innerAction->clone(), _times );
     a->autorelease();
     return a;
 }
@@ -510,11 +510,11 @@ bool RepeatForever::initWithAction(ActionInterval *action)
     return true;
 }
 
-RepeatForever *RepeatForever::copy()
+RepeatForever *RepeatForever::clone() const
 {
     // no copy constructor    
     auto a = new (std::nothrow) RepeatForever();
-    a->initWithAction(_innerAction->copy());
+    a->initWithAction(_innerAction->clone());
     a->autorelease();
     return a;
 }
@@ -679,11 +679,11 @@ bool Spawn::initWithTwoActions(FiniteTimeAction *action1, FiniteTimeAction *acti
     return ret;
 }
 
-Spawn* Spawn::copy()
+Spawn* Spawn::clone() const
 {
     // no copy constructor    
     auto a = new (std::nothrow) Spawn();
-    a->initWithTwoActions(_one->copy(), _two->copy());
+    a->initWithTwoActions(_one->clone(), _two->clone());
 
     a->autorelease();
     return a;
@@ -790,7 +790,7 @@ bool RotateTo::initWithDuration(float duration, const DPoint3D& dstAngle3D)
     return false;
 }
 
-RotateTo* RotateTo::copy()
+RotateTo* RotateTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) RotateTo();
@@ -953,7 +953,7 @@ bool RotateBy::initWithDuration(float duration, const DPoint3D& deltaAngle3D)
 }
 
 
-RotateBy* RotateBy::copy()
+RotateBy* RotateBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) RotateBy();
@@ -1076,7 +1076,7 @@ bool MoveBy::initWithDuration(float duration, const DPoint3D& deltaPosition)
     return ret;
 }
 
-MoveBy* MoveBy::copy()
+MoveBy* MoveBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) MoveBy();
@@ -1161,7 +1161,7 @@ bool MoveTo::initWithDuration(float duration, const DPoint3D& position)
     return ret;
 }
 
-MoveTo* MoveTo::copy()
+MoveTo* MoveTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) MoveTo();
@@ -1219,7 +1219,7 @@ bool SkewTo::initWithDuration(float t, float sx, float sy)
     return bRet;
 }
 
-SkewTo* SkewTo::copy()
+SkewTo* SkewTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) SkewTo();
@@ -1322,7 +1322,7 @@ SkewBy* SkewBy::create(float t, float sx, float sy)
     return skewBy;
 }
 
-SkewBy * SkewBy::copy()
+SkewBy * SkewBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) SkewBy();
@@ -1389,7 +1389,7 @@ bool JumpBy::initWithDuration(float duration, const DPoint& position, float heig
     return false;
 }
 
-JumpBy* JumpBy::copy()
+JumpBy* JumpBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) JumpBy();
@@ -1465,7 +1465,7 @@ bool JumpTo::initWithDuration(float duration, const DPoint& position, float heig
     return false;
 }
 
-JumpTo* JumpTo::copy()
+JumpTo* JumpTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) JumpTo();
@@ -1528,7 +1528,7 @@ void BezierBy::startWithTarget(CGNode *target)
     _previousPosition = _startPosition = target->getPosition();
 }
 
-BezierBy* BezierBy::copy()
+BezierBy* BezierBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) BezierBy();
@@ -1605,7 +1605,7 @@ bool BezierTo::initWithDuration(float t, const ccBezierConfig &c)
     return false;
 }
 
-BezierTo* BezierTo::copy()
+BezierTo* BezierTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) BezierTo();
@@ -1701,7 +1701,7 @@ bool ScaleTo::initWithDuration(float duration, float sx, float sy, float sz)
     return false;
 }
 
-ScaleTo* ScaleTo::copy()
+ScaleTo* ScaleTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) ScaleTo();
@@ -1769,7 +1769,7 @@ ScaleBy* ScaleBy::create(float duration, float sx, float sy, float sz)
     return scaleBy;
 }
 
-ScaleBy* ScaleBy::copy()
+ScaleBy* ScaleBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) ScaleBy();
@@ -1830,7 +1830,7 @@ void Blink::startWithTarget(CGNode *target)
     _originalState = target->isVisible();
 }
 
-Blink* Blink::copy()
+Blink* Blink::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) Blink();
@@ -1868,7 +1868,7 @@ FadeIn* FadeIn::create(float d)
     return action;
 }
 
-FadeIn* FadeIn::copy()
+FadeIn* FadeIn::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) FadeIn();
@@ -1926,7 +1926,7 @@ FadeOut* FadeOut::create(float d)
     return action;
 }
 
-FadeOut* FadeOut::copy()
+FadeOut* FadeOut::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) FadeOut();
@@ -1990,7 +1990,7 @@ bool FadeTo::initWithDuration(float duration, float opacity)
     return false;
 }
 
-FadeTo* FadeTo::copy()
+FadeTo* FadeTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) FadeTo();
@@ -2051,7 +2051,7 @@ bool TintTo::initWithDuration(float duration, GLubyte red, GLubyte green, GLubyt
     return false;
 }
 
-TintTo* TintTo::copy()
+TintTo* TintTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) TintTo();
@@ -2114,7 +2114,7 @@ bool TintBy::initWithDuration(float duration, GLshort deltaRed, GLshort deltaGre
     return false;
 }
 
-TintBy* TintBy::copy()
+TintBy* TintBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) TintBy();
@@ -2165,7 +2165,7 @@ DelayTime* DelayTime::create(float d)
     return action;
 }
 
-DelayTime* DelayTime::copy()
+DelayTime* DelayTime::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) DelayTime();
@@ -2193,7 +2193,7 @@ ReverseTime* ReverseTime::create(FiniteTimeAction *action)
 {
     // casting to prevent warnings
     ReverseTime *reverseTime = new (std::nothrow) ReverseTime();
-    reverseTime->initWithAction( action->copy() );
+    reverseTime->initWithAction( action->clone() );
     reverseTime->autorelease();
 
     return reverseTime;
@@ -2218,11 +2218,11 @@ bool ReverseTime::initWithAction(FiniteTimeAction *action)
     return false;
 }
 
-ReverseTime* ReverseTime::copy()
+ReverseTime* ReverseTime::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) ReverseTime();
-    a->initWithAction( _other->copy() );
+    a->initWithAction( _other->clone() );
     a->autorelease();
     return a;
 }
@@ -2261,7 +2261,7 @@ void ReverseTime::update(float time)
 ReverseTime* ReverseTime::reverse() const
 {
     // FIXME: This looks like a bug
-    return (ReverseTime*)_other->copy();
+    return (ReverseTime*)_other->clone();
 }
 
 //
@@ -2335,11 +2335,11 @@ void Animate::setAnimation(CrossApp::Animation *animation)
     }
 }
 
-Animate* Animate::copy()
+Animate* Animate::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) Animate();
-    a->initWithAnimation(_animation->copy());
+    a->initWithAnimation(_animation->clone());
     a->autorelease();
     return a;
 }
@@ -2430,7 +2430,7 @@ Animate* Animate::reverse() const
                 break;
             }
 
-            newArray.pushBack(animFrame->copy());
+            newArray.pushBack(animFrame->clone());
         }
     }
 
@@ -2476,12 +2476,12 @@ bool TargetedAction::initWithTarget(CGNode* target, FiniteTimeAction* action)
     return false;
 }
 
-TargetedAction* TargetedAction::copy()
+TargetedAction* TargetedAction::clone() const
 {
     // no copy constructor    
     auto a = new (std::nothrow) TargetedAction();
     // win32 : use the _other's copy object.
-    a->initWithTarget(_forcedTarget, _action->copy());
+    a->initWithTarget(_forcedTarget, _action->clone());
     a->autorelease();
     return a;
 }
@@ -2547,7 +2547,7 @@ bool ActionFloat::initWithDuration(float duration, float from, float to, ActionF
     return false;
 }
 
-ActionFloat* ActionFloat::copy()
+ActionFloat* ActionFloat::clone() const
 {
     auto a = new (std::nothrow) ActionFloat();
     a->initWithDuration(_duration, _from, _to, _callback);

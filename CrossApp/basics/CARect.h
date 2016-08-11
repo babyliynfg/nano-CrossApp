@@ -20,6 +20,8 @@ public:
     
     DRect();
     
+    DRect(const DPoint& orgin, const DSize& size);
+    
     DRect(float x, float y, float width, float height);
 
     DRect(const DRect& other);

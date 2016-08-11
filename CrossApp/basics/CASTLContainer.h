@@ -1069,33 +1069,11 @@ public:
 		return *this;
 	}
 
-	bool insert(K key, T object)
+	void insert(K key, T object)
 	{
-		iterator it = _data.find(key);
-		if (it != _data.end())
-		{
-			return false;
-		}
         CC_SAFE_RETAIN(object);
-		_data[key] = object;
-        return true;
-	}
-
-	void assign(K key, T object)
-	{
-		CC_SAFE_RETAIN(object);
-
-		iterator it = _data.find(key);
-		if (it == _data.end())
-		{
-			_data[key] = object;
-		}
-		else
-		{
-			CAObject* o = (CAObject*)it->second;
-			CC_SAFE_RELEASE_NULL(o);
-			it->second = object;
-		}
+        erase(key);
+        _data.insert(std::make_pair(key, object));
 	}
 
 	size_t size() const
@@ -1129,8 +1107,7 @@ public:
 		iterator it = _data.find(key);
 		if (it != _data.end())
 		{
-			CAObject* o = (CAObject*)it->second;
-			CC_SAFE_RELEASE_NULL(o);
+			CC_SAFE_RELEASE_NULL(it->second);
 			_data.erase(it);
 			return true;
 		}
@@ -1159,7 +1136,8 @@ public:
 
     void erase(const std::vector<K>& keys)
     {
-        for(const auto &key : keys) {
+        for(const auto &key : keys)
+        {
             this->erase(key);
         }
     }

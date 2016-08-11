@@ -92,11 +92,11 @@ bool Speed::initWithAction(ActionInterval *action, float speed)
     return true;
 }
 
-Speed *Speed::copy()
+Speed *Speed::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) Speed();
-    a->initWithAction(_innerAction->copy(), _speed);
+    a->initWithAction(_innerAction->clone(), _speed);
     a->autorelease();
     return a;
 }
@@ -158,7 +158,7 @@ Follow* Follow::create(CGNode *followedNode, const DRect& rect/* = DRectZero*/)
     return nullptr;
 }
 
-Follow* Follow::copy()
+Follow* Follow::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) Follow();

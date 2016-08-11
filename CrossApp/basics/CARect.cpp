@@ -14,6 +14,13 @@ DRect::DRect(void)
     setRect(0.0f, 0.0f, 0.0f, 0.0f);
 }
 
+DRect::DRect(const DPoint& orgin, const DSize& size)
+:m_eType(Frame)
+{
+    setRect(orgin.x, orgin.y, size.width, size.height);
+}
+
+
 DRect::DRect(float x, float y, float width, float height)
 :m_eType(Frame)
 {

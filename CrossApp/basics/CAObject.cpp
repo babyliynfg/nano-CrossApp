@@ -125,13 +125,6 @@ private:
 };
 
 
-CAObject* CACopying::copyWithZone(CAZone *pZone)
-{
-    CC_UNUSED_PARAM(pZone);
-    CCAssert(0, "not implement");
-    return 0;
-}
-
 CAObject::CAObject(void)
 : m_uReference(1) // when the object is created, the reference count of it is 1
 , m_uAutoReleaseCount(0)
@@ -164,11 +157,6 @@ CAObject::~CAObject(void)
     {
         pEngine->removeScriptObjectByCCObject(this);
     }
-}
-
-CAObject* CAObject::copy()
-{
-    return copyWithZone(0);
 }
 
 void CAObject::release(void)
@@ -223,10 +211,6 @@ void CAObject::updateDelayTimers(float t)
 	CAObjectHelper::getInstance()->updateDelayTimers(t);
 }
 
-CAZone::CAZone(CAObject *pObject)
-{
-    m_pCopyObject = pObject;
-}
 
 
 

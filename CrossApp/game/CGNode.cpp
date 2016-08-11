@@ -79,13 +79,15 @@ CGNode::CGNode(void)
     this->updateRotationQuat();
     
     s_pMap[m_u__ID] = this;
-    CCLog("CGNode = %d\n", ++nodeCount);
+//    CCLog("CGNode = %d\n", ++nodeCount);
 }
 
 CGNode::~CGNode(void)
 {
     CC_SAFE_RELEASE(m_pCamera);
     CC_SAFE_RELEASE(m_pShaderProgram);
+    
+    this->stopAllActions();
     
     if(!m_obChildren.empty())
     {
@@ -102,7 +104,7 @@ CGNode::~CGNode(void)
         m_pCAView->release();
     }
     s_pMap.erase(m_u__ID);
-    CCLog("~CGNode = %d\n", --nodeCount);
+//    CCLog("~CGNode = %d\n", --nodeCount);
 }
 
 CGNode * CGNode::create(void)
@@ -847,6 +849,7 @@ CGNode* CGNode::copy()
 void CGNode::onEnter()
 {
     m_bRunning = true;
+    CAScheduler::getScheduler()->resumeTarget(this);
     ActionManager::getInstance()->resumeTarget(this);
     
     if (!m_obChildren.empty())
@@ -901,7 +904,7 @@ void CGNode::onExit()
 {
     m_bRunning = false;
     CAScheduler::getScheduler()->pauseTarget(this);
-    this->stopAllActions();
+    ActionManager::getInstance()->pauseTarget(this);
     
     if (!m_obChildren.empty())
     {

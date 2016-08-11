@@ -261,10 +261,9 @@ void CGSpriteBatchNode::draw(void)
 
     CAIMAGE_DRAW_SETUP();
 
-    CAVector<CGNode*>::const_iterator itr;
-    for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
+    for (auto& var : m_obChildren)
     {
-        CGSprite* sprite = (CGSprite*)(*itr);
+        CGSprite* sprite = (CGSprite*)var;
         sprite->updateTransform();
     }
     

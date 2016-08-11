@@ -22,7 +22,7 @@ public:
     //
     // Overrides
     //
-    virtual ActionInstant* copy()
+    virtual ActionInstant* clone() const
     {
         CC_ASSERT(0);
         return nullptr;
@@ -65,7 +65,7 @@ public:
      */
     virtual void update(float time) override;
     virtual ActionInstant* reverse() const override;
-    virtual Show* copy();
+    virtual Show* clone() const override;
 
 public:
     Show(){}
@@ -95,7 +95,7 @@ public:
      */
     virtual void update(float time) override;
     virtual ActionInstant* reverse() const override;
-    virtual Hide* copy();
+    virtual Hide* clone() const override;
 
 public:
     Hide(){}
@@ -125,7 +125,7 @@ public:
      */
     virtual void update(float time) override;
     virtual ToggleVisibility* reverse() const override;
-    virtual ToggleVisibility* copy();
+    virtual ToggleVisibility* clone() const override;
 
 public:
     ToggleVisibility(){}
@@ -145,7 +145,7 @@ public:
     static RemoveSelf * create();
 
     virtual void update(float time) override;
-    virtual RemoveSelf* copy();
+    virtual RemoveSelf* clone() const override;
     virtual RemoveSelf* reverse() const override;
     
 public:
@@ -179,7 +179,7 @@ public:
      */
     virtual void update(float time) override;
     virtual FlipX* reverse() const override;
-    virtual FlipX* copy();
+    virtual FlipX* clone() const override;
     
 public:
     FlipX() :_flipX(false) {}
@@ -217,7 +217,7 @@ public:
      */
     virtual void update(float time) override;
     virtual FlipY* reverse() const override;
-    virtual FlipY* copy();
+    virtual FlipY* clone() const override;
     
 public:
     FlipY() :_flipY(false) {}
@@ -255,7 +255,7 @@ public:
      */
     virtual void update(float time) override;
     virtual Place* reverse() const override;
-    virtual Place* copy();
+    virtual Place* clone() const override;
     
 public:
     Place(){}
@@ -289,83 +289,29 @@ public:
      */
     static CallFunc * create(const std::function<void()>& func);
 
-    /** Creates the action with the callback
-
-     typedef void (Ref::*SEL_CallFunc)();
-     @deprecated Use the std::function API instead.
-     * @js NA
-     * @lua NA
-     */
-    CC_DEPRECATED_ATTRIBUTE static CallFunc * create(CAObject* target, SEL_CallFunc selector);
-
 public:
     /** Executes the callback.
      */
     virtual void execute();
 
-    /** Get the selector target.
-     *
-     * @return The selector target.
-     */
-    inline CAObject* getTargetCallback()
-    {
-        return _selectorTarget;
-    }
-
-    /** Set the selector target.
-     *
-     * @param sel The selector target.
-     */
-    inline void setTargetCallback(CAObject* sel)
-    {
-        if (sel != _selectorTarget)
-        {
-            CC_SAFE_RETAIN(sel);
-            CC_SAFE_RELEASE(_selectorTarget);
-            _selectorTarget = sel;
-        }
-    }
-    //
-    // Overrides
-    //
-    /**
-     * @param time In seconds.
-     */
     virtual void update(float time) override;
     virtual CallFunc* reverse() const override;
-    virtual CallFunc* copy();
+    virtual CallFunc* clone() const override;
     
 public:
     CallFunc()
-    : _selectorTarget(nullptr)
-    , _callFunc(nullptr)
-    , _function(nullptr)
+    :_function(nullptr)
     {
     }
     virtual ~CallFunc();
 
-    /** initializes the action with the callback
-     typedef void (Ref::*SEL_CallFunc)();
-     @deprecated Use the std::function API instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(CAObject* target);
-    
     /** initializes the action with the std::function<void()>
      * @lua NA
      */
     bool initWithFunction(const std::function<void()>& func);
 
 protected:
-    /** Target that will be called */
-    CAObject*   _selectorTarget;
 
-    union
-    {
-        SEL_CallFunc    _callFunc;
-        SEL_CallFuncN    _callFuncN;
-    };
-    
-    /** function that will be called */
     std::function<void()> _function;
 
 private:
@@ -386,18 +332,10 @@ public:
      * @return  An autoreleased CallFuncN object.
      */
     static CallFuncN * create(const std::function<void(CGNode*)>& func);
-
-    /** Creates the action with the callback.
-
-    typedef void (Ref::*SEL_CallFuncN)(CGNode*);
-     @deprecated Use the std::function API instead.
-    */
-    CC_DEPRECATED_ATTRIBUTE static CallFuncN * create(CAObject* target, SEL_CallFuncN selector);
-
     //
     // Overrides
     //
-    virtual CallFuncN* copy();
+    virtual CallFuncN* clone() const override;
     virtual void execute() override;
     
 public:
@@ -406,13 +344,6 @@ public:
 
     /** initializes the action with the std::function<void(CGNode*)> */
     bool initWithFunction(const std::function<void(CGNode*)>& func);
-    
-    /** initializes the action with the callback
-     
-     typedef void (Ref::*SEL_CallFuncN)(CGNode*);
-     @deprecated Use the std::function API instead.
-     */
-    CC_DEPRECATED_ATTRIBUTE bool initWithTarget(CAObject* target, SEL_CallFuncN selector);
 
 protected:
     /** function that will be called with the "sender" as the 1st argument */
@@ -420,92 +351,6 @@ protected:
 
 private:
     M_DISALLOW_COPY_AND_ASSIGN(CallFuncN);
-};
-
-/** @class __CCCallFuncND
- * @deprecated Please use CallFuncN instead.
- * @brief Calls a 'callback' with the node as the first argument and the 2nd argument is data.
- * ND means: Node and Data. Data is void *, so it could be anything.
- * @js NA
- */
-class CC_DLL  __CCCallFuncND : public CallFunc
-{
-public:
-    /** Creates the action with the callback and the data to pass as an argument.
-     *
-     * @param target    A certain target.
-     * @param selector  The callback need to be executed.
-     * @param d Data, is void* type.
-     * @return An autoreleased __CCCallFuncND object.
-     */
-    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncND * create(CAObject* target, SEL_CallFuncND selector, void* d);
-    
-    //
-    // Overrides
-    //
-    virtual __CCCallFuncND* copy();
-    virtual void execute() override;
-    
-public:
-    __CCCallFuncND() {}
-    virtual ~__CCCallFuncND() {}
-    
-    /** initializes the action with the callback and the data to pass as an argument */
-    bool initWithTarget(CAObject* target, SEL_CallFuncND selector, void* d);
-
-protected:
-    SEL_CallFuncND _callFuncND;
-    void* _data;
-
-private:
-    M_DISALLOW_COPY_AND_ASSIGN(__CCCallFuncND);
-};
-
-
-/** @class __CCCallFuncO
- @deprecated Please use CallFuncN instead.
- @brief Calls a 'callback' with an object as the first argument. O means Object.
- @since v0.99.5
- @js NA
- */
-
-class CC_DLL __CCCallFuncO : public CallFunc
-{
-public:
-    /** Creates the action with the callback.
-        typedef void (Ref::*SEL_CallFuncO)(Ref*);
-     *
-     * @param target    A certain target.
-     * @param selector  The callback need to be executed.
-     * @param object    An object as the callback's first argument.
-     * @return An autoreleased __CCCallFuncO object.
-     */
-    CC_DEPRECATED_ATTRIBUTE static __CCCallFuncO * create(CAObject* target, SEL_CallFuncO selector, CAObject* object);
-    //
-    // Overrides
-    //
-    virtual __CCCallFuncO* copy();
-    virtual void execute() override;
-    
-    CAObject* getObject() const;
-    void setObject(CAObject* obj);
-    
-public:
-    __CCCallFuncO();
-    virtual ~__CCCallFuncO();
-    /** initializes the action with the callback
-
-     typedef void (Ref::*SEL_CallFuncO)(Ref*);
-     */
-    bool initWithTarget(CAObject* target, SEL_CallFuncO selector, CAObject* object);
-    
-protected:
-    /** object to be passed as argument */
-    CAObject* _object;
-    SEL_CallFuncO _callFuncO;
-
-private:
-    M_DISALLOW_COPY_AND_ASSIGN(__CCCallFuncO);
 };
 
 // end of actions group

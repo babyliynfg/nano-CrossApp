@@ -50,7 +50,7 @@ public:
         return nullptr;
     }
 
-    virtual ActionInterval *copy()
+    virtual ActionInterval *clone() const
     {
         CC_ASSERT(0);
         return nullptr;
@@ -128,7 +128,7 @@ public:
     //
     // Overrides
     //
-    virtual Sequence* copy();
+    virtual Sequence* clone() const override;
     virtual Sequence* reverse() const override;
     virtual void startWithTarget(CGNode *target) override;
     virtual void stop(void) override;
@@ -195,7 +195,7 @@ public:
     //
     // Overrides
     //
-    virtual Repeat* copy();
+    virtual Repeat* clone() const override;
     virtual Repeat* reverse() const override;
     virtual void startWithTarget(CGNode *target) override;
     virtual void stop(void) override;
@@ -265,7 +265,7 @@ public:
     //
     // Overrides
     //
-    virtual RepeatForever* copy();
+    virtual RepeatForever* clone() const override;
     virtual RepeatForever* reverse(void) const override;
     virtual void startWithTarget(CGNode* target) override;
     /**
@@ -354,7 +354,7 @@ public:
     //
     // Overrides
     //
-    virtual Spawn* copy();
+    virtual Spawn* clone() const override;
     virtual Spawn* reverse(void) const override;
     virtual void startWithTarget(CGNode *target) override;
     virtual void stop(void) override;
@@ -416,7 +416,7 @@ public:
     //
     // Overrides
     //
-    virtual RotateTo* copy();
+    virtual RotateTo* clone() const override;
     virtual RotateTo* reverse() const override;
     virtual void startWithTarget(CGNode *target) override;
     /**
@@ -492,7 +492,7 @@ public:
     //
     // Override
     //
-    virtual RotateBy* copy();
+    virtual RotateBy* clone() const override;
     virtual RotateBy* reverse(void) const override;
     virtual void startWithTarget(CGNode *target) override;
     /**
@@ -553,7 +553,7 @@ public:
     //
     // Overrides
     //
-    virtual MoveBy* copy();
+    virtual MoveBy* clone() const override;
     virtual MoveBy* reverse(void) const  override;
     virtual void startWithTarget(CGNode *target) override;
     /**
@@ -606,7 +606,7 @@ public:
     //
     // Overrides
     //
-    virtual MoveTo* copy();
+    virtual MoveTo* clone() const override;
     virtual MoveTo* reverse() const  override;
     virtual void startWithTarget(CGNode *target) override;
     
@@ -651,7 +651,7 @@ public:
     //
     // Overrides
     //
-    virtual SkewTo* copy();
+    virtual SkewTo* clone() const override;
     virtual SkewTo* reverse(void) const override;
     virtual void startWithTarget(CGNode *target) override;
     /**
@@ -701,7 +701,7 @@ public:
     // Overrides
     //
     virtual void startWithTarget(CGNode *target) override;
-    virtual SkewBy* copy()  override;
+    virtual SkewBy* clone() const  override;
     virtual SkewBy* reverse(void) const override;
     
 public:
@@ -735,7 +735,7 @@ public:
     //
     // Overrides
     //
-    virtual JumpBy* copy();
+    virtual JumpBy* clone() const override;
     virtual JumpBy* reverse(void) const override;
     virtual void startWithTarget(CGNode *target) override;
     /**
@@ -784,7 +784,7 @@ public:
     // Override
     //
     virtual void startWithTarget(CGNode *target) override;
-    virtual JumpTo* copy();
+    virtual JumpTo* clone() const override;
     virtual JumpTo* reverse(void) const override;
 
 public:
@@ -836,7 +836,7 @@ public:
     //
     // Overrides
     //
-    virtual BezierBy* copy();
+    virtual BezierBy* clone() const override;
     virtual BezierBy* reverse(void) const override;
     virtual void startWithTarget(CGNode *target) override;
     /**
@@ -886,7 +886,7 @@ public:
     // Overrides
     //
     virtual void startWithTarget(CGNode *target) override;
-    virtual BezierTo* copy();
+    virtual BezierTo* clone() const override;
     virtual BezierTo* reverse(void) const override;
     
 public:
@@ -942,7 +942,7 @@ public:
     //
     // Overrides
     //
-    virtual ScaleTo* copy();
+    virtual ScaleTo* clone() const override;
     virtual ScaleTo* reverse(void) const override;
     virtual void startWithTarget(CGNode *target) override;
     /**
@@ -1026,7 +1026,7 @@ public:
     // Overrides
     //
     virtual void startWithTarget(CGNode *target) override;
-    virtual ScaleBy* copy();
+    virtual ScaleBy* clone() const override;
     virtual ScaleBy* reverse(void) const override;
 
 public:
@@ -1054,7 +1054,7 @@ public:
     //
     // Overrides
     //
-    virtual Blink* copy();
+    virtual Blink* clone() const override;
     virtual Blink* reverse() const override;
     /**
      * @param time In seconds.
@@ -1100,7 +1100,7 @@ public:
     //
     // Overrides
     //
-    virtual FadeTo* copy();
+    virtual FadeTo* clone() const override;
     virtual FadeTo* reverse(void) const override;
     virtual void startWithTarget(CGNode *target) override;
     /**
@@ -1145,7 +1145,7 @@ public:
     // Overrides
     //
     virtual void startWithTarget(CGNode *target) override;
-    virtual FadeIn* copy();
+    virtual FadeIn* clone() const override;
     virtual FadeTo* reverse(void) const override;
 
     /**
@@ -1179,7 +1179,7 @@ public:
     // Overrides
     //
     virtual void startWithTarget(CGNode *target) override;
-    virtual FadeOut* copy()  override;
+    virtual FadeOut* clone() const  override;
     virtual FadeTo* reverse(void) const override;
 
     /**
@@ -1223,7 +1223,7 @@ public:
     //
     // Overrides
     //
-    virtual TintTo* copy();
+    virtual TintTo* clone() const override;
     virtual TintTo* reverse(void) const override;
     virtual void startWithTarget(CGNode *target) override;
     /**
@@ -1266,7 +1266,7 @@ public:
     //
     // Overrides
     //
-    virtual TintBy* copy();
+    virtual TintBy* clone() const override;
     virtual TintBy* reverse() const override;
     virtual void startWithTarget(CGNode *target) override;
     /**
@@ -1315,7 +1315,7 @@ public:
      */
     virtual void update(float time) override;
     virtual DelayTime* reverse() const override;
-    virtual DelayTime* copy();
+    virtual DelayTime* clone() const override;
 
 public:
     DelayTime() {}
@@ -1347,7 +1347,7 @@ public:
     // Overrides
     //
     virtual ReverseTime* reverse() const override;
-    virtual ReverseTime* copy();
+    virtual ReverseTime* clone() const override;
     virtual void startWithTarget(CGNode *target) override;
     virtual void stop(void) override;
     /**
@@ -1403,7 +1403,7 @@ public:
     //
     // Overrides
     //
-    virtual Animate* copy();
+    virtual Animate* clone() const override;
     virtual Animate* reverse() const override;
     virtual void startWithTarget(CGNode *target) override;
     virtual void stop(void) override;
@@ -1462,7 +1462,7 @@ public:
     //
     // Overrides
     //
-    virtual TargetedAction* copy();
+    virtual TargetedAction* clone() const override;
     virtual TargetedAction* reverse() const  override;
     virtual void startWithTarget(CGNode *target) override;
     virtual void stop(void) override;
@@ -1516,7 +1516,7 @@ public:
     void startWithTarget(CGNode* target) override;
     void update(float delta) override;
     ActionFloat* reverse() const override;
-    ActionFloat* copy();
+    ActionFloat* clone() const override;
 
 public:
     ActionFloat() {};

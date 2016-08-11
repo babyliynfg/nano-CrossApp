@@ -29,7 +29,7 @@ class CGSpriteFrame;
  
  @since v2.0
  */
-class CC_DLL AnimationFrame : public CAObject
+class CC_DLL AnimationFrame : public CAObject, public CAClonable
 {
 public:
     /** @struct DisplayedEventInfo
@@ -96,7 +96,7 @@ public:
     }
     
     // Overrides
-	virtual AnimationFrame *copy();
+	virtual AnimationFrame *clone() const override;
     
 public:
     /**
@@ -138,7 +138,7 @@ private:
  * sprite->runAction(Animate::create(animation));
  * @endcode
 */
-class CC_DLL Animation : public CAObject
+class CC_DLL Animation : public CAObject, public CAClonable
 {
 public:
     /** Creates an animation.
@@ -254,7 +254,7 @@ public:
     void setLoops(unsigned int loops) { _loops = loops; };
     
     // overrides
-	virtual Animation *copy();
+	virtual Animation *clone() const override;
     
 public:
     Animation();

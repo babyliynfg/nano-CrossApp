@@ -7,6 +7,18 @@ NS_CC_BEGIN
 
 // implementation of CGSpriteFrame
 
+CGSpriteFrame::CGSpriteFrame()
+: _rotated(false)
+, _image(nullptr)
+{
+    
+}
+
+CGSpriteFrame::~CGSpriteFrame()
+{
+    CC_SAFE_RELEASE(_image);
+}
+
 CGSpriteFrame* CGSpriteFrame::create(const std::string& filename, const DRect& rect)
 {
     CGSpriteFrame *spriteFrame = new (std::nothrow) CGSpriteFrame();
@@ -41,13 +53,6 @@ CGSpriteFrame* CGSpriteFrame::create(const std::string& filename, const DRect& r
     spriteFrame->autorelease();
 
     return spriteFrame;
-}
-
-CGSpriteFrame::CGSpriteFrame()
-: _rotated(false)
-, _image(nullptr)
-{
-    
 }
 
 bool CGSpriteFrame::initWithImage(CAImage* image, const DRect& rect)
@@ -87,13 +92,7 @@ bool CGSpriteFrame::initWithImageFilename(const std::string& filename, const DRe
     return true;
 }
 
-CGSpriteFrame::~CGSpriteFrame()
-{
-    CCLOGINFO("deallocing CGSpriteFrame: %p", this);
-    CC_SAFE_RELEASE(_image);
-}
-
-CGSpriteFrame* CGSpriteFrame::copy()
+CGSpriteFrame* CGSpriteFrame::clone() const
 {
     CGSpriteFrame *copy = new (std::nothrow) CGSpriteFrame();
     copy->initWithImageFilename(_imageFilename, _rect, _rotated, _offset, _originalSize);
@@ -134,9 +133,10 @@ bool CGSpriteFrame::hasAnchorPoint() const
 
 void CGSpriteFrame::setImage(CAImage * image)
 {
-    if( _image != image ) {
-        CC_SAFE_RELEASE(_image);
+    if( _image != image )
+    {
         CC_SAFE_RETAIN(image);
+        CC_SAFE_RELEASE(_image);
         _image = image;
     }
 }

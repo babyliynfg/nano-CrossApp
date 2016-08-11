@@ -31,7 +31,7 @@ public:
     //
     // Overrides
     //
-	virtual ProgressTo* copy();
+	virtual ProgressTo* clone() const override;
 	virtual ProgressTo* reverse() const override;
     virtual void startWithTarget(CGNode *target) override;
     virtual void update(float time) override;
@@ -75,7 +75,7 @@ public:
     //
     // Overrides
     //
-	virtual ProgressFromTo* copy();
+	virtual ProgressFromTo* clone() const override;
 	virtual ProgressFromTo* reverse() const override;
     virtual void startWithTarget(CGNode *target) override;
     virtual void update(float time) override;

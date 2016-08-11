@@ -38,7 +38,7 @@ bool PointArray::initWithCapacity(ssize_t capacity)
     return true;
 }
 
-PointArray* PointArray::copy()
+PointArray* PointArray::clone() const
 {
     std::vector<DPoint*> *newArray = new std::vector<DPoint*>();
     std::vector<DPoint*>::iterator iter;
@@ -225,11 +225,11 @@ void CardinalSplineTo::startWithTarget(CrossApp::CGNode *target)
     _accumulatedDiff = DPointZero;
 }
 
-CardinalSplineTo* CardinalSplineTo::copy()
+CardinalSplineTo* CardinalSplineTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) CardinalSplineTo();
-    a->initWithDuration(this->_duration, this->_points->copy(), this->_tension);
+    a->initWithDuration(this->_duration, this->_points->clone(), this->_tension);
     a->autorelease();
     return a;
 }
@@ -322,7 +322,7 @@ void CardinalSplineBy::updatePosition(CrossApp::DPoint &newPos)
 
 CardinalSplineBy* CardinalSplineBy::reverse() const
 {
-    PointArray *copyConfig = _points->copy();
+    PointArray *copyConfig = _points->clone();
 	
     //
     // convert "absolutes" to "diffs"
@@ -368,11 +368,11 @@ void CardinalSplineBy::startWithTarget(CrossApp::CGNode *target)
     _startPosition = target->getPosition();
 }
 
-CardinalSplineBy* CardinalSplineBy::copy()
+CardinalSplineBy* CardinalSplineBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) CardinalSplineBy();
-    a->initWithDuration(this->_duration, this->_points->copy(), this->_tension);
+    a->initWithDuration(this->_duration, this->_points->clone(), this->_tension);
     a->autorelease();
     return a;
 }
@@ -408,11 +408,11 @@ bool CatmullRomTo::initWithDuration(float dt, CrossApp::PointArray *points)
     return false;
 }
 
-CatmullRomTo* CatmullRomTo::copy()
+CatmullRomTo* CatmullRomTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) CatmullRomTo();
-    a->initWithDuration(this->_duration, this->_points->copy());
+    a->initWithDuration(this->_duration, this->_points->clone());
     a->autorelease();
     return a;
 }
@@ -455,18 +455,18 @@ bool CatmullRomBy::initWithDuration(float dt, CrossApp::PointArray *points)
     return false;
 }
 
-CatmullRomBy* CatmullRomBy::copy()
+CatmullRomBy* CatmullRomBy::clone() const
 {
     // no copy constructor	
     auto a = new (std::nothrow) CatmullRomBy();
-    a->initWithDuration(this->_duration, this->_points->copy());
+    a->initWithDuration(this->_duration, this->_points->clone());
     a->autorelease();
     return a;
 }
 
 CatmullRomBy* CatmullRomBy::reverse() const
 {
-    PointArray *copyConfig = _points->copy();
+    PointArray *copyConfig = _points->clone();
 
     //
     // convert "absolutes" to "diffs"

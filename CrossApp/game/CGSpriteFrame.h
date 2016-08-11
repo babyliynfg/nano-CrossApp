@@ -11,7 +11,7 @@ NS_CC_BEGIN
 
 class CAImage;
 
-class CC_DLL CGSpriteFrame : public CAObject
+class CC_DLL CGSpriteFrame : public CAObject, public CAClonable
 {
 public:
 
@@ -61,7 +61,7 @@ public:
 
     bool hasAnchorPoint() const;
 
-	virtual CGSpriteFrame *copy();
+	virtual CGSpriteFrame *clone() const override;
 
 protected:
     
