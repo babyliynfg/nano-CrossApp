@@ -22,9 +22,8 @@
 
 NS_CC_BEGIN;
 
-static int nodeCount = 0;
-
 static int s_globalOrderOfArrival = 1;
+
 static std::map<int, CGNode*> s_pMap;
 
 std::map<int, CGNode*>& CGNode::getInstanceMap()
@@ -79,7 +78,7 @@ CGNode::CGNode(void)
     this->updateRotationQuat();
     
     s_pMap[m_u__ID] = this;
-//    CCLog("CGNode = %d\n", ++nodeCount);
+//    CCLog("CGNode = %ld\n", s_pMap.size());
 }
 
 CGNode::~CGNode(void)
@@ -104,7 +103,7 @@ CGNode::~CGNode(void)
         m_pCAView->release();
     }
     s_pMap.erase(m_u__ID);
-//    CCLog("~CGNode = %d\n", --nodeCount);
+//    CCLog("~CGNode = %ld\n", s_pMap.size());
 }
 
 CGNode * CGNode::create(void)
@@ -1223,12 +1222,8 @@ void CGNode::transform()
 
 void CGNode::updateTransform()
 {
-    if (!m_obChildren.empty())
-    {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-            (*itr)->updateTransform();
-    }
+    for (const auto& var : m_obChildren)
+        var->updateTransform();
 }
 
 DRect CGNode::convertRectToNodeSpace(const CrossApp::DRect &worldRect)

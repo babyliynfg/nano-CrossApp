@@ -153,6 +153,17 @@ void DRect::InflateRect(float v)
 	}
 }
 
+void DRect::InflateRect(float hor, float ver)
+{
+    size.width += hor;
+    size.height += ver;
+    if (m_eType == Frame)
+    {
+        origin.x -= hor/2;
+        origin.y -= ver/2;
+    }
+}
+
 void DRect::InflateRect(float l, float t, float r, float b)
 {
 	size.width += (l+r);

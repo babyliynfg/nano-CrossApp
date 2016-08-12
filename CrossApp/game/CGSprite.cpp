@@ -396,14 +396,13 @@ void CGSprite::updateTransform(void)
             }
             else
             {
-                m_tTransformToBatch = TransformConcat(getNodeToParentTransform() , ((CGSprite*)m_pParent)->m_tTransformToBatch);
+                const Mat4 &nodeToParent = getNodeToParentTransform();
+                Mat4 &parentTransform = static_cast<CGSprite*>(m_pParent)->m_tTransformToBatch;
+                m_tTransformToBatch = parentTransform * nodeToParent;
             }
             
             DSize size = m_obRect.size;
-            
-            AffineTransform affineToBatch;
-            GLToCGAffine(m_tTransformToBatch.m.mat, &affineToBatch);
-            
+
             float x1 = m_obOffsetPosition.x;
             float y1 = m_obOffsetPosition.y;
             
@@ -444,26 +443,7 @@ void CGSprite::updateTransform(void)
         m_bRecursiveDirty = false;
         setDirty(false);
     }
-    
-    if (!m_obChildren.empty())
-    {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-            (*itr)->updateTransform();
-    }
-    
-#if CC_SPRITE_DEBUG_DRAW
-    // draw bounding box
-    DPoint vertices[4] =
-    {
-        DPoint( m_sQuad.bl.vertices.x, m_sQuad.bl.vertices.y ),
-        DPoint( m_sQuad.br.vertices.x, m_sQuad.br.vertices.y ),
-        DPoint( m_sQuad.tr.vertices.x, m_sQuad.tr.vertices.y ),
-        DPoint( m_sQuad.tl.vertices.x, m_sQuad.tl.vertices.y ),
-    };
-    ccDrawPoly(vertices, 4, true);
-#endif
-
+    CGNode::updateTransform();
 }
 
 void CGSprite::draw()

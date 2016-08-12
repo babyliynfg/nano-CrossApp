@@ -432,13 +432,13 @@ CATabBar::CATabBar(bool clearance)
 ,m_bClearance(clearance)
 {
     m_pBackgroundImage = CAImage::create("source_material/tabBar_bg.png");
-    m_pBackgroundImage->retain();
+    CC_SAFE_RETAIN(m_pBackgroundImage);
     
     m_pSelectedBackgroundImage = CAImage::create("source_material/tabBar_selected_bg.png");
-    m_pSelectedBackgroundImage->retain();
+    CC_SAFE_RETAIN(m_pSelectedBackgroundImage);
     
     m_pSelectedIndicatorImage = CAImage::create("source_material/tabBar_selected_indicator.png");
-    m_pSelectedIndicatorImage->retain();
+    CC_SAFE_RETAIN(m_pSelectedIndicatorImage);
 }
 
 CATabBar::~CATabBar()

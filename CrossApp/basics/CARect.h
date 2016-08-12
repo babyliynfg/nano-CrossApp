@@ -44,7 +44,8 @@ public:
     bool containsPoint(const DPoint& point) const;
     bool intersectsRect(const DRect& rect) const;
     void InflateRect(float v);
-	void InflateRect(float l, float t, float r, float b);
+    void InflateRect(float hor, float ver);
+    void InflateRect(float l, float t, float r, float b);
     
     typedef enum
     {

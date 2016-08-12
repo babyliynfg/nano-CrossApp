@@ -2038,7 +2038,7 @@ void CAView::transform()
 
 void CAView::updateTransform()
 {
-    if(m_pobImage && isDirty())
+    if(isDirty())
     {
         if(!m_bVisible || (m_pSuperview && m_pSuperview != m_pobBatchView && m_pSuperview->m_bShouldBeHidden))
         {
@@ -2055,14 +2055,13 @@ void CAView::updateTransform()
             }
             else
             {
-                m_tTransformToBatch = TransformConcat(getViewToSuperviewTransform() , m_pSuperview->m_tTransformToBatch);
+                const Mat4 &nodeToParent = getViewToSuperviewTransform();
+                Mat4 &parentTransform = m_pSuperview->m_tTransformToBatch;
+                m_tTransformToBatch = parentTransform * nodeToParent;
             }
             
             DSize size = m_obContentSize;
-            
-            AffineTransform affineToBatch;
-            GLToCGAffine(m_tTransformToBatch.m.mat, &affineToBatch);
-            
+
             float x1 = 0;
             float y1 = 0;
             
@@ -2103,12 +2102,8 @@ void CAView::updateTransform()
         setDirty(false);
     }
     
-    if (!m_obSubviews.empty())
-    {
-        CAVector<CAView*>::iterator itr;
-        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-            (*itr)->updateTransform();
-    }
+    for (const auto& var : m_obSubviews)
+        var->updateTransform();
     
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
