@@ -1436,16 +1436,8 @@ void CAView::draw()
     ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
     
 #define kQuadSize sizeof(m_sQuad.bl)
-#ifdef EMSCRIPTEN
-    
-    long offset = 0;
-    setGLBufferData(&m_sQuad, 4 * kQuadSize, 0);
-    
-#else
     
     long offset = (long)&m_sQuad;
-    
-#endif
     
     // vertex
     int diff = offsetof( ccV3F_C4B_T2F, vertices);

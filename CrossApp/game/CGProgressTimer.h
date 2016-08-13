@@ -3,16 +3,10 @@
 #define __MISC_NODE_PROGRESS_TIMER_H__
 
 #include "CGSprite.h"
-#ifdef EMSCRIPTEN
-#include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
 class CC_DLL CGProgressTimer : public CGNode
-#ifdef EMSCRIPTEN
-, public CCGLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
 

@@ -10,10 +10,6 @@
 #include <vector>
 #include <deque>
 
-#ifdef EMSCRIPTEN
-#include <GLES2/gl2.h>
-#endif // EMSCRIPTEN
-
 NS_CC_BEGIN
 
 #define kCAObjectTagInvalid -1

@@ -488,22 +488,9 @@ void CGProgressTimer::draw(void)
     
     ccGLBindTexture2D( m_pSprite->getImage()->getName() );
     
-#ifdef EMSCRIPTEN
-    setGLBufferData((void*) m_pVertexData, (m_nVertexDataCount * sizeof(ccV2F_C4B_T2F)), 0);
-    
-    int offset = 0;
-    glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
-    
-    offset += sizeof(DPoint);
-    glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
-    
-    offset += sizeof(CAColor4B);
-    glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid*)offset);
-#else
     glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(m_pVertexData[0]) , &m_pVertexData[0].vertices);
     glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(m_pVertexData[0]), &m_pVertexData[0].texCoords);
     glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(m_pVertexData[0]), &m_pVertexData[0].colors);
-#endif // EMSCRIPTEN
     
     if(m_eType == Type::RADIAL)
     {

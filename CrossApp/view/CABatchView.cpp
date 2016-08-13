@@ -307,7 +307,7 @@ unsigned int CABatchView::lowestAtlasIndexInSubview(CAView *view)
     }
     else
     {
-        return lowestAtlasIndexInSubview(pSubview.front());
+        return lowestAtlasIndexInSubview(pSubview.back());
     }
 }
 
