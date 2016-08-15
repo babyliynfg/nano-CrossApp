@@ -58,14 +58,13 @@ public:
 
     void removeChildAtIndex(unsigned int index, bool doCleanup);
 
-    void appendChild(CGSprite *child, unsigned int index);
     void appendChild(CGSprite* sprite);
     void removeSpriteFromAtlas(CGSprite *sprite);
 
-    unsigned int rebuildIndexInOrder(CGSprite *parent, unsigned int index);
-    unsigned int highestAtlasIndexInChild(CGSprite *sprite);
-    unsigned int lowestAtlasIndexInChild(CGSprite *sprite);
-    unsigned int atlasIndexForChild(CGSprite *sprite, int z);
+    ssize_t rebuildIndexInOrder(CGSprite *parent, ssize_t index);
+    ssize_t highestAtlasIndexInChild(CGSprite *sprite);
+    ssize_t lowestAtlasIndexInChild(CGSprite *sprite);
+    ssize_t atlasIndexForChild(CGSprite *sprite, int z);
 
     void reorderBatch(bool reorder);
     
@@ -93,16 +92,16 @@ public:
 
 protected:
 
-    void insertQuadFromSprite(CGSprite *sprite, unsigned int index);
+    void insertQuadFromSprite(CGSprite *sprite, ssize_t index);
 
-    void updateQuadFromSprite(CGSprite *sprite, unsigned int index);
+    void updateQuadFromSprite(CGSprite *sprite, ssize_t index);
 
-    CGSpriteBatchNode * addSpriteWithoutQuad(CGSprite*child, unsigned int z, int aTag);
+    CGSpriteBatchNode * addSpriteWithoutQuad(CGSprite*child, ssize_t z, int aTag);
 
 private:
-    void updateAtlasIndex(CGNode* node, int* curIndex);
+    void updateAtlasIndex(CGSprite* sprite, ssize_t* curIndex);
     
-    void swap(int oldIndex, int newIndex);
+    void swap(ssize_t oldIndex, ssize_t newIndex);
     
     void updateBlendFunc();
 

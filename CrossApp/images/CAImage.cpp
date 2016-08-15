@@ -66,16 +66,8 @@ CAImage* CAImage::scaleToNewImageWithImage(CAImage* image, const DSize& size)
     
     ccGLBindTexture2D( image->getName() );
     
-#ifdef EMSCRIPTEN
-    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
-#else
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-#endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     
     renderImage->end();
@@ -2296,16 +2288,8 @@ void CAImage::drawAtPoint(const DPoint& point)
     
     ccGLBindTexture2D( m_uName );
     
-#ifdef EMSCRIPTEN
-    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
-#else
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-#endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
@@ -2333,16 +2317,8 @@ void CAImage::drawInRect(const DRect& rect)
     
     ccGLBindTexture2D( m_uName );
     
-#ifdef EMSCRIPTEN
-    setGLBufferData(vertices, 8 * sizeof(GLfloat), 0);
-    glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    
-    setGLBufferData(coordinates, 8 * sizeof(GLfloat), 1);
-    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, 0);
-#else
     glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
     glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, coordinates);
-#endif // EMSCRIPTEN
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 

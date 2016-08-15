@@ -25,11 +25,6 @@
 #include "math/CAMath.h"
 #include "math/TransformUtils.h"
 
-
-#ifdef EMSCRIPTEN
-#include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
-
 NS_CC_BEGIN
 
 class CACamera;
@@ -49,9 +44,6 @@ class CC_DLL CAView
 :public CAResponder
 ,public CARGBAProtocol
 ,public CAImageProtocol
-#ifdef EMSCRIPTEN
-,public CCGLBufferedNode
-#endif // EMSCRIPTEN
 {
     
 public:

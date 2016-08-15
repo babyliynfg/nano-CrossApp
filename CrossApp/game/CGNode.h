@@ -21,9 +21,6 @@
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAGLProgram.h"
 #include <map>
-#ifdef EMSCRIPTEN
-#include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 

@@ -14,9 +14,6 @@
 #include "images/CAImageCache.h"
 #include "ccTypes.h"
 #include <string>
-#ifdef EMSCRIPTEN
-#include "base_nodes/CCGLBufferedNode.h"
-#endif // EMSCRIPTEN
 
 NS_CC_BEGIN
 
@@ -25,9 +22,6 @@ class CGSpriteFrame;
 class CGAnimation;
 
 class CC_DLL CGSprite : public CGNode, public CAImageProtocol
-#ifdef EMSCRIPTEN
-, public CCGLBufferedNode
-#endif // EMSCRIPTEN
 {
 public:
 
