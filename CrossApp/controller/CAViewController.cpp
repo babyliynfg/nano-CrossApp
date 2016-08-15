@@ -51,6 +51,7 @@ CAViewController::~CAViewController()
 
 bool CAViewController::init()
 {
+    this->parser();
     return true;
 }
 
@@ -95,7 +96,6 @@ void CAViewController::viewOnEnterTransitionDidFinish()
     {
         CC_BREAK_IF(m_bLifeLock);
         m_bLifeLock = true;
-        this->parser();
         this->viewDidLoad();
     }
     while (0);
