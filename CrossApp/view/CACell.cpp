@@ -131,17 +131,17 @@ void CACell::setControlStateNormal()
 
 void CACell::setControlStateHighlighted()
 {
-    this->setControlState(CAControlStateNormal);
+    this->setControlState(CAControlStateHighlighted);
 }
 
 void CACell::setControlStateDisabled()
 {
-    this->setControlState(CAControlStateNormal);
+    this->setControlState(CAControlStateDisabled);
 }
 
 void CACell::setControlStateSelected()
 {
-    this->setControlState(CAControlStateNormal);
+    this->setControlState(CAControlStateSelected);
 }
 
 void CACell::normalCell()
