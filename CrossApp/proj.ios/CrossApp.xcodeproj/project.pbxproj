@@ -248,6 +248,8 @@
 		469A7DF416C24787006FFCB2 /* tinyxml2.h in Headers */ = {isa = PBXBuildFile; fileRef = 469A7DF216C24787006FFCB2 /* tinyxml2.h */; };
 		46A393F716E5D01B00210B16 /* CAUserDefault.h in Headers */ = {isa = PBXBuildFile; fileRef = 46A393F316E5D01B00210B16 /* CAUserDefault.h */; };
 		46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F416E5D01B00210B16 /* CAUserDefault.mm */; };
+		48A94CE61D62DB1F0069A3EC /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48A94CE41D62DB1E0069A3EC /* CCScriptSupport.cpp */; };
+		48A94CE71D62DB1F0069A3EC /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 48A94CE51D62DB1F0069A3EC /* CCScriptSupport.h */; };
 		B01D4BF819A5E8240071F6A3 /* CADrawerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */; };
 		B01D4BF919A5E8240071F6A3 /* CADrawerController.h in Headers */ = {isa = PBXBuildFile; fileRef = B01D4BF719A5E8240071F6A3 /* CADrawerController.h */; };
 		B01E807C1AD5113400301FC2 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01E80791AD5113400301FC2 /* etc1.cpp */; };
@@ -453,8 +455,6 @@
 		E0C0BA5C1CEC52C30097F0C3 /* CAGyroDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C0BA5B1CEC52C30097F0C3 /* CAGyroDelegate.h */; };
 		E0C0BA5F1CEC53F60097F0C3 /* CAGyroscope.h in Headers */ = {isa = PBXBuildFile; fileRef = E0C0BA5D1CEC53F60097F0C3 /* CAGyroscope.h */; };
 		E0C0BA601CEC53F60097F0C3 /* CAGyroscope.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0C0BA5E1CEC53F60097F0C3 /* CAGyroscope.mm */; };
-		EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */; };
-		EB9D562319E8DC2D0072BE8E /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */; };
 		EB9D562419E8DC2D0072BE8E /* JSViewController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */; };
 		EB9D562519E8DC2D0072BE8E /* JSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = EB9D562119E8DC2D0072BE8E /* JSViewController.h */; };
 /* End PBXBuildFile section */
@@ -687,6 +687,8 @@
 		469A7DF216C24787006FFCB2 /* tinyxml2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml2.h; sourceTree = "<group>"; };
 		46A393F316E5D01B00210B16 /* CAUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAUserDefault.h; sourceTree = "<group>"; };
 		46A393F416E5D01B00210B16 /* CAUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAUserDefault.mm; sourceTree = "<group>"; };
+		48A94CE41D62DB1E0069A3EC /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
+		48A94CE51D62DB1F0069A3EC /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawerController.cpp; sourceTree = "<group>"; };
 		B01D4BF719A5E8240071F6A3 /* CADrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADrawerController.h; sourceTree = "<group>"; };
 		B01E80791AD5113400301FC2 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
@@ -909,8 +911,6 @@
 		E0C0BA5B1CEC52C30097F0C3 /* CAGyroDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGyroDelegate.h; sourceTree = "<group>"; };
 		E0C0BA5D1CEC53F60097F0C3 /* CAGyroscope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAGyroscope.h; sourceTree = "<group>"; };
 		E0C0BA5E1CEC53F60097F0C3 /* CAGyroscope.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAGyroscope.mm; sourceTree = "<group>"; };
-		EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
-		EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
 		EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSViewController.cpp; sourceTree = "<group>"; };
 		EB9D562119E8DC2D0072BE8E /* JSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1715,8 +1715,8 @@
 		EB9D561D19E8DC2D0072BE8E /* script_support */ = {
 			isa = PBXGroup;
 			children = (
-				EB9D561E19E8DC2D0072BE8E /* CCScriptSupport.cpp */,
-				EB9D561F19E8DC2D0072BE8E /* CCScriptSupport.h */,
+				48A94CE41D62DB1E0069A3EC /* CCScriptSupport.cpp */,
+				48A94CE51D62DB1F0069A3EC /* CCScriptSupport.h */,
 				EB9D562019E8DC2D0072BE8E /* JSViewController.cpp */,
 				EB9D562119E8DC2D0072BE8E /* JSViewController.h */,
 			);
@@ -1766,7 +1766,6 @@
 				B0ADAE741B2E7F1B00BE8FA3 /* CADrawingPrimitives.h in Headers */,
 				D64B49791D40982E00081862 /* CGSpriteFrame.h in Headers */,
 				04EABB1F1956DAEA00198A8E /* CATouchDispatcher.cpp in Headers */,
-				EB9D562319E8DC2D0072BE8E /* CCScriptSupport.h in Headers */,
 				B0885A1A1CE1CEA700A5C04C /* CAGPUAdapter.h in Headers */,
 				B0A02FF81A8E04A80005CB8F /* CATempTypeFont.h in Headers */,
 				B0ADAE9A1B2E7F1B00BE8FA3 /* CAWebView.h in Headers */,
@@ -1974,6 +1973,7 @@
 				D64B495F1D40982E00081862 /* CGActionEase.h in Headers */,
 				022160771C1FAD38009FFCFC /* CATextField.h in Headers */,
 				0460ED1D195700EE00D13001 /* CCEGLViewProtocol.h in Headers */,
+				48A94CE71D62DB1F0069A3EC /* CCScriptSupport.h in Headers */,
 				0460ED2D1957019600D13001 /* CCApplication.h in Headers */,
 				0460ED2F1957019600D13001 /* CCEGLView.h in Headers */,
 				0460ED361957031200D13001 /* CAGLProgram.h in Headers */,
@@ -2050,7 +2050,6 @@
 				B0A11DB91AE8E0B300933BF6 /* dgif_lib.c in Sources */,
 				1551A65F158F2ADE00E66CFE /* CCSet.cpp in Sources */,
 				D64B497A1D40982E00081862 /* CGSpriteFrameCache.cpp in Sources */,
-				EB9D562219E8DC2D0072BE8E /* CCScriptSupport.cpp in Sources */,
 				B093DB541CBCE1E300E98AD6 /* CALayout.cpp in Sources */,
 				B0ADAE831B2E7F1B00BE8FA3 /* CAPageView.cpp in Sources */,
 				D64B49741D40982E00081862 /* CGSprite.cpp in Sources */,
@@ -2070,6 +2069,7 @@
 				1551A6C9158F2ADE00E66CFE /* mat3.c in Sources */,
 				D64B49681D40982E00081862 /* CGActionTween.cpp in Sources */,
 				3E19F2AB1B8B0ED100720027 /* CABrightness_iOS.mm in Sources */,
+				48A94CE61D62DB1F0069A3EC /* CCScriptSupport.cpp in Sources */,
 				1551A6CA158F2ADE00E66CFE /* mat4.c in Sources */,
 				B06805231A833DF700F6BE00 /* CAViewAnimation.cpp in Sources */,
 				D65F35A71D38E154004B56A9 /* CAPoint3D.cpp in Sources */,

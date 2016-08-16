@@ -40,6 +40,16 @@ class CAViewAnimation;
 class CARenderImage;
 class CGNode;
 
+//script
+enum {
+    kNodeOnEnter,
+    kNodeOnExit,
+    kNodeOnEnterTransitionDidFinish,
+    kNodeOnExitTransitionDidStart,
+    kNodeOnCleanup
+};
+
+
 class CC_DLL CAView
 :public CAResponder
 ,public CARGBAProtocol
@@ -163,6 +173,10 @@ public:
     virtual void addSubview(CAView * child);
 
     virtual void insertSubview(CAView* subview, int z);
+    
+    virtual void setTag(int tag);
+    
+    virtual int getTag();
 
     virtual CAView * getSubviewByTag(int tag);
 

@@ -1244,6 +1244,16 @@ CAView* CAView::getSubviewByTextTag(const std::string& textTag)
     return NULL;
 }
 
+void CAView::setTag(int tag)
+{
+    this->m_nTag = tag;
+}
+
+int CAView::getTag()
+{
+    return this->m_nTag;
+}
+
 void CAView::addSubview(CAView *subview)
 {
     this->insertSubview(subview, subview->getZOrder());
@@ -1638,6 +1648,16 @@ CAResponder* CAView::nextResponder()
 
 void CAView::onEnter()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+    {
+        if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+        {
+            if (CCScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnter))
+                return;
+        }
+    }
+#endif
     if (m_pSuperview)
     {
         this->reViewlayout(m_pSuperview->m_obContentSize);
@@ -1667,6 +1687,16 @@ void CAView::onEnter()
 
 void CAView::onEnterTransitionDidFinish()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+    {
+        if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+        {
+            if (CCScriptEngineManager::sendNodeEventToJS(this, kNodeOnEnterTransitionDidFinish))
+                return;
+        }
+    }
+#endif
     if (!m_obSubviews.empty())
     {
         CAVector<CAView*>::iterator itr;
@@ -1687,6 +1717,16 @@ void CAView::onEnterTransitionDidFinish()
 
 void CAView::onExitTransitionDidStart()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+    {
+        if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+        {
+            if (CCScriptEngineManager::sendNodeEventToJS(this, kNodeOnExitTransitionDidStart))
+                return;
+        }
+    }
+#endif
     if (!m_obSubviews.empty())
     {
         CAVector<CAView*>::iterator itr;
@@ -1707,6 +1747,16 @@ void CAView::onExitTransitionDidStart()
 
 void CAView::onExit()
 {
+#if CC_ENABLE_SCRIPT_BINDING
+    if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+    {
+        if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+        {
+            if (CCScriptEngineManager::sendNodeEventToJS(this, kNodeOnExit))
+                return;
+        }
+    }
+#endif
     m_bRunning = false;
     
     if (!m_obSubviews.empty())

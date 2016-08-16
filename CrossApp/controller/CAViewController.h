@@ -23,6 +23,13 @@ class CANavigationController;
 class CADrawerController;
 class CAUIEditorParser;
 
+//script
+enum {
+    kOnEnterTransitionDidFinish,
+    kOnExitTransitionDidStart,
+    kOnSizeTransitionDidChanged
+};
+
 class CC_DLL CAViewController
 : public CAContentContainer
 , public CAKeypadDelegate

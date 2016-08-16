@@ -95,6 +95,15 @@ void CAViewController::viewOnEnterTransitionDidFinish()
     do
     {
         CC_BREAK_IF(m_bLifeLock);
+#if CC_ENABLE_SCRIPT_BINDING
+        if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+        {
+            if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+            {
+                if (CCScriptEngineManager::sendViewControllerEventToJS(this, kOnEnterTransitionDidFinish));
+            }
+        }
+#endif
         m_bLifeLock = true;
         this->viewDidLoad();
     }
@@ -109,6 +118,15 @@ void CAViewController::viewOnExitTransitionDidStart()
     do
     {
         CC_BREAK_IF(m_bLifeLock);
+#if CC_ENABLE_SCRIPT_BINDING
+        if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+        {
+            if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+            {
+                if (CCScriptEngineManager::sendViewControllerEventToJS(this, kOnExitTransitionDidStart));
+            }
+        }
+#endif
         m_bLifeLock = true;
         this->viewDidUnload();
         m_pView->removeAllSubviews();
@@ -121,6 +139,15 @@ void CAViewController::viewOnSizeTransitionDidChanged()
 {
     if (m_bLifeLock)
     {
+#if CC_ENABLE_SCRIPT_BINDING
+        if(CCScriptEngineManager::sharedManager()->getScriptEngine())
+        {
+            if (CCScriptEngineManager::sharedManager()->getScriptEngine()->getScriptType()== kScriptTypeJavascript)
+            {
+                if (CCScriptEngineManager::sendViewControllerEventToJS(this, kOnSizeTransitionDidChanged));
+            }
+        }
+#endif
         this->viewSizeDidChanged();
     }
 }
