@@ -260,7 +260,7 @@ bool CATextField::becomeFirstResponder()
         return false;
     }
     
-    bool result = CAControl::becomeFirstResponder();
+    bool result = true;//CAControl::becomeFirstResponder();
     
     this->hideTextField();
     
@@ -409,13 +409,13 @@ void CATextField::setContentSize(const DSize& contentSize)
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    
+    m_bMoved = false;
     return true;
 }
 
 void CATextField::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
-    
+    m_bMoved = true;
 }
 
 void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
@@ -426,7 +426,7 @@ void CATextField::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
     {
         becomeFirstResponder();
     }
-    else
+    else if (!m_bMoved)
     {
         resignFirstResponder();
     }

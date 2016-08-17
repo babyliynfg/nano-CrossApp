@@ -198,6 +198,8 @@ private:
     bool                    m_bUpdateImage;
     
     DPoint                  m_obLastPoint;
+    
+    bool                    m_bMoved;
 };
 
 NS_CC_END

@@ -948,7 +948,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
 
 void CAScrollView::initIndicator()
 {
-    const char indicatorSize = 6;
+    const char indicatorSize = 9;
     
     if (m_pIndicatorHorizontal == NULL)
     {

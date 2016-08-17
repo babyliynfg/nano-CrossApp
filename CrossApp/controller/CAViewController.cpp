@@ -34,7 +34,7 @@ CAViewController::CAViewController()
     m_pView->retain();
     m_pView->setContentContainer(this);
     m_pView->setLayout(DLayoutFill);
-    m_pView->setHaveNextResponder(false);
+    this->setHaveNextResponder(false);
 }
 
 CAViewController::~CAViewController()
