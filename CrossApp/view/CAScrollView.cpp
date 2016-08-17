@@ -56,7 +56,6 @@ CAScrollView::CAScrollView()
 {
     this->setPriorityScroll(true);
     this->setReachBoundaryHandOverToSuperview(true);
-    this->setHaveNextResponder(false);
 }
 
 CAScrollView::~CAScrollView()

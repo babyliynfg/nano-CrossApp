@@ -539,7 +539,7 @@ void CAApplication::purgeDirector()
     ActionManager::destroyInstance();
     
     // CrossApp specific data structures
-    CAUserDefault::purgeSharedUserDefault();
+    CAUserDefault::destroyInstance();
     CANotificationCenter::purgeNotificationCenter();
 
     ccGLInvalidateStateCache();

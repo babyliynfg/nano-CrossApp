@@ -85,8 +85,8 @@ public:
      */
     void    flush();
 
-    static CAUserDefault* sharedUserDefault();
-    static void purgeSharedUserDefault();
+    static CAUserDefault* getInstance();
+    static void destroyInstance();
     const static std::string& getXMLFilePath();
     static bool isXMLFileExist();
 

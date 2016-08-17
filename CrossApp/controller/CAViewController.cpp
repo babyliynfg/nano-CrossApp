@@ -34,6 +34,7 @@ CAViewController::CAViewController()
     m_pView->retain();
     m_pView->setContentContainer(this);
     m_pView->setLayout(DLayoutFill);
+    m_pView->setHaveNextResponder(false);
 }
 
 CAViewController::~CAViewController()
@@ -258,7 +259,6 @@ CANavigationController::CANavigationController()
 {
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
-    this->setHaveNextResponder(false);
     this->setTouchMoved(true);
     this->setVerticalScrollEnabled(false);
     this->setNavigationBarBackgroundImage(CAImage::create("source_material/navigation_bg.png"));
