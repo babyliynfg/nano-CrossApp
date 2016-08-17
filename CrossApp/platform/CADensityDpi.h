@@ -35,12 +35,12 @@ public:
 
 static inline float s_dip_to_px(float dip)
 {
-    return dip * (CADensityDpi::getDensityDpi() / 320.0f);
+    return dip * (CADensityDpi::getDensityDpi() / DPI_STANDARD);
 }
 
 static inline float s_px_to_dip(float px)
 {
-    return px / (CADensityDpi::getDensityDpi() / 320.0f);
+    return px / (CADensityDpi::getDensityDpi() / DPI_STANDARD);
 }
 
 NS_CC_END

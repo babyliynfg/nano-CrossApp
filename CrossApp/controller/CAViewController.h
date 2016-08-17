@@ -291,6 +291,8 @@ public:
     
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTabBarSelectedTitleColor, TabBarTitleColorForSelected);
     
+    CC_PROPERTY(bool, m_bTabBarSelectedTitleBold, TabBarTitleBoldForSelected);
+    
     void updateItem(CAViewController* viewController);
     
     void showTabBarSelectedIndicator();

@@ -102,7 +102,7 @@ bool CAApplication::init(void)
     // create autorelease pool
     CAPoolManager::sharedPoolManager()->push();
 
-    m_fAdaptationRatio = CADensityDpi::getDensityDpi() / 320.0f;
+    m_fAdaptationRatio = CADensityDpi::getDensityDpi() / DPI_STANDARD;
     
     
     return true;

@@ -23,7 +23,7 @@ NS_CC_BEGIN
 CATableView::CATableView()
 :m_pTableHeaderView(NULL)
 ,m_pTableFooterView(NULL)
-,m_obSeparatorColor(CAColor_gray)
+,m_obSeparatorColor(ccc4Int(0xffefeef4))
 ,m_nSeparatorViewHeight(1)
 ,m_nTableHeaderHeight(0)
 ,m_nTableFooterHeight(0)
@@ -860,7 +860,7 @@ void CATableViewCell::normalTableViewCell()
 void CATableViewCell::highlightedTableViewCell()
 {
     CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
+    m_pBackgroundView->setColor(ccc4(240, 240, 240, 255));
 }
 
 

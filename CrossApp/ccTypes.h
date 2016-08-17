@@ -13,6 +13,9 @@
 
 NS_CC_BEGIN
 
+static float DPI_STANDARD = 320.0f;
+static float DPI_SIMULATOR = 160.0f;
+
 /** RGBA color composed of 4 bytes
 @since v0.8
 */
@@ -295,6 +298,7 @@ struct CC_DLL BlendFunc
 };
 
 static const BlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
+
 // XXX: If any of these enums are edited and/or reordered, update CAImage.m
 //! Vertical text alignment type
 typedef enum

@@ -795,7 +795,7 @@ void CACollectionViewCell::normalCollectionViewCell()
 void CACollectionViewCell::highlightedCollectionViewCell()
 {
 	CC_RETURN_IF(m_pBackgroundView == NULL);
-	m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
+	m_pBackgroundView->setColor(ccc4(240, 240, 240, 255));
 }
 
 

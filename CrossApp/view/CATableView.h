@@ -306,15 +306,15 @@ protected:
     
     virtual void recoveryCell();
     
-    virtual void normalTableViewCell();
+    CC_DEPRECATED_ATTRIBUTE virtual void normalTableViewCell();
     
-    virtual void highlightedTableViewCell();
+    CC_DEPRECATED_ATTRIBUTE virtual void highlightedTableViewCell();
     
-    virtual void selectedTableViewCell();
+    CC_DEPRECATED_ATTRIBUTE virtual void selectedTableViewCell();
     
-    virtual void disabledTableViewCell();
+    CC_DEPRECATED_ATTRIBUTE virtual void disabledTableViewCell();
 
-    virtual void recoveryTableViewCell(){};
+    CC_DEPRECATED_ATTRIBUTE virtual void recoveryTableViewCell(){};
     
     friend class CATableView;
 };

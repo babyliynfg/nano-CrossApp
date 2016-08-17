@@ -21,7 +21,7 @@ CAListView::CAListView()
 , m_pListFooterView(NULL)
 , m_nListHeaderHeight(0)
 , m_nListFooterHeight(0)
-, m_obSeparatorColor(CAColor_gray)
+, m_obSeparatorColor(ccc4Int(0xffefeef4))
 , m_nSeparatorViewHeight(1)
 {
     
@@ -717,7 +717,7 @@ void CAListViewCell::normalListViewCell()
 void CAListViewCell::highlightedListViewCell()
 {
     CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
+    m_pBackgroundView->setColor(ccc4(240, 240, 240, 255));
 }
 
 

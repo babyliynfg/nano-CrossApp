@@ -16,7 +16,7 @@ float CADensityDpi::getDensityDpi()
     JniMethodInfo jni;
     if(!JniHelper::getStaticMethodInfo(jni , "org/CrossApp/lib/CrossAppHelper" , "getDPI" , "()F"))
     {
-        return 320.0f;
+        return DPI_STANDARD;
     }
     
     ret = (float)(jfloat)jni.env->CallStaticFloatMethod(jni.classID , jni.methodID);
