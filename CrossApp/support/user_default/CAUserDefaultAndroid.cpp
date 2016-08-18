@@ -52,7 +52,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
         *doc = xmlDoc;
         unsigned long nSize;
-        const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
+        const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(CAUserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &nSize);
         //const char* pXmlBuffer = (const char*)data.getBuffer();
         if(NULL == pXmlBuffer)
         {
@@ -73,7 +73,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         if (!curNode)
         {
             // There is not xml node, delete xml file.
-            remove(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+            remove(CAUserDefault::getInstance()->getXMLFilePath().c_str());
             
             return NULL;
         }
@@ -99,7 +99,7 @@ static void deleteNode(tinyxml2::XMLDocument* doc, tinyxml2::XMLElement* node)
     if (node)
     {
         doc->DeleteNode(node);
-        doc->SaveFile(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+        doc->SaveFile(CAUserDefault::getInstance()->getXMLFilePath().c_str());
         delete doc;
     }
 }
@@ -113,8 +113,8 @@ static void deleteNodeByKey(const char *pKey)
 #endif
 
 /**
- * If the user invoke delete CAUserDefault::sharedUserDefault(), should set m_spUserDefault
- * to null to avoid error when he invoke CAUserDefault::sharedUserDefault() later.
+ * If the user invoke delete CAUserDefault::getInstance(), should set m_spUserDefault
+ * to null to avoid error when he invoke CAUserDefault::getInstance() later.
  */
 CAUserDefault::~CAUserDefault()
 {
@@ -127,7 +127,7 @@ CAUserDefault::CAUserDefault()
 	m_spUserDefault = NULL;
 }
 
-void CAUserDefault::purgeSharedUserDefault()
+void CAUserDefault::destroyInstance()
 {
     m_spUserDefault = NULL;
 }
@@ -358,7 +358,7 @@ void CAUserDefault::setStringForKey(const char* pKey, const std::string & value)
     return setStringForKeyJNI(pKey, value.c_str());
 }
 
-CAUserDefault* CAUserDefault::sharedUserDefault()
+CAUserDefault* CAUserDefault::getInstance()
 {
 #ifdef KEEP_COMPATABILITY
     initXMLFilePath();

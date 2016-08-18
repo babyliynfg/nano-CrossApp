@@ -13,9 +13,6 @@
 
 NS_CC_BEGIN
 
-static float DPI_STANDARD = 320.0f;
-static float DPI_SIMULATOR = 160.0f;
-
 /** RGBA color composed of 4 bytes
 @since v0.8
 */

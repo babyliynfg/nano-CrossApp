@@ -34,9 +34,9 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLEle
     {
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 		*doc = xmlDoc;
-		//CCFileData data(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str(),"rt");
+		//CCFileData data(CAUserDefault::getInstance()->getXMLFilePath().c_str(),"rt");
 		unsigned long nSize;
-		const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
+		const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(CAUserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &nSize);
 		//const char* pXmlBuffer = (const char*)data.getBuffer();
 		if(NULL == pXmlBuffer)
 		{
@@ -108,7 +108,7 @@ static void setValueForKey(const char* pKey, const char* pValue)
     // save file and free doc
 	if (doc)
 	{
-		doc->SaveFile(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+		doc->SaveFile(CAUserDefault::getInstance()->getXMLFilePath().c_str());
 		delete doc;
 	}
 }
@@ -122,8 +122,8 @@ string CAUserDefault::m_sFilePath = string("");
 bool CAUserDefault::m_sbIsFilePathInitialized = false;
 
 /**
- * If the user invoke delete CAUserDefault::sharedUserDefault(), should set m_spUserDefault
- * to null to avoid error when he invoke CAUserDefault::sharedUserDefault() later.
+ * If the user invoke delete CAUserDefault::getInstance(), should set m_spUserDefault
+ * to null to avoid error when he invoke CAUserDefault::getInstance() later.
  */
 CAUserDefault::~CAUserDefault()
 {
@@ -136,7 +136,7 @@ CAUserDefault::CAUserDefault()
 	m_spUserDefault = NULL;
 }
 
-void CAUserDefault::purgeSharedUserDefault()
+void CAUserDefault::destroyInstance()
 {
     m_spUserDefault = NULL;
 }
@@ -339,7 +339,7 @@ void CAUserDefault::setStringForKey(const char* pKey, const std::string & value)
     setValueForKey(pKey, value.c_str());
 }
 
-CAUserDefault* CAUserDefault::sharedUserDefault()
+CAUserDefault* CAUserDefault::getInstance()
 {
     initXMLFilePath();
 

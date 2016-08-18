@@ -1,0 +1,22 @@
+//
+// Prefix header for all source files of the 'CrossAppx' target in the 'CrossApp' project
+//
+
+#ifndef __PREFIX_H__
+#define __PREFIX_H__
+
+#include <iostream>
+
+#define DPI_IPHONE_5            320
+#define DPI_IPHONE_5S           320
+#define DPI_IPHONE_6            320
+#define DPI_IPHONE_6S           320
+#define DPI_IPHONE_6_PLUS       480
+#define DPI_IPHONE_6S_PLUS      480
+
+
+static float DPI_STANDARD = DPI_IPHONE_6;
+
+static float DPI_SIMULATOR = 240.0f;
+
+#endif

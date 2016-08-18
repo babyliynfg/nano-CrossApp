@@ -406,6 +406,7 @@
 		D66BCD501D3DC27700587C65 /* CGSpriteFrameCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D66BCD4C1D3DC27700587C65 /* CGSpriteFrameCache.cpp */; };
 		D66BCD511D3DC27700587C65 /* CGSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = D66BCD4D1D3DC27700587C65 /* CGSpriteFrameCache.h */; };
 		D693E7C71D34F75F003D97A4 /* CAVec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D693E7C51D34F75F003D97A4 /* CAVec4.h */; };
+		D6B0C6411D6587ED00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -858,6 +859,7 @@
 		D66BCD4D1D3DC27700587C65 /* CGSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGSpriteFrameCache.h; sourceTree = "<group>"; };
 		D693E7C51D34F75F003D97A4 /* CAVec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVec4.h; sourceTree = "<group>"; };
 		D693E7C61D34F75F003D97A4 /* CAVec4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVec4.cpp; sourceTree = "<group>"; };
+		D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -880,6 +882,7 @@
 		04EAA0491956D74D00198A8E /* CrossApp */ = {
 			isa = PBXGroup;
 			children = (
+				D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */,
 				04EABB431956DD8E00198A8E /* CrossApp.cpp */,
 				04EAA09F1956D74D00198A8E /* CrossApp.h */,
 				04EAA0701956D74D00198A8E /* ccConfig.h */,
@@ -1813,6 +1816,7 @@
 				04EAB1531956D75600198A8E /* CCPlatformDefine.h in Headers */,
 				D649B2AE1D3CD6A80020414A /* CGActionCatmullRom.h in Headers */,
 				3E2154521B8180340075448E /* json_lib.h in Headers */,
+				D6B0C6411D6587ED00D0E1BE /* CrossApp-Prefix.h in Headers */,
 				D64A8C901D34870B00F75021 /* TransformUtils.h in Headers */,
 				04EAB1541956D75600198A8E /* CCStdC.h in Headers */,
 				D64A8C851D34870B00F75021 /* CAMath.h in Headers */,

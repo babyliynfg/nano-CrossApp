@@ -9,7 +9,7 @@
 #ifndef __CrossApp__CADensityDpi__
 #define __CrossApp__CADensityDpi__
 
-#include <iostream>
+#include "CrossApp-Prefix.h"
 #include "basics/CAApplication.h"
 
 NS_CC_BEGIN
