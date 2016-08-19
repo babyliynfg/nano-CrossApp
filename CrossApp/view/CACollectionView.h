@@ -295,15 +295,15 @@ protected:
     
     virtual void recoveryCell();
     
-	virtual void normalCollectionViewCell();
+	CC_DEPRECATED_ATTRIBUTE virtual void normalCollectionViewCell();
     
-	virtual void highlightedCollectionViewCell();
+	CC_DEPRECATED_ATTRIBUTE virtual void highlightedCollectionViewCell();
     
-	virtual void selectedCollectionViewCell();
+	CC_DEPRECATED_ATTRIBUTE virtual void selectedCollectionViewCell();
     
-	virtual void disabledCollectionViewCell();
+	CC_DEPRECATED_ATTRIBUTE virtual void disabledCollectionViewCell();
 
-    virtual void recoveryCollectionViewCell(){};
+    CC_DEPRECATED_ATTRIBUTE virtual void recoveryCollectionViewCell(){};
 
     friend class CACollectionView;
     

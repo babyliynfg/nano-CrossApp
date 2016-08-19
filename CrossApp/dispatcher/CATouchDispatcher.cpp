@@ -96,7 +96,7 @@ std::vector<CAResponder*> CATouchController::getEventListener(CATouch* touch, CA
     
     do
     {
-        //CCLog("------ %s", typeid(*responder).name());
+//        CCLog("------ %s", typeid(*responder).name());
         vector.push_back(responder);
 
         if (CAView* view = dynamic_cast<CAView*>(responder))
@@ -457,6 +457,7 @@ void CATouchController::touchCancelled()
 
 bool CATouchController::touchBeganWithResponder(CAResponder* responder)
 {
+//    CCLog("------ %s", typeid(*responder).name());
     responder->m_vTouches.pushBack(m_pTouch);
     bool ret = responder->ccTouchBegan(m_pTouch, m_pEvent);
     if (!ret)

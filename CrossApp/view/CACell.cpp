@@ -131,17 +131,17 @@ void CACell::setControlStateNormal()
 
 void CACell::setControlStateHighlighted()
 {
-    this->setControlState(CAControlStateNormal);
+    this->setControlState(CAControlStateHighlighted);
 }
 
 void CACell::setControlStateDisabled()
 {
-    this->setControlState(CAControlStateNormal);
+    this->setControlState(CAControlStateDisabled);
 }
 
 void CACell::setControlStateSelected()
 {
-    this->setControlState(CAControlStateNormal);
+    this->setControlState(CAControlStateSelected);
 }
 
 void CACell::normalCell()
@@ -153,7 +153,7 @@ void CACell::normalCell()
 void CACell::highlightedCell()
 {
     CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
+    m_pBackgroundView->setColor(ccc4(240, 240, 240, 255));
 }
 
 

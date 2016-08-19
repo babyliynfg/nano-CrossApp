@@ -51,7 +51,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
  		tinyxml2::XMLDocument* xmlDoc = new tinyxml2::XMLDocument();
 		*doc = xmlDoc;
 		unsigned long nSize;
-		const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str(), "rb", &nSize);
+		const char* pXmlBuffer = (const char*)FileUtils::getInstance()->getFileData(CAUserDefault::getInstance()->getXMLFilePath().c_str(), "rb", &nSize);
 		//const char* pXmlBuffer = (const char*)data.getBuffer();
 		if(NULL == pXmlBuffer)
 		{
@@ -72,7 +72,7 @@ static tinyxml2::XMLElement* getXMLNodeForKey(const char* pKey, tinyxml2::XMLDoc
         if (!curNode)
         {
             // There is not xml node, delete xml file.
-            remove(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+            remove(CAUserDefault::getInstance()->getXMLFilePath().c_str());
             
             return NULL;
         }
@@ -98,7 +98,7 @@ static void deleteNode(tinyxml2::XMLDocument* doc, tinyxml2::XMLElement* node)
     if (node)
     {
         doc->DeleteNode(node);
-        doc->SaveFile(CAUserDefault::sharedUserDefault()->getXMLFilePath().c_str());
+        doc->SaveFile(CAUserDefault::getInstance()->getXMLFilePath().c_str());
         delete doc;
     }
 }
@@ -126,7 +126,7 @@ CAUserDefault::CAUserDefault()
 	m_spUserDefault = NULL;
 }
 
-void CAUserDefault::purgeSharedUserDefault()
+void CAUserDefault::destroyInstance()
 {
     m_spUserDefault = NULL;
 }
@@ -397,7 +397,7 @@ void CAUserDefault::setStringForKey(const char* pKey, const std::string & value)
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithUTF8String:value.c_str()] forKey:[NSString stringWithUTF8String:pKey]];
 }
 
-CAUserDefault* CAUserDefault::sharedUserDefault()
+CAUserDefault* CAUserDefault::getInstance()
 {
 #ifdef KEEP_COMPATABILITY
     initXMLFilePath();

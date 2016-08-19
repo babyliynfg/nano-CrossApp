@@ -449,6 +449,7 @@
 		D65F35AC1D38E154004B56A9 /* CASize.h in Headers */ = {isa = PBXBuildFile; fileRef = D65F35A21D38E154004B56A9 /* CASize.h */; };
 		D65F35AD1D38E154004B56A9 /* CAVec4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D65F35A31D38E154004B56A9 /* CAVec4.cpp */; };
 		D65F35AE1D38E154004B56A9 /* CAVec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D65F35A41D38E154004B56A9 /* CAVec4.h */; };
+		D6B0C63F1D6587DD00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C63E1D6587DD00D0E1BE /* CrossApp-Prefix.h */; };
 		E0AAB3651CCA3E3A00353011 /* CAAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */; };
 		E0AAB3681CCA3E7500353011 /* CAAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */; };
 		E0AAB3691CCA3E7500353011 /* CAAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */; };
@@ -905,6 +906,7 @@
 		D65F35A21D38E154004B56A9 /* CASize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CASize.h; sourceTree = "<group>"; };
 		D65F35A31D38E154004B56A9 /* CAVec4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVec4.cpp; sourceTree = "<group>"; };
 		D65F35A41D38E154004B56A9 /* CAVec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVec4.h; sourceTree = "<group>"; };
+		D6B0C63E1D6587DD00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
 		E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometerDelegate.h; sourceTree = "<group>"; };
 		E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometer.h; sourceTree = "<group>"; };
 		E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAccelerometer.mm; sourceTree = "<group>"; };
@@ -1158,6 +1160,7 @@
 		1551A353158F2ADE00E66CFE /* CrossApp */ = {
 			isa = PBXGroup;
 			children = (
+				D6B0C63E1D6587DD00D0E1BE /* CrossApp-Prefix.h */,
 				04EAA01F1956CE3800198A8E /* ccConfig.h */,
 				04EAA0201956CE3800198A8E /* ccMacros.h */,
 				04EAA0211956CE3800198A8E /* ccTypeInfo.h */,
@@ -1948,6 +1951,7 @@
 				EB9D562519E8DC2D0072BE8E /* JSViewController.h in Headers */,
 				B0ADAE881B2E7F1B00BE8FA3 /* CAPullToRefreshView.h in Headers */,
 				3E19F2A81B8B0ED100720027 /* CABlueTooth.h in Headers */,
+				D6B0C63F1D6587DD00D0E1BE /* CrossApp-Prefix.h in Headers */,
 				D64B497F1D40999500081862 /* CAValue.h in Headers */,
 				B04BCA851985DE5500CE0BC1 /* CAIndexPath.h in Headers */,
 				04EAA0051956CE2500198A8E /* CAKeypadDispatcher.h in Headers */,

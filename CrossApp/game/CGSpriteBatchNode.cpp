@@ -74,7 +74,7 @@ bool CGSpriteBatchNode::initWithFile(const std::string& fileImage, unsigned int 
 }
 
 CGSpriteBatchNode::CGSpriteBatchNode()
-: m_pobImageAtlas(NULL)
+: m_pobImageAtlas(nullptr)
 {
 }
 
@@ -103,7 +103,6 @@ void CGSpriteBatchNode::visit(void)
     }
     
     kmGLPopMatrix();
-    this->setOrderOfArrival(0);
 
     CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryBatchSprite, "CGSpriteBatchNode - visit");
 }
@@ -176,7 +175,6 @@ void CGSpriteBatchNode::updateAtlasIndex(CGSprite* sprite, ssize_t* curIndex)
     {
         oldIndex = sprite->getAtlasIndex();
         sprite->setAtlasIndex(*curIndex);
-        sprite->setOrderOfArrival(0);
         if (oldIndex != *curIndex)
         {
             swap(oldIndex, *curIndex);
@@ -191,7 +189,6 @@ void CGSpriteBatchNode::updateAtlasIndex(CGSprite* sprite, ssize_t* curIndex)
         {
             oldIndex = sprite->getAtlasIndex();
             sprite->setAtlasIndex(*curIndex);
-            sprite->setOrderOfArrival(0);
             if (oldIndex != *curIndex)
             {
                 swap(oldIndex, *curIndex);
@@ -208,7 +205,6 @@ void CGSpriteBatchNode::updateAtlasIndex(CGSprite* sprite, ssize_t* curIndex)
             {
                 oldIndex = sprite->getAtlasIndex();
                 sprite->setAtlasIndex(*curIndex);
-                sprite->setOrderOfArrival(0);
                 if (oldIndex != *curIndex)
                 {
                     this->swap(oldIndex, *curIndex);
@@ -225,7 +221,6 @@ void CGSpriteBatchNode::updateAtlasIndex(CGSprite* sprite, ssize_t* curIndex)
         {
             oldIndex = sprite->getAtlasIndex();
             sprite->setAtlasIndex(*curIndex);
-            sprite->setOrderOfArrival(0);
             if (oldIndex!=*curIndex)
             {
                 swap(oldIndex, *curIndex);
@@ -404,7 +399,7 @@ void CGSpriteBatchNode::appendChild(CGSprite* sprite)
 
     m_obDescendants.pushBack(sprite);
 
-    ssize_t index = static_cast<ssize_t>(m_obDescendants.size()-1);
+    ssize_t index = static_cast<ssize_t>(m_obDescendants.size() - 1);
     sprite->setAtlasIndex(index);
 
     ccV3F_C4B_T2F_Quad quad = sprite->getQuad();
@@ -421,7 +416,7 @@ void CGSpriteBatchNode::removeSpriteFromAtlas(CGSprite *sprite)
 {
     m_pobImageAtlas->removeQuadAtIndex(sprite->getAtlasIndex());
 
-    sprite->setBatchNode(NULL);
+    sprite->setBatchNode(nullptr);
 
     auto it = std::find(m_obDescendants.begin(), m_obDescendants.end(), sprite );
     if( it != m_obDescendants.end() )
@@ -432,7 +427,7 @@ void CGSpriteBatchNode::removeSpriteFromAtlas(CGSprite *sprite)
         for(; next != m_obDescendants.end(); ++next)
         {
             spr = *next;
-            spr->setAtlasIndex( spr->getAtlasIndex() - 1 );
+            spr->setAtlasIndex(spr->getAtlasIndex() - 1);
         }
         
         m_obDescendants.erase(it);

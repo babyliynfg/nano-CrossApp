@@ -172,7 +172,9 @@ public:
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sTitleColor, TitleColorForNormal);
     
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sSelectedTitleColor, TitleColorForSelected);
-        
+    
+    CC_PROPERTY(bool, m_bSelectedTitleBold, TitleBoldForSelected);
+    
     CC_SYNTHESIZE(CATabBarDelegate* , m_pDelegate, Delegate);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CATabBarItem*>, m_pItems, Items);

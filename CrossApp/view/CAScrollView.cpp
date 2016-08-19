@@ -56,7 +56,6 @@ CAScrollView::CAScrollView()
 {
     this->setPriorityScroll(true);
     this->setReachBoundaryHandOverToSuperview(true);
-    this->setHaveNextResponder(false);
 }
 
 CAScrollView::~CAScrollView()
@@ -949,7 +948,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
 
 void CAScrollView::initIndicator()
 {
-    const char indicatorSize = 6;
+    const char indicatorSize = 9;
     
     if (m_pIndicatorHorizontal == NULL)
     {

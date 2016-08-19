@@ -262,15 +262,15 @@ protected:
     
     virtual void recoveryCell();
     
-    virtual void normalWaterfallViewCell();
+    CC_DEPRECATED_ATTRIBUTE virtual void normalWaterfallViewCell();
     
-    virtual void highlightedWaterfallViewCell();
+    CC_DEPRECATED_ATTRIBUTE virtual void highlightedWaterfallViewCell();
     
-    virtual void selectedWaterfallViewCell();
+    CC_DEPRECATED_ATTRIBUTE virtual void selectedWaterfallViewCell();
     
-    virtual void disabledWaterfallViewCell();
+    CC_DEPRECATED_ATTRIBUTE virtual void disabledWaterfallViewCell();
     
-    virtual void recoveryWaterfallViewCell(){};
+    CC_DEPRECATED_ATTRIBUTE virtual void recoveryWaterfallViewCell(){};
 
     friend class CAWaterfallView;
 };

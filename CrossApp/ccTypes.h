@@ -295,6 +295,7 @@ struct CC_DLL BlendFunc
 };
 
 static const BlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
+
 // XXX: If any of these enums are edited and/or reordered, update CAImage.m
 //! Vertical text alignment type
 typedef enum

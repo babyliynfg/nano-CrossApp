@@ -427,6 +427,7 @@ CATabBar::CATabBar(bool clearance)
 ,m_nSelectedIndex(-1)
 ,m_sTitleColor(CAColor_white)
 ,m_sSelectedTitleColor(ccc4(50, 193, 255, 255))
+,m_bSelectedTitleBold(false)
 ,m_bShowIndicator(false)
 ,m_pDelegate(NULL)
 ,m_bClearance(clearance)
@@ -769,6 +770,31 @@ const CAColor4B& CATabBar::getTitleColorForSelected()
     return m_sSelectedTitleColor;
 }
 
+void CATabBar::setTitleBoldForSelected(bool var)
+{
+    m_bSelectedTitleBold = var;
+    if (!m_pButtons.empty())
+    {
+        for (size_t i=0; i<m_pButtons.size(); i++)
+        {
+            CAButton* btn = m_pButtons.at(i);
+            if (i == m_nSelectedIndex)
+            {
+                btn->setTitleBold(var);
+            }
+            else
+            {
+                btn->setTitleBold(false);
+            }
+        }
+    }
+}
+
+bool CATabBar::getTitleBoldForSelected()
+{
+    return m_bSelectedTitleBold;
+}
+
 void CATabBar::showBackground()
 {
     this->removeSubview(m_pBackgroundView);
@@ -872,6 +898,18 @@ void CATabBar::setSelectedAtIndex(int index)
     if (index != -1)
     {
         m_pButtons.at(index)->setControlStateSelected();
+        for (size_t i=0; i<m_pButtons.size(); i++)
+        {
+            CAButton* btn = m_pButtons.at(i);
+            if (i == index)
+            {
+                btn->setTitleBold(m_bSelectedTitleBold);
+            }
+            else
+            {
+                btn->setTitleBold(false);
+            }
+        }
         m_nSelectedIndex = index;
         m_pSelectedItem = m_pItems.at(m_nSelectedIndex);
         

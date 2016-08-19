@@ -34,6 +34,7 @@ CAViewController::CAViewController()
     m_pView->retain();
     m_pView->setContentContainer(this);
     m_pView->setLayout(DLayoutFill);
+    this->setHaveNextResponder(false);
 }
 
 CAViewController::~CAViewController()
@@ -285,7 +286,6 @@ CANavigationController::CANavigationController()
 {
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
-    this->setHaveNextResponder(false);
     this->setTouchMoved(true);
     this->setVerticalScrollEnabled(false);
     this->setNavigationBarBackgroundImage(CAImage::create("source_material/navigation_bg.png"));
@@ -1142,6 +1142,7 @@ CATabBarController::CATabBarController()
 ,m_sTabBarBackgroundColor(CAColor_white)
 ,m_sTabBarSelectedBackgroundColor(CAColor_white)
 ,m_sTabBarSelectedIndicatorColor(CAColor_white)
+,m_bTabBarSelectedTitleBold(false)
 ,m_sTabBarTitleColor(CAColor_white)
 ,m_sTabBarSelectedTitleColor(ccc4(50, 193, 255, 255))
 ,m_bShowTabBarSelectedIndicator(false)
@@ -1299,6 +1300,20 @@ const CAColor4B& CATabBarController::getTabBarTitleColorForSelected()
     return m_sTabBarSelectedTitleColor;
 }
 
+void CATabBarController::setTabBarTitleBoldForSelected(bool var)
+{
+    m_bTabBarSelectedTitleBold = var;
+    
+    if (m_pTabBar)
+    {
+        m_pTabBar->setTitleBoldForSelected(m_bTabBarSelectedTitleBold);
+    }
+}
+
+bool CATabBarController::getTabBarTitleBoldForSelected()
+{
+    return m_bTabBarSelectedTitleBold;
+}
 
 void CATabBarController::showTabBarSelectedIndicator()
 {
@@ -1455,6 +1470,7 @@ void CATabBarController::viewDidLoad()
     
     m_pTabBar->setTitleColorForNormal(m_sTabBarTitleColor);
     m_pTabBar->setTitleColorForSelected(m_sTabBarSelectedTitleColor);
+    m_pTabBar->setTitleBoldForSelected(m_bTabBarSelectedTitleBold);
     
     if (m_bShowTabBarSelectedIndicator)
     {

@@ -26,6 +26,7 @@ float CADensityDpi::getDensityDpi()
         }
         
         dpi = 160 * scale;
+        CCLog("\n*******************\nDEVICE DPI:%f\n*******************\n", dpi);
     }
     
 //    struct utsname systemInfo;

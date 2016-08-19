@@ -102,7 +102,7 @@ bool CAApplication::init(void)
     // create autorelease pool
     CAPoolManager::sharedPoolManager()->push();
 
-    m_fAdaptationRatio = CADensityDpi::getDensityDpi() / 320.0f;
+    m_fAdaptationRatio = CADensityDpi::getDensityDpi() / DPI_STANDARD;
     
     
     return true;
@@ -539,7 +539,7 @@ void CAApplication::purgeDirector()
     ActionManager::destroyInstance();
     
     // CrossApp specific data structures
-    CAUserDefault::purgeSharedUserDefault();
+    CAUserDefault::destroyInstance();
     CANotificationCenter::purgeNotificationCenter();
 
     ccGLInvalidateStateCache();
