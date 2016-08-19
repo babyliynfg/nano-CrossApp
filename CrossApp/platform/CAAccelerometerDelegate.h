@@ -29,6 +29,8 @@ receiving acceleration-related data from the system.
 class CC_DLL CAAccelerometerDelegate
 {
 public:
+    virtual ~CAAccelerometerDelegate() {}
+    
     virtual void didAccelerate(CAAcceleration* pAccelerationValue) {CC_UNUSED_PARAM(pAccelerationValue);}
 };
 
