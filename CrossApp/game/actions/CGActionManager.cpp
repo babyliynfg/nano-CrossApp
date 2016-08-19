@@ -65,7 +65,6 @@ void ActionManager::deleteHashElement(tHashElement *element)
 {
     ccArrayFree(element->actions);
     HASH_DEL(_targets, element);
-    element->target->release();
     free(element);
 }
 
@@ -174,7 +173,6 @@ void ActionManager::addAction(Action *action, CGNode *target, bool paused)
     {
         element = (tHashElement*)calloc(sizeof(*element), 1);
         element->paused = paused;
-        target->retain();
         element->target = target;
         HASH_ADD_PTR(_targets, target, element);
     }

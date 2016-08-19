@@ -39,6 +39,7 @@ class CAScrollView;
 class CAViewAnimation;
 class CARenderImage;
 class CGNode;
+class CGSprite;
 
 class CC_DLL CAView
 :public CAResponder
@@ -465,6 +466,8 @@ protected:
     CGNode*                     m_pParentCGNode;
     
     friend class                CGNode;
+    
+    friend class                CGSprite;
     
     friend class                CARenderImage;
     

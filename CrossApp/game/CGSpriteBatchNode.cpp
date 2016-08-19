@@ -96,6 +96,9 @@ void CGSpriteBatchNode::visit(void)
     this->transform();
     this->sortAllChildren();
     this->draw();
+    
+    for (auto& var : m_obChildren)
+        var->visit();
 
     if (m_pCAView)
     {

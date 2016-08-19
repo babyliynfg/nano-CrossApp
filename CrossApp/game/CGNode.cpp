@@ -86,16 +86,14 @@ CGNode::~CGNode(void)
     CC_SAFE_RELEASE(m_pCamera);
     CC_SAFE_RELEASE(m_pShaderProgram);
     
-    this->stopAllActions();
+    ActionManager::getInstance()->removeAllActionsFromTarget(this);
     
     if(!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-        {
-            (*itr)->setParent(NULL);
-        }
+        for (auto& var : m_obChildren)
+            var->setParent(NULL);
     }
+    
     m_obChildren.clear();
     if (m_pCAView)
     {
@@ -577,12 +575,11 @@ CGNode* CGNode::getChildByTag(int aTag)
     
     if(!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
+        for (auto& var : m_obChildren)
         {
-            if ((*itr)->m_nTag == aTag)
+            if (var->m_nTag == aTag)
             {
-                return *itr;
+                return var;
             }
         }
     }
@@ -595,12 +592,11 @@ CGNode* CGNode::getChildByTextTag(const std::string& textTag)
     
     if(!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
+        for (auto& var : m_obChildren)
         {
-            if ((*itr)->m_sTextTag.compare(textTag) == 0)
+            if (var->m_sTextTag.compare(textTag) == 0)
             {
-                return *itr;
+                return var;
             }
         }
     }
@@ -675,21 +671,17 @@ void CGNode::removeAllChildren()
 {
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
+        for (auto& var : m_obChildren)
         {
             if(m_bRunning)
             {
-                (*itr)->onExitTransitionDidStart();
-                (*itr)->onExit();
+                var->onExitTransitionDidStart();
+                var->onExit();
             }
-            
-            (*itr)->setParent(NULL);
+            var->setParent(NULL);
         }
-        
         m_obChildren.clear();
     }
-    
     m_bHasChildren = false;
 }
 
@@ -825,12 +817,8 @@ void CGNode::visit()
 
 void CGNode::visitEve(void)
 {
-    CAVector<CGNode*>::iterator itr=m_obChildren.begin();
-    while (itr!=m_obChildren.end())
-    {
-        (*itr)->visitEve();
-        itr++;
-    }
+    for (auto& var : m_obChildren)
+        var->visitEve();
     
     if (m_pCAView)
     {
@@ -853,11 +841,8 @@ void CGNode::onEnter()
     
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-        {
-            (*itr)->onEnter();
-        }
+        for (auto& var : m_obChildren)
+            var->onEnter();
     }
     
     if (m_pCAView)
@@ -873,9 +858,8 @@ void CGNode::onEnterTransitionDidFinish()
 {
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-            (*itr)->onEnterTransitionDidFinish();
+        for (auto& var : m_obChildren)
+            var->onEnterTransitionDidFinish();
     }
     
     if (m_pCAView)
@@ -888,9 +872,8 @@ void CGNode::onExitTransitionDidStart()
 {
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-            (*itr)->onExitTransitionDidStart();
+        for (auto& var : m_obChildren)
+            var->onExitTransitionDidStart();
     }
     
     if (m_pCAView)
@@ -907,9 +890,8 @@ void CGNode::onExit()
     
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-            (*itr)->onExit();
+        for (auto& var : m_obChildren)
+            var->onExit();
     }
     
     if (m_pCAView)
@@ -1326,9 +1308,8 @@ void CGNode::updateDisplayedAlpha(float parentAlpha)
     
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-            (*itr)->updateDisplayedAlpha(_displayedAlpha);
+        for (auto& var : m_obChildren)
+            var->updateDisplayedAlpha(_displayedAlpha);
     }
     
     this->updateColor();
