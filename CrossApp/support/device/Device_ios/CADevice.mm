@@ -232,21 +232,6 @@ void stopUpdateLocation()
     [[CALocation sharedLocation] stopUpdatingLocation];
 }
 
-void startAccelerometer(CAAccelerometerDelegate* delegate)
-{
-    CAAccelerometer::sharedAccelerometer()->setDelegate(delegate);
-}
-
-void setAccelerometerInterval(float interval)
-{
-    CAAccelerometer::sharedAccelerometer()->setAccelerometerInterval(interval);
-}
-
-void stopAccelerometer()
-{
-    CAAccelerometer::sharedAccelerometer()->stopAccelerometer();
-}
-    
 void startGyroscope(CAGyroDelegate* delegate)
 {
     [[CAGyroscope sharedGyroscope] addGyroDelegate:delegate];
@@ -260,6 +245,7 @@ void setGyroInterval(float value)
 void stopGyroscope()
 {
     [[CAGyroscope sharedGyroscope] stopUpdatingGyroscope];
+    [[CAGyroscope sharedGyroscope] release];
 }
 }
 

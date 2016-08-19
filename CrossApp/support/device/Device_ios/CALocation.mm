@@ -42,6 +42,19 @@ static CALocation* m_pLocation = NULL;
     return m_pLocation;
 }
 
+- (void) dealloc
+{
+    self.sender = NULL;
+
+    [m_pLocation release];
+    m_pLocation = NULL;
+    
+    [_locationManager release];
+    _locationManager = NULL;
+    
+    [super dealloc];
+}
+
 -(void)startUpdatingLocation
 {
     if ([CLLocationManager locationServicesEnabled]) {

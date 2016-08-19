@@ -48,9 +48,10 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
     if (_motionManager.accelerometerAvailable)
     {
         // 启动设备的运动更新，通过给定的队列向给定的处理程序提供数据。
-        [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *motion, NSError *error) {
-            
-            [self performSelectorOnMainThread:@selector(handleDeviceMotion:) withObject:motion waitUntilDone:YES];
+        [_motionManager startDeviceMotionUpdatesToQueue:[NSOperationQueue mainQueue] withHandler:^(CMDeviceMotion *motion, NSError *error)
+        {
+            _motionManager.deviceMotionUpdateInterval = 0.1f;
+            [self handleDeviceMotion:motion];
         }];
     }
     else
@@ -81,6 +82,31 @@ static AccelerometerDispatcher* s_pAccelerometerDispatcher;
     acceleration_->y = deviceMotion.gravity.y;
     acceleration_->z = deviceMotion.gravity.z;
     acceleration_->timestamp = _motionManager.deviceMotionUpdateInterval;
+    
+    double tmp = acceleration_->x;
+    
+    switch ([[UIApplication sharedApplication] statusBarOrientation])
+    {
+        case UIInterfaceOrientationLandscapeRight:
+            acceleration_->x = -acceleration_->y;
+            acceleration_->y = tmp;
+            break;
+            
+        case UIInterfaceOrientationLandscapeLeft:
+            acceleration_->x = acceleration_->y;
+            acceleration_->y = -tmp;
+            break;
+            
+        case UIInterfaceOrientationPortraitUpsideDown:
+            acceleration_->x = -acceleration_->y;
+            acceleration_->y = -tmp;
+            break;
+            
+        case UIInterfaceOrientationPortrait:
+            break;
+        default:
+            NSAssert(false, @"unknow orientation");
+    }
     
     delegate_->didAccelerate(acceleration_);
     

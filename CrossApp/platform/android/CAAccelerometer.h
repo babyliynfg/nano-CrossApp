@@ -6,7 +6,8 @@
 #include "platform/CACommon.h"
 #include "platform/CAAccelerometerDelegate.h"
 
-namespace   CrossApp {
+namespace CrossApp
+{
 
 class CC_DLL CAAccelerometer
 {

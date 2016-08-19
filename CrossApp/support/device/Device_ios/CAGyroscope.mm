@@ -38,9 +38,15 @@ static CAGyroscope* m_pGyroscope = NULL;
 
 - (void) dealloc
 {
-    delegate_ = 0;
-    
+    delegate_ = NULL;
+
     delete gyroDate;
+
+    [_motionManager release];
+    _motionManager = NULL;
+
+    [m_pGyroscope release];
+    m_pGyroscope = NULL;
     
     [super dealloc];
 }

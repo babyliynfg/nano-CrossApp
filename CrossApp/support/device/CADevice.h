@@ -192,12 +192,6 @@ namespace CADevice
 	CC_DLL void startUpdateLocation(CALocationDelegate* gpsDelegate);
 
 	CC_DLL void stopUpdateLocation();
-
-    CC_DLL void startAccelerometer(CAAccelerometerDelegate* delegate);
-
-	CC_DLL void setAccelerometerInterval(float interval);
-
-	CC_DLL void stopAccelerometer();
     
     CC_DLL void startGyroscope(CAGyroDelegate* delegate);
     

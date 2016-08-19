@@ -17,6 +17,8 @@ public:
     double z;
 
     float timestamp;
+    
+    CAAcceleration(): x(0), y(0), z(0), timestamp(0) {}
 };
 
 /**

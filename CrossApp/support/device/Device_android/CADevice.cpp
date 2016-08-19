@@ -172,33 +172,6 @@ extern "C"
         }
     }
 
-	void JAVAStartAccelerometer()
-	{
-		JniMethodInfo jmi;
-		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "enableAccelerometer", "()V"))
-		{
-			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
-		}
-	}
-
-	void JAVASetAccelerometer(float interval)
-	{
-		JniMethodInfo jmi;
-		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "setAccelerometerInterval", "(F)V"))
-		{
-			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID,interval);
-		}
-	}
-
-	void JAVAStopAccelerometer()
-	{
-		JniMethodInfo jmi;
-		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "disableAccelerometer", "()V"))
-		{
-			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
-		}
-	}
-
 	void JAVAStartGyroscope()
 	{
 		JniMethodInfo jmi;
@@ -505,23 +478,6 @@ void setScreenBrightness(float brightness)
     setJAVABrightness(sender);
 }
 
-void startAccelerometer(CAAccelerometerDelegate* delegate)
-{
-	accelerometerDelegate = delegate;
-
-	JAVAStartAccelerometer();
-}
-
-void setAccelerometerInterval(float interval)
-{
-	JAVASetAccelerometer(interval);
-}
-
-void stopAccelerometer()
-{
-	JAVAStopAccelerometer();
-}
-
 void startGyroscope(CAGyroDelegate* delegate)
 {
 	gyroscopeDelegate = delegate;
@@ -649,23 +605,6 @@ extern "C"
         }
     }
     
-	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppAccelerometer_onSensorChanged(
-		JNIEnv *env, 
-		jobject obj,
-		jfloat px,
-		jfloat py,
-		jfloat pz,
-		jfloat pTime)
-	{
-		CAAcceleration* acceleration = new CAAcceleration();
-		acceleration->x = px;
-		acceleration->y = py;
-		acceleration->z = pz;		
-		acceleration->timestamp = pTime;
-
-		accelerometerDelegate->didAccelerate(acceleration);
-	}
-
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppGyroscope_onGyroSensorChanged(
 		JNIEnv *env,
 		jobject obj,
