@@ -51,7 +51,7 @@ public:
         /// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
         P3D,
 
-        Default = P2D,
+        Default = P3D,
     } Projection;
     
     /**

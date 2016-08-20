@@ -732,19 +732,28 @@ Spawn* Spawn::reverse() const
 // RotateTo
 //
 
-RotateTo* RotateTo::create(float duration, float dstAngle)
+RotateTo* RotateTo::createX(float duration, float dstAngleX)
 {
     RotateTo* rotateTo = new (std::nothrow) RotateTo();
-    rotateTo->initWithDuration(duration, dstAngle, dstAngle);
+    rotateTo->initWithDurationX(duration, dstAngleX);
     rotateTo->autorelease();
 
     return rotateTo;
 }
 
-RotateTo* RotateTo::create(float duration, float dstAngleX, float dstAngleY)
+RotateTo* RotateTo::createY(float duration, float dstAngleY)
 {
     RotateTo* rotateTo = new (std::nothrow) RotateTo();
-    rotateTo->initWithDuration(duration, dstAngleX, dstAngleY);
+    rotateTo->initWithDurationY(duration, dstAngleY);
+    rotateTo->autorelease();
+    
+    return rotateTo;
+}
+
+RotateTo* RotateTo::createZ(float duration, float dstAngleZ)
+{
+    RotateTo* rotateTo = new (std::nothrow) RotateTo();
+    rotateTo->initWithDurationZ(duration, dstAngleZ);
     rotateTo->autorelease();
     
     return rotateTo;
@@ -760,16 +769,38 @@ RotateTo* RotateTo::create(float duration, const DPoint3D& dstAngle3D)
 }
 
 RotateTo::RotateTo()
-: _is3D(false)
 {
 }
 
-bool RotateTo::initWithDuration(float duration, float dstAngleX, float dstAngleY)
+bool RotateTo::initWithDurationX(float duration, float dstAngleX)
 {
     if (ActionInterval::initWithDuration(duration))
     {
         _dstAngle.x = dstAngleX;
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool RotateTo::initWithDurationY(float duration, float dstAngleY)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
         _dstAngle.y = dstAngleY;
+        
+        return true;
+    }
+    
+    return false;
+}
+
+bool RotateTo::initWithDurationZ(float duration, float dstAngleZ)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _dstAngle.z = dstAngleZ;
         
         return true;
     }
@@ -782,7 +813,6 @@ bool RotateTo::initWithDuration(float duration, const DPoint3D& dstAngle3D)
     if (ActionInterval::initWithDuration(duration))
     {
         _dstAngle = dstAngle3D;
-        _is3D = true;
         
         return true;
     }
@@ -794,10 +824,7 @@ RotateTo* RotateTo::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) RotateTo();
-    if(_is3D)
-       a->initWithDuration(_duration, _dstAngle);
-    else
-        a->initWithDuration(_duration, _dstAngle.x, _dstAngle.y);
+    a->initWithDuration(_duration, _dstAngle);
     a->autorelease();
     return a;
 }
@@ -828,15 +855,7 @@ void RotateTo::startWithTarget(CGNode *target)
 {
     ActionInterval::startWithTarget(target);
     
-    if (_is3D)
-    {
-        _startAngle = _target->getRotation3D();
-    }
-    else
-    {
-        _startAngle.x = _target->getRotationX();
-        _startAngle.y = _target->getRotationY();
-    }
+    _startAngle = _target->getRotation3D();
 
     calculateAngles(_startAngle.x, _diffAngle.x, _dstAngle.x);
     calculateAngles(_startAngle.y, _diffAngle.y, _dstAngle.y);
@@ -847,31 +866,10 @@ void RotateTo::update(float time)
 {
     if (_target)
     {
-        if(_is3D)
-        {
-            _target->setRotation3D(DPoint3D(
-                _startAngle.x + _diffAngle.x * time,
-                _startAngle.y + _diffAngle.y * time,
-                _startAngle.z + _diffAngle.z * time
-            ));
-        }
-        else
-        {
-#if CC_USE_PHYSICS
-            if (_startAngle.x == _startAngle.y && _diffAngle.x == _diffAngle.y)
-            {
-                _target->setRotation(_startAngle.x + _diffAngle.x * time);
-            }
-            else
-            {
-                _target->setRotationX(_startAngle.x + _diffAngle.x * time);
-                _target->setRotationY(_startAngle.y + _diffAngle.y * time);
-            }
-#else
-            _target->setRotationX(_startAngle.x + _diffAngle.x * time);
-            _target->setRotationY(_startAngle.y + _diffAngle.y * time);
-#endif // CC_USE_PHYSICS
-        }
+        _target->setRotation3D(DPoint3D(_startAngle.x + _diffAngle.x * time,
+                                        _startAngle.y + _diffAngle.y * time,
+                                        _startAngle.z + _diffAngle.z * time
+                                        ));
     }
 }
 
@@ -885,19 +883,28 @@ RotateTo *RotateTo::reverse() const
 // RotateBy
 //
 
-RotateBy* RotateBy::create(float duration, float deltaAngle)
+RotateBy* RotateBy::createX(float duration, float deltaAngleX)
 {
     RotateBy *rotateBy = new (std::nothrow) RotateBy();
-    rotateBy->initWithDuration(duration, deltaAngle);
+    rotateBy->initWithDurationX(duration, deltaAngleX);
     rotateBy->autorelease();
 
     return rotateBy;
 }
 
-RotateBy* RotateBy::create(float duration, float deltaAngleX, float deltaAngleY)
+RotateBy* RotateBy::createY(float duration, float deltaAngleY)
 {
     RotateBy *rotateBy = new (std::nothrow) RotateBy();
-    rotateBy->initWithDuration(duration, deltaAngleX, deltaAngleY);
+    rotateBy->initWithDurationY(duration, deltaAngleY);
+    rotateBy->autorelease();
+    
+    return rotateBy;
+}
+
+RotateBy* RotateBy::createZ(float duration, float deltaAngleZ)
+{
+    RotateBy *rotateBy = new (std::nothrow) RotateBy();
+    rotateBy->initWithDurationZ(duration, deltaAngleZ);
     rotateBy->autorelease();
     
     return rotateBy;
@@ -913,30 +920,39 @@ RotateBy* RotateBy::create(float duration, const DPoint3D& deltaAngle3D)
 }
 
 RotateBy::RotateBy()
-: _is3D(false)
 {
 }
 
-bool RotateBy::initWithDuration(float duration, float deltaAngle)
-{
-    if (ActionInterval::initWithDuration(duration))
-    {
-        _deltaAngle.x = _deltaAngle.y = deltaAngle;
-        return true;
-    }
-
-    return false;
-}
-
-bool RotateBy::initWithDuration(float duration, float deltaAngleX, float deltaAngleY)
+bool RotateBy::initWithDurationX(float duration, float deltaAngleX)
 {
     if (ActionInterval::initWithDuration(duration))
     {
         _deltaAngle.x = deltaAngleX;
+        return true;
+    }
+    
+    return false;
+}
+
+bool RotateBy::initWithDurationY(float duration, float deltaAngleY)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
         _deltaAngle.y = deltaAngleY;
         return true;
     }
     
+    return false;
+}
+
+bool RotateBy::initWithDurationZ(float duration, float deltaAngleZ)
+{
+    if (ActionInterval::initWithDuration(duration))
+    {
+        _deltaAngle.z = deltaAngleZ;
+        return true;
+    }
+
     return false;
 }
 
@@ -945,7 +961,6 @@ bool RotateBy::initWithDuration(float duration, const DPoint3D& deltaAngle3D)
     if (ActionInterval::initWithDuration(duration))
     {
         _deltaAngle = deltaAngle3D;
-        _is3D = true;
         return true;
     }
 
@@ -957,10 +972,7 @@ RotateBy* RotateBy::clone() const
 {
     // no copy constructor
     auto a = new (std::nothrow) RotateBy();
-    if(_is3D)
-        a->initWithDuration(_duration, _deltaAngle);
-    else
-        a->initWithDuration(_duration, _deltaAngle.x, _deltaAngle.y);
+    a->initWithDuration(_duration, _deltaAngle);
     a->autorelease();
     return a;
 }
@@ -968,15 +980,7 @@ RotateBy* RotateBy::clone() const
 void RotateBy::startWithTarget(CGNode *target)
 {
     ActionInterval::startWithTarget(target);
-    if(_is3D)
-    {
-        _startAngle = target->getRotation3D();
-    }
-    else
-    {
-        _startAngle.x = target->getRotationX();
-        _startAngle.y = target->getRotationY();
-    }
+    _startAngle = target->getRotation3D();
 }
 
 void RotateBy::update(float time)
@@ -984,48 +988,21 @@ void RotateBy::update(float time)
     // FIXME: shall I add % 360
     if (_target)
     {
-        if(_is3D)
-        {
-            DPoint3D v;
-            v.x = _startAngle.x + _deltaAngle.x * time;
-            v.y = _startAngle.y + _deltaAngle.y * time;
-            v.z = _startAngle.z + _deltaAngle.z * time;
-            _target->setRotation3D(v);
-        }
-        else
-        {
-#if CC_USE_PHYSICS
-            if (_startAngle.x == _startAngle.y && _deltaAngle.x == _deltaAngle.y)
-            {
-                _target->setRotation(_startAngle.x + _deltaAngle.x * time);
-            }
-            else
-            {
-                _target->setRotationX(_startAngle.x + _deltaAngle.x * time);
-                _target->setRotationY(_startAngle.y + _deltaAngle.y * time);
-            }
-#else
-            _target->setRotationX(_startAngle.x + _deltaAngle.x * time);
-            _target->setRotationY(_startAngle.y + _deltaAngle.y * time);
-#endif // CC_USE_PHYSICS
-        }
+        DPoint3D v;
+        v.x = _startAngle.x + _deltaAngle.x * time;
+        v.y = _startAngle.y + _deltaAngle.y * time;
+        v.z = _startAngle.z + _deltaAngle.z * time;
+        _target->setRotation3D(v);
     }
 }
 
 RotateBy* RotateBy::reverse() const
 {
-    if(_is3D)
-    {
-        DPoint3D v;
-        v.x = - _deltaAngle.x;
-        v.y = - _deltaAngle.y;
-        v.z = - _deltaAngle.z;
-        return RotateBy::create(_duration, v);
-    }
-    else
-    {
-        return RotateBy::create(_duration, -_deltaAngle.x, -_deltaAngle.y);
-    }
+    DPoint3D v;
+    v.x = - _deltaAngle.x;
+    v.y = - _deltaAngle.y;
+    v.z = - _deltaAngle.z;
+    return RotateBy::create(_duration, v);
 }
 
 //

@@ -391,19 +391,27 @@ public:
      *
      * @param duration Duration time, in seconds.
      * @param dstAngleX In degreesCW.
+     * @return An autoreleased RotateTo object.
+     */
+    static RotateTo* createX(float duration, float dstAngleX);
+
+    /**
+     * Creates the action with separate rotation angles.
+     *
+     * @param duration Duration time, in seconds.
      * @param dstAngleY In degreesCW.
      * @return An autoreleased RotateTo object.
      */
-    static RotateTo* create(float duration, float dstAngleX, float dstAngleY);
-
+    static RotateTo* createY(float duration, float dstAngleY);
+    
     /** 
      * Creates the action.
      *
      * @param duration Duration time, in seconds.
-     * @param dstAngle In degreesCW.
+     * @param dstAngleZ In degreesCW.
      * @return An autoreleased RotateTo object.
      */
-    static RotateTo* create(float duration, float dstAngle);
+    static RotateTo* createZ(float duration, float dstAngleZ);
 
     /** 
      * Creates the action with 3D rotation angles.
@@ -432,9 +440,23 @@ public:
      * initializes the action
      * @param duration in seconds
      * @param dstAngleX in degreesCW
+     */
+    bool initWithDurationX(float duration, float dstAngleX);
+    
+    /**
+     * initializes the action
+     * @param duration in seconds
      * @param dstAngleY in degreesCW
      */
-    bool initWithDuration(float duration, float dstAngleX, float dstAngleY);
+    bool initWithDurationY(float duration, float dstAngleY);
+    
+    /**
+     * initializes the action
+     * @param duration in seconds
+     * @param dstAngleZ in degreesCW
+     */
+    bool initWithDurationZ(float duration, float dstAngleZ);
+    
     /**
      * initializes the action
      * @param duration in seconds
@@ -448,7 +470,7 @@ public:
     void calculateAngles(float &startAngle, float &diffAngle, float dstAngle);
     
 protected:
-    bool _is3D;
+    
     DPoint3D _dstAngle;
     DPoint3D _startAngle;
     DPoint3D _diffAngle;
@@ -463,24 +485,34 @@ private:
 class CC_DLL RotateBy : public ActionInterval
 {
 public:
-    /** 
-     * Creates the action.
-     *
-     * @param duration Duration time, in seconds.
-     * @param deltaAngle In degreesCW.
-     * @return An autoreleased RotateBy object.
-     */
-    static RotateBy* create(float duration, float deltaAngle);
+    
     /**
      * Creates the action with separate rotation angles.
      *
      * @param duration Duration time, in seconds.
-     * @param deltaAngleZ_X In degreesCW.
-     * @param deltaAngleZ_Y In degreesCW.
+     * @param dstAngleX In degreesCW.
      * @return An autoreleased RotateBy object.
-     * @warning The physics body contained in Node doesn't support rotate with different x and y angle.
      */
-    static RotateBy* create(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
+    static RotateBy* createX(float duration, float dstAngleX);
+    
+    /**
+     * Creates the action with separate rotation angles.
+     *
+     * @param duration Duration time, in seconds.
+     * @param dstAngleY In degreesCW.
+     * @return An autoreleased RotateBy object.
+     */
+    static RotateBy* createY(float duration, float dstAngleY);
+    
+    /**
+     * Creates the action.
+     *
+     * @param duration Duration time, in seconds.
+     * @param dstAngleZ In degreesCW.
+     * @return An autoreleased RotateBy object.
+     */
+    static RotateBy* createZ(float duration, float dstAngleZ);
+    
     /** Creates the action with 3D rotation angles.
      *
      * @param duration Duration time, in seconds.
@@ -504,18 +536,35 @@ public:
     RotateBy();
     virtual ~RotateBy() {}
 
-    /** initializes the action */
-    bool initWithDuration(float duration, float deltaAngle);
-    /** 
-     * @warning The physics body contained in Node doesn't support rotate with different x and y angle.
-     * @param deltaAngleZ_X in degreesCW
-     * @param deltaAngleZ_Y in degreesCW
+    /**
+     * initializes the action
+     * @param duration in seconds
+     * @param dstAngleX in degreesCW
      */
-    bool initWithDuration(float duration, float deltaAngleZ_X, float deltaAngleZ_Y);
+    bool initWithDurationX(float duration, float dstAngleX);
+    
+    /**
+     * initializes the action
+     * @param duration in seconds
+     * @param dstAngleY in degreesCW
+     */
+    bool initWithDurationY(float duration, float dstAngleY);
+    
+    /**
+     * initializes the action
+     * @param duration in seconds
+     * @param dstAngleZ in degreesCW
+     */
+    bool initWithDurationZ(float duration, float dstAngleZ);
+    
+    /**
+     * initializes the action
+     * @param duration in seconds
+     */
     bool initWithDuration(float duration, const DPoint3D& deltaAngle3D);
     
 protected:
-    bool _is3D;
+    
     DPoint3D _deltaAngle;
     DPoint3D _startAngle;
 

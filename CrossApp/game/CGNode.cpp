@@ -173,13 +173,13 @@ void CGNode::setZOrder(int z)
     }
 }
 
-int CGNode::getRotation()
+float CGNode::getRotationZ()
 {
     CCAssert(m_fRotationZ_X == m_fRotationZ_Y, "CGNode#rotation. m_fRotationZ_X != m_fRotationZ_Y. Don't know which one to return");
     return m_fRotationZ_X;
 }
 
-void CGNode::setRotation(int newRotation)
+void CGNode::setRotationZ(float newRotation)
 {
     if (m_fRotationZ_X != newRotation || m_fRotationZ_Y != newRotation)
     {
@@ -189,31 +189,31 @@ void CGNode::setRotation(int newRotation)
     }
 }
 
-int CGNode::getRotationX()
+float CGNode::getRotationX()
 {
-    return m_fRotationZ_X;
+    return m_fRotationX;
 }
 
-void CGNode::setRotationX(int fRotationX)
+void CGNode::setRotationX(float fRotationX)
 {
-    if (m_fRotationZ_X != fRotationX)
+    if (m_fRotationX != fRotationX)
     {
-        m_fRotationZ_X = fRotationX;
+        m_fRotationX = fRotationX;
         this->updateRotationQuat();
         this->updateDraw();
     }
 }
 
-int CGNode::getRotationY()
+float CGNode::getRotationY()
 {
-    return m_fRotationZ_Y;
+    return m_fRotationY;
 }
 
-void CGNode::setRotationY(int fRotationY)
+void CGNode::setRotationY(float fRotationY)
 {
-    if (m_fRotationZ_Y != fRotationY)
+    if (m_fRotationY != fRotationY)
     {
-        m_fRotationZ_Y = fRotationY;
+        m_fRotationY = fRotationY;
         this->updateRotationQuat();
         this->updateDraw();
     }

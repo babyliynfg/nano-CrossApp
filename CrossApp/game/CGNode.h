@@ -88,17 +88,17 @@ public:
     
     virtual bool isVisible();
     
-    virtual void setRotation(int fRotation);
+    virtual void setRotationZ(float fRotation);
     
-    virtual int getRotation();
+    virtual float getRotationZ();
     
-    virtual void setRotationX(int fRotaionX);
+    virtual void setRotationX(float fRotaionX);
     
-    virtual int getRotationX();
+    virtual float getRotationX();
     
-    virtual void setRotationY(int fRotationY);
+    virtual void setRotationY(float fRotationY);
     
-    virtual int getRotationY();
+    virtual float getRotationY();
     
     virtual void setRotation3D(const DPoint3D& rotation);
 
@@ -321,10 +321,10 @@ protected:
     float                       m_fSkewX;
     float                       m_fSkewY;
     
-    int                         m_fRotationX;
-    int                         m_fRotationY;
-    int                         m_fRotationZ_X;             ///< rotation angle on Z-axis, component X
-    int                         m_fRotationZ_Y;             ///< rotation angle on Z-axis, component Y
+    float                       m_fRotationX;
+    float                       m_fRotationY;
+    float                       m_fRotationZ_X;             ///< rotation angle on Z-axis, component X
+    float                       m_fRotationZ_Y;             ///< rotation angle on Z-axis, component Y
     Quaternion                  m_obRotationQuat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
     
     float                       m_fScaleX;

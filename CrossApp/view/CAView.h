@@ -386,8 +386,7 @@ protected:
     
     int                         m_fRotationX;
     int                         m_fRotationY;
-    int                         m_fRotationZ_X;             ///< rotation angle on Z-axis, component X
-    int                         m_fRotationZ_Y;             ///< rotation angle on Z-axis, component Y
+    int                         m_fRotationZ;
     Quaternion                  m_obRotationQuat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
     
     float                       m_fScaleX;
