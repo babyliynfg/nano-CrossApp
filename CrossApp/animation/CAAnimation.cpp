@@ -48,8 +48,8 @@ namespace CAAnimation
         m_obInfo.now = 0;
         m_obInfo.total = 0;
         m_obInfo.interval = 0;
-        m_obInfo.selector = NULL;
-        m_obInfo.target = NULL;
+        m_obInfo.selector = nullptr;
+        m_obInfo.target = nullptr;
     }
     
     Animation::~Animation()
@@ -69,12 +69,6 @@ namespace CAAnimation
     
     void Animation::update(float dt)
     {
-        if (m_obInfo.now >= m_obInfo.total)
-        {
-            _deque.eraseObject(this);
-            return;
-        }
-        
         if (m_obInfo.delay > 0)
         {
             m_obInfo.delay -= dt;
@@ -90,8 +84,15 @@ namespace CAAnimation
         m_obInfo.interval = dt;
         m_obInfo.now += dt;
         m_obInfo.now = MIN(m_obInfo.now, m_obInfo.total);
-
-        if (m_obInfo.target && m_obInfo.selector)
+        
+        if (m_obInfo.now >= m_obInfo.total)
+        {
+            this->retain();
+            _deque.eraseObject(this);
+            this->end();
+            this->release();
+        }
+        else if (m_obInfo.target && m_obInfo.selector)
         {
             ((CAObject *)m_obInfo.target->*m_obInfo.selector)(m_obInfo.interval, m_obInfo.now, m_obInfo.total);
         }
@@ -99,6 +100,7 @@ namespace CAAnimation
     
     void Animation::end()
     {
+        CAScheduler::unscheduleAllForTarget(this);
         if (m_obInfo.target && m_obInfo.selector)
         {
             ((CAObject *)m_obInfo.target->*m_obInfo.selector)(m_obInfo.interval, m_obInfo.total, m_obInfo.total);
@@ -132,15 +134,18 @@ namespace CAAnimation
 
     void unschedule(SEL_CAAnimation selector, CAObject* target)
     {
-        for (CADeque<Animation*>::iterator itr=_deque.begin(); itr!=_deque.end(); itr++)
+        for (auto itr=_deque.begin(); itr!=_deque.end();)
         {
             Animation* obj = *itr;
             if (obj->m_obInfo.selector == selector && obj->m_obInfo.target == target)
             {
-                CAScheduler::unscheduleAllForTarget(obj);
+                itr = _deque.erase(itr);
                 obj->end();
-                _deque.erase(itr);
                 break;
+            }
+            else
+            {
+                itr++;
             }
         }
     }
