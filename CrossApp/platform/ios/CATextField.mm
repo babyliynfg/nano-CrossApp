@@ -260,7 +260,7 @@ bool CATextField::becomeFirstResponder()
         return false;
     }
     
-    bool result = true;//CAControl::becomeFirstResponder();
+    bool result = CAControl::becomeFirstResponder();
     
     this->hideTextField();
     

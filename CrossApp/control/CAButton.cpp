@@ -16,7 +16,7 @@
 #include "view/CALabel.h"
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
-
+#include "animation/CAViewAnimation.h"
 NS_CC_BEGIN
 
 CAButton::CAButton(const CAButtonType& buttonType)
@@ -383,8 +383,11 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     do
     {
         CC_BREAK_IF(m_eControlState != CAControlStateNormal && m_eControlState != CAControlStateSelected);
-
-        this->performSelector(callfunc_selector(CAButton::setTouchLongPress), 0.5f);
+        
+        CAViewAnimation::beginAnimations(m_s__StrID + "TouchLongPress", NULL);
+        CAViewAnimation::setAnimationDuration(0.5f);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAButton::setTouchLongPress));
+        CAViewAnimation::commitAnimations();
         
         return this->setTouchBegin(point);
     }
@@ -395,6 +398,8 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
+    CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
+    
     CC_RETURN_IF(!this->isTouchClick());
     
     DPoint point = pTouch->getLocation();
@@ -441,6 +446,8 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
+    CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
+    
     CC_RETURN_IF(!this->isTouchClick());
     
     DPoint point = pTouch->getLocation();
@@ -480,6 +487,8 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
+    CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
+    
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
         

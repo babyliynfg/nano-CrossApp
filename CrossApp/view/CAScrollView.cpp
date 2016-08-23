@@ -1358,12 +1358,11 @@ void CAIndicator::setHide(bool var)
     }
     else
     {
-        CAViewAnimation::areBeginAnimationsWithID(m_s__StrID);
+        CAViewAnimation::removeAnimations(m_s__StrID);
         
         CC_RETURN_IF(1.0f-this->getAlpha() > FLT_EPSILON);
         CAViewAnimation::beginAnimations(m_s__StrID, NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
-        CAViewAnimation::setAnimationDelay(0.2f);
         this->setAlpha(0.0f);
         CAViewAnimation::commitAnimations();
     }
