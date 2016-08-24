@@ -534,7 +534,7 @@ void CAApplication::purgeDirector()
     
     // CrossApp specific data structures
     CAUserDefault::destroyInstance();
-    CANotificationCenter::purgeNotificationCenter();
+    CANotificationCenter::destroyInstance();
 
     ccGLInvalidateStateCache();
         

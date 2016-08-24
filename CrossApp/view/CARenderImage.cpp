@@ -37,12 +37,12 @@ CARenderImage::CARenderImage()
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     // Listen this event to save render Image before come to background.
     // Then it can be restored after coming to foreground on Android.
-    CANotificationCenter::sharedNotificationCenter()->addObserver(this,
+    CANotificationCenter::getInstance()->addObserver(this,
                                                                   callfuncO_selector(CARenderImage::listenToBackground),
                                                                   EVENT_COME_TO_BACKGROUND,
                                                                   NULL);
     
-    CANotificationCenter::sharedNotificationCenter()->addObserver(this,
+    CANotificationCenter::getInstance()->addObserver(this,
                                                                   callfuncO_selector(CARenderImage::listenToForeground),
                                                                   EVENT_COME_TO_FOREGROUND, // this is misspelt
                                                                   NULL);
@@ -61,8 +61,8 @@ CARenderImage::~CARenderImage()
     }
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    CANotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
-    CANotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
+    CANotificationCenter::getInstance()->removeObserver(this, EVENT_COME_TO_BACKGROUND);
+    CANotificationCenter::getInstance()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
 #endif
 
 }

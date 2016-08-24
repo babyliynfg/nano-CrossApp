@@ -353,7 +353,7 @@ void CCEGLViewProtocol::setStatusBarOrientation(const CAInterfaceOrientation& va
     else
     {
         m_eOrientation = var;
-        CANotificationCenter::sharedNotificationCenter()->postNotification(CAApplicationDidChangeStatusBarOrientationNotification, NULL);
+        CANotificationCenter::getInstance()->postNotification(CAApplicationDidChangeStatusBarOrientationNotification, NULL);
     }
 }
 

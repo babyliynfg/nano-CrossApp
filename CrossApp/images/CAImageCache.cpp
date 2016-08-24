@@ -488,7 +488,7 @@ CAImageAtlas::CAImageAtlas()
 CAImageAtlas::~CAImageAtlas()
 {
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
-    CANotificationCenter::sharedNotificationCenter()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
+    CANotificationCenter::getInstance()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
 #endif
     
     CCLOGINFO("CrossApp: CAImageAtlas deallocing %p.", this);
@@ -585,10 +585,10 @@ bool CAImageAtlas::initWithImage(CAImage *image, unsigned int capacity)
     
 #if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
     // listen the event when app go to background
-    CANotificationCenter::sharedNotificationCenter()->addObserver(this,
-                                                                  callfuncO_selector(CAImageAtlas::listenBackToForeground),
-                                                                  EVENT_COME_TO_FOREGROUND,
-                                                                  NULL);
+    CANotificationCenter::getInstance()->addObserver(this,
+                                                     callfuncO_selector(CAImageAtlas::listenBackToForeground),
+                                                     EVENT_COME_TO_FOREGROUND,
+                                                     NULL);
 #endif
     
     this->setupIndices();

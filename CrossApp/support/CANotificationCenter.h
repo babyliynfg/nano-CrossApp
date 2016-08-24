@@ -51,11 +51,23 @@ public:
     /** CANotificationCenter destructor */
     ~CANotificationCenter();
     
-    /** Gets the single instance of CANotificationCenter. */
-    static CANotificationCenter *sharedNotificationCenter(void);
-
-    /** Destroys the single instance of CANotificationCenter. */
-    static void purgeNotificationCenter(void);
+    /** Gets the single instance of __NotificationCenter. */
+    static CANotificationCenter *getInstance();
+    
+    /** Destroys the single instance of __NotificationCenter. */
+    static void destroyInstance();
+    
+    /** @deprecated use getInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static CANotificationCenter *sharedNotificationCenter(void)
+    {
+        return CANotificationCenter::getInstance();
+    }
+    
+    /** @deprecated use destroyInstance() instead */
+    CC_DEPRECATED_ATTRIBUTE static void purgeNotificationCenter(void)
+    {
+        CANotificationCenter::destroyInstance();
+    }
 
     /** @brief Adds an observer for the specified target.
      *  @param target The target which wants to observe notification events.
