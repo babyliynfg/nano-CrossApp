@@ -93,7 +93,6 @@ public:
 
     CAValue& operator= (CAValueMap&& v);
 
-
     CAValue& operator= (const CAValueMapIntKey& v);
 
     CAValue& operator= (CAValueMapIntKey&& v);

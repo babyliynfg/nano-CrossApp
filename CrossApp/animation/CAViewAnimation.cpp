@@ -717,7 +717,7 @@ void CAViewAnimation::setRotation(float rotation, CAView* view)
     CAViewAnimation::allocCAViewModel(view);
     CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->bRotation = true;
-    model->endRotationX = model->endRotationY = rotation;
+    model->endRotationZ = model->endRotationZ = rotation;
 }
 
 void CAViewAnimation::setRotationX(float rotationX, CAView* view)
