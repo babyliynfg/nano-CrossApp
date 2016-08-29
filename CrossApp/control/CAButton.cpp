@@ -802,4 +802,9 @@ void CAButton::setTitleBold(bool bold)
     m_pLabel->setBold(bold);
 }
 
+void CAButton::setTitleTextAlignment(const CATextAlignment& var)
+{
+    m_pLabel->setTextAlignment(var);
+}
+
 NS_CC_END

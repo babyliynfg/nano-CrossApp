@@ -241,7 +241,7 @@ void CANavigationBar::showLeftButton()
         
         if (i == 0)
         {
-            layout.horizontal.left = 10;
+            layout.horizontal.left = 20;
         }
         
         CAButton* button = CAButton::createWithLayout(layout, CAButtonTypeCustom);
@@ -306,7 +306,7 @@ void CANavigationBar::showRightButton()
         
         if (i == 0)
         {
-            layout.horizontal.right = 10;
+            layout.horizontal.right = 20;
         }
         
         CAButton* button = CAButton::createWithLayout(layout, CAButtonTypeCustom);
