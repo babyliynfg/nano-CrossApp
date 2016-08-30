@@ -92,6 +92,23 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    CrossApp::CATextField* crossTextField = ((IOSTextField*)self.textField).textField;
+    
+    if (crossTextField->getDelegate())
+    {
+        std::string text = [textField.text UTF8String];
+        unsigned int location = 0;
+        unsigned int lenght = (unsigned int)text.size();
+
+        return crossTextField->getDelegate()->textFieldShouldChangeCharacters(crossTextField,
+                                                                              location,
+                                                                              lenght,
+                                                                              text);
+    }
+    return YES;
+}
 
 @end
 
