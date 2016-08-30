@@ -337,6 +337,7 @@ void OpenURL(const std::string &url)
     if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "browserOpenURL" , "(Ljava/lang/String;)V"))
     {
         jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(url.c_str()));
+        jmi.env->DeleteLocalRef(jmi.classID);
     }
 }
     
@@ -346,24 +347,27 @@ void JAVAOpenCamera(int type)
 	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "CAImageCapture" , "(I)V"))
 	{
 		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
+        jmi.env->DeleteLocalRef(jmi.classID);
 	}
 }
     
-void JAVAUpdatingLocation()
+void JAVAUpdateLocation()
 {
-    JniMethodInfo jmi;
-    if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "startUpdatingLocation" , "()V"))
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppDevice", "startLocation", "()V"))
     {
-        jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID);
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID);
+        jni.env->DeleteLocalRef(jni.classID);
     }
 }
     
 void JAVAStopUpdateLocation()
 {
     JniMethodInfo jmi;
-    if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "stopUpdatingLocation", "()V"))
+    if(JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "stopLocation", "()V"))
     {
-        jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
+        jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
+        jmi.env->DeleteLocalRef(jmi.classID);
     }
 }
     
@@ -498,7 +502,7 @@ void stopGyroscope()
 void startUpdateLocation(CALocationDelegate* gpsDelegate)
 {
 	locationDelegate = gpsDelegate;
-	JAVAUpdatingLocation();
+	JAVAUpdateLocation();
 }
 
 void stopUpdateLocation()
