@@ -98,14 +98,13 @@
     
     if (crossTextField->getDelegate())
     {
-        std::string text = [textField.text UTF8String];
         unsigned int location = 0;
-        unsigned int lenght = (unsigned int)text.size();
+        unsigned int lenght = (unsigned int)[textField.text length];
 
         return crossTextField->getDelegate()->textFieldShouldChangeCharacters(crossTextField,
                                                                               location,
                                                                               lenght,
-                                                                              text);
+                                                                              "");
     }
     return YES;
 }
