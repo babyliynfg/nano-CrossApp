@@ -119,16 +119,6 @@ namespace CADevice
 		
 	}
 
-	void startUpdateLocation(CALocationDelegate* gpsDelegate)
-	{
-
-	}
-
-	void stopUpdateLocation()
-	{
-
-	}
-    
     void startAccelerometer(CAAccelerometerDelegate* delegate)
     {
         

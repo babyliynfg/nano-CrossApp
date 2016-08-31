@@ -249,9 +249,9 @@ public:
 
     DPoint convertToWorldSpace(const DPoint& nodePoint);
 
-    DPoint convertToNodeSize(const DSize& worldSize);
+    DSize convertToNodeSize(const DSize& worldSize);
     
-    DPoint convertToWorldSize(const DSize& nodeSize);
+    DSize convertToWorldSize(const DSize& nodeSize);
     
     DPoint convertTouchToNodeSpace(CATouch * touch);
     

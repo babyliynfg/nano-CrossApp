@@ -189,3 +189,8 @@ void kmGLScalef(float x, float y, float z)
     kmMat4Scaling(&scaling, x, y, z);
     kmMat4Multiply(current_stack->top, current_stack->top, &scaling);
 }
+
+kmMat4* CC_DLL kmGLGetCurrTopMatrix()
+{
+    return current_stack->top;
+}
