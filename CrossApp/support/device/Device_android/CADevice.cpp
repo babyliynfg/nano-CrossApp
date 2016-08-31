@@ -288,7 +288,7 @@ float getBatteryLevel()
 {
     return JAVAgetBattery();
 }
-static CALocationDelegate *locationDelegate = NULL;
+    
 static CABlueToothDelegate *bluetoothdelegate =NULL;
     
 void initBlueTooth(CABlueToothDelegate *target)
@@ -497,17 +497,6 @@ void setGyroInterval(float interval)
 void stopGyroscope()
 {
 	JAVAStopGyroscope();
-}
-
-void startUpdateLocation(CALocationDelegate* gpsDelegate)
-{
-	locationDelegate = gpsDelegate;
-	JAVAUpdateLocation();
-}
-
-void stopUpdateLocation()
-{
-	JAVAStopUpdateLocation();
 }
 
 ToMainThread::ToMainThread()
