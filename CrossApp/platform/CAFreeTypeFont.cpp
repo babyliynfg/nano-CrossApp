@@ -931,7 +931,7 @@ FT_Error CAFreeTypeFont::initWordGlyphs(std::vector<TGlyph>& glyphs, const std::
 
 		if (m_bBold)
 		{
-			FT_Outline_Embolden(&slot->outline, 1 << 6);
+			FT_Outline_Embolden(&slot->outline, 56);
 		}
 
 		if (c == 10)
