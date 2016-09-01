@@ -524,6 +524,7 @@ void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
             
             CAButton* btn = CAButton::createWithFrame(rect, CAButtonTypeCustom);
             m_pContentView->addSubview(btn);
+            btn->setTouchEventScrollHandOverToSuperview(false);
             btn->setTag(i);
             btn->addTarget(this, CAControl_selector(CATabBar::setTouchSelected), CAControlEventTouchUpInSide);
             m_pButtons.pushBack(btn);

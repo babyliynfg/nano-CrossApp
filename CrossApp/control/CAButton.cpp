@@ -457,16 +457,9 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     {
         CC_BREAK_IF(this->getControlState() != CAControlStateHighlighted);
         
-        if (m_bAllowsSelected)
+        if (m_bAllowsSelected && m_bSelected)
         {
-            if (m_bSelected && getBounds().containsPoint(point))
-            {
-                this->setControlState(CAControlStateSelected);
-            }
-            else
-            {
-                this->setControlState(CAControlStateNormal);
-            }
+            this->setControlState(CAControlStateSelected);
         }
         else
         {
