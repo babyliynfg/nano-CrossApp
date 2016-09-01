@@ -73,7 +73,7 @@ void CDShowNewsImage::initNewsImageView(newsImage _image)
 //    this->getView()->addSubview(view);
     
     p_bg = CAView::createWithColor(ccc4(0,0,0,200));
-    p_bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_C(0, 0.85)));
+    p_bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_NH_C(0.3, 0.85)));
     this->getView()->addSubview(p_bg);
 
     p_title = CALabel::createWithLayout(DLayout(DHorizontalLayout_L_R(10, 80), DVerticalLayout_T_H(10, 50)));
@@ -146,7 +146,7 @@ void CDShowNewsImage::scrollViewTouchUpWithoutMoved(CAScrollView* view, const DP
         //动画时长
         CAViewAnimation::setAnimationDuration(0.2f);
         
-        p_bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_C(0, 0.85)));
+        p_bg->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(0.3, 0.85)));
         
         //执行动画
         CAViewAnimation::commitAnimations();

@@ -464,6 +464,7 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     CAView* container = new CAView();
     container->setLayout(layout);
     container->enabledLeftShadow(true);
+    container->setHaveNextResponder(false);
     this->getView()->addSubview(container);
     m_pContainers.pushBack(container);
     container->release();

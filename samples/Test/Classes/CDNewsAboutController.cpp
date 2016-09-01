@@ -196,7 +196,7 @@ void CDNewsAboutController::viewDidLoad()
     btn3->setBackgroundViewForState(CAControlStateHighlighted, CAImageView::createWithImage(CAImage::create("image/about_btn3_down.png")));
     
     CAView* view1 = CAView::createWithLayout(DLayoutFill, ccc4(210,210,210,255));
-    view1->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_C(0, 0.88)));
+    view1->setLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_NH_C(0.24, 0.88)));
     view1->addSubview(btn1);
     view1->addSubview(btn2);
     view1->addSubview(btn3);
