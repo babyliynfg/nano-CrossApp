@@ -384,11 +384,14 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     {
         CC_BREAK_IF(m_eControlState != CAControlStateNormal && m_eControlState != CAControlStateSelected);
         
-        CAViewAnimation::beginAnimations(m_s__StrID + "TouchLongPress", NULL);
-        CAViewAnimation::setAnimationDuration(0.5f);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAButton::setTouchLongPress));
-        CAViewAnimation::commitAnimations();
-        
+        if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
+        {
+            CAViewAnimation::beginAnimations(m_s__StrID + "TouchLongPress", NULL);
+            CAViewAnimation::setAnimationDuration(0.5f);
+            CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAButton::setTouchLongPress));
+            CAViewAnimation::commitAnimations();
+        }
+
         return this->setTouchBegin(point);
     }
     while (0);
@@ -398,7 +401,10 @@ bool CAButton::ccTouchBegan(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
+    if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
+    {
+        CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
+    }
     
     CC_RETURN_IF(!this->isTouchClick());
     
@@ -414,16 +420,16 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         if (m_bAllowsSelected && m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
         {
             if (m_bSelected)
-            {
+            {CCLog("CAControlStateSelected");
                 this->setControlState(CAControlStateSelected);
             }
             else
-            {
+            {CCLog("CAControlStateNormal");
                 this->setControlState(CAControlStateNormal);
             }
         }
         else
-        {
+        {CCLog("CAControlStateHighlighted");
             this->setControlState(CAControlStateHighlighted);
         }
     }
@@ -434,11 +440,11 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         this->setTouchMovedOutSide(point);
         
         if (m_bAllowsSelected && m_bSelected)
-        {
+        {CCLog("CAControlStateSelected");
             this->setControlState(CAControlStateSelected);
         }
         else
-        {
+        {CCLog("CAControlStateNormal");
             this->setControlState(CAControlStateNormal);
         }
     }
@@ -446,7 +452,10 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
+    if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
+    {
+        CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
+    }
     
     CC_RETURN_IF(!this->isTouchClick());
     
@@ -480,7 +489,10 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
 
 void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent)
 {
-    CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
+    if (m_pTarget[CAControlEventTouchLongPress] && m_selTouch[CAControlEventTouchLongPress])
+    {
+        CAViewAnimation::removeAnimations(m_s__StrID + "TouchLongPress");
+    }
     
     DPoint point = pTouch->getLocation();
     point = this->convertToNodeSpace(point);
@@ -541,11 +553,6 @@ void CAButton::setControlState(const CAControlState& var)
     
     image = m_pImage[m_eControlState];
     title = m_sTitle[m_eControlState];
-    
-    if (image == NULL)
-    {
-        image = this->isSelected() ? m_pImage[CAControlStateSelected] : m_pImage[CAControlStateNormal];
-    }
     
     if (strcmp(title.c_str(), "") == 0)
     {

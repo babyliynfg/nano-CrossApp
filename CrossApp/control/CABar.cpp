@@ -80,6 +80,8 @@ bool CANavigationBar::init()
     m_pContentView->setLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_T_B(m_bClearance ? 40 : 0, 0)));
     this->addSubview(m_pContentView);
     m_pContentView->release();
+    
+    this->enabledBottomShadow(true);
     return true;
 }
 
@@ -251,7 +253,7 @@ void CANavigationBar::showLeftButton()
         
         if (item == NULL && m_pItem)
         {
-            button->setImageForState(CAControlStateNormal, CAImage::create("source_material/btn_left_white.png"));
+            button->setImageForState(CAControlStateAll, CAImage::create("source_material/btn_left_white.png"));
             button->setImageColorForState(CAControlStateHighlighted, ccc4(255, 255, 200, 255));
             button->addTarget(this, CAControl_selector(CANavigationBar::goBack), CAControlEventTouchUpInSide);
         }
@@ -259,7 +261,7 @@ void CANavigationBar::showLeftButton()
         {
             if (item->getImage())
             {
-                button->setImageForState(CAControlStateNormal, item->getImage());
+                button->setImageForState(CAControlStateAll, item->getImage());
                 if (item->getHighlightedImage())
                 {
                     button->setImageForState(CAControlStateHighlighted, item->getHighlightedImage());
@@ -318,7 +320,7 @@ void CANavigationBar::showRightButton()
         {
             if (item->getImage())
             {
-                button->setImageForState(CAControlStateNormal, item->getImage());
+                button->setImageForState(CAControlStateAll, item->getImage());
                 if (item->getHighlightedImage())
                 {
                     button->setImageForState(CAControlStateHighlighted, item->getHighlightedImage());

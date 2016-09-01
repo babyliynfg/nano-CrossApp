@@ -2810,7 +2810,7 @@ CAImage* CAImage::CC_WHITE_IMAGE()
 
 CAImage* CAImage::CC_SHADOW_LEFT_IMAGE()
 {
-    if (s_shadow_left_image == NULL)
+    if (s_shadow_left_image == nullptr)
     {
         unsigned int pixels[12] =
         {
@@ -2837,7 +2837,7 @@ CAImage* CAImage::CC_SHADOW_LEFT_IMAGE()
 
 CAImage* CAImage::CC_SHADOW_RIGHT_IMAGE()
 {
-    if (s_shadow_left_image == NULL)
+    if (s_shadow_right_image == nullptr)
     {
         unsigned int pixels[12] =
         {
@@ -2855,16 +2855,16 @@ CAImage* CAImage::CC_SHADOW_RIGHT_IMAGE()
             0x7060606
         };
         
-        s_shadow_left_image = new CAImage();
-        s_shadow_left_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 12, 1);
-        s_shadow_left_image->m_bMonochrome = true;
+        s_shadow_right_image = new CAImage();
+        s_shadow_right_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 12, 1);
+        s_shadow_right_image->m_bMonochrome = true;
     }
     return s_shadow_right_image;
 }
 
 CAImage* CAImage::CC_SHADOW_TOP_IMAGE()
 {
-    if (s_shadow_left_image == NULL)
+    if (s_shadow_top_image == nullptr)
     {
         unsigned int pixels[12] =
         {
@@ -2882,16 +2882,16 @@ CAImage* CAImage::CC_SHADOW_TOP_IMAGE()
             0x2b1b1b1b
         };
         
-        s_shadow_left_image = new CAImage();
-        s_shadow_left_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 1, 12);
-        s_shadow_left_image->m_bMonochrome = true;
+        s_shadow_top_image = new CAImage();
+        s_shadow_top_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 1, 12);
+        s_shadow_top_image->m_bMonochrome = true;
     }
     return s_shadow_top_image;
 }
 
 CAImage* CAImage::CC_SHADOW_BOTTOM_IMAGE()
 {
-    if (s_shadow_left_image == NULL)
+    if (s_shadow_bottom_image == nullptr)
     {
         unsigned int pixels[12] =
         {
@@ -2909,9 +2909,9 @@ CAImage* CAImage::CC_SHADOW_BOTTOM_IMAGE()
             0x7060606
         };
         
-        s_shadow_left_image = new CAImage();
-        s_shadow_left_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 1, 12);
-        s_shadow_left_image->m_bMonochrome = true;
+        s_shadow_bottom_image = new CAImage();
+        s_shadow_bottom_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 1, 12);
+        s_shadow_bottom_image->m_bMonochrome = true;
     }
     return s_shadow_bottom_image;
 }
