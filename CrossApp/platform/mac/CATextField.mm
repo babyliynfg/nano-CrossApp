@@ -332,6 +332,10 @@
             
             [self setBeforeText:current];
             [self setStringValue:current];
+            if (_textField->getDelegate())
+            {
+                _textField->getDelegate()->textFieldDidChangeText(_textField);
+            }
         }
     }
 }

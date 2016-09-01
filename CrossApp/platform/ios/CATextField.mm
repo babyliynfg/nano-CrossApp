@@ -153,6 +153,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillWasShown:) name:UIKeyboardWillShowNotification object:nil];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
+    
+    [self addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
 
 -(void)removeTextField
@@ -182,6 +184,14 @@
     if (_textField->getDelegate() && [self isFirstResponder])
     {
         _textField->getDelegate()->keyBoardHeight(_textField, 0);
+    }
+}
+
+- (void) textFieldDidChange:(NSNotification *) notif
+{
+    if (_textField->getDelegate() && [self isFirstResponder])
+    {
+        _textField->getDelegate()->textFieldDidChangeText(_textField);
     }
 }
 
