@@ -1378,11 +1378,6 @@ void CATabBarController::viewDidLoad()
         tabBarLayout.vertical.height = m_iTabBarHeight;
     }
     
-    m_pTabBar = CATabBar::createWithLayout(tabBarLayout, clearance);
-    m_pTabBar->setItems(items);
-    m_pTabBar->setDelegate(this);
-    this->getView()->addSubview(m_pTabBar);
-    
     DLayout containerLayout;
     containerLayout.horizontal = DHorizontalLayoutFill;
     
@@ -1411,6 +1406,11 @@ void CATabBarController::viewDidLoad()
         view->release();
     }
     m_pContainer->setViews(views);
+    
+    m_pTabBar = CATabBar::createWithLayout(tabBarLayout, clearance);
+    m_pTabBar->setItems(items);
+    m_pTabBar->setDelegate(this);
+    this->getView()->addSubview(m_pTabBar);
     
     if (m_pTabBarBackgroundImage)
     {

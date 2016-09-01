@@ -1377,9 +1377,9 @@ void CAView::drawRightShadow()
         ccV3F_C4B_T2F_Quad quad = m_sQuad;
         
         GLfloat x1,x2,y1,y2;
-        x1 = 0;
+        x1 = m_obContentSize.width;
         y1 = 0;
-        x2 = 12;
+        x2 = m_obContentSize.width + 12;
         y2 = m_obContentSize.height;
         
         quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
@@ -1405,9 +1405,9 @@ void CAView::drawTopShadow()
         
         GLfloat x1,x2,y1,y2;
         x1 = 0;
-        y1 = -12;
+        y1 = m_obContentSize.height;
         x2 = m_obContentSize.width;
-        y2 = 0;
+        y2 = m_obContentSize.height + 4;
         
         quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
         quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
@@ -1432,9 +1432,9 @@ void CAView::drawBottomShadow()
         
         GLfloat x1,x2,y1,y2;
         x1 = 0;
-        y1 = 0;
+        y1 = -4;
         x2 = m_obContentSize.width;
-        y2 = 12;
+        y2 = 0;
         
         quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
         quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);

@@ -502,10 +502,9 @@ bool CATabBar::init()
     this->addSubview(m_pContentView);
     m_pContentView->release();
     
+    this->enabledTopShadow(true);
     return true;
 }
-
-
 
 void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
 {
