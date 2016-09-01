@@ -223,6 +223,14 @@ public:
     
     static CAImage* CC_WHITE_IMAGE();
 
+    static CAImage* CC_SHADOW_LEFT_IMAGE();
+    
+    static CAImage* CC_SHADOW_RIGHT_IMAGE();
+    
+    static CAImage* CC_SHADOW_TOP_IMAGE();
+    
+    static CAImage* CC_SHADOW_BOTTOM_IMAGE();
+    
     virtual CAImage* copy();
     
     CAImage::Format detectFormat(const unsigned char * data, unsigned long dataLen);

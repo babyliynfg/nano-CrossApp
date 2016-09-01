@@ -84,11 +84,16 @@ CAView::CAView(void)
 , m_bIsAnimation(false)
 , m_pobBatchView(NULL)
 , m_pobImageAtlas(NULL)
+, m_bLeftShadowed(false)
+, m_bRightShadowed(false)
+, m_bTopShadowed(false)
+, m_bBottomShadowed(false)
 , m_pParentCGNode(NULL)
 , m_pCGNode(NULL)
 , m_obLayout(DLayoutZero)
 , m_eLayoutType(0)
 {
+    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
     memset(&m_sQuad, 0, sizeof(m_sQuad));
@@ -883,6 +888,26 @@ void CAView::setShaderProgram(CAGLProgram *pShaderProgram)
     m_pShaderProgram = pShaderProgram;
 }
 
+void CAView::enabledLeftShadow(bool var)
+{
+    m_bLeftShadowed = var;
+}
+
+void CAView::enabledRightShadow(bool var)
+{
+    m_bRightShadowed = var;
+}
+
+void CAView::enabledTopShadow(bool var)
+{
+    m_bTopShadowed = var;
+}
+
+void CAView::enabledBottomShadow(bool var)
+{
+    m_bBottomShadowed = var;
+}
+
 const char* CAView::description()
 {
     return crossapp_format_string("<CAView | TextTag = %s | Tag = %d >", m_sTextTag.c_str(), m_nTag).c_str();
@@ -1275,6 +1300,157 @@ void CAView::draw()
     CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAView - draw");
 }
 
+void CAView::drawShadow(CAImage* i, const ccV3F_C4B_T2F_Quad& q)
+{
+    kmGLPushMatrix();
+    
+    CAIMAGE_DRAW_SETUP();
+    
+    ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    ccGLBindTexture2D(i->getName());
+    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
+
+    long offset = (long)&q;
+    // vertex
+    int diff = offsetof( ccV3F_C4B_T2F, vertices);
+    glVertexAttribPointer(kCCVertexAttrib_Position,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(q.bl),
+                          (void*) (offset + diff));
+    
+    // texCoods
+    diff = offsetof( ccV3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords,
+                          2,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(q.bl),
+                          (void*) (offset + diff));
+    
+    // color
+    diff = offsetof( ccV3F_C4B_T2F, colors);
+    glVertexAttribPointer(kCCVertexAttrib_Color,
+                          4,
+                          GL_UNSIGNED_BYTE,
+                          GL_TRUE,
+                          sizeof(q.bl),
+                          (void*)(offset + diff));
+    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    kmGLPopMatrix();
+}
+
+void CAView::drawLeftShadow()
+{
+    if (m_bLeftShadowed)
+    {
+        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = -12;
+        y1 = 0;
+        x2 = 0;
+        y2 = m_obContentSize.height;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fVertexZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fVertexZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(CAImage::CC_SHADOW_LEFT_IMAGE(), quad);
+    }
+
+}
+
+void CAView::drawRightShadow()
+{
+    if (m_bRightShadowed)
+    {
+        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = 0;
+        y1 = 0;
+        x2 = 12;
+        y2 = m_obContentSize.height;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fVertexZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fVertexZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+        
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(CAImage::CC_SHADOW_RIGHT_IMAGE(), quad);
+    }
+    
+}
+
+void CAView::drawTopShadow()
+{
+    if (m_bTopShadowed)
+    {
+        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = 0;
+        y1 = -12;
+        x2 = m_obContentSize.width;
+        y2 = 0;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fVertexZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fVertexZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+        
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(CAImage::CC_SHADOW_TOP_IMAGE(), quad);
+    }
+    
+}
+
+void CAView::drawBottomShadow()
+{
+    if (m_bBottomShadowed)
+    {
+        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = 0;
+        y1 = 0;
+        x2 = m_obContentSize.width;
+        y2 = 12;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fVertexZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fVertexZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+        
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(CAImage::CC_SHADOW_BOTTOM_IMAGE(), quad);
+    }
+    
+}
+
 void CAView::visit()
 {
     CC_RETURN_IF(!m_bVisible);
@@ -1282,6 +1458,11 @@ void CAView::visit()
     kmGLPushMatrix();
 
     this->transform();
+    
+    this->drawLeftShadow();
+    this->drawRightShadow();
+    this->drawTopShadow();
+    this->drawBottomShadow();
     
     int minX, maxX, minY, maxY;
     bool isScissor = (bool)glIsEnabled(GL_SCISSOR_TEST);
@@ -1969,18 +2150,6 @@ void CAView::setImage(CAImage* image)
         CC_SAFE_RETAIN(image);
         CC_SAFE_RELEASE(m_pobImage);
         m_pobImage = image;
-        if (image)
-        {
-            if (image->getPixelFormat() == CAImage::PixelFormat_A8)
-            {
-                this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
-            }
-            else
-            {
-                this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-            }
-        }
-        
         this->updateBlendFunc();
         this->updateDraw();
     }
