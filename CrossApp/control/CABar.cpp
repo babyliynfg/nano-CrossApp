@@ -211,6 +211,7 @@ void CANavigationBar::showTitle()
         title->setNumberOfLine(1);
 		title->setColor(m_cTitleColor);
         title->setFontSize(36);
+        title->setBold(true);
         m_pContentView->addSubview(title);
         m_pTitle = title;
         
