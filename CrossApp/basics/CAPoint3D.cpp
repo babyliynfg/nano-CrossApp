@@ -2,7 +2,7 @@
 
 #include "CAPoint3D.h"
 #include "ccMacros.h"
-#include "math/MathUtil.h"
+#include "math/CAMathUtil.h"
 
 // implementation of DPoint
 NS_CC_BEGIN

@@ -1,4 +1,4 @@
-#include "math/MathUtil.h"
+#include "math/CAMathUtil.h"
 #include "ccMacros.h"
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID)
@@ -39,18 +39,18 @@
 #endif
 
 #ifdef INCLUDE_NEON32
-#include "math/MathUtilNeon.inl"
+#include "math/CAMathUtilNeon.inl"
 #endif
 
 #ifdef INCLUDE_NEON64
-#include "math/MathUtilNeon64.inl"
+#include "math/CAMathUtilNeon64.inl"
 #endif
 
 #ifdef INCLUDE_SSE
-#include "math/MathUtilSSE.inl"
+#include "math/CAMathUtilSSE.inl"
 #endif
 
-#include "math/MathUtil.inl"
+#include "math/CAMathUtil.inl"
 
 NS_CC_BEGIN
 

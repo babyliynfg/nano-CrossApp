@@ -975,6 +975,6 @@ NS_CC_END
  end of base group
  @}
  */
-#include "math/Mat4.inl"
+#include "math/CAMat4.inl"
 
 #endif // MATH_MAT4_H

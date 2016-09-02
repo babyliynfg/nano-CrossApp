@@ -3,7 +3,7 @@
 #define QUATERNION_H_
 
 #include "basics/CAPoint3D.h"
-#include "math/Mat4.h"
+#include "math/CAMat4.h"
 //#include "Plane.h"
 
 /**

@@ -11,9 +11,9 @@ LOCAL_ARM_MODE := arm
 endif
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
-MATHNEONFILE := math/MathUtil.cpp.neon
+MATHNEONFILE := math/CAMathUtil.cpp.neon
 else
-MATHNEONFILE := math/MathUtil.cpp
+MATHNEONFILE := math/CAMathUtil.cpp
 endif
 
 LOCAL_SRC_FILES := \
@@ -126,7 +126,7 @@ view/CAGifView.cpp \
 view/CARichLabel.cpp \
 math/CAAffineTransform.cpp \
 math/CAVertex.cpp \
-math/Mat4.cpp \
+math/CAMat4.cpp \
 math/Quaternion.cpp \
 math/TransformUtils.cpp \
 $(MATHNEONFILE) \

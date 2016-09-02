@@ -345,10 +345,10 @@
 		D64A8C861D34870B00F75021 /* CAMathBase.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C711D34870B00F75021 /* CAMathBase.h */; };
 		D64A8C871D34870B00F75021 /* CAVertex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C721D34870B00F75021 /* CAVertex.cpp */; };
 		D64A8C881D34870B00F75021 /* CAVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C731D34870B00F75021 /* CAVertex.h */; };
-		D64A8C891D34870B00F75021 /* Mat4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C751D34870B00F75021 /* Mat4.cpp */; };
-		D64A8C8A1D34870B00F75021 /* Mat4.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C761D34870B00F75021 /* Mat4.h */; };
-		D64A8C8B1D34870B00F75021 /* MathUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C781D34870B00F75021 /* MathUtil.cpp */; };
-		D64A8C8C1D34870B00F75021 /* MathUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C791D34870B00F75021 /* MathUtil.h */; };
+		D64A8C891D34870B00F75021 /* CAMat4.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C751D34870B00F75021 /* CAMat4.cpp */; };
+		D64A8C8A1D34870B00F75021 /* CAMat4.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C761D34870B00F75021 /* CAMat4.h */; };
+		D64A8C8B1D34870B00F75021 /* CAMathUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C781D34870B00F75021 /* CAMathUtil.cpp */; };
+		D64A8C8C1D34870B00F75021 /* CAMathUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C791D34870B00F75021 /* CAMathUtil.h */; };
 		D64A8C8D1D34870B00F75021 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C7E1D34870B00F75021 /* Quaternion.cpp */; };
 		D64A8C8E1D34870B00F75021 /* Quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C7F1D34870B00F75021 /* Quaternion.h */; };
 		D64A8C8F1D34870B00F75021 /* TransformUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C811D34870B00F75021 /* TransformUtils.cpp */; };
@@ -790,15 +790,15 @@
 		D64A8C721D34870B00F75021 /* CAVertex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVertex.cpp; sourceTree = "<group>"; };
 		D64A8C731D34870B00F75021 /* CAVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVertex.h; sourceTree = "<group>"; };
 		D64A8C741D34870B00F75021 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		D64A8C751D34870B00F75021 /* Mat4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mat4.cpp; sourceTree = "<group>"; };
-		D64A8C761D34870B00F75021 /* Mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mat4.h; sourceTree = "<group>"; };
-		D64A8C771D34870B00F75021 /* Mat4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Mat4.inl; sourceTree = "<group>"; };
-		D64A8C781D34870B00F75021 /* MathUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MathUtil.cpp; sourceTree = "<group>"; };
-		D64A8C791D34870B00F75021 /* MathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathUtil.h; sourceTree = "<group>"; };
-		D64A8C7A1D34870B00F75021 /* MathUtil.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MathUtil.inl; sourceTree = "<group>"; };
-		D64A8C7B1D34870B00F75021 /* MathUtilNeon.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MathUtilNeon.inl; sourceTree = "<group>"; };
-		D64A8C7C1D34870B00F75021 /* MathUtilNeon64.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MathUtilNeon64.inl; sourceTree = "<group>"; };
-		D64A8C7D1D34870B00F75021 /* MathUtilSSE.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MathUtilSSE.inl; sourceTree = "<group>"; };
+		D64A8C751D34870B00F75021 /* CAMat4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAMat4.cpp; sourceTree = "<group>"; };
+		D64A8C761D34870B00F75021 /* CAMat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMat4.h; sourceTree = "<group>"; };
+		D64A8C771D34870B00F75021 /* CAMat4.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CAMat4.inl; sourceTree = "<group>"; };
+		D64A8C781D34870B00F75021 /* CAMathUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAMathUtil.cpp; sourceTree = "<group>"; };
+		D64A8C791D34870B00F75021 /* CAMathUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAMathUtil.h; sourceTree = "<group>"; };
+		D64A8C7A1D34870B00F75021 /* CAMathUtil.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CAMathUtil.inl; sourceTree = "<group>"; };
+		D64A8C7B1D34870B00F75021 /* CAMathUtilNeon.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CAMathUtilNeon.inl; sourceTree = "<group>"; };
+		D64A8C7C1D34870B00F75021 /* CAMathUtilNeon64.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CAMathUtilNeon64.inl; sourceTree = "<group>"; };
+		D64A8C7D1D34870B00F75021 /* CAMathUtilSSE.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CAMathUtilSSE.inl; sourceTree = "<group>"; };
 		D64A8C7E1D34870B00F75021 /* Quaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quaternion.cpp; sourceTree = "<group>"; };
 		D64A8C7F1D34870B00F75021 /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
 		D64A8C801D34870B00F75021 /* Quaternion.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Quaternion.inl; sourceTree = "<group>"; };
@@ -1594,15 +1594,15 @@
 				D64A8C721D34870B00F75021 /* CAVertex.cpp */,
 				D64A8C731D34870B00F75021 /* CAVertex.h */,
 				D64A8C741D34870B00F75021 /* CMakeLists.txt */,
-				D64A8C751D34870B00F75021 /* Mat4.cpp */,
-				D64A8C761D34870B00F75021 /* Mat4.h */,
-				D64A8C771D34870B00F75021 /* Mat4.inl */,
-				D64A8C781D34870B00F75021 /* MathUtil.cpp */,
-				D64A8C791D34870B00F75021 /* MathUtil.h */,
-				D64A8C7A1D34870B00F75021 /* MathUtil.inl */,
-				D64A8C7B1D34870B00F75021 /* MathUtilNeon.inl */,
-				D64A8C7C1D34870B00F75021 /* MathUtilNeon64.inl */,
-				D64A8C7D1D34870B00F75021 /* MathUtilSSE.inl */,
+				D64A8C751D34870B00F75021 /* CAMat4.cpp */,
+				D64A8C761D34870B00F75021 /* CAMat4.h */,
+				D64A8C771D34870B00F75021 /* CAMat4.inl */,
+				D64A8C781D34870B00F75021 /* CAMathUtil.cpp */,
+				D64A8C791D34870B00F75021 /* CAMathUtil.h */,
+				D64A8C7A1D34870B00F75021 /* CAMathUtil.inl */,
+				D64A8C7B1D34870B00F75021 /* CAMathUtilNeon.inl */,
+				D64A8C7C1D34870B00F75021 /* CAMathUtilNeon64.inl */,
+				D64A8C7D1D34870B00F75021 /* CAMathUtilSSE.inl */,
 				D64A8C7E1D34870B00F75021 /* Quaternion.cpp */,
 				D64A8C7F1D34870B00F75021 /* Quaternion.h */,
 				D64A8C801D34870B00F75021 /* Quaternion.inl */,
@@ -1886,10 +1886,10 @@
 				04EABA7C1956D75A00198A8E /* CAProfiling.h in Headers */,
 				04EABA7E1956D75A00198A8E /* ccUTF8.h in Headers */,
 				04EABA801956D75A00198A8E /* ccUtils.h in Headers */,
-				D64A8C8A1D34870B00F75021 /* Mat4.h in Headers */,
+				D64A8C8A1D34870B00F75021 /* CAMat4.h in Headers */,
 				B074CCEF1C31546F00493A8A /* CATextEditHelper.h in Headers */,
 				04EABA881956D75A00198A8E /* ccCArray.h in Headers */,
-				D64A8C8C1D34870B00F75021 /* MathUtil.h in Headers */,
+				D64A8C8C1D34870B00F75021 /* CAMathUtil.h in Headers */,
 				04EABA891956D75A00198A8E /* uthash.h in Headers */,
 				D649B2821D3C64480020414A /* CGNode.h in Headers */,
 				04EABA8A1956D75A00198A8E /* utlist.h in Headers */,
@@ -1996,7 +1996,7 @@
 				D65F356F1D38C995004B56A9 /* ray2.c in Sources */,
 				D649B2AB1D3CD6A80020414A /* CGActionCamera.cpp in Sources */,
 				D64A8C831D34870B00F75021 /* CAAffineTransform.cpp in Sources */,
-				D64A8C891D34870B00F75021 /* Mat4.cpp in Sources */,
+				D64A8C891D34870B00F75021 /* CAMat4.cpp in Sources */,
 				04EAB08B1956D75600198A8E /* CCSet.cpp in Sources */,
 				B047B91619E9181800F24BE6 /* CCScriptSupport.cpp in Sources */,
 				B0B05FA31BB1483200B891CE /* CAClippingView.cpp in Sources */,
@@ -2009,7 +2009,7 @@
 				B08F4BCD19C7E66C008DE306 /* CAFreeTypeFont.cpp in Sources */,
 				04EAB0911956D75600198A8E /* CAButton.cpp in Sources */,
 				D65F35691D38C995004B56A9 /* matrix.c in Sources */,
-				D64A8C8B1D34870B00F75021 /* MathUtil.cpp in Sources */,
+				D64A8C8B1D34870B00F75021 /* CAMathUtil.cpp in Sources */,
 				04EAB0931956D75600198A8E /* CAControl.cpp in Sources */,
 				D649B2B71D3CD6A80020414A /* CGActionInterval.cpp in Sources */,
 				B0B05F9F1BB1483200B891CE /* CAAutoCollectionView.cpp in Sources */,

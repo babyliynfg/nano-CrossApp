@@ -1,8 +1,8 @@
 
 
-#include "math/Mat4.h"
+#include "math/CAMat4.h"
 #include "math/Quaternion.h"
-#include "math/MathUtil.h"
+#include "math/CAMathUtil.h"
 #include "ccMacros.h"
 
 NS_CC_BEGIN

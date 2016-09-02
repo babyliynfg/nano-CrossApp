@@ -248,7 +248,10 @@ void CAActivityIndicatorView::setActivityIndicatorView(CrossApp::CAView *var)
     m_pImageView = var;
     if (m_pImageView)
     {
-        m_pImageView->setCenterOrigin(getBounds().size/2);
+        if (m_pBackView->getLayoutType() <= 1)
+        {
+            m_pImageView->setCenterOrigin(m_obContentSize/2);
+        }
         this->insertSubview(m_pImageView, 1);
     }
     
@@ -269,7 +272,10 @@ void CAActivityIndicatorView::setActivityBackView(CrossApp::CAView *var)
     
     if (m_pBackView)
     {
-        m_pBackView->setCenterOrigin(getBounds().size/2);
+        if (m_pBackView->getLayoutType() <= 1)
+        {
+            m_pBackView->setCenterOrigin(m_obContentSize/2);
+        }
         this->insertSubview(m_pBackView, 0);
     }
 }
