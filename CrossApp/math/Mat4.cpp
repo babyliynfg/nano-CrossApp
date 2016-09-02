@@ -5,7 +5,7 @@
 #include "math/MathUtil.h"
 #include "ccMacros.h"
 
-NS_CC_MATH_BEGIN
+NS_CC_BEGIN
 
 Mat4::Mat4()
 {
@@ -959,4 +959,4 @@ const Mat4 Mat4::ZERO = Mat4(
                     0, 0, 0, 0,
                     0, 0, 0, 0 );
 
-NS_CC_MATH_END
+NS_CC_END

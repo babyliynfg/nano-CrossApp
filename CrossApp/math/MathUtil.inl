@@ -1,5 +1,5 @@
 
-NS_CC_MATH_BEGIN
+NS_CC_BEGIN
 
 class MathUtilC
 {
@@ -196,4 +196,4 @@ inline void MathUtilC::crossVec3(const float* v1, const float* v2, float* dst)
     dst[2] = z;
 }
 
-NS_CC_MATH_END
+NS_CC_END

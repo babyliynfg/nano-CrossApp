@@ -11,7 +11,7 @@
  * @{
  */
 
-NS_CC_MATH_BEGIN
+NS_CC_BEGIN
 
 class Mat4;
 
@@ -390,7 +390,7 @@ private:
     static void slerpForSquad(const Quaternion& q1, const Quaternion& q2, float t, Quaternion* dst);
 };
 
-NS_CC_MATH_END
+NS_CC_END
 /**
  end of base group
  @}

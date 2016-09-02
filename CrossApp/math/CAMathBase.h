@@ -35,19 +35,4 @@
 //#ifndef M_1_PI
 //#define M_1_PI                      0.31830988618379067154
 
-#ifdef __cplusplus
-    #define NS_CC_MATH_BEGIN                     namespace CrossApp {
-    #define NS_CC_MATH_END                       }
-    #define USING_NS_CC_MATH                     using namespace CrossApp
-#else
-    #define NS_CC_MATH_BEGIN 
-    #define NS_CC_MATH_END 
-    #define USING_NS_CC_MATH 
-#endif
-
-/**
- * end of base group
- * @}
- */
-
 #endif // __CCMATHBASE_H__

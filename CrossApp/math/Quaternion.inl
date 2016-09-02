@@ -1,7 +1,7 @@
 
 #include "math/Quaternion.h"
 
-NS_CC_MATH_BEGIN
+NS_CC_BEGIN
 
 inline const Quaternion Quaternion::operator*(const Quaternion& q) const
 {
@@ -29,4 +29,4 @@ inline DPoint3D Quaternion::operator*(const DPoint3D& v) const
     return v + uv + uuv;
 }
 
-NS_CC_MATH_END
+NS_CC_END

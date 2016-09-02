@@ -2,7 +2,7 @@
 
 #include "math/Mat4.h"
 #include "kazmath/include/kazmath/mat4.h"
-NS_CC_MATH_BEGIN
+NS_CC_BEGIN
 
 inline const Mat4 Mat4::operator+(const Mat4& mat) const
 {
@@ -76,4 +76,4 @@ inline const Vec4 operator*(const Mat4& m, const Vec4& v)
     return x;
 }
 
-NS_CC_MATH_END
+NS_CC_END
