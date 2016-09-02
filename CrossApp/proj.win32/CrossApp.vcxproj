@@ -103,7 +103,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\FFmpeg\prebuilt\win32\*.*" "$(OutDi
 xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;SDL2.lib;avcodec.lib;avformat.lib;avdevice.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;SDL2.lib;avcodec.lib;avformat.lib;avdevice.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;sqlite3.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
