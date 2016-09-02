@@ -47,7 +47,7 @@ void TabBarControllerTest::viewDidLoad()
     tabBar1->setTag(100);
     tabBar1->setSelectedAtIndex(0);
     
-    CAView* view1 = CAView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_C(0, 0.5)));
+    CAView* view1 = CAView::createWithLayout(DLayoutFill);
     view1->addSubview(tabBar);
     view1->addSubview(tabBar1);
     view1->setColor(CAColor_gray);

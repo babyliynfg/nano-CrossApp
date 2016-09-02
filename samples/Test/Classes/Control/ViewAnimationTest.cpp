@@ -62,10 +62,10 @@ void ViewAnimationTest::viewDidLoad()
     else if (AnimationNum == 1)
     {
         //Animation 2
-        CAImageView* bg = CAImageView::createWithLayout(DLayout(DHorizontalLayout_L_C(0, 0.5), DVerticalLayout_H_C(80, 0.5)));
+        CAImageView* bg = CAImageView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(80, 0.5)));
         bg->setImage(CAImage::create("image/navbg.jpg"));
     
-        animation_2_textfield = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_C(90, 0.1), DVerticalLayout_H_C(50, 0.5)));
+        animation_2_textfield = CATextField::createWithLayout(DLayout(DHorizontalLayout_L_R(90, 90), DVerticalLayout_H_C(50, 0.5)));
         animation_2_textfield->setFontSize(40);
         animation_2_textfield->setKeyboardType(CATextField::Default);
         animation_2_textfield->setVisible(false);
@@ -141,11 +141,11 @@ void ViewAnimationTest::doAction(CAControl* btn,DPoint point)
         animation_2_textfield->setVisible(true);
         animation_2_btn_cancel->setVisible(false);
         animation_2_textfield->setAlpha(0);
-        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_C(90, 0.1), DVerticalLayout_H_C(50, 0.5)));
+        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_R(90, 90), DVerticalLayout_H_C(50, 0.5)));
         
         CAViewAnimation::beginAnimations("", NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
-        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_C(90, 0.5), DVerticalLayout_H_C(50, 0.5)));
+        animation_2_textfield->setLayout(DLayout(DHorizontalLayout_L_R(90, 90), DVerticalLayout_H_C(50, 0.5)));
         animation_2_textfield->setAlpha(1);
         CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(ViewAnimationTest::endAction));
         CAViewAnimation::commitAnimations();

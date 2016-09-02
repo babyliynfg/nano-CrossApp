@@ -737,27 +737,48 @@ void CGNode::visit()
     
     this->transform();
     
+    int minX, maxX, minY, maxY;
     bool isScissor = (bool)glIsEnabled(GL_SCISSOR_TEST);
-    DRect restoreScissorRect = DRectZero;
     if (isScissor)
     {
         GLfloat params[4];
         glGetFloatv(GL_SCISSOR_BOX, params);
-        restoreScissorRect = DRect(params[0], params[1], params[2], params[3]);
+        minX = params[0];
+        minY = params[1];
+        maxX = params[0] + params[2];
+        maxY = params[1] + params[3];
     }
     
     if (!m_bDisplayRange)
     {
-        DRect frame = DRectZero;
-        frame.size = m_obContentSize;
-        frame = this->convertRectToWorldSpace(frame);
-        frame.origin.y = CAApplication::getApplication()->getWinSize().height - frame.size.height - frame.origin.y;
+        kmMat4 min;     kmGLGetMatrix(KM_GL_MODELVIEW, &min);
+        
+        kmMat4 tm;      kmMat4Identity(&tm);
+        tm.mat[12]  =   m_obContentSize.width;
+        tm.mat[13]  =   m_obContentSize.height;
+        
+        kmMat4 max;     kmMat4Multiply(&max, &min, &tm);
+        
+        float minX2 = ceilf(s_dip_to_px(min.mat[12] - 0.5));
+        float minY2 = ceilf(s_dip_to_px(min.mat[13] - 0.5));
+        float maxX2 = ceilf(s_dip_to_px(max.mat[12] + 0.5));
+        float maxY2 = ceilf(s_dip_to_px(max.mat[13] + 0.5));
+        
+        static CAApplication* application = CAApplication::getApplication();
+        if (application->getProjection() == CAApplication::P3D)
+        {
+            minX2 += s_dip_to_px(application->getWinSize().width/2);
+            minY2 += s_dip_to_px(application->getWinSize().height/2);
+            maxX2 += s_dip_to_px(application->getWinSize().width/2);
+            maxY2 += s_dip_to_px(application->getWinSize().height/2);
+        }
+        
         if (isScissor)
         {
-            float x1 = MAX(s_dip_to_px(frame.getMinX()), restoreScissorRect.getMinX());
-            float y1 = MAX(s_dip_to_px(frame.getMinY()), restoreScissorRect.getMinY());
-            float x2 = MIN(s_dip_to_px(frame.getMaxX()) + 0.5f, restoreScissorRect.getMaxX());
-            float y2 = MIN(s_dip_to_px(frame.getMaxY()) + 0.5f, restoreScissorRect.getMaxY());
+            float x1 = MAX(minX2, minX);
+            float y1 = MAX(minY2, minY);
+            float x2 = MIN(maxX2, maxX);
+            float y2 = MIN(maxY2, maxY);
             float width = MAX(x2-x1, 0);
             float height = MAX(y2-y1, 0);
             glScissor(x1, y1, width, height);
@@ -765,10 +786,10 @@ void CGNode::visit()
         else
         {
             glEnable(GL_SCISSOR_TEST);
-            glScissor(s_dip_to_px(frame.origin.x),
-                      s_dip_to_px(frame.origin.y),
-                      s_dip_to_px(frame.size.width) + 0.5f,
-                      s_dip_to_px(frame.size.height) + 0.5f);
+            glScissor(minX2,
+                      minY2,
+                      maxX2-minX2,
+                      maxY2-minY2);
         }
     }
     
@@ -801,10 +822,10 @@ void CGNode::visit()
     {
         if (isScissor)
         {
-            glScissor(restoreScissorRect.origin.x,
-                      restoreScissorRect.origin.y ,
-                      restoreScissorRect.size.width,
-                      restoreScissorRect.size.height);
+            glScissor(minX,
+                      minY,
+                      maxX-minX,
+                      maxY-minY);
         }
         else
         {
@@ -1242,7 +1263,7 @@ DPoint CGNode::convertToWorldSpace(const DPoint& nodePoint)
     return DPoint(ret.x, CAApplication::getApplication()->getWinSize().height - ret.y);
 }
 
-DPoint CGNode::convertToNodeSize(const DSize& worldSize)
+DSize CGNode::convertToNodeSize(const DSize& worldSize)
 {
     DSize ret = worldSize;
     for (CGNode* v = this; v; v = v->m_pParent)
@@ -1253,7 +1274,7 @@ DPoint CGNode::convertToNodeSize(const DSize& worldSize)
     return ret;
 }
 
-DPoint CGNode::convertToWorldSize(const DSize& nodeSize)
+DSize CGNode::convertToWorldSize(const DSize& nodeSize)
 {
     DSize ret = nodeSize;
     for (CGNode* v = this; v; v = v->m_pParent)

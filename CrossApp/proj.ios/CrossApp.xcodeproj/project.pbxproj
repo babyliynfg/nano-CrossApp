@@ -236,8 +236,6 @@
 		3E19F2AC1B8B0ED100720027 /* CACameraController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19F29D1B8B0ED100720027 /* CACameraController.h */; };
 		3E19F2AD1B8B0ED100720027 /* CACameraController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F29E1B8B0ED100720027 /* CACameraController.mm */; };
 		3E19F2AE1B8B0ED100720027 /* CADevice.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F29F1B8B0ED100720027 /* CADevice.mm */; };
-		3E19F2AF1B8B0ED100720027 /* CALocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19F2A01B8B0ED100720027 /* CALocation.h */; };
-		3E19F2B01B8B0ED100720027 /* CALocation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F2A11B8B0ED100720027 /* CALocation.mm */; };
 		3E19F2B11B8B0ED100720027 /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 3E19F2A21B8B0ED100720027 /* Reachability.h */; };
 		3E19F2B21B8B0ED100720027 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E19F2A31B8B0ED100720027 /* Reachability.m */; };
 		3E21547A1B81AAAE0075448E /* CAAutoCollectionView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3E2154781B81AAAE0075448E /* CAAutoCollectionView.cpp */; };
@@ -676,8 +674,6 @@
 		3E19F29D1B8B0ED100720027 /* CACameraController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CACameraController.h; sourceTree = "<group>"; };
 		3E19F29E1B8B0ED100720027 /* CACameraController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CACameraController.mm; sourceTree = "<group>"; };
 		3E19F29F1B8B0ED100720027 /* CADevice.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CADevice.mm; sourceTree = "<group>"; };
-		3E19F2A01B8B0ED100720027 /* CALocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALocation.h; sourceTree = "<group>"; };
-		3E19F2A11B8B0ED100720027 /* CALocation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CALocation.mm; sourceTree = "<group>"; };
 		3E19F2A21B8B0ED100720027 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		3E19F2A31B8B0ED100720027 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		3E2154781B81AAAE0075448E /* CAAutoCollectionView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAAutoCollectionView.cpp; sourceTree = "<group>"; };
@@ -1552,8 +1548,6 @@
 				3E19F29D1B8B0ED100720027 /* CACameraController.h */,
 				3E19F29E1B8B0ED100720027 /* CACameraController.mm */,
 				3E19F29F1B8B0ED100720027 /* CADevice.mm */,
-				3E19F2A01B8B0ED100720027 /* CALocation.h */,
-				3E19F2A11B8B0ED100720027 /* CALocation.mm */,
 				3E19F2A21B8B0ED100720027 /* Reachability.h */,
 				3E19F2A31B8B0ED100720027 /* Reachability.m */,
 			);
@@ -1830,7 +1824,6 @@
 				B0B553D7193485BE0065053D /* CAImage.h in Headers */,
 				B0C512ED19A341B700E6934B /* CACalendar.h in Headers */,
 				1551A723158F2ADE00E66CFE /* CCPlatformMacros.h in Headers */,
-				3E19F2AF1B8B0ED100720027 /* CALocation.h in Headers */,
 				1551A728158F2ADE00E66CFE /* AccelerometerDelegateWrapper.h in Headers */,
 				B06805241A833DF700F6BE00 /* CAViewAnimation.h in Headers */,
 				B02A776A19B82F7300C4A5EF /* CAStepper.h in Headers */,
@@ -2172,7 +2165,6 @@
 				D65F358D1D38E141004B56A9 /* CAAffineTransform.cpp in Sources */,
 				04EA9FED1956CE2500198A8E /* CAControl.cpp in Sources */,
 				04EA9FF11956CE2500198A8E /* CAProgress.cpp in Sources */,
-				3E19F2B01B8B0ED100720027 /* CALocation.mm in Sources */,
 				04EA9FF31956CE2500198A8E /* CASegmentedControl.cpp in Sources */,
 				04EA9FF51956CE2500198A8E /* CASlider.cpp in Sources */,
 				D64B49581D40982E00081862 /* CGAction.cpp in Sources */,

@@ -213,6 +213,14 @@ public:
     
     virtual CAView* copy();
     
+    virtual void enabledLeftShadow(bool var);
+
+    virtual void enabledRightShadow(bool var);
+    
+    virtual void enabledTopShadow(bool var);
+    
+    virtual void enabledBottomShadow(bool var);
+    
 public:
     
     void transform();
@@ -249,9 +257,9 @@ public:
 
     DPoint convertToWorldSpace(const DPoint& nodePoint);
 
-    DPoint convertToNodeSize(const DSize& worldSize);
+    DSize convertToNodeSize(const DSize& worldSize);
     
-    DPoint convertToWorldSize(const DSize& nodeSize);
+    DSize convertToWorldSize(const DSize& nodeSize);
     
     DPoint convertTouchToNodeSpace(CATouch * touch);
     
@@ -371,6 +379,16 @@ protected:
     
     void updateRotationQuat();
     
+    void drawLeftShadow();
+    
+    void drawRightShadow();
+    
+    void drawTopShadow();
+    
+    void drawBottomShadow();
+    
+    void drawShadow(CAImage* i, const ccV3F_C4B_T2F_Quad& q);
+    
 protected:
  
     CC_SYNTHESIZE(CAContentContainer*, m_pContentContainer, ContentContainer);
@@ -460,6 +478,11 @@ protected:
     bool                        m_bOpacityModifyRGB;
     
     CAImage*                    m_pobImage;
+    
+    bool                        m_bLeftShadowed;
+    bool                        m_bRightShadowed;
+    bool                        m_bTopShadowed;
+    bool                        m_bBottomShadowed;
     
     CGNode*                     m_pCGNode;
     CGNode*                     m_pParentCGNode;

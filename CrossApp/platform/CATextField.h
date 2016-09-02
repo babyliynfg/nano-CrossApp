@@ -45,6 +45,8 @@ public:
     {
         return true;
     }
+    
+    virtual void textFieldDidChangeText(CATextField* sender){}
 };
 
 class CC_DLL CATextField : public CAControl

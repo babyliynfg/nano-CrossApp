@@ -2,7 +2,7 @@
 Thumbs.db
 
 # Ignore files build by Visual Studio
-CrossApp-Prefix.h
+*.class
 *.obj
 *.pdb
 *.aps
