@@ -1407,7 +1407,7 @@ void CAView::drawTopShadow()
         x1 = 0;
         y1 = m_obContentSize.height;
         x2 = m_obContentSize.width;
-        y2 = m_obContentSize.height + 4;
+        y2 = m_obContentSize.height + 6;
         
         quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
         quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
@@ -1432,7 +1432,7 @@ void CAView::drawBottomShadow()
         
         GLfloat x1,x2,y1,y2;
         x1 = 0;
-        y1 = -4;
+        y1 = -6;
         x2 = m_obContentSize.width;
         y2 = 0;
         

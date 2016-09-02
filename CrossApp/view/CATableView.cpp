@@ -535,7 +535,7 @@ void CATableView::reloadViewSizeData()
         for (unsigned int j=0; j<m_nRowHeightss.at(i).size(); j++)
         {
             sectionHeight += m_nRowHeightss.at(i).at(j);
-            sectionHeight += m_nSeparatorViewHeight;
+            sectionHeight += s_px_to_dip(m_nSeparatorViewHeight);
         }
         m_nSectionHeights[i] = sectionHeight;
         viewHeight += sectionHeight;

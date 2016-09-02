@@ -2814,18 +2814,18 @@ CAImage* CAImage::CC_SHADOW_LEFT_IMAGE()
     {
         unsigned int pixels[12] =
         {
-            0x7060606,
-            0xb080808,
-            0x110d0d0d,
-            0x17111111,
-            0x1c141414,
-            0x22181818,
-            0x23181818,
-            0x25191919,
-            0x26191919,
-            0x281a1a1a,
-            0x291a1a1a,
-            0x2b1b1b1b
+            0x4030303,
+            0x6050505,
+            0x9070707,
+            0xc090909,
+            0xe0a0a0a,
+            0x110c0c0c,
+            0x120d0d0d,
+            0x130d0d0d,
+            0x130d0d0d,
+            0x140d0d0d,
+            0x150e0e0e,
+            0x160e0e0e
         };
         
         s_shadow_left_image = new CAImage();
@@ -2841,18 +2841,18 @@ CAImage* CAImage::CC_SHADOW_RIGHT_IMAGE()
     {
         unsigned int pixels[12] =
         {
-            0x2b1b1b1b,
-            0x291a1a1a,
-            0x281a1a1a,
-            0x26191919,
-            0x25191919,
-            0x23181818,
-            0x22181818,
-            0x1c141414,
-            0x17111111,
-            0x110d0d0d,
-            0xb080808,
-            0x7060606
+            0x160e0e0e,
+            0x150e0e0e,
+            0x140d0d0d,
+            0x130d0d0d,
+            0x130d0d0d,
+            0x120d0d0d,
+            0x110c0c0c,
+            0xe0a0a0a,
+            0xc090909,
+            0x9070707,
+            0x6050505,
+            0x4030303
         };
         
         s_shadow_right_image = new CAImage();
@@ -2868,18 +2868,18 @@ CAImage* CAImage::CC_SHADOW_TOP_IMAGE()
     {
         unsigned int pixels[12] =
         {
-            0x7060606,
-            0xb080808,
-            0x110d0d0d,
-            0x17111111,
-            0x1c141414,
-            0x22181818,
-            0x23181818,
-            0x25191919,
-            0x26191919,
-            0x281a1a1a,
-            0x291a1a1a,
-            0x2b1b1b1b
+            0x4030303,
+            0x6050505,
+            0x9070707,
+            0xc090909,
+            0xe0a0a0a,
+            0x110c0c0c,
+            0x120d0d0d,
+            0x130d0d0d,
+            0x130d0d0d,
+            0x140d0d0d,
+            0x150e0e0e,
+            0x160e0e0e
         };
         
         s_shadow_top_image = new CAImage();
@@ -2895,18 +2895,18 @@ CAImage* CAImage::CC_SHADOW_BOTTOM_IMAGE()
     {
         unsigned int pixels[12] =
         {
-            0x2b1b1b1b,
-            0x291a1a1a,
-            0x281a1a1a,
-            0x26191919,
-            0x25191919,
-            0x23181818,
-            0x22181818,
-            0x1c141414,
-            0x17111111,
-            0x110d0d0d,
-            0xb080808,
-            0x7060606
+            0x160e0e0e,
+            0x150e0e0e,
+            0x140d0d0d,
+            0x130d0d0d,
+            0x130d0d0d,
+            0x120d0d0d,
+            0x110c0c0c,
+            0xe0a0a0a,
+            0xc090909,
+            0x9070707,
+            0x6050505,
+            0x4030303
         };
         
         s_shadow_bottom_image = new CAImage();
