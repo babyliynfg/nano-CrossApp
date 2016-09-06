@@ -523,9 +523,6 @@
     <ClCompile Include="..\math\CAVertex.cpp">
       <Filter>math</Filter>
     </ClCompile>
-    <ClCompile Include="..\math\Quaternion.cpp">
-      <Filter>math</Filter>
-    </ClCompile>
     <ClCompile Include="..\math\TransformUtils.cpp">
       <Filter>math</Filter>
     </ClCompile>
@@ -614,6 +611,9 @@
       <Filter>math</Filter>
     </ClCompile>
     <ClCompile Include="..\math\CAMathUtil.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\math\CAQuaternion.cpp">
       <Filter>math</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1140,9 +1140,6 @@
     <ClInclude Include="..\math\CAVertex.h">
       <Filter>math</Filter>
     </ClInclude>
-    <ClInclude Include="..\math\Quaternion.h">
-      <Filter>math</Filter>
-    </ClInclude>
     <ClInclude Include="..\math\TransformUtils.h">
       <Filter>math</Filter>
     </ClInclude>
@@ -1245,6 +1242,9 @@
     <ClInclude Include="..\math\CAMathUtil.h">
       <Filter>math</Filter>
     </ClInclude>
+    <ClInclude Include="..\math\CAQuaternion.h">
+      <Filter>math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\support\Json\lib_json\json_internalarray.inl">
@@ -1255,9 +1255,6 @@
     </None>
     <None Include="..\support\Json\lib_json\json_valueiterator.inl">
       <Filter>support\json\lib_json</Filter>
-    </None>
-    <None Include="..\math\Quaternion.inl">
-      <Filter>math</Filter>
     </None>
     <None Include="..\math\CAMat4.inl">
       <Filter>math</Filter>
@@ -1272,6 +1269,9 @@
       <Filter>math</Filter>
     </None>
     <None Include="..\math\CAMathUtilSSE.inl">
+      <Filter>math</Filter>
+    </None>
+    <None Include="..\math\CAQuaternion.inl">
       <Filter>math</Filter>
     </None>
   </ItemGroup>
