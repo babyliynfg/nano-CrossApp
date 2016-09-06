@@ -342,7 +342,7 @@ std::string CAUserDefault::getStringForKey(const char* pKey, const std::string &
 #endif
     
     NSString *str = [[NSUserDefaults standardUserDefaults] stringForKey:[NSString stringWithUTF8String:pKey]];
-    if (! str)
+    if (! str || [str isEqualToString:@"null\n"])
     {
         return defaultValue;
     }

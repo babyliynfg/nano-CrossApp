@@ -26,6 +26,7 @@
 #include "kazmath/GL/matrix.h"
 #include "ccMacros.h"
 #include <string.h>
+#include "view/CAView.h"
 NS_CC_BEGIN
 
 static int spriteCount = 0;
@@ -555,11 +556,14 @@ void CGSprite::sortAllChildren()
         
         if (m_pobBatchNode)
         {
-            CAVector<CGNode*>::iterator itr;
-            for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-                if(m_bRunning) (*itr)->sortAllChildren();
+            for (auto& var : m_obChildren)
+            {
+                if(m_bRunning)
+                {
+                    var->sortAllChildren();
+                }
+            }
         }
-        
         m_bReorderChildDirty = false;
     }
 }
@@ -594,10 +598,9 @@ void CGSprite::setDirtyRecursively(bool bValue)
     {
         if (!m_obChildren.empty())
         {
-            CAVector<CGNode*>::iterator itr;
-            for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
+            for (auto& var : m_obChildren)
             {
-                CGSprite* pChild = (CGSprite*)(*itr);
+                CGSprite* pChild = (CGSprite*)var;
                 pChild->setDirtyRecursively(bValue);
             }
             
@@ -807,6 +810,33 @@ void CGSprite::setImage(CAImage *image)
 CAImage* CGSprite::getImage()
 {
     return m_pobImage;
+}
+
+void CGSprite::visit()
+{
+    CC_RETURN_IF(!m_bVisible);
+    if (m_pobBatchNode == nullptr)
+    {
+        CGNode::visit();
+    }
+    else
+    {
+        kmGLPushMatrix();
+        
+        this->transform();
+        
+        this->sortAllChildren();
+        
+        for (auto& var : m_obChildren)
+            var->visit();
+
+        if (m_pCAView)
+        {
+            m_pCAView->visit();
+        }
+        
+        kmGLPopMatrix();
+    }
 }
 
 NS_CC_END

@@ -1,9 +1,9 @@
 
 
-#include "math/Quaternion.h"
+#include "math/CAQuaternion.h"
 #include "ccMacros.h"
 
-NS_CC_MATH_BEGIN
+NS_CC_BEGIN
 
 const Quaternion Quaternion::ZERO(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -415,4 +415,4 @@ void Quaternion::slerpForSquad(const Quaternion& q1, const Quaternion& q2, float
     dst->w = (q1.w * r1 + q2.w * r2);
 }
 
-NS_CC_MATH_END
+NS_CC_END

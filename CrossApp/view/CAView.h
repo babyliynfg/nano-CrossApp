@@ -39,6 +39,7 @@ class CAScrollView;
 class CAViewAnimation;
 class CARenderImage;
 class CGNode;
+class CGSprite;
 
 //script
 enum {
@@ -226,6 +227,14 @@ public:
     
     virtual CAView* copy();
     
+    virtual void enabledLeftShadow(bool var);
+
+    virtual void enabledRightShadow(bool var);
+    
+    virtual void enabledTopShadow(bool var);
+    
+    virtual void enabledBottomShadow(bool var);
+    
 public:
     
     void transform();
@@ -262,9 +271,9 @@ public:
 
     DPoint convertToWorldSpace(const DPoint& nodePoint);
 
-    DPoint convertToNodeSize(const DSize& worldSize);
+    DSize convertToNodeSize(const DSize& worldSize);
     
-    DPoint convertToWorldSize(const DSize& nodeSize);
+    DSize convertToWorldSize(const DSize& nodeSize);
     
     DPoint convertTouchToNodeSpace(CATouch * touch);
     
@@ -384,6 +393,16 @@ protected:
     
     void updateRotationQuat();
     
+    void drawLeftShadow();
+    
+    void drawRightShadow();
+    
+    void drawTopShadow();
+    
+    void drawBottomShadow();
+    
+    void drawShadow(CAImage* i, const ccV3F_C4B_T2F_Quad& q);
+    
 protected:
  
     CC_SYNTHESIZE(CAContentContainer*, m_pContentContainer, ContentContainer);
@@ -399,8 +418,7 @@ protected:
     
     int                         m_fRotationX;
     int                         m_fRotationY;
-    int                         m_fRotationZ_X;             ///< rotation angle on Z-axis, component X
-    int                         m_fRotationZ_Y;             ///< rotation angle on Z-axis, component Y
+    int                         m_fRotationZ;
     Quaternion                  m_obRotationQuat;      ///rotation using quaternion, if _rotationZ_X == _rotationZ_Y, _rotationQuat = RotationZ_X * RotationY * RotationX, else _rotationQuat = RotationY * RotationX
     
     float                       m_fScaleX;
@@ -475,10 +493,17 @@ protected:
     
     CAImage*                    m_pobImage;
     
+    bool                        m_bLeftShadowed;
+    bool                        m_bRightShadowed;
+    bool                        m_bTopShadowed;
+    bool                        m_bBottomShadowed;
+    
     CGNode*                     m_pCGNode;
     CGNode*                     m_pParentCGNode;
     
     friend class                CGNode;
+    
+    friend class                CGSprite;
     
     friend class                CARenderImage;
     

@@ -650,6 +650,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         }
         this->setContainerPoint(p_container);
         this->showIndicator();
+        this->update(0);
         
         if (m_bTracking == false)
         {
@@ -752,7 +753,7 @@ void CAScrollView::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y, C
     this->getScrollWindowNotOutPoint(p_container);
     this->setContainerPoint(p_container);
     this->showIndicator();
-    
+    this->update(0);
     if (m_pScrollViewDelegate)
     {
         m_pScrollViewDelegate->scrollViewDidMoved(this);
@@ -811,9 +812,7 @@ void CAScrollView::startDeaccelerateScroll()
 {
     CAAnimation::unschedule(CAAnimation_selector(CAScrollView::closeToPoint), this);
     CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
-    CAScheduler::unschedule(schedule_selector(CAScrollView::update), this);
     CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
-    CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f);
     m_bDecelerating = true;
     this->setScrollRunning(true);
     if (m_bTouchEnabledAtSubviews)
@@ -944,6 +943,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
     }
+    this->update(dt);
 }
 
 void CAScrollView::initIndicator()
@@ -971,10 +971,6 @@ void CAScrollView::initIndicator()
 
 void CAScrollView::showIndicator()
 {
-    if (!CAScheduler::isScheduled(schedule_selector(CAScrollView::update), this))
-    {
-        CAScheduler::schedule(schedule_selector(CAScrollView::update), this, 1/60.0f);
-    }
     if (m_pIndicatorHorizontal)
     {
         m_pIndicatorHorizontal->setHide(false);
@@ -988,8 +984,6 @@ void CAScrollView::showIndicator()
 
 void CAScrollView::hideIndicator()
 {
-    CAScheduler::unschedule(schedule_selector(CAScrollView::update), this);
-    
     if (!m_bPCMode)
     {
         m_pIndicatorHorizontal->setHide(true);
@@ -1358,12 +1352,11 @@ void CAIndicator::setHide(bool var)
     }
     else
     {
-        CAViewAnimation::areBeginAnimationsWithID(m_s__StrID);
+        CAViewAnimation::removeAnimations(m_s__StrID);
         
         CC_RETURN_IF(1.0f-this->getAlpha() > FLT_EPSILON);
         CAViewAnimation::beginAnimations(m_s__StrID, NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
-        CAViewAnimation::setAnimationDelay(0.2f);
         this->setAlpha(0.0f);
         CAViewAnimation::commitAnimations();
     }

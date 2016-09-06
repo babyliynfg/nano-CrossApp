@@ -962,8 +962,6 @@ CAImage::PixelFormat CAImage::convertDataToFormat(const unsigned char* data, uns
 
 static std::set<CAImage*> s_pImages;
 
-static CAImage* cc_white_image = NULL;
-
 static const unsigned char* s_pData = NULL;
 static int  s_pDataMark = 0;
 
@@ -2791,26 +2789,133 @@ const char* CAImage::getImageFileType()
     }
     return text;
 }
+static CAImage* s_white_image           = nullptr;
+static CAImage* s_shadow_left_image     = nullptr;
+static CAImage* s_shadow_right_image    = nullptr;
+static CAImage* s_shadow_top_image      = nullptr;
+static CAImage* s_shadow_bottom_image   = nullptr;
 
 CAImage* CAImage::CC_WHITE_IMAGE()
 {
-    if (cc_white_image == NULL)
+    if (s_white_image == nullptr)
     {
-        unsigned char pixels[2][2];
-        for (int i=0; i<2; i++)
-        {
-            for (int j=0; j<2; j++)
-            {
-                pixels[i][j] = 0xff;
-            }
-        }
-        
-        cc_white_image = new CAImage();
-        cc_white_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_A8, 2, 2);
-        cc_white_image->m_bMonochrome = true;
+        unsigned int pixels = 0xffffffff;
+
+        s_white_image = new CAImage();
+        s_white_image->initWithRawData((const unsigned char *)&pixels, CAImage::PixelFormat_RGBA8888, 1, 1);
+        s_white_image->m_bMonochrome = true;
     }
-    return cc_white_image;
+    return s_white_image;
 }
+
+CAImage* CAImage::CC_SHADOW_LEFT_IMAGE()
+{
+    if (s_shadow_left_image == nullptr)
+    {
+        unsigned int pixels[12] =
+        {
+            0x4030303,
+            0x6050505,
+            0x9070707,
+            0xc090909,
+            0xe0a0a0a,
+            0x110c0c0c,
+            0x120d0d0d,
+            0x130d0d0d,
+            0x130d0d0d,
+            0x140d0d0d,
+            0x150e0e0e,
+            0x160e0e0e
+        };
+        
+        s_shadow_left_image = new CAImage();
+        s_shadow_left_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 12, 1);
+        s_shadow_left_image->m_bMonochrome = true;
+    }
+    return s_shadow_left_image;
+}
+
+CAImage* CAImage::CC_SHADOW_RIGHT_IMAGE()
+{
+    if (s_shadow_right_image == nullptr)
+    {
+        unsigned int pixels[12] =
+        {
+            0x160e0e0e,
+            0x150e0e0e,
+            0x140d0d0d,
+            0x130d0d0d,
+            0x130d0d0d,
+            0x120d0d0d,
+            0x110c0c0c,
+            0xe0a0a0a,
+            0xc090909,
+            0x9070707,
+            0x6050505,
+            0x4030303
+        };
+        
+        s_shadow_right_image = new CAImage();
+        s_shadow_right_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 12, 1);
+        s_shadow_right_image->m_bMonochrome = true;
+    }
+    return s_shadow_right_image;
+}
+
+CAImage* CAImage::CC_SHADOW_TOP_IMAGE()
+{
+    if (s_shadow_top_image == nullptr)
+    {
+        unsigned int pixels[12] =
+        {
+            0x4030303,
+            0x6050505,
+            0x9070707,
+            0xc090909,
+            0xe0a0a0a,
+            0x110c0c0c,
+            0x120d0d0d,
+            0x130d0d0d,
+            0x130d0d0d,
+            0x140d0d0d,
+            0x150e0e0e,
+            0x160e0e0e
+        };
+        
+        s_shadow_top_image = new CAImage();
+        s_shadow_top_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 1, 12);
+        s_shadow_top_image->m_bMonochrome = true;
+    }
+    return s_shadow_top_image;
+}
+
+CAImage* CAImage::CC_SHADOW_BOTTOM_IMAGE()
+{
+    if (s_shadow_bottom_image == nullptr)
+    {
+        unsigned int pixels[12] =
+        {
+            0x160e0e0e,
+            0x150e0e0e,
+            0x140d0d0d,
+            0x130d0d0d,
+            0x130d0d0d,
+            0x120d0d0d,
+            0x110c0c0c,
+            0xe0a0a0a,
+            0xc090909,
+            0x9070707,
+            0x6050505,
+            0x4030303
+        };
+        
+        s_shadow_bottom_image = new CAImage();
+        s_shadow_bottom_image->initWithRawData((const unsigned char *)pixels, CAImage::PixelFormat_RGBA8888, 1, 12);
+        s_shadow_bottom_image->m_bMonochrome = true;
+    }
+    return s_shadow_bottom_image;
+}
+
 
 CAImage::Format CAImage::detectFormat(const unsigned char * data, unsigned long dataLen)
 {

@@ -10,14 +10,10 @@ class CC_DLL CAAccelerometer
 {
 public:
     CAAccelerometer();
-    
-    static CAAccelerometer* sharedAccelerometer();
-    
+        
     void setDelegate(CAAccelerometerDelegate* pDelegate);
     
     void setAccelerometerInterval(float interval);
-    
-    void stopAccelerometer();
 };
 
 NS_CC_END

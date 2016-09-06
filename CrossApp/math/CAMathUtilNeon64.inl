@@ -1,5 +1,5 @@
 
-NS_CC_MATH_BEGIN
+NS_CC_BEGIN
 
 class MathUtilNeon64
 {
@@ -243,4 +243,4 @@ inline void MathUtilNeon64::crossVec3(const float* v1, const float* v2, float* d
     );
 }
 
-NS_CC_MATH_END
+NS_CC_END

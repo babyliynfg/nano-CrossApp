@@ -4,13 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import junit.framework.Test;
-
 import org.CrossApp.lib.CrossAppBattery;
-
-import android.R;
-import android.R.drawable;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,17 +16,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
-import android.widget.RemoteViews;
 
 @SuppressLint("SimpleDateFormat")
 public abstract class CrossAppDevice  extends Activity  {
@@ -321,12 +309,12 @@ public abstract class CrossAppDevice  extends Activity  {
         .setOngoing(false)
         .build();   
         
-        notification.flags = Notification.FLAG_AUTO_CANCEL;//閻愮懓鍤崥搴ゅ殰閸斻劍绉锋径锟�
-        notification.defaults = Notification.DEFAULT_SOUND;//婢逛即鐓舵妯款吇  
+        notification.flags = Notification.FLAG_AUTO_CANCEL;//��绘�������ゎ��宕ユ�淬��娈伴�告�诲��缁����寰����锟�
+        notification.defaults = Notification.DEFAULT_SOUND;//濠㈤����抽����殿��濡�娆惧��  
         
         ++mIndex;
 		
-        manager.notify(mIndex, notification);//閸欐垵濮╅柅姘辩叀        	
+        manager.notify(mIndex, notification);//��告����垫慨������濮�杈╁��        	
 	}
 	
 	public static void sendLocalNotification(final String title,final String content,int time)
@@ -355,22 +343,12 @@ public abstract class CrossAppDevice  extends Activity  {
         return CrossAppNativeTool.getSaveImagePath();
     }
     
-    //閺囧瓨鏌婇崶鎯х氨
+    //��哄�х�ㄩ��濠�宕堕����姘�
     public static void UpdateCamera(final String url)
     { 
     	CrossAppNativeTool.UpdateCamera(url);
     } 
-    
-	public static void startUpdatingLocation() {
-		CrossAppGPS.Init(CrossAppActivity.getContext());
-		CrossAppGPS.getLocation();
-	}
-	
-	public static void stopUpdatingLocation()
-	{
-		CrossAppGPS.stopUpdateLocation();
-	}
-	
+  
     /** 
      * Get the value of the data column for this Uri. This is useful for 
      * MediaStore Uris, and other file-based ContentProviders. 

@@ -2,7 +2,7 @@
 
 #include "CAVec4.h"
 #include "ccMacros.h"
-#include "math/MathUtil.h"
+#include "math/CAMathUtil.h"
 #include <math.h>
 // implementation of DPoint
 NS_CC_BEGIN

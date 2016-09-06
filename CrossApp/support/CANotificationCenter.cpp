@@ -19,7 +19,7 @@ CANotificationCenter::~CANotificationCenter()
     m_observers.clear();
 }
 
-CANotificationCenter *CANotificationCenter::sharedNotificationCenter(void)
+CANotificationCenter *CANotificationCenter::getInstance(void)
 {
     if (!s_sharedNotifCenter)
     {
@@ -28,7 +28,7 @@ CANotificationCenter *CANotificationCenter::sharedNotificationCenter(void)
     return s_sharedNotifCenter;
 }
 
-void CANotificationCenter::purgeNotificationCenter(void)
+void CANotificationCenter::destroyInstance(void)
 {
     CC_SAFE_RELEASE_NULL(s_sharedNotifCenter);
 }

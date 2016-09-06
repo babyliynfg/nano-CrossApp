@@ -103,7 +103,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\FFmpeg\prebuilt\win32\*.*" "$(OutDi
 xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;SDL2.lib;avcodec.lib;avformat.lib;avdevice.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;sqlite3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;SDL2.lib;avcodec.lib;avformat.lib;avdevice.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;sqlite3.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -151,7 +151,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\FFmpeg\prebuilt\win32\*.*" "$(OutDi
 xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;sqlite3.lib;SDL2.lib;avcodec.lib;avformat.lib;avdevice.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;sqlite3.lib;SDL2.lib;avcodec.lib;avformat.lib;avdevice.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -237,10 +237,10 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\images\gif_lib\gif_hash.c" />
     <ClCompile Include="..\images\gif_lib\quantize.c" />
     <ClCompile Include="..\math\CAAffineTransform.cpp" />
+    <ClCompile Include="..\math\CAMat4.cpp" />
+    <ClCompile Include="..\math\CAMathUtil.cpp" />
+    <ClCompile Include="..\math\CAQuaternion.cpp" />
     <ClCompile Include="..\math\CAVertex.cpp" />
-    <ClCompile Include="..\math\Mat4.cpp" />
-    <ClCompile Include="..\math\MathUtil.cpp" />
-    <ClCompile Include="..\math\Quaternion.cpp" />
     <ClCompile Include="..\math\TransformUtils.cpp" />
     <ClCompile Include="..\platform\CAEmojiFont.cpp" />
     <ClCompile Include="..\platform\CAFileUtils.cpp" />
@@ -411,12 +411,12 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\images\CAImage.h" />
     <ClInclude Include="..\images\CAImageCache.h" />
     <ClInclude Include="..\math\CAAffineTransform.h" />
+    <ClInclude Include="..\math\CAMat4.h" />
     <ClInclude Include="..\math\CAMath.h" />
     <ClInclude Include="..\math\CAMathBase.h" />
+    <ClInclude Include="..\math\CAMathUtil.h" />
+    <ClInclude Include="..\math\CAQuaternion.h" />
     <ClInclude Include="..\math\CAVertex.h" />
-    <ClInclude Include="..\math\Mat4.h" />
-    <ClInclude Include="..\math\MathUtil.h" />
-    <ClInclude Include="..\math\Quaternion.h" />
     <ClInclude Include="..\math\TransformUtils.h" />
     <ClInclude Include="..\platform\CAAccelerometerDelegate.h" />
     <ClInclude Include="..\platform\CAClipboard.h" />
@@ -556,12 +556,12 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\math\Mat4.inl" />
-    <None Include="..\math\MathUtil.inl" />
-    <None Include="..\math\MathUtilNeon.inl" />
-    <None Include="..\math\MathUtilNeon64.inl" />
-    <None Include="..\math\MathUtilSSE.inl" />
-    <None Include="..\math\Quaternion.inl" />
+    <None Include="..\math\CAMat4.inl" />
+    <None Include="..\math\CAMathUtil.inl" />
+    <None Include="..\math\CAMathUtilNeon.inl" />
+    <None Include="..\math\CAMathUtilNeon64.inl" />
+    <None Include="..\math\CAMathUtilSSE.inl" />
+    <None Include="..\math\CAQuaternion.inl" />
     <None Include="..\support\Json\lib_json\json_internalarray.inl" />
     <None Include="..\support\Json\lib_json\json_internalmap.inl" />
     <None Include="..\support\Json\lib_json\json_valueiterator.inl" />

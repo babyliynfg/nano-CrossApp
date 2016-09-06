@@ -16,7 +16,7 @@
  * @{
  */
 
-NS_CC_MATH_BEGIN
+NS_CC_BEGIN
 
 //class Plane;
 
@@ -970,11 +970,11 @@ inline const Vec4 operator*(const Mat4& m, const Vec4& v);
 
 
 
-NS_CC_MATH_END
+NS_CC_END
 /**
  end of base group
  @}
  */
-#include "math/Mat4.inl"
+#include "math/CAMat4.inl"
 
 #endif // MATH_MAT4_H

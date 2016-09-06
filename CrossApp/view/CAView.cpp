@@ -41,8 +41,7 @@ static int s_globalOrderOfArrival = 1;
 CAView::CAView(void)
 : m_fRotationX(0.0f)
 , m_fRotationY(0.0f)
-, m_fRotationZ_X(0.0f)
-, m_fRotationZ_Y(0.0f)
+, m_fRotationZ(0.0f)
 , m_fScaleX(1.0f)
 , m_fScaleY(1.0f)
 , m_fScaleZ(1.0f)
@@ -85,11 +84,16 @@ CAView::CAView(void)
 , m_bIsAnimation(false)
 , m_pobBatchView(NULL)
 , m_pobImageAtlas(NULL)
+, m_bLeftShadowed(false)
+, m_bRightShadowed(false)
+, m_bTopShadowed(false)
+, m_bBottomShadowed(false)
 , m_pParentCGNode(NULL)
 , m_pCGNode(NULL)
 , m_obLayout(DLayoutZero)
 , m_eLayoutType(0)
 {
+    this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
     memset(&m_sQuad, 0, sizeof(m_sQuad));
@@ -395,8 +399,7 @@ void CAView::setVertexZ(float var)
 /// rotation getter
 int CAView::getRotation()
 {
-    CCAssert(m_fRotationZ_X == m_fRotationZ_Y, "CAView#rotation. RotationX != RotationY. Don't know which one to return");
-    return m_fRotationZ_X;
+    return m_fRotationZ;
 }
 
 /// rotation setter
@@ -407,9 +410,9 @@ void CAView::setRotation(int newRotation)
     {
         CAViewAnimation::getInstance()->setRotation(newRotation, this);
     }
-    else if (m_fRotationZ_X != newRotation || m_fRotationZ_Y != newRotation)
+    else if (m_fRotationZ != newRotation)
     {
-        m_fRotationZ_X = m_fRotationZ_Y = newRotation;
+        m_fRotationZ = newRotation;
         this->updateRotationQuat();
         this->updateDraw();
     }
@@ -417,7 +420,7 @@ void CAView::setRotation(int newRotation)
 
 int CAView::getRotationX()
 {
-    return m_fRotationZ_X;
+    return m_fRotationX;
 }
 
 void CAView::setRotationX(int fRotationX)
@@ -427,9 +430,9 @@ void CAView::setRotationX(int fRotationX)
     {
         CAViewAnimation::getInstance()->setRotationX(fRotationX, this);
     }
-    else if (m_fRotationZ_X != fRotationX)
+    else if (m_fRotationX != fRotationX)
     {
-        m_fRotationZ_X = fRotationX;
+        m_fRotationX = fRotationX;
         this->updateRotationQuat();
         this->updateDraw();
     }
@@ -437,7 +440,7 @@ void CAView::setRotationX(int fRotationX)
 
 int CAView::getRotationY()
 {
-    return m_fRotationZ_Y;
+    return m_fRotationY;
 }
 
 void CAView::setRotationY(int fRotationY)
@@ -447,9 +450,9 @@ void CAView::setRotationY(int fRotationY)
     {
         CAViewAnimation::getInstance()->setRotationY(fRotationY, this);
     }
-    else if (m_fRotationZ_Y != fRotationY)
+    else if (m_fRotationY != fRotationY)
     {
-        m_fRotationZ_Y = fRotationY;
+        m_fRotationY = fRotationY;
         this->updateRotationQuat();
         this->updateDraw();
     }
@@ -462,7 +465,7 @@ void CAView::updateRotationQuat()
     // when m_fRotationZ_X != m_fRotationZ_Y, m_fRotationQuat = RotationY * RotationX
     float halfRadx = CC_DEGREES_TO_RADIANS(m_fRotationX / 2.f);
     float halfRady = CC_DEGREES_TO_RADIANS(m_fRotationY / 2.f);
-    float halfRadz = m_fRotationZ_X == m_fRotationZ_Y ? -CC_DEGREES_TO_RADIANS(m_fRotationZ_X / 2.f) : 0;
+    float halfRadz = -CC_DEGREES_TO_RADIANS(m_fRotationZ / 2.f);
     
     float coshalfRadx = cosf(halfRadx), sinhalfRadx = sinf(halfRadx), coshalfRady = cosf(halfRady), sinhalfRady = sinf(halfRady), coshalfRadz = cosf(halfRadz), sinhalfRadz = sinf(halfRadz);
     
@@ -486,7 +489,7 @@ void CAView::setScale(float scale)
 }
 
 /// scale setter
-void CAView::setScale(float fScaleX,float fScaleY)
+void CAView::setScale(float fScaleX, float fScaleY)
 {
     this->setScaleX(fScaleX);
     this->setScaleY(fScaleY);
@@ -885,6 +888,26 @@ void CAView::setShaderProgram(CAGLProgram *pShaderProgram)
     m_pShaderProgram = pShaderProgram;
 }
 
+void CAView::enabledLeftShadow(bool var)
+{
+    m_bLeftShadowed = var;
+}
+
+void CAView::enabledRightShadow(bool var)
+{
+    m_bRightShadowed = var;
+}
+
+void CAView::enabledTopShadow(bool var)
+{
+    m_bTopShadowed = var;
+}
+
+void CAView::enabledBottomShadow(bool var)
+{
+    m_bBottomShadowed = var;
+}
+
 const char* CAView::description()
 {
     return crossapp_format_string("<CAView | TextTag = %s | Tag = %d >", m_sTextTag.c_str(), m_nTag).c_str();
@@ -897,252 +920,63 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
         DPoint point;
         DSize size;
         
-        if (m_fRotationZ_X != m_fRotationZ_Y || abs((this->getRotation() + 360) % 360) <= 45)
         {
-            {
-                const DHorizontalLayout& horizontalLayout = m_obLayout.horizontal;
-                
-                if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.right < FLOAT_NONE)
-                {
-                    size.width = contentSize.width - horizontalLayout.left - horizontalLayout.right;
-                    point.x = horizontalLayout.left;
-                }
-                else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-                {
-                    size.width = horizontalLayout.width;
-                    point.x = horizontalLayout.left;
-                }
-                else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-                {
-                    size.width = horizontalLayout.width;
-                    point.x = contentSize.width - horizontalLayout.right - size.width;
-                }
-                else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.width = horizontalLayout.width;
-                    point.x = contentSize.width * horizontalLayout.center - size.width / 2;
-                }
-                else if (horizontalLayout.normalizedWidth < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.width = contentSize.width * horizontalLayout.normalizedWidth;
-                    point.x = contentSize.width * horizontalLayout.center - size.width / 2;
-                }
-            }
+            const DHorizontalLayout& horizontalLayout = m_obLayout.horizontal;
             
+            if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.right < FLOAT_NONE)
             {
-                const DVerticalLayout& verticalLayout = m_obLayout.vertical;
-                
-                if (verticalLayout.top < FLOAT_NONE && verticalLayout.bottom < FLOAT_NONE)
-                {
-                    size.height = contentSize.height - verticalLayout.top - verticalLayout.bottom;
-                    point.y = verticalLayout.top;
-                }
-                else if (verticalLayout.top < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-                {
-                    size.height = verticalLayout.height;
-                    point.y = verticalLayout.top;
-                }
-                else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-                {
-                    size.height = verticalLayout.height;
-                    point.y = contentSize.height - verticalLayout.bottom - size.height;
-                }
-                else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.height = verticalLayout.height;
-                    point.y = contentSize.height * verticalLayout.center - size.height / 2;
-                }
-                else if (verticalLayout.normalizedHeight < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.height = contentSize.height * verticalLayout.normalizedHeight;
-                    point.y = contentSize.height * verticalLayout.center - size.height / 2;
-                }
+                size.width = contentSize.width - horizontalLayout.left - horizontalLayout.right;
+                point.x = horizontalLayout.left;
+            }
+            else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
+            {
+                size.width = horizontalLayout.width;
+                point.x = horizontalLayout.left;
+            }
+            else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
+            {
+                size.width = horizontalLayout.width;
+                point.x = contentSize.width - horizontalLayout.right - size.width;
+            }
+            else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
+            {
+                size.width = horizontalLayout.width;
+                point.x = contentSize.width * horizontalLayout.center - size.width / 2;
+            }
+            else if (horizontalLayout.normalizedWidth < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
+            {
+                size.width = contentSize.width * horizontalLayout.normalizedWidth;
+                point.x = contentSize.width * horizontalLayout.center - size.width / 2;
             }
         }
-        else if (abs((this->getRotation() + 180) % 360) <= 45)
+        
         {
-            {
-                const DHorizontalLayout& horizontalLayout = m_obLayout.horizontal;
-                
-                if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.right < FLOAT_NONE)
-                {
-                    size.width = contentSize.width - horizontalLayout.left - horizontalLayout.right;
-                    point.x = horizontalLayout.left;
-                }
-                else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-                {
-                    size.width = horizontalLayout.width;
-                    point.x = horizontalLayout.left;
-                }
-                else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-                {
-                    size.width = horizontalLayout.width;
-                    point.x = contentSize.width - horizontalLayout.right - size.width;
-                }
-                else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.width = horizontalLayout.width;
-                    point.x = contentSize.width * horizontalLayout.center - size.width / 2;
-                }
-                else if (horizontalLayout.normalizedWidth < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.width = contentSize.width * horizontalLayout.normalizedWidth;
-                    point.x = contentSize.width * horizontalLayout.center - size.width / 2;
-                }
-            }
+            const DVerticalLayout& verticalLayout = m_obLayout.vertical;
             
+            if (verticalLayout.top < FLOAT_NONE && verticalLayout.bottom < FLOAT_NONE)
             {
-                const DVerticalLayout& verticalLayout = m_obLayout.vertical;
-                
-                if (verticalLayout.top < FLOAT_NONE && verticalLayout.bottom < FLOAT_NONE)
-                {
-                    size.height = contentSize.height - verticalLayout.top - verticalLayout.bottom;
-                    point.y = verticalLayout.bottom;
-                }
-                else if (verticalLayout.top < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-                {
-                    size.height = verticalLayout.height;
-                    point.y = contentSize.height - verticalLayout.top - size.height;
-                }
-                else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-                {
-                    size.height = verticalLayout.height;
-                    point.y = verticalLayout.bottom;
-                }
-                else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.height = verticalLayout.height;
-                    point.y = contentSize.height * (1 - verticalLayout.center) - size.height / 2;
-                }
-                else if (verticalLayout.normalizedHeight < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.height = contentSize.height * verticalLayout.normalizedHeight;
-                    point.y = contentSize.height * (1 - verticalLayout.center) - size.height / 2;
-                }
+                size.height = contentSize.height - verticalLayout.top - verticalLayout.bottom;
+                point.y = verticalLayout.top;
             }
-        }
-        else if (abs((this->getRotation() + 270) % 360) <= 45)//left
-        {
+            else if (verticalLayout.top < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
             {
-                const DHorizontalLayout& horizontalLayout = m_obLayout.horizontal;
-                
-                if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.right < FLOAT_NONE)
-                {
-                    size.height = contentSize.width - horizontalLayout.left - horizontalLayout.right;
-                    point.y = horizontalLayout.left;
-                }
-                else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-                {
-                    size.height = horizontalLayout.width;
-                    point.y = horizontalLayout.left;
-                }
-                else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-                {
-                    size.height = horizontalLayout.width;
-                    point.y = contentSize.width - horizontalLayout.right - size.width;
-                }
-                else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.height = horizontalLayout.width;
-                    point.y = contentSize.width * horizontalLayout.center - size.width / 2;
-                }
-                else if (horizontalLayout.normalizedWidth < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.height = contentSize.width * horizontalLayout.normalizedWidth;
-                    point.y = contentSize.width * horizontalLayout.center - size.width / 2;
-                }
+                size.height = verticalLayout.height;
+                point.y = verticalLayout.top;
             }
-            
+            else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
             {
-                const DVerticalLayout& verticalLayout = m_obLayout.vertical;
-                
-                if (verticalLayout.top < FLOAT_NONE && verticalLayout.bottom < FLOAT_NONE)
-                {
-                    size.width = contentSize.height - verticalLayout.top - verticalLayout.bottom;
-                    point.x = verticalLayout.bottom;
-                }
-                else if (verticalLayout.top < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-                {
-                    size.width = verticalLayout.height;
-                    point.x = contentSize.height - verticalLayout.top - size.height;
-                }
-                else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-                {
-                    size.width = verticalLayout.height;
-                    point.x = verticalLayout.bottom;
-                }
-                else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.width = verticalLayout.height;
-                    point.x = contentSize.height * (1 - verticalLayout.center) - size.height / 2;
-                }
-                else if (verticalLayout.normalizedHeight < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.width = contentSize.height * verticalLayout.normalizedHeight;
-                    point.x = contentSize.height * (1 - verticalLayout.center) - size.height / 2;
-                }
+                size.height = verticalLayout.height;
+                point.y = contentSize.height - verticalLayout.bottom - size.height;
             }
-        }
-        else if (abs((this->getRotation() + 90) % 360) <= 45)//right
-        {
+            else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
             {
-                const DHorizontalLayout& horizontalLayout = m_obLayout.horizontal;
-                
-                if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.right < FLOAT_NONE)
-                {
-                    size.height = contentSize.width - horizontalLayout.left - horizontalLayout.right;
-                    point.y = horizontalLayout.right;
-                }
-                else if (horizontalLayout.left < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-                {
-                    size.height = horizontalLayout.width;
-                    point.y = contentSize.width - horizontalLayout.left - size.width;
-                }
-                else if (horizontalLayout.right < FLOAT_NONE && horizontalLayout.width < FLOAT_NONE)
-                {
-                    size.height = horizontalLayout.width;
-                    point.y = horizontalLayout.right;
-                }
-                else if (horizontalLayout.width < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.height = horizontalLayout.width;
-                    point.y = contentSize.width * (1 - horizontalLayout.center) - size.width / 2;
-                }
-                else if (horizontalLayout.normalizedWidth < FLOAT_NONE && horizontalLayout.center < FLOAT_NONE)
-                {
-                    size.height = contentSize.width * horizontalLayout.normalizedWidth;
-                    point.y = contentSize.width * (1 - horizontalLayout.center) - size.width / 2;
-                }
+                size.height = verticalLayout.height;
+                point.y = contentSize.height * verticalLayout.center - size.height / 2;
             }
-            
+            else if (verticalLayout.normalizedHeight < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
             {
-                const DVerticalLayout& verticalLayout = m_obLayout.vertical;
-                
-                if (verticalLayout.top < FLOAT_NONE && verticalLayout.bottom < FLOAT_NONE)
-                {
-                    size.width = contentSize.height - verticalLayout.top - verticalLayout.bottom;
-                    point.x = verticalLayout.top;
-                }
-                else if (verticalLayout.top < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-                {
-                    size.width = verticalLayout.height;
-                    point.x = verticalLayout.top;
-                }
-                else if (verticalLayout.bottom < FLOAT_NONE && verticalLayout.height < FLOAT_NONE)
-                {
-                    size.width = verticalLayout.height;
-                    point.x = contentSize.height - verticalLayout.bottom - size.height;
-                }
-                else if (verticalLayout.height < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.width = verticalLayout.height;
-                    point.x = contentSize.height * verticalLayout.center - size.height / 2;
-                }
-                else if (verticalLayout.normalizedHeight < FLOAT_NONE && verticalLayout.center < FLOAT_NONE)
-                {
-                    size.width = contentSize.height * verticalLayout.normalizedHeight;
-                    point.x = contentSize.height * verticalLayout.center - size.height / 2;
-                }
+                size.height = contentSize.height * verticalLayout.normalizedHeight;
+                point.y = contentSize.height * verticalLayout.center - size.height / 2;
             }
         }
         
@@ -1157,24 +991,7 @@ void CAView::reViewlayout(const DSize& contentSize, bool allowAnimation)
             this->setContentSize(size);
         }
         
-        DPoint p = DPointZero;
-        if (m_fRotationZ_X != m_fRotationZ_Y || abs((this->getRotation() + 360) % 360) <= 45)
-        {
-            p = ccpCompMult(size, m_obAnchorPoint);
-        }
-        else if (abs((this->getRotation() + 180) % 360) <= 45)
-        {
-            p = ccpCompMult(DSize(size.width, size.height), DPoint(m_obAnchorPoint.x, 1 - m_obAnchorPoint.y));
-        }
-        else if (abs((this->getRotation() + 270) % 360) <= 45)//left
-        {
-            p = ccpCompMult(DSize(size.height, size.width), DPoint(m_obAnchorPoint.y, 1 - m_obAnchorPoint.x));
-        }
-        else if (abs((this->getRotation() + 90) % 360) <= 45)//right
-        {
-            p = ccpCompMult(DSize(size.height, size.width), DPoint(1 - m_obAnchorPoint.y, m_obAnchorPoint.x));
-        }
-        
+        DPoint p = ccpCompMult(size, m_obAnchorPoint);;
         p = ccpAdd(p, point);
         
         if (allowAnimation
@@ -1210,7 +1027,7 @@ void CAView::updateDraw()
 
 CAView* CAView::getSubviewByTag(int aTag)
 {
-    CCAssert( aTag != kCAObjectTagInvalid, "Invalid tag");
+    CCAssert( aTag != TagInvalid, "Invalid tag");
     
     if(!m_obSubviews.empty())
     {
@@ -1312,7 +1129,7 @@ void CAView::removeSubview(CAView* subview)
 
 void CAView::removeSubviewByTag(int tag)
 {
-    CCAssert( tag != kCAObjectTagInvalid, "Invalid tag");
+    CCAssert( tag != TagInvalid, "Invalid tag");
     
     CAView *subview = this->getSubviewByTag(tag);
     
@@ -1493,6 +1310,157 @@ void CAView::draw()
     CC_PROFILER_STOP_CATEGORY(kCCProfilerCategorySprite, "CAView - draw");
 }
 
+void CAView::drawShadow(CAImage* i, const ccV3F_C4B_T2F_Quad& q)
+{
+    kmGLPushMatrix();
+    
+    CAIMAGE_DRAW_SETUP();
+    
+    ccGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    ccGLBindTexture2D(i->getName());
+    ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
+
+    long offset = (long)&q;
+    // vertex
+    int diff = offsetof( ccV3F_C4B_T2F, vertices);
+    glVertexAttribPointer(kCCVertexAttrib_Position,
+                          3,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(q.bl),
+                          (void*) (offset + diff));
+    
+    // texCoods
+    diff = offsetof( ccV3F_C4B_T2F, texCoords);
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords,
+                          2,
+                          GL_FLOAT,
+                          GL_FALSE,
+                          sizeof(q.bl),
+                          (void*) (offset + diff));
+    
+    // color
+    diff = offsetof( ccV3F_C4B_T2F, colors);
+    glVertexAttribPointer(kCCVertexAttrib_Color,
+                          4,
+                          GL_UNSIGNED_BYTE,
+                          GL_TRUE,
+                          sizeof(q.bl),
+                          (void*)(offset + diff));
+    
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+    
+    kmGLPopMatrix();
+}
+
+void CAView::drawLeftShadow()
+{
+    if (m_bLeftShadowed)
+    {
+        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = -12;
+        y1 = 0;
+        x2 = 0;
+        y2 = m_obContentSize.height;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fVertexZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fVertexZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(CAImage::CC_SHADOW_LEFT_IMAGE(), quad);
+    }
+
+}
+
+void CAView::drawRightShadow()
+{
+    if (m_bRightShadowed)
+    {
+        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = m_obContentSize.width;
+        y1 = 0;
+        x2 = m_obContentSize.width + 12;
+        y2 = m_obContentSize.height;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fVertexZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fVertexZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+        
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(CAImage::CC_SHADOW_RIGHT_IMAGE(), quad);
+    }
+    
+}
+
+void CAView::drawTopShadow()
+{
+    if (m_bTopShadowed)
+    {
+        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = 0;
+        y1 = m_obContentSize.height;
+        x2 = m_obContentSize.width;
+        y2 = m_obContentSize.height + 6;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fVertexZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fVertexZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+        
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(CAImage::CC_SHADOW_TOP_IMAGE(), quad);
+    }
+    
+}
+
+void CAView::drawBottomShadow()
+{
+    if (m_bBottomShadowed)
+    {
+        ccV3F_C4B_T2F_Quad quad = m_sQuad;
+        
+        GLfloat x1,x2,y1,y2;
+        x1 = 0;
+        y1 = -6;
+        x2 = m_obContentSize.width;
+        y2 = 0;
+        
+        quad.bl.vertices = DPoint3D(x1, y1, m_fVertexZ);
+        quad.br.vertices = DPoint3D(x2, y1, m_fVertexZ);
+        quad.tl.vertices = DPoint3D(x1, y2, m_fVertexZ);
+        quad.tr.vertices = DPoint3D(x2, y2, m_fVertexZ);
+        
+        quad.bl.texCoords.u = quad.tl.texCoords.u = quad.tl.texCoords.v = quad.tr.texCoords.v = 0;
+        quad.bl.texCoords.v = quad.br.texCoords.u = quad.br.texCoords.v = quad.tr.texCoords.u = 1;
+        
+        quad.bl.colors = quad.br.colors = quad.tl.colors = quad.tr.colors = CAColor_white;
+        
+        this->drawShadow(CAImage::CC_SHADOW_BOTTOM_IMAGE(), quad);
+    }
+    
+}
+
 void CAView::visit()
 {
     CC_RETURN_IF(!m_bVisible);
@@ -1501,45 +1469,53 @@ void CAView::visit()
 
     this->transform();
     
+    this->drawLeftShadow();
+    this->drawRightShadow();
+    this->drawTopShadow();
+    this->drawBottomShadow();
+    
+    int minX, maxX, minY, maxY;
     bool isScissor = (bool)glIsEnabled(GL_SCISSOR_TEST);
-    DRect restoreScissorRect = DRectZero;
     if (isScissor)
     {
         GLfloat params[4];
         glGetFloatv(GL_SCISSOR_BOX, params);
-        restoreScissorRect = DRect(params[0], params[1], params[2], params[3]);
+        minX = params[0];
+        minY = params[1];
+        maxX = params[0] + params[2];
+        maxY = params[1] + params[3];
     }
 
     if (!m_bDisplayRange)
     {
-//        kmMat4 modelview;
-//        kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
-//        kmMat4 tm;
-//        kmMat4Identity(&tm);
-//        tm.mat[12] = m_obContentSize.width;
-//        tm.mat[13] = m_obContentSize.height;
-//        kmMat4 tm2;
-//        kmMat4Multiply(&tm2, &modelview, &tm);
-//
-//        DPoint point = DPoint(modelview.mat[12], modelview.mat[13]);
-//        
-//        static CAApplication* application = CAApplication::getApplication();
-//        if (application->getProjection() == CAApplication::P3D)
-//        {
-//            point = ccpAdd(point, application->getWinSize() / 2);
-//        }
-//        
-//        DSize size = DSize(tm2.mat[12] - modelview.mat[12], tm2.mat[13] - modelview.mat[13]);
-//        DRect frame = DRect(point.x, point.y, size.width, size.height);
+        kmMat4 min;     kmGLGetMatrix(KM_GL_MODELVIEW, &min);
         
-        DRect frame = this->convertRectToWorldSpace(this->getBounds());
-        frame.origin.y = CAApplication::getApplication()->getWinSize().height - frame.size.height - frame.origin.y;
+        kmMat4 tm;      kmMat4Identity(&tm);
+        tm.mat[12]  =   m_obContentSize.width;
+        tm.mat[13]  =   m_obContentSize.height;
+        
+        kmMat4 max;     kmMat4Multiply(&max, &min, &tm);
+        
+        float minX2 = ceilf(s_dip_to_px(min.mat[12] - 0.5));
+        float minY2 = ceilf(s_dip_to_px(min.mat[13] - 0.5));
+        float maxX2 = ceilf(s_dip_to_px(max.mat[12] + 0.5));
+        float maxY2 = ceilf(s_dip_to_px(max.mat[13] + 0.5));
+        
+        static CAApplication* application = CAApplication::getApplication();
+        if (application->getProjection() == CAApplication::P3D)
+        {
+            minX2 += s_dip_to_px(application->getWinSize().width/2);
+            minY2 += s_dip_to_px(application->getWinSize().height/2);
+            maxX2 += s_dip_to_px(application->getWinSize().width/2);
+            maxY2 += s_dip_to_px(application->getWinSize().height/2);
+        }
+
         if (isScissor)
         {
-            float x1 = MAX(s_dip_to_px(frame.getMinX()), restoreScissorRect.getMinX());
-            float y1 = MAX(s_dip_to_px(frame.getMinY()), restoreScissorRect.getMinY());
-            float x2 = MIN(s_dip_to_px(frame.getMaxX()) + 0.5f, restoreScissorRect.getMaxX());
-            float y2 = MIN(s_dip_to_px(frame.getMaxY()) + 0.5f, restoreScissorRect.getMaxY());
+            float x1 = MAX(minX2, minX);
+            float y1 = MAX(minY2, minY);
+            float x2 = MIN(maxX2, maxX);
+            float y2 = MIN(maxY2, maxY);
             float width = MAX(x2-x1, 0);
             float height = MAX(y2-y1, 0);
             glScissor(x1, y1, width, height);
@@ -1547,10 +1523,10 @@ void CAView::visit()
         else
         {
             glEnable(GL_SCISSOR_TEST);
-            glScissor(s_dip_to_px(frame.origin.x),
-                      s_dip_to_px(frame.origin.y),
-                      s_dip_to_px(frame.size.width) + 0.5f,
-                      s_dip_to_px(frame.size.height) + 0.5f);
+            glScissor(minX2,
+                      minY2,
+                      maxX2-minX2,
+                      maxY2-minY2);
         }
     }
 
@@ -1583,10 +1559,10 @@ void CAView::visit()
     {
         if (isScissor)
         {
-            glScissor(restoreScissorRect.origin.x,
-                      restoreScissorRect.origin.y ,
-                      restoreScissorRect.size.width,
-                      restoreScissorRect.size.height);
+            glScissor(minX,
+                      minY,
+                      maxX-minX,
+                      maxY-minY);
         }
         else
         {
@@ -1899,23 +1875,6 @@ const Mat4& CAView::getViewToSuperviewTransform() const
         
         Mat4::createRotation(m_obRotationQuat, &m_tTransform);
         
-        if (m_fRotationZ_X != m_fRotationZ_Y)
-        {
-            // Rotation values
-            // Change rotation code to handle X and Y
-            // If we skew with the exact same value for both x and y then we're simply just rotating
-            float radiansX = -CC_DEGREES_TO_RADIANS(m_fRotationZ_X);
-            float radiansY = -CC_DEGREES_TO_RADIANS(m_fRotationZ_Y);
-            float cx = cosf(radiansX);
-            float sx = sinf(radiansX);
-            float cy = cosf(radiansY);
-            float sy = sinf(radiansY);
-            
-            float m0 = m_tTransform.m.mat[0], m1 = m_tTransform.m.mat[1], m4 = m_tTransform.m.mat[4], m5 = m_tTransform.m.mat[5], m8 = m_tTransform.m.mat[8], m9 = m_tTransform.m.mat[9];
-            
-            m_tTransform.m.mat[0] = cy * m0 - sx * m1, m_tTransform.m.mat[4] = cy * m4 - sx * m5, m_tTransform.m.mat[8] = cy * m8 - sx * m9;
-            m_tTransform.m.mat[1] = sy * m0 + cx * m1, m_tTransform.m.mat[5] = sy * m4 + cx * m5, m_tTransform.m.mat[9] = sy * m8 + cx * m9;
-        }
         m_tTransform = translation * m_tTransform;
         //move by (-anchorPoint.x, -anchorPoint.y, 0) after rotation
         m_tTransform.translate(-anchorPoint.x, -anchorPoint.y, 0);
@@ -2195,7 +2154,7 @@ DPoint CAView::convertToWorldSpace(const DPoint& nodePoint)
     return DPoint(ret.x, CAApplication::getApplication()->getWinSize().height - ret.y);
 }
 
-DPoint CAView::convertToNodeSize(const DSize& worldSize)
+DSize CAView::convertToNodeSize(const DSize& worldSize)
 {
     DSize ret = worldSize;
     for (CAView* v = this; v; v = v->m_pSuperview)
@@ -2206,7 +2165,7 @@ DPoint CAView::convertToNodeSize(const DSize& worldSize)
     return ret;
 }
 
-DPoint CAView::convertToWorldSize(const DSize& nodeSize)
+DSize CAView::convertToWorldSize(const DSize& nodeSize)
 {
     DSize ret = nodeSize;
     for (CAView* v = this; v; v = v->m_pSuperview)
@@ -2241,18 +2200,6 @@ void CAView::setImage(CAImage* image)
         CC_SAFE_RETAIN(image);
         CC_SAFE_RELEASE(m_pobImage);
         m_pobImage = image;
-        if (image)
-        {
-            if (image->getPixelFormat() == CAImage::PixelFormat_A8)
-            {
-                this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureA8Color));
-            }
-            else
-            {
-                this->setShaderProgram(CAShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionTextureColor));
-            }
-        }
-        
         this->updateBlendFunc();
         this->updateDraw();
     }

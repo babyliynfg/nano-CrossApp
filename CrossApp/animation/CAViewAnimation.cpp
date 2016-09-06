@@ -65,6 +65,9 @@ public:
     float deltaRotationY;
     bool bRotationY;
     
+    float startRotationZ;
+    float endRotationZ;
+    float deltaRotationZ;
     bool bRotation;
     
     CAColor4B startColor;
@@ -154,8 +157,9 @@ void CAViewModel::getReady()
     startVertexZ = view->m_fVertexZ;
     startSkewX = view->m_fSkewX;
     startSkewY = view->m_fSkewY;
-    startRotationX = view->m_fRotationZ_X;
-    startRotationY = view->m_fRotationZ_Y;
+    startRotationX = view->m_fRotationX;
+    startRotationY = view->m_fRotationY;
+    startRotationZ = view->m_fRotationZ;
     startColor = view->_realColor;
     startAlpha = view->_realAlpha;
     startImageRect = view->m_obRect;
@@ -196,18 +200,15 @@ void CAViewModel::getReady()
     }
     if (bRotation)
     {
-        deltaRotationX = deltaRotationY = endRotationX - startRotationX;
+        deltaRotationZ = endRotationZ - startRotationZ;
     }
-    else
+    if (bRotationX)
     {
-        if (bRotationX)
-        {
-            deltaRotationX = endRotationX - startRotationX;
-        }
-        if (bRotationY)
-        {
-            deltaRotationY = endRotationY - startRotationY;
-        }
+        deltaRotationX = endRotationX - startRotationX;
+    }
+    if (bRotationY)
+    {
+        deltaRotationY = endRotationY - startRotationY;
     }
     
     if (bColor)
@@ -573,18 +574,15 @@ void CAViewAnimation::update(float dt)
                 }
                 if (model->bRotation)
                 {
-                    view->setRotation(model->startRotationX + model->deltaRotationX * s);
+                    view->setRotation(model->startRotationZ + model->deltaRotationZ * s);
                 }
-                else
+                if (model->bRotationX)
                 {
-                    if (model->bRotationX)
-                    {
-                        view->setRotationX(model->startRotationX + model->deltaRotationX * s);
-                    }
-                    if (model->bRotationY)
-                    {
-                        view->setRotationY(model->startRotationY + model->deltaRotationY * s);
-                    }
+                    view->setRotationX(model->startRotationX + model->deltaRotationX * s);
+                }
+                if (model->bRotationY)
+                {
+                    view->setRotationY(model->startRotationY + model->deltaRotationY * s);
                 }
                 
                 if (model->bColor)
@@ -719,7 +717,7 @@ void CAViewAnimation::setRotation(float rotation, CAView* view)
     CAViewAnimation::allocCAViewModel(view);
     CAViewModel* model = (CAViewModel*)m_vWillModules.back()->animations.getValue(view);
     model->bRotation = true;
-    model->endRotationX = model->endRotationY = rotation;
+    model->endRotationZ = model->endRotationZ = rotation;
 }
 
 void CAViewAnimation::setRotationX(float rotationX, CAView* view)

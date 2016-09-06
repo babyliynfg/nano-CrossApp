@@ -352,6 +352,15 @@ extern "C"
 		return true;
     }
     
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_didTextChanged(JNIEnv *env, jclass cls, jint key)
+    {
+        CATextField* textField = s_map[(int)key];
+        if (textField->getDelegate())
+        {
+            return textField->getDelegate()->textFieldDidChangeText(textField);
+        }
+    }
+    
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_text(JNIEnv *env, jclass cls, jint key, jbyteArray textBuffer, int lenght)
     {
         std::string text;

@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-
+#include "basics/CAObject.h"
 /**
  * @addtogroup base
  * @{
@@ -27,7 +27,7 @@ CC_DLL extern const CAValueMapIntKey CAValueMapIntKeyNull;
 /*
  * This class is provide as a wrapper of basic types, such as int and bool.
  */
-class CC_DLL CAValue
+class CC_DLL CAValue: public CAObject
 {
 public:
 
@@ -92,7 +92,6 @@ public:
     CAValue& operator= (const CAValueMap& v);
 
     CAValue& operator= (CAValueMap&& v);
-
 
     CAValue& operator= (const CAValueMapIntKey& v);
 

@@ -172,33 +172,6 @@ extern "C"
         }
     }
 
-	void JAVAStartAccelerometer()
-	{
-		JniMethodInfo jmi;
-		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "enableAccelerometer", "()V"))
-		{
-			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
-		}
-	}
-
-	void JAVASetAccelerometer(float interval)
-	{
-		JniMethodInfo jmi;
-		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "setAccelerometerInterval", "(F)V"))
-		{
-			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID,interval);
-		}
-	}
-
-	void JAVAStopAccelerometer()
-	{
-		JniMethodInfo jmi;
-		if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "disableAccelerometer", "()V"))
-		{
-			jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
-		}
-	}
-
 	void JAVAStartGyroscope()
 	{
 		JniMethodInfo jmi;
@@ -315,7 +288,7 @@ float getBatteryLevel()
 {
     return JAVAgetBattery();
 }
-static CALocationDelegate *locationDelegate = NULL;
+    
 static CABlueToothDelegate *bluetoothdelegate =NULL;
     
 void initBlueTooth(CABlueToothDelegate *target)
@@ -364,6 +337,7 @@ void OpenURL(const std::string &url)
     if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "browserOpenURL" , "(Ljava/lang/String;)V"))
     {
         jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,jmi.env->NewStringUTF(url.c_str()));
+        jmi.env->DeleteLocalRef(jmi.classID);
     }
 }
     
@@ -373,24 +347,27 @@ void JAVAOpenCamera(int type)
 	if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "CAImageCapture" , "(I)V"))
 	{
 		jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
+        jmi.env->DeleteLocalRef(jmi.classID);
 	}
 }
     
-void JAVAUpdatingLocation()
+void JAVAUpdateLocation()
 {
-    JniMethodInfo jmi;
-    if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "startUpdatingLocation" , "()V"))
+    JniMethodInfo jni;
+    if (JniHelper::getStaticMethodInfo(jni, "org/CrossApp/lib/CrossAppDevice", "startLocation", "()V"))
     {
-        jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID);
+        jni.env->CallStaticVoidMethod(jni.classID, jni.methodID);
+        jni.env->DeleteLocalRef(jni.classID);
     }
 }
     
 void JAVAStopUpdateLocation()
 {
     JniMethodInfo jmi;
-    if (JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "stopUpdatingLocation", "()V"))
+    if(JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "stopLocation", "()V"))
     {
-        jmi.env->CallStaticObjectMethod(jmi.classID, jmi.methodID);
+        jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
+        jmi.env->DeleteLocalRef(jmi.classID);
     }
 }
     
@@ -505,23 +482,6 @@ void setScreenBrightness(float brightness)
     setJAVABrightness(sender);
 }
 
-void startAccelerometer(CAAccelerometerDelegate* delegate)
-{
-	accelerometerDelegate = delegate;
-
-	JAVAStartAccelerometer();
-}
-
-void setAccelerometerInterval(float interval)
-{
-	JAVASetAccelerometer(interval);
-}
-
-void stopAccelerometer()
-{
-	JAVAStopAccelerometer();
-}
-
 void startGyroscope(CAGyroDelegate* delegate)
 {
 	gyroscopeDelegate = delegate;
@@ -537,17 +497,6 @@ void setGyroInterval(float interval)
 void stopGyroscope()
 {
 	JAVAStopGyroscope();
-}
-
-void startUpdateLocation(CALocationDelegate* gpsDelegate)
-{
-	locationDelegate = gpsDelegate;
-	JAVAUpdatingLocation();
-}
-
-void stopUpdateLocation()
-{
-	JAVAStopUpdateLocation();
 }
 
 ToMainThread::ToMainThread()
@@ -649,23 +598,6 @@ extern "C"
         }
     }
     
-	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppAccelerometer_onSensorChanged(
-		JNIEnv *env, 
-		jobject obj,
-		jfloat px,
-		jfloat py,
-		jfloat pz,
-		jfloat pTime)
-	{
-		CAAcceleration* acceleration = new CAAcceleration();
-		acceleration->x = px;
-		acceleration->y = py;
-		acceleration->z = pz;		
-		acceleration->timestamp = pTime;
-
-		accelerometerDelegate->didAccelerate(acceleration);
-	}
-
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppGyroscope_onGyroSensorChanged(
 		JNIEnv *env,
 		jobject obj,
@@ -681,43 +613,6 @@ extern "C"
 		gyroDate->timestamp = pTime;
 
 		gyroscopeDelegate->didGyroscope(gyroDate);
-	}
-
-	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppGPS_returnLocationInfo(JNIEnv *env, jobject obj, jobject sender)
-	{
-		jclass gpsInfoType = env->GetObjectClass(sender);
-
-
-		jmethodID getLongitude = env->GetMethodID(gpsInfoType, "getLongitude", "()Ljava/lang/String;");
-		jmethodID getLatitude = env->GetMethodID(gpsInfoType, "getLatitude", "()Ljava/lang/String;");
-		jmethodID getAltitude = env->GetMethodID(gpsInfoType, "getAltitude", "()Ljava/lang/String;");
-		jmethodID getSpeed = env->GetMethodID(gpsInfoType, "getSpeed", "()Ljava/lang/String;");
-		jmethodID getBearing = env->GetMethodID(gpsInfoType, "getBearing", "()Ljava/lang/String;");
-
-		jstring sLongitude = (jstring)env->CallObjectMethod(sender, getLongitude);
-		jstring sLatitude = (jstring)env->CallObjectMethod(sender, getLatitude);
-		jstring sAltitude = (jstring)env->CallObjectMethod(sender, getAltitude);
-		jstring sSpeed = (jstring)env->CallObjectMethod(sender, getSpeed);
-		jstring sBearing = (jstring)env->CallObjectMethod(sender, getBearing);
-
-		const char *sLongitudeCStr = env->GetStringUTFChars(sLongitude, 0);
-		const char *sLatitudeCStr = env->GetStringUTFChars(sLatitude, 0);
-		const char *sAltitudeCStr = env->GetStringUTFChars(sAltitude, 0);
-		const char *sSpeedCStr = env->GetStringUTFChars(sSpeed, 0);
-		const char *sBearingCStr = env->GetStringUTFChars(sBearing, 0);
-
-		CALocationInfo info;
-		info.sLongitude = sLongitudeCStr;
-		info.sLatitude = sLatitudeCStr;
-		info.sAltitude = sAltitudeCStr;
-		info.sSpeed = sSpeedCStr;
-		info.sBearing = sBearingCStr;
-
-
-		if (locationDelegate)
-		{
-			locationDelegate->getLocationChanged(info);
-		}
 	}
 
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppDevice_getWifiList(JNIEnv *env,jobject obj,jobject obj_wifiArray)

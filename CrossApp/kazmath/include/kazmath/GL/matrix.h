@@ -52,7 +52,6 @@ void CC_DLL kmGLTranslatef(float x, float y, float z);
 void CC_DLL kmGLRotatef(float angle, float x, float y, float z);
 void CC_DLL kmGLScalef(float x, float y, float z);
 void CC_DLL kmGLGetMatrix(kmGLEnum mode, kmMat4* pOut);
-
 #ifdef __cplusplus
 }
 #endif

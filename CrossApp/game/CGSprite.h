@@ -107,7 +107,7 @@ public:
 
     inline unsigned int getAtlasIndex(void) { return m_uAtlasIndex; }
 
-    inline void setAtlasIndex(unsigned int uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
+    inline void setAtlasIndex(ssize_t uAtlasIndex) { m_uAtlasIndex = uAtlasIndex; }
 
     inline const DRect& getImageRect(void) { return m_obRect; }
 
@@ -125,6 +125,8 @@ public:
 
     void setFlipY(bool bFlipY);
 
+    virtual void visit(void);
+    
 protected:
     
     virtual void updateDraw();

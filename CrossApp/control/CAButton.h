@@ -79,6 +79,8 @@ public:
     
     void setTitleBold(bool bold);
     
+    void setTitleTextAlignment(const CATextAlignment& var);
+    
     virtual void setControlState(const CAControlState& var);
     
     using CAControl::addTarget;

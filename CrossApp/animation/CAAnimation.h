@@ -23,7 +23,6 @@ namespace CAAnimation
 
     CC_DLL void unschedule(SEL_CAAnimation selector, CAObject* target);
     
-    
     CC_DLL bool isSchedule(SEL_CAAnimation selector, CAObject* target);
 };
 

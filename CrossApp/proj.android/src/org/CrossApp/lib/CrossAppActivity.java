@@ -30,7 +30,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-
 import org.CrossApp.lib.CrossAppVolumeControl;
 import org.CrossApp.lib.CrossAppNetWorkManager;
 import org.CrossApp.lib.CrossAppDevice;
@@ -169,10 +168,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 
 		CrossAppHelper.onResume();
 		this.mGLSurfaceView.onResume();
-		if (CrossAppGPS.locationManager!=null)
-		{
-			CrossAppGPS.locationManager.requestLocationUpdates(CrossAppGPS.locationManager.GPS_PROVIDER, 1000, 1, CrossAppGPS.locationListener);
-		}
 	}
 
 	@Override
@@ -181,10 +176,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 
 		CrossAppHelper.onPause();
 		this.mGLSurfaceView.onPause();
-		if (CrossAppGPS.locationManager!=null)
-		{
-			CrossAppGPS.locationManager.removeUpdates(CrossAppGPS.locationListener);
-		}
 	}
 
 	@Override

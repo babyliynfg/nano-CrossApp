@@ -28,12 +28,6 @@
 #include "support/netWork/DownloadManager.h"
 #include "game/actions/CGActionManager.h"
 
-#ifndef CC_DIRECTOR_STATS_POSITION
-#define CC_DIRECTOR_STATS_POSITION CAApplication::getApplication()->getVisibleOrigin()
-#endif
-
-
-
 NS_CC_BEGIN
 
 static CCDisplayLinkDirector *s_SharedApplication = NULL;
@@ -143,7 +137,7 @@ void CAApplication::setGLDefaultValues(void)
     CCAssert(m_pobOpenGLView, "opengl view should not be null");
 
     setAlphaBlending(true);
-    setDepthTest(true);
+    setDepthTest(false);
     setProjection(m_eProjection);
 
     // set other opengl default values
@@ -266,7 +260,7 @@ void CAApplication::setOpenGLView(CCEGLView *pobOpenGLView)
         // set size
         m_obWinSizeInPoints = m_pobOpenGLView->getDesignResolutionSize();
         
-        //createStatsLabel();
+        createStatsLabel();
         
         if (m_pobOpenGLView)
         {
@@ -540,7 +534,7 @@ void CAApplication::purgeDirector()
     
     // CrossApp specific data structures
     CAUserDefault::destroyInstance();
-    CANotificationCenter::purgeNotificationCenter();
+    CANotificationCenter::destroyInstance();
 
     ccGLInvalidateStateCache();
         
@@ -601,6 +595,7 @@ void CAApplication::showStats(void)
             sprintf(m_pszFPS, "%.1f", m_fFrameRate);
             m_pFPSLabel->setText(m_pszFPS);
         }
+        m_pFPSLabel->visitEve();
         m_pFPSLabel->visit();
     }
 }
@@ -623,29 +618,25 @@ void CAApplication::getFPSImageData(unsigned char** datapointer, unsigned int* l
 
 void CAApplication::createStatsLabel()
 {
-    CAImage* image = NULL;
-    CAImageCache *ImageCache = CAImageCache::sharedImageCache();
-
     if( m_pFPSLabel)
     {
         CC_SAFE_RELEASE_NULL(m_pFPSLabel);
-        ImageCache->removeImageForKey("cc_fps_images");
+        //CAImageCache::sharedImageCache()->removeImageForKey("cc_fps_images");
         FileUtils::getInstance()->purgeCachedEntries();
     }
 
-    unsigned char *data = NULL;
-    unsigned int data_len = 0;
-    getFPSImageData(&data, &data_len);
-
-    image = CAImage::createWithImageData(data, data_len, "cc_fps_images");
+//    unsigned char *data = NULL;
+//    unsigned int data_len = 0;
+//    getFPSImageData(&data, &data_len);
+//
+//    CAImage* image = CAImage::createWithImageData(data, data_len, "cc_fps_images");
     
-    float factor = CCEGLView::sharedOpenGLView()->getDesignResolutionSize().height / 640.0f;
-
-    m_pFPSLabel = CALabel::createWithFrame(DRect(0, 0, 100, 32));
-    m_pFPSLabel->retain();
-    m_pFPSLabel->setScale(factor);
-	m_pFPSLabel->setColor(CAColor_blue);
-    m_pFPSLabel->setFrameOrigin(CC_DIRECTOR_STATS_POSITION);
+    m_pFPSLabel = CALabel::createWithFrame(DRect(20, 20, 100, 50));
+    m_pFPSLabel->setFontSize(40);
+	m_pFPSLabel->setColor(CAColor_yellow);
+    CC_SAFE_RETAIN(m_pFPSLabel);
+    m_pFPSLabel->onEnter();
+    m_pFPSLabel->onEnterTransitionDidFinish();
 }
 
 CAView* CAApplication::getNotificationView()

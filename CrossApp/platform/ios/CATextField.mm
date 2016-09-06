@@ -92,6 +92,22 @@
     return YES;
 }
 
+- (BOOL)textFieldShouldClear:(UITextField *)textField
+{
+    CrossApp::CATextField* crossTextField = ((IOSTextField*)self.textField).textField;
+    
+    if (crossTextField->getDelegate())
+    {
+        unsigned int location = 0;
+        unsigned int lenght = (unsigned int)[textField.text length];
+
+        return crossTextField->getDelegate()->textFieldShouldChangeCharacters(crossTextField,
+                                                                              location,
+                                                                              lenght,
+                                                                              "");
+    }
+    return YES;
+}
 
 @end
 
@@ -137,6 +153,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillWasShown:) name:UIKeyboardWillShowNotification object:nil];
 
     [[NSNotificationCenter defaultCenter]  addObserver:self selector:@selector(keyboardWasHidden:) name:UIKeyboardWillHideNotification object:nil];
+    
+    [self addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
 }
 
 -(void)removeTextField
@@ -166,6 +184,14 @@
     if (_textField->getDelegate() && [self isFirstResponder])
     {
         _textField->getDelegate()->keyBoardHeight(_textField, 0);
+    }
+}
+
+- (void) textFieldDidChange:(NSNotification *) notif
+{
+    if (_textField->getDelegate() && [self isFirstResponder])
+    {
+        _textField->getDelegate()->textFieldDidChangeText(_textField);
     }
 }
 
@@ -260,7 +286,7 @@ bool CATextField::becomeFirstResponder()
         return false;
     }
     
-    bool result = true;//CAControl::becomeFirstResponder();
+    bool result = CAControl::becomeFirstResponder();
     
     this->hideTextField();
     

@@ -86,16 +86,14 @@ CGNode::~CGNode(void)
     CC_SAFE_RELEASE(m_pCamera);
     CC_SAFE_RELEASE(m_pShaderProgram);
     
-    this->stopAllActions();
+    ActionManager::getInstance()->removeAllActionsFromTarget(this);
     
     if(!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-        {
-            (*itr)->setParent(NULL);
-        }
+        for (auto& var : m_obChildren)
+            var->setParent(NULL);
     }
+    
     m_obChildren.clear();
     if (m_pCAView)
     {
@@ -175,13 +173,13 @@ void CGNode::setZOrder(int z)
     }
 }
 
-int CGNode::getRotation()
+float CGNode::getRotationZ()
 {
     CCAssert(m_fRotationZ_X == m_fRotationZ_Y, "CGNode#rotation. m_fRotationZ_X != m_fRotationZ_Y. Don't know which one to return");
     return m_fRotationZ_X;
 }
 
-void CGNode::setRotation(int newRotation)
+void CGNode::setRotationZ(float newRotation)
 {
     if (m_fRotationZ_X != newRotation || m_fRotationZ_Y != newRotation)
     {
@@ -191,31 +189,31 @@ void CGNode::setRotation(int newRotation)
     }
 }
 
-int CGNode::getRotationX()
+float CGNode::getRotationX()
 {
-    return m_fRotationZ_X;
+    return m_fRotationX;
 }
 
-void CGNode::setRotationX(int fRotationX)
+void CGNode::setRotationX(float fRotationX)
 {
-    if (m_fRotationZ_X != fRotationX)
+    if (m_fRotationX != fRotationX)
     {
-        m_fRotationZ_X = fRotationX;
+        m_fRotationX = fRotationX;
         this->updateRotationQuat();
         this->updateDraw();
     }
 }
 
-int CGNode::getRotationY()
+float CGNode::getRotationY()
 {
-    return m_fRotationZ_Y;
+    return m_fRotationY;
 }
 
-void CGNode::setRotationY(int fRotationY)
+void CGNode::setRotationY(float fRotationY)
 {
-    if (m_fRotationZ_Y != fRotationY)
+    if (m_fRotationY != fRotationY)
     {
-        m_fRotationZ_Y = fRotationY;
+        m_fRotationY = fRotationY;
         this->updateRotationQuat();
         this->updateDraw();
     }
@@ -573,16 +571,15 @@ void CGNode::updateDraw()
 
 CGNode* CGNode::getChildByTag(int aTag)
 {
-    CCAssert( aTag != kCAObjectTagInvalid, "Invalid tag");
+    CCAssert( aTag != TagInvalid, "Invalid tag");
     
     if(!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
+        for (auto& var : m_obChildren)
         {
-            if ((*itr)->m_nTag == aTag)
+            if (var->m_nTag == aTag)
             {
-                return *itr;
+                return var;
             }
         }
     }
@@ -595,12 +592,11 @@ CGNode* CGNode::getChildByTextTag(const std::string& textTag)
     
     if(!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
+        for (auto& var : m_obChildren)
         {
-            if ((*itr)->m_sTextTag.compare(textTag) == 0)
+            if (var->m_sTextTag.compare(textTag) == 0)
             {
-                return *itr;
+                return var;
             }
         }
     }
@@ -649,7 +645,7 @@ void CGNode::removeChild(CGNode* child)
 
 void CGNode::removeChildByTag(int tag)
 {
-    CCAssert( tag != kCAObjectTagInvalid, "Invalid tag");
+    CCAssert( tag != TagInvalid, "Invalid tag");
     
     CGNode* child = this->getChildByTag(tag);
     
@@ -675,21 +671,17 @@ void CGNode::removeAllChildren()
 {
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
+        for (auto& var : m_obChildren)
         {
             if(m_bRunning)
             {
-                (*itr)->onExitTransitionDidStart();
-                (*itr)->onExit();
+                var->onExitTransitionDidStart();
+                var->onExit();
             }
-            
-            (*itr)->setParent(NULL);
+            var->setParent(NULL);
         }
-        
         m_obChildren.clear();
     }
-    
     m_bHasChildren = false;
 }
 
@@ -745,27 +737,48 @@ void CGNode::visit()
     
     this->transform();
     
+    int minX, maxX, minY, maxY;
     bool isScissor = (bool)glIsEnabled(GL_SCISSOR_TEST);
-    DRect restoreScissorRect = DRectZero;
     if (isScissor)
     {
         GLfloat params[4];
         glGetFloatv(GL_SCISSOR_BOX, params);
-        restoreScissorRect = DRect(params[0], params[1], params[2], params[3]);
+        minX = params[0];
+        minY = params[1];
+        maxX = params[0] + params[2];
+        maxY = params[1] + params[3];
     }
     
     if (!m_bDisplayRange)
     {
-        DRect frame = DRectZero;
-        frame.size = m_obContentSize;
-        frame = this->convertRectToWorldSpace(frame);
-        frame.origin.y = CAApplication::getApplication()->getWinSize().height - frame.size.height - frame.origin.y;
+        kmMat4 min;     kmGLGetMatrix(KM_GL_MODELVIEW, &min);
+        
+        kmMat4 tm;      kmMat4Identity(&tm);
+        tm.mat[12]  =   m_obContentSize.width;
+        tm.mat[13]  =   m_obContentSize.height;
+        
+        kmMat4 max;     kmMat4Multiply(&max, &min, &tm);
+        
+        float minX2 = ceilf(s_dip_to_px(min.mat[12] - 0.5));
+        float minY2 = ceilf(s_dip_to_px(min.mat[13] - 0.5));
+        float maxX2 = ceilf(s_dip_to_px(max.mat[12] + 0.5));
+        float maxY2 = ceilf(s_dip_to_px(max.mat[13] + 0.5));
+        
+        static CAApplication* application = CAApplication::getApplication();
+        if (application->getProjection() == CAApplication::P3D)
+        {
+            minX2 += s_dip_to_px(application->getWinSize().width/2);
+            minY2 += s_dip_to_px(application->getWinSize().height/2);
+            maxX2 += s_dip_to_px(application->getWinSize().width/2);
+            maxY2 += s_dip_to_px(application->getWinSize().height/2);
+        }
+        
         if (isScissor)
         {
-            float x1 = MAX(s_dip_to_px(frame.getMinX()), restoreScissorRect.getMinX());
-            float y1 = MAX(s_dip_to_px(frame.getMinY()), restoreScissorRect.getMinY());
-            float x2 = MIN(s_dip_to_px(frame.getMaxX()) + 0.5f, restoreScissorRect.getMaxX());
-            float y2 = MIN(s_dip_to_px(frame.getMaxY()) + 0.5f, restoreScissorRect.getMaxY());
+            float x1 = MAX(minX2, minX);
+            float y1 = MAX(minY2, minY);
+            float x2 = MIN(maxX2, maxX);
+            float y2 = MIN(maxY2, maxY);
             float width = MAX(x2-x1, 0);
             float height = MAX(y2-y1, 0);
             glScissor(x1, y1, width, height);
@@ -773,10 +786,10 @@ void CGNode::visit()
         else
         {
             glEnable(GL_SCISSOR_TEST);
-            glScissor(s_dip_to_px(frame.origin.x),
-                      s_dip_to_px(frame.origin.y),
-                      s_dip_to_px(frame.size.width) + 0.5f,
-                      s_dip_to_px(frame.size.height) + 0.5f);
+            glScissor(minX2,
+                      minY2,
+                      maxX2-minX2,
+                      maxY2-minY2);
         }
     }
     
@@ -809,10 +822,10 @@ void CGNode::visit()
     {
         if (isScissor)
         {
-            glScissor(restoreScissorRect.origin.x,
-                      restoreScissorRect.origin.y ,
-                      restoreScissorRect.size.width,
-                      restoreScissorRect.size.height);
+            glScissor(minX,
+                      minY,
+                      maxX-minX,
+                      maxY-minY);
         }
         else
         {
@@ -825,12 +838,8 @@ void CGNode::visit()
 
 void CGNode::visitEve(void)
 {
-    CAVector<CGNode*>::iterator itr=m_obChildren.begin();
-    while (itr!=m_obChildren.end())
-    {
-        (*itr)->visitEve();
-        itr++;
-    }
+    for (auto& var : m_obChildren)
+        var->visitEve();
     
     if (m_pCAView)
     {
@@ -853,11 +862,8 @@ void CGNode::onEnter()
     
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-        {
-            (*itr)->onEnter();
-        }
+        for (auto& var : m_obChildren)
+            var->onEnter();
     }
     
     if (m_pCAView)
@@ -873,9 +879,8 @@ void CGNode::onEnterTransitionDidFinish()
 {
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-            (*itr)->onEnterTransitionDidFinish();
+        for (auto& var : m_obChildren)
+            var->onEnterTransitionDidFinish();
     }
     
     if (m_pCAView)
@@ -888,9 +893,8 @@ void CGNode::onExitTransitionDidStart()
 {
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-            (*itr)->onExitTransitionDidStart();
+        for (auto& var : m_obChildren)
+            var->onExitTransitionDidStart();
     }
     
     if (m_pCAView)
@@ -907,9 +911,8 @@ void CGNode::onExit()
     
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-            (*itr)->onExit();
+        for (auto& var : m_obChildren)
+            var->onExit();
     }
     
     if (m_pCAView)
@@ -1260,7 +1263,7 @@ DPoint CGNode::convertToWorldSpace(const DPoint& nodePoint)
     return DPoint(ret.x, CAApplication::getApplication()->getWinSize().height - ret.y);
 }
 
-DPoint CGNode::convertToNodeSize(const DSize& worldSize)
+DSize CGNode::convertToNodeSize(const DSize& worldSize)
 {
     DSize ret = worldSize;
     for (CGNode* v = this; v; v = v->m_pParent)
@@ -1271,7 +1274,7 @@ DPoint CGNode::convertToNodeSize(const DSize& worldSize)
     return ret;
 }
 
-DPoint CGNode::convertToWorldSize(const DSize& nodeSize)
+DSize CGNode::convertToWorldSize(const DSize& nodeSize)
 {
     DSize ret = nodeSize;
     for (CGNode* v = this; v; v = v->m_pParent)
@@ -1326,9 +1329,8 @@ void CGNode::updateDisplayedAlpha(float parentAlpha)
     
     if (!m_obChildren.empty())
     {
-        CAVector<CGNode*>::iterator itr;
-        for (itr=m_obChildren.begin(); itr!=m_obChildren.end(); itr++)
-            (*itr)->updateDisplayedAlpha(_displayedAlpha);
+        for (auto& var : m_obChildren)
+            var->updateDisplayedAlpha(_displayedAlpha);
     }
     
     this->updateColor();
