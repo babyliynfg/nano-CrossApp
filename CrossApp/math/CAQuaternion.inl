@@ -1,5 +1,5 @@
 
-#include "math/Quaternion.h"
+#include "math/CAQuaternion.h"
 
 NS_CC_BEGIN
 

@@ -349,8 +349,8 @@
 		D64A8C8A1D34870B00F75021 /* CAMat4.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C761D34870B00F75021 /* CAMat4.h */; };
 		D64A8C8B1D34870B00F75021 /* CAMathUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C781D34870B00F75021 /* CAMathUtil.cpp */; };
 		D64A8C8C1D34870B00F75021 /* CAMathUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C791D34870B00F75021 /* CAMathUtil.h */; };
-		D64A8C8D1D34870B00F75021 /* Quaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C7E1D34870B00F75021 /* Quaternion.cpp */; };
-		D64A8C8E1D34870B00F75021 /* Quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C7F1D34870B00F75021 /* Quaternion.h */; };
+		D64A8C8D1D34870B00F75021 /* CAQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C7E1D34870B00F75021 /* CAQuaternion.cpp */; };
+		D64A8C8E1D34870B00F75021 /* CAQuaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C7F1D34870B00F75021 /* CAQuaternion.h */; };
 		D64A8C8F1D34870B00F75021 /* TransformUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D64A8C811D34870B00F75021 /* TransformUtils.cpp */; };
 		D64A8C901D34870B00F75021 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C821D34870B00F75021 /* TransformUtils.h */; };
 		D64A8C9A1D34912200F75021 /* CAPoint3D.h in Headers */ = {isa = PBXBuildFile; fileRef = D64A8C921D34912200F75021 /* CAPoint3D.h */; };
@@ -799,9 +799,9 @@
 		D64A8C7B1D34870B00F75021 /* CAMathUtilNeon.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CAMathUtilNeon.inl; sourceTree = "<group>"; };
 		D64A8C7C1D34870B00F75021 /* CAMathUtilNeon64.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CAMathUtilNeon64.inl; sourceTree = "<group>"; };
 		D64A8C7D1D34870B00F75021 /* CAMathUtilSSE.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CAMathUtilSSE.inl; sourceTree = "<group>"; };
-		D64A8C7E1D34870B00F75021 /* Quaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Quaternion.cpp; sourceTree = "<group>"; };
-		D64A8C7F1D34870B00F75021 /* Quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Quaternion.h; sourceTree = "<group>"; };
-		D64A8C801D34870B00F75021 /* Quaternion.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Quaternion.inl; sourceTree = "<group>"; };
+		D64A8C7E1D34870B00F75021 /* CAQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAQuaternion.cpp; sourceTree = "<group>"; };
+		D64A8C7F1D34870B00F75021 /* CAQuaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAQuaternion.h; sourceTree = "<group>"; };
+		D64A8C801D34870B00F75021 /* CAQuaternion.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CAQuaternion.inl; sourceTree = "<group>"; };
 		D64A8C811D34870B00F75021 /* TransformUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TransformUtils.cpp; sourceTree = "<group>"; };
 		D64A8C821D34870B00F75021 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		D64A8C921D34912200F75021 /* CAPoint3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAPoint3D.h; sourceTree = "<group>"; };
@@ -1603,9 +1603,9 @@
 				D64A8C7B1D34870B00F75021 /* CAMathUtilNeon.inl */,
 				D64A8C7C1D34870B00F75021 /* CAMathUtilNeon64.inl */,
 				D64A8C7D1D34870B00F75021 /* CAMathUtilSSE.inl */,
-				D64A8C7E1D34870B00F75021 /* Quaternion.cpp */,
-				D64A8C7F1D34870B00F75021 /* Quaternion.h */,
-				D64A8C801D34870B00F75021 /* Quaternion.inl */,
+				D64A8C7E1D34870B00F75021 /* CAQuaternion.cpp */,
+				D64A8C7F1D34870B00F75021 /* CAQuaternion.h */,
+				D64A8C801D34870B00F75021 /* CAQuaternion.inl */,
 				D64A8C811D34870B00F75021 /* TransformUtils.cpp */,
 				D64A8C821D34870B00F75021 /* TransformUtils.h */,
 			);
@@ -1756,7 +1756,7 @@
 				D66BCD4F1D3DC27700587C65 /* CGSpriteFrame.h in Headers */,
 				04EAB0A51956D75600198A8E /* CrossApp.h in Headers */,
 				022CAAEC1BF1C41500ED015B /* sqlite3.h in Headers */,
-				D64A8C8E1D34870B00F75021 /* Quaternion.h in Headers */,
+				D64A8C8E1D34870B00F75021 /* CAQuaternion.h in Headers */,
 				D649B2841D3C64480020414A /* CGSprite.h in Headers */,
 				B09B73C91BD1FD47001D82BC /* CAVideoPlayerDecoder.h in Headers */,
 				B0B05FCC1BB1483200B891CE /* CAView.h in Headers */,
@@ -2062,7 +2062,7 @@
 				B0B05FA71BB1483200B891CE /* CADatePickerView.cpp in Sources */,
 				3E2154551B8180340075448E /* json_value.cpp in Sources */,
 				D649B2AD1D3CD6A80020414A /* CGActionCatmullRom.cpp in Sources */,
-				D64A8C8D1D34870B00F75021 /* Quaternion.cpp in Sources */,
+				D64A8C8D1D34870B00F75021 /* CAQuaternion.cpp in Sources */,
 				B0A7157E1A43F6DE00A85FB9 /* CAWebViewImpl.cpp in Sources */,
 				3E2153E11B817AB80075448E /* CADevice.cpp in Sources */,
 				B0B05FA91BB1483200B891CE /* CADrawingPrimitives.cpp in Sources */,

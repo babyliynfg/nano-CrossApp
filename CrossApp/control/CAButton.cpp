@@ -420,16 +420,16 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         if (m_bAllowsSelected && m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
         {
             if (m_bSelected)
-            {CCLog("CAControlStateSelected");
+            {
                 this->setControlState(CAControlStateSelected);
             }
             else
-            {CCLog("CAControlStateNormal");
+            {
                 this->setControlState(CAControlStateNormal);
             }
         }
         else
-        {CCLog("CAControlStateHighlighted");
+        {
             this->setControlState(CAControlStateHighlighted);
         }
     }
@@ -440,11 +440,11 @@ void CAButton::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         this->setTouchMovedOutSide(point);
         
         if (m_bAllowsSelected && m_bSelected)
-        {CCLog("CAControlStateSelected");
+        {
             this->setControlState(CAControlStateSelected);
         }
         else
-        {CCLog("CAControlStateNormal");
+        {
             this->setControlState(CAControlStateNormal);
         }
     }

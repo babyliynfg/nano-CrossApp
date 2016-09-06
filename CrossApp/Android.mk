@@ -127,7 +127,7 @@ view/CARichLabel.cpp \
 math/CAAffineTransform.cpp \
 math/CAVertex.cpp \
 math/CAMat4.cpp \
-math/Quaternion.cpp \
+math/CAQuaternion.cpp \
 math/TransformUtils.cpp \
 $(MATHNEONFILE) \
 kazmath/src/aabb.c \

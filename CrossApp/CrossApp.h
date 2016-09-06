@@ -122,7 +122,7 @@
 #include "math/CAVertex.h"
 #include "math/CAMat4.h"
 #include "math/CAMathUtil.h"
-#include "math/Quaternion.h"
+#include "math/CAQuaternion.h"
 #include "math/TransformUtils.h"
 
 // kazmath

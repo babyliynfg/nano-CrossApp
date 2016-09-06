@@ -1,6 +1,6 @@
 
 
-#include "math/Quaternion.h"
+#include "math/CAQuaternion.h"
 #include "ccMacros.h"
 
 NS_CC_BEGIN
