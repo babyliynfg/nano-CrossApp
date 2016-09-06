@@ -1027,7 +1027,7 @@ void CAView::updateDraw()
 
 CAView* CAView::getSubviewByTag(int aTag)
 {
-    CCAssert( aTag != kCAObjectTagInvalid, "Invalid tag");
+    CCAssert( aTag != TagInvalid, "Invalid tag");
     
     if(!m_obSubviews.empty())
     {
@@ -1119,7 +1119,7 @@ void CAView::removeSubview(CAView* subview)
 
 void CAView::removeSubviewByTag(int tag)
 {
-    CCAssert( tag != kCAObjectTagInvalid, "Invalid tag");
+    CCAssert( tag != TagInvalid, "Invalid tag");
     
     CAView *subview = this->getSubviewByTag(tag);
     

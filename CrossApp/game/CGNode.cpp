@@ -571,7 +571,7 @@ void CGNode::updateDraw()
 
 CGNode* CGNode::getChildByTag(int aTag)
 {
-    CCAssert( aTag != kCAObjectTagInvalid, "Invalid tag");
+    CCAssert( aTag != TagInvalid, "Invalid tag");
     
     if(!m_obChildren.empty())
     {
@@ -645,7 +645,7 @@ void CGNode::removeChild(CGNode* child)
 
 void CGNode::removeChildByTag(int tag)
 {
-    CCAssert( tag != kCAObjectTagInvalid, "Invalid tag");
+    CCAssert( tag != TagInvalid, "Invalid tag");
     
     CGNode* child = this->getChildByTag(tag);
     

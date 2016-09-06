@@ -128,7 +128,7 @@ private:
 CAObject::CAObject(void)
 : m_uReference(1) // when the object is created, the reference count of it is 1
 , m_uAutoReleaseCount(0)
-, m_nTag(kCAObjectTagInvalid)
+, m_nTag(TagInvalid)
 , m_pUserData(NULL)
 , m_pUserObject(NULL)
 {

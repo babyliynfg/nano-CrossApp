@@ -228,5 +228,5 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 #endif
 #endif
 
-
+#define TagInvalid -1
 #endif // __CCMACROS_H__

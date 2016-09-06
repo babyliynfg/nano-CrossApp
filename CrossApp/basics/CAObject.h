@@ -12,8 +12,6 @@
 
 NS_CC_BEGIN
 
-#define kCAObjectTagInvalid -1
-
 class CAObject;
 class CAEvent;
 class CAView;
