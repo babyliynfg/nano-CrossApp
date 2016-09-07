@@ -871,7 +871,7 @@ void CAScheduler::update(float dt)
                 elt->currentTimerSalvaged = false;
                 
                 elt->currentTimer->update(dt);
-                
+                 
                 if (elt->currentTimerSalvaged)
                 {
                     // The currentTimer told the remove itself. To prevent the timer from

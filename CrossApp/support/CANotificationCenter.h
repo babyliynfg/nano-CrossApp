@@ -23,7 +23,7 @@ public:
      */
     CANotificationObserver(CAObject *target,
                            SEL_CallFuncO selector,
-                           const char *name,
+                           const std::string& name,
                            CAObject *obj);
     
     /** CANotificationObserver destructor function */
@@ -34,7 +34,7 @@ public:
 private:
     CC_PROPERTY_READONLY(CAObject *, m_target, Target);
     CC_PROPERTY_READONLY(SEL_CallFuncO, m_selector, Selector);
-    CC_PROPERTY_READONLY(char *, m_name, Name);
+    CC_PROPERTY_READONLY_PASS_BY_REF(std::string, m_name, Name);
     CC_PROPERTY_READONLY(CAObject *, m_object, Object);
     CC_PROPERTY(int, m_nHandler,Handler);
 };
@@ -77,14 +77,14 @@ public:
      */
     void addObserver(CAObject *target, 
                      SEL_CallFuncO selector,
-                     const char *name,
+                     const std::string& name,
                      CAObject *obj);
 
     /** @brief Removes the observer by the specified target and name.
      *  @param target The target of this notification.
      *  @param name The name of this notification. 
      */
-    void removeObserver(CAObject *target,const char *name);
+    void removeObserver(CAObject *target,const std::string& name);
     
     /** @brief Removes all notifications registered by this target
      *  @param target The target of this notification.
@@ -96,21 +96,21 @@ public:
      *  @note Only supports Lua Binding now.
      *  @param handler The lua handler.
      */
-    void registerScriptObserver(CAObject *target,int handler,const char* name);
+    void registerScriptObserver(CAObject *target, int handler, const std::string& name);
 
     /** Unregisters script observer */
-    void unregisterScriptObserver(CAObject *target,const char* name);
+    void unregisterScriptObserver(CAObject *target, const std::string& name);
     
     /** @brief Posts one notification event by name.
      *  @param name The name of this notification.
      */
-    void postNotification(const char *name);
+    void postNotification(const std::string& name);
 
     /** @brief Posts one notification event by name.
      *  @param name The name of this notification.
      *  @param object The extra parameter.
      */
-    void postNotification(const char *name, CAObject *object);
+    void postNotification(const std::string& name, CAObject *object);
     
     /** @brief Gets script handler.
      *  @note Only supports Lua Binding now.
@@ -122,12 +122,12 @@ public:
      *  @param name The name of this notification.
      *  @return The observer script handle.
      */
-    int getObserverHandlerByName(const char* name);
+    int getObserverHandlerByName(const std::string& name);
 private:
     // internal functions
 
     // Check whether the observer exists by the specified target and name.
-    bool observerExisted(CAObject *target,const char *name);
+    bool observerExisted(CAObject *target, const std::string& name);
     
     // variables
     //

@@ -1485,7 +1485,7 @@ void CAView::visit()
         maxX = params[0] + params[2];
         maxY = params[1] + params[3];
     }
-
+    //m_bDisplayRange = 1;
     if (!m_bDisplayRange)
     {
         kmMat4 min;     kmGLGetMatrix(KM_GL_MODELVIEW, &min);
@@ -1496,10 +1496,10 @@ void CAView::visit()
         
         kmMat4 max;     kmMat4Multiply(&max, &min, &tm);
         
-        float minX2 = ceilf(s_dip_to_px(min.mat[12] - 0.5));
-        float minY2 = ceilf(s_dip_to_px(min.mat[13] - 0.5));
-        float maxX2 = ceilf(s_dip_to_px(max.mat[12] + 0.5));
-        float maxY2 = ceilf(s_dip_to_px(max.mat[13] + 0.5));
+        float minX2 = ceilf(s_dip_to_px(min.mat[12] - 0.9));
+        float minY2 = ceilf(s_dip_to_px(min.mat[13] - 0.9));
+        float maxX2 = ceilf(s_dip_to_px(max.mat[12] + 0.9));
+        float maxY2 = ceilf(s_dip_to_px(max.mat[13] + 0.9));
         
         static CAApplication* application = CAApplication::getApplication();
         if (application->getProjection() == CAApplication::P3D)

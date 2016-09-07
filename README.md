@@ -13,27 +13,28 @@ CrossApp
 
 支持的平台：
 
-iOS：6.0 ~ 9.X SDK
+iOS：7.0 ~ 9.X SDK
 
-android：4.0 ~ 5.X SDK
+android：4.4 ~ 6.X SDK
 
-windows：windows XP、windows Vista、windows 7、windows 8.0、 windows 8.1
+windows：windows XP、windows Vista、windows 7、windows 8.0、 windows 8.1、 windows 10
 
-MAC OSX：10.7.X ~ 10.10 SDK
+MAC OSX：10.7.X ~ 10.12 SDK
 
 
 -------------------
 
 支持的语言：
 
-目前仅支持C++，将来会扩展支持Javascript、python等
+目前仅支持C++、Javascript
 
 
 -------------------
 
 联系我们：
 
-QQ群：345156390
+QQ群：   1群：345156390
+        2群：70268065
+        3群：63254880
 
 官网：http://crossapp.9miao.com
-九秒官网：http://www.9miao.com
