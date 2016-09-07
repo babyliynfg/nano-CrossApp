@@ -1,5 +1,3 @@
-
-
 #ifndef __SCRIPT_SUPPORT_H__
 #define __SCRIPT_SUPPORT_H__
 
@@ -66,7 +64,7 @@ protected:
 class CCSchedulerScriptHandlerEntry : public CCScriptHandlerEntry
 {
 public:
-
+    
     static CCSchedulerScriptHandlerEntry* create(int nHandler, float fInterval, bool bPaused);
     ~CCSchedulerScriptHandlerEntry(void);
     
@@ -138,8 +136,92 @@ private:
     int     m_nPriority;
     bool    m_bSwallowsTouches;
 };
+/** ScriptEventType enum*/
+enum ScriptEventType
+{
+    kNodeEvent = 0,
+    kMenuClickedEvent,
+    kCallFuncEvent,
+    kScheduleEvent,
+    kTouchEvent,
+    kTouchesEvent,
+    kKeypadEvent,
+    kAccelerometerEvent,
+    kControlEvent,
+    kCommonEvent,
+    kComponentEvent,
+    kRestartGame,
+    kScriptActionEvent,
+    kViewControllerEvent
+};
+/**
+ * For Lua, Wrapper the script data that should be used to find the handler corresponding to the Lua function by the nativeobject pointer and store the value pointer which would be converted concretely by the different events,then the converted data would be passed into the Lua stack.
+ * @js NA
+ */
+struct BasicScriptData
+{
+    /**
+     * For Lua, nativeobject is used to get handler corresponding to the Lua function.
+     *
+     * @js NA
+     * @lua NA
+     */
+    void* nativeObject;
+    
+    /**
+     * A pointer point to the value data which would be converted by different events.
+     *
+     * @js NA
+     * @lua NA
+     */
+    void* value;
+    
+    /**
+     * Constructor of BasicScriptData.
+     *
+     * @js NA
+     * @lua NA
+     */
+    BasicScriptData(void* inObject,void* inValue = nullptr)
+    : nativeObject(inObject),value(inValue)
+    {
+    }
+};
 
-
+/**
+ * The ScriptEvent wrapper the different script data corresponding to the ScriptEventType in to the unified struct.
+ * when the corresponding event is triggered, we could call the `sendEvent` of ScriptEngineProtocol to handle the event.
+ * @js NA
+ */
+struct ScriptEvent
+{
+    /**
+     * The specific type of ScriptEventType.
+     *
+     * @lua NA
+     * @js NA
+     */
+    ScriptEventType type;
+    /**
+     * Pointer point to the different data.
+     *
+     * @lua NA
+     * @js NA
+     */
+    void* data;
+    
+    /**
+     * Constructor of ScriptEvent.
+     *
+     * @lua NA
+     * @js NA
+     */
+    ScriptEvent(ScriptEventType inType,void* inData)
+    : type(inType),
+    data(inData)
+    {
+    }
+};
 // Don't make CCScriptEngineProtocol inherits from CCObject since setScriptEngine is invoked only once in AppDelegate.cpp,
 // It will affect the lifecycle of ScriptCore instance, the autorelease pool will be destroyed before destructing ScriptCore.
 // So a crash will appear on Win32 if you click the close button.
@@ -154,9 +236,9 @@ public:
     
     /** Get script type */
     virtual ccScriptType getScriptType() { return kScriptTypeNone; };
-
-    /** Remove script object. */
-    virtual void removeScriptObjectByCCObject(CAObject* pObj) = 0;
+    
+    /** Remove script object. */ 
+    virtual void removeScriptObjectByObject(CAObject* pObj) = 0;
     
     /** Remove script function handler, only CCLuaEngine class need to implement this function. */
     virtual void removeScriptHandler(int nHandler) {};
@@ -184,20 +266,43 @@ public:
      @param functionName String object holding the name of the function, in the global script environment, that is to be executed.
      @return The integer value returned from the script function.
      */
-//    virtual int executeGlobalFunction(const char* functionName) = 0;
-//
+        virtual int executeGlobalFunction(const char* functionName) = 0;
+    //
     /**
      @brief Execute a node event function
      @param pNode which node produce this event
      @param nAction kCCNodeOnEnter,kCCNodeOnExit,kCCMenuItemActivated,kCCNodeOnEnterTransitionDidFinish,kCCNodeOnExitTransitionDidStart
      @return The integer value returned from the script function.
      */
-    virtual int executeNodeEvent(CrossApp::CAViewController* pNode, int nAction) = 0;
+//    virtual int executeNodeEvent(CrossApp::CAViewController* pNode, int nAction) = 0;
     
+    /*
+    *
+    * @lua NA
+    * @js NA
+    */
+    virtual int sendEvent(ScriptEvent* evt) = 0;
+
     /** called by CCAssert to allow scripting engine to handle failed assertions
      * @return true if the assert was handled by the script engine, false otherwise.
      */
     virtual bool handleAssert(const char *msg) = 0;
+    
+    /**
+     * Useless for Lua.
+     *
+     * @lua NA
+     * @js NA
+     */
+    virtual void setCalledFromScript(bool callFromScript) { CC_UNUSED_PARAM(callFromScript); };
+    
+    /**
+     * Useless for Lua.
+     *
+     * @lua NA
+     * @js NA
+     */
+    virtual bool isCalledFromScript() { return false; };
     
     /**
      *
@@ -230,6 +335,22 @@ public:
     
     static CCScriptEngineManager* sharedManager(void);
     static void purgeSharedManager(void);
+    
+    /**
+     *
+     *
+     * @lua NA
+     * @js NA
+     */
+    static bool sendNodeEventToJS(CAView* node, int action);
+    
+    /**
+     *
+     *
+     * @lua NA
+     * @js NA
+     */
+    static bool sendViewControllerEventToJS(CAViewController* node, int action);
     
 private:
     CCScriptEngineManager(void)

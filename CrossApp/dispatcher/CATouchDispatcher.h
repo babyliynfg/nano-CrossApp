@@ -15,6 +15,15 @@
 #include "cocoa/CCSet.h"
 NS_CC_BEGIN
 
+//script
+enum {
+    CCTOUCHBEGAN,
+    CCTOUCHMOVED,
+    CCTOUCHENDED,
+    CCTOUCHCANCELLED,
+    
+    ccTouchMax,
+};
 
 class CATouch;
 class CAEvent;

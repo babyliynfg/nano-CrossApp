@@ -1,6 +1,7 @@
 
 
-#include "CCScriptSupport.h"
+#include "script_support/CCScriptSupport.h"
+#include "basics/CAScheduler.h"
 
 bool CC_DLL cc_assert_script_compatible(const char *msg)
 {
@@ -50,11 +51,11 @@ CCSchedulerScriptHandlerEntry* CCSchedulerScriptHandlerEntry::create(int nHandle
 
 bool CCSchedulerScriptHandlerEntry::init(float fInterval, bool bPaused)
 {
-//    m_pTimer = new CrossApp::CATimer();
+//    m_pTimer = new TimerScriptHandler();
 //    m_pTimer->initWithScriptHandler(m_nHandler, fInterval);
 //    m_pTimer->autorelease();
 //    m_pTimer->retain();
-//    m_bPaused = bPaused;
+    m_bPaused = bPaused;
     return true;
 }
 
@@ -143,5 +144,46 @@ void CCScriptEngineManager::purgeSharedManager(void)
         s_pSharedScriptEngineManager = NULL;
     }
 }
+
+bool CCScriptEngineManager::sendNodeEventToJS(CAView* node, int action)
+{
+    auto scriptEngine = sharedManager()->getScriptEngine();
+    
+    if (scriptEngine->isCalledFromScript())
+    {
+        // Should only be invoked at root class Node
+        scriptEngine->setCalledFromScript(false);
+    }
+    else
+    {
+        BasicScriptData data(node,(void*)&action);
+        ScriptEvent scriptEvent(kNodeEvent,(void*)&data);
+        if (scriptEngine->sendEvent(&scriptEvent))
+            return true;
+    }
+    
+    return false;
+}
+
+bool CCScriptEngineManager::sendViewControllerEventToJS(CAViewController* node, int action)
+{
+    auto scriptEngine = sharedManager()->getScriptEngine();
+    
+    if (scriptEngine->isCalledFromScript())
+    {
+        // Should only be invoked at root class Node
+        scriptEngine->setCalledFromScript(false);
+    }
+    else
+    {
+        BasicScriptData data(node,(void*)&action);
+        ScriptEvent scriptEvent(kViewControllerEvent,(void*)&data);
+        if (scriptEngine->sendEvent(&scriptEvent))
+        return true;
+    }
+    
+    return false;
+}
+
 
 NS_CC_END
