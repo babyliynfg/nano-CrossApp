@@ -155,7 +155,7 @@ CAObject::~CAObject(void)
     CCScriptEngineProtocol* pEngine = CCScriptEngineManager::sharedManager()->getScriptEngine();
     if (pEngine != NULL && pEngine->getScriptType() == kScriptTypeJavascript)
     {
-        pEngine->removeScriptObjectByCCObject(this);
+        pEngine->removeScriptObjectByObject(this);
     }
 }
 

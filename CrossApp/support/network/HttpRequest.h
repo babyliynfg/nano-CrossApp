@@ -157,12 +157,12 @@ public:
    		return _headers;
    	}
 
-    inline void setThreadID(int threadID)
+    inline void setThreadID(ssize_t threadID)
     {
         _threadID = threadID;
     };
 
-    inline int getThreadID()
+    inline ssize_t getThreadID()
     {
         return _threadID;
     };
@@ -177,7 +177,7 @@ protected:
     SEL_HttpResponse            _pSelector;      /// callback function, e.g. MyLayer::onHttpResponse(CCHttpClient *sender, CCHttpResponse * response)
     std::vector<std::string>    _headers;		      /// custom http headers
 	std::string					_fileNameToPost;
-    int                         _threadID;
+    ssize_t                     _threadID;
 };
 
 NS_CC_END

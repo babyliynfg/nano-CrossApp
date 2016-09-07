@@ -18,9 +18,9 @@ class CC_DLL CAHttpClient : public CAObject
 {
 public:
 
-    static CAHttpClient *getInstance(int thread = 0);
+    static CAHttpClient *getInstance(ssize_t thread = 0);
     
-    static void destroyInstance(int thread = 0);
+    static void destroyInstance(ssize_t thread = 0);
 
     static void destroyAllInstance();
     
@@ -40,7 +40,7 @@ public:
     
 private:
     
-    CAHttpClient(int thread);
+    CAHttpClient(ssize_t thread);
     
     virtual ~CAHttpClient();
     
@@ -53,7 +53,7 @@ private:
 private:
     int _timeoutForConnect;
     int _timeoutForRead;
-    int _threadID;
+    ssize_t _threadID;
 
 public:
     unsigned long               _asyncRequestCount;

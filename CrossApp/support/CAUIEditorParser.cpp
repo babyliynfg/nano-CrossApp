@@ -773,6 +773,11 @@ CAView* layoutView(tinyxml2::XMLElement* viewXml, CAView* superview, CAMap<std::
 		{
 			segmentControl->setImageForSegmentAtIndex(CAImage::create(value), 1, CAControlStateNormal);
 		}
+        
+        if (const char* value = viewXml->Attribute("selectedAtIndex"))
+        {
+            segmentControl->setSelectedAtIndex(atoi(value));
+        }
 		
 		tinyxml2::XMLElement* itemXml = NULL;
 		
