@@ -27,7 +27,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <mutex>
-#include "cocos2d_specifics.hpp"
+#include "crossapp_specifics.hpp"
 
 #ifdef ANDROID
 #define  LOG_TAG    "ScriptingCore.cpp"

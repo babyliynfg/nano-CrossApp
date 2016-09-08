@@ -1,7 +1,7 @@
 #include "AppDelegate.h"
 #include "ScriptingCore.h"
 #include "jsb_crossapp_auto.hpp"
-#include "cocos2d_specifics.hpp"
+#include "crossapp_specifics.hpp"
 #include "js_crossapp_delegates_manual.hpp"
 
 USING_NS_CC;

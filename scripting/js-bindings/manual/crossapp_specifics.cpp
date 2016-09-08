@@ -21,7 +21,7 @@
  * THE SOFTWARE.
  */
 
-#include "cocos2d_specifics.hpp"
+#include "crossapp_specifics.hpp"
 #include "CrossApp.h"
 #include <typeinfo>
 #include "js_bindings_config.h"

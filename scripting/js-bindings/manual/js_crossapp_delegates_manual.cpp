@@ -7,7 +7,7 @@
 //
 
 #include "js_crossapp_delegates_manual.hpp"
-#include "cocos2d_specifics.hpp"
+#include "crossapp_specifics.hpp"
 #include "jsb_crossapp_auto.hpp"
 
 typedef CAMap<std::string,CAObject*> CADelegateMap;

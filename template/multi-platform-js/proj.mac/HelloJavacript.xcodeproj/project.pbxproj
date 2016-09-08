@@ -27,12 +27,12 @@
 		41BC70E515BF81A5006A0A6C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DC15BF81A5006A0A6C /* InfoPlist.strings */; };
 		41BC70E615BF81A5006A0A6C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 41BC70DE15BF81A5006A0A6C /* MainMenu.xib */; };
 		41BC70E815BF81A5006A0A6C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 41BC70E115BF81A5006A0A6C /* main.m */; };
+		4851EDB71D81721400863BD1 /* crossapp_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4851EDB51D81721400863BD1 /* crossapp_specifics.cpp */; };
 		48D960971D58A15300158611 /* js_crossapp_delegates_manual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48D960951D58A15300158611 /* js_crossapp_delegates_manual.cpp */; };
 		48D9609C1D58A17000158611 /* source_material in Resources */ = {isa = PBXBuildFile; fileRef = 48D960981D58A17000158611 /* source_material */; };
 		48D9609E1D58A17000158611 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 48D9609A1D58A17000158611 /* fonts */; };
 		48E141061CED674B0029BABC /* js in Resources */ = {isa = PBXBuildFile; fileRef = 48E141051CED674B0029BABC /* js */; };
 		48E144341CED67980029BABC /* jsb_crossapp_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E1410B1CED67970029BABC /* jsb_crossapp_auto.cpp */; };
-		48E144351CED67980029BABC /* cocos2d_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E1410E1CED67970029BABC /* cocos2d_specifics.cpp */; };
 		48E144371CED67980029BABC /* js_bindings_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141141CED67970029BABC /* js_bindings_core.cpp */; };
 		48E144381CED67980029BABC /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141161CED67970029BABC /* js_manual_conversions.cpp */; };
 		48E144391CED67980029BABC /* ScriptingCore.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141181CED67970029BABC /* ScriptingCore.cpp */; };
@@ -193,6 +193,8 @@
 		41BC70E115BF81A5006A0A6C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = SOURCE_ROOT; };
 		41BC70E215BF81A5006A0A6C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = SOURCE_ROOT; };
 		41BC70E315BF81A5006A0A6C /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = SOURCE_ROOT; };
+		4851EDB51D81721400863BD1 /* crossapp_specifics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = crossapp_specifics.cpp; sourceTree = "<group>"; };
+		4851EDB61D81721400863BD1 /* crossapp_specifics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = crossapp_specifics.hpp; sourceTree = "<group>"; };
 		48D960951D58A15300158611 /* js_crossapp_delegates_manual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_crossapp_delegates_manual.cpp; sourceTree = "<group>"; };
 		48D960961D58A15300158611 /* js_crossapp_delegates_manual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = js_crossapp_delegates_manual.hpp; sourceTree = "<group>"; };
 		48D960981D58A17000158611 /* source_material */ = {isa = PBXFileReference; lastKnownFileType = folder; path = source_material; sourceTree = "<group>"; };
@@ -200,8 +202,6 @@
 		48E141051CED674B0029BABC /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
 		48E1410B1CED67970029BABC /* jsb_crossapp_auto.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsb_crossapp_auto.cpp; sourceTree = "<group>"; };
 		48E1410C1CED67970029BABC /* jsb_crossapp_auto.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = jsb_crossapp_auto.hpp; sourceTree = "<group>"; };
-		48E1410E1CED67970029BABC /* cocos2d_specifics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cocos2d_specifics.cpp; sourceTree = "<group>"; };
-		48E1410F1CED67970029BABC /* cocos2d_specifics.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = cocos2d_specifics.hpp; sourceTree = "<group>"; };
 		48E141131CED67970029BABC /* js_bindings_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_config.h; sourceTree = "<group>"; };
 		48E141141CED67970029BABC /* js_bindings_core.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = js_bindings_core.cpp; sourceTree = "<group>"; };
 		48E141151CED67970029BABC /* js_bindings_core.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_core.h; sourceTree = "<group>"; };
@@ -602,10 +602,10 @@
 		48E1410D1CED67970029BABC /* manual */ = {
 			isa = PBXGroup;
 			children = (
+				4851EDB51D81721400863BD1 /* crossapp_specifics.cpp */,
+				4851EDB61D81721400863BD1 /* crossapp_specifics.hpp */,
 				48D960951D58A15300158611 /* js_crossapp_delegates_manual.cpp */,
 				48D960961D58A15300158611 /* js_crossapp_delegates_manual.hpp */,
-				48E1410E1CED67970029BABC /* cocos2d_specifics.cpp */,
-				48E1410F1CED67970029BABC /* cocos2d_specifics.hpp */,
 				48E141101CED67970029BABC /* component */,
 				48E141131CED67970029BABC /* js_bindings_config.h */,
 				48E141141CED67970029BABC /* js_bindings_core.cpp */,
@@ -1044,6 +1044,7 @@
 				B018710A1B844E16006510B5 /* gameswf_value.cpp in Sources */,
 				B01870FA1B844E16006510B5 /* gameswf_movie_def.cpp in Sources */,
 				B01870EC1B844E16006510B5 /* gameswf_disasm.cpp in Sources */,
+				4851EDB71D81721400863BD1 /* crossapp_specifics.cpp in Sources */,
 				B018710B1B844E16006510B5 /* gameswf_video_impl.cpp in Sources */,
 				B01870DD1B844E16006510B5 /* as_number.cpp in Sources */,
 				B01870C41B844E16006510B5 /* zlib_adapter.cpp in Sources */,
@@ -1056,7 +1057,6 @@
 				B01870DC1B844E16006510B5 /* as_netstream.cpp in Sources */,
 				B01870C51B844E16006510B5 /* CAFlash.cpp in Sources */,
 				B01870B31B844E16006510B5 /* image.cpp in Sources */,
-				48E144351CED67980029BABC /* cocos2d_specifics.cpp in Sources */,
 				B01871011B844E16006510B5 /* gameswf_shape.cpp in Sources */,
 				B01870D11B844E16006510B5 /* as_flash.cpp in Sources */,
 				B01870C11B844E16006510B5 /* tu_types.cpp in Sources */,
