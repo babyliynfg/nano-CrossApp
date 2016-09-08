@@ -51,7 +51,7 @@ public:
 
     virtual void setImageAsyncWithFile(const std::string& path);
     
-    using CAView::setImageRect;
+    virtual void setImageRect(const DRect& rect);
     
     CC_PROPERTY_PASS_BY_REF(CAImageViewScaleType, m_eImageViewScaleType, ImageViewScaleType);
     

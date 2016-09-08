@@ -3,7 +3,7 @@
 
 #include "basics/CAObject.h"
 #include "ccTypes.h"
-
+#include "script_support/CCScriptSupport.h"
 NS_CC_BEGIN
 
 class CGNode;

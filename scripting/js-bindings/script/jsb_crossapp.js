@@ -451,17 +451,17 @@ DHorizontalLayout_L_W = function(left,width){
     return DHorizontalLayout(left, width, ca.DHorizontalLayoutType.L_W);
 };
 
-DHorizontalLayout_L_C = function(left,center){
-    return DHorizontalLayout(left, center, ca.DHorizontalLayoutType.L_C);
-};
+//DHorizontalLayout_L_C = function(left,center){
+//    return DHorizontalLayout(left, center, ca.DHorizontalLayoutType.L_C);
+//};
 
 DHorizontalLayout_R_W = function(right,width){
     return DHorizontalLayout(right,width, ca.DHorizontalLayoutType.R_W);
 };
 
-DHorizontalLayout_R_C = function(right,center){
-    return DHorizontalLayout(right,center, ca.DHorizontalLayoutType.R_C);
-};
+//DHorizontalLayout_R_C = function(right,center){
+//    return DHorizontalLayout(right,center, ca.DHorizontalLayoutType.R_C);
+//};
 
 DHorizontalLayout_W_C = function(width,center){
     return DHorizontalLayout(width, center, ca.DHorizontalLayoutType.W_C);
@@ -479,17 +479,17 @@ DVerticalLayout_T_H = function(top,height){
     return DVerticalLayout(top,height, ca.DVerticalLayoutType.T_H);
 };
 
-DVerticalLayout_T_C = function(top,center){
-    return DVerticalLayout(top,center, ca.DVerticalLayoutType.T_C);
-};
+//DVerticalLayout_T_C = function(top,center){
+//    return DVerticalLayout(top,center, ca.DVerticalLayoutType.T_C);
+//};
 
 DVerticalLayout_B_H = function(bottom,height){
     return DVerticalLayout(bottom,height, ca.DVerticalLayoutType.B_H);
 };
 
-DVerticalLayout_B_C = function(bottom,center){
-    return DVerticalLayout(bottom,center, ca.DVerticalLayoutType.B_C);
-};
+//DVerticalLayout_B_C = function(bottom,center){
+//    return DVerticalLayout(bottom,center, ca.DVerticalLayoutType.B_C);
+//};
 
 DVerticalLayout_H_C = function(height,center){
     return DVerticalLayout(height,center, ca.DVerticalLayoutType.H_C);

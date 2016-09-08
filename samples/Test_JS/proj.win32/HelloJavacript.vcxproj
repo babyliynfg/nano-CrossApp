@@ -139,11 +139,10 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\js-bindings\spidermonkey\prebuilt\w
     <ClCompile Include="..\..\..\scripting\js-bindings\auto\jsb_crossapp_auto.cpp" />
     <ClCompile Include="..\..\..\scripting\js-bindings\manual\cocos2d_specifics.cpp" />
     <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_bindings_core.cpp" />
+    <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_crossapp_delegates_manual.cpp" />
     <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_manual_conversions.cpp" />
     <ClCompile Include="..\..\..\scripting\js-bindings\manual\ScriptingCore.cpp" />
     <ClCompile Include="..\Classes\AppDelegate.cpp" />
-    <ClCompile Include="..\Classes\FirstViewController.cpp" />
-    <ClCompile Include="..\Classes\RootWindow.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,13 +150,11 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\js-bindings\spidermonkey\prebuilt\w
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\cocos2d_specifics.hpp" />
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_bindings_config.h" />
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_bindings_core.h" />
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_crossapp_delegates_manual.hpp" />
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_manual_conversions.h" />
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\ScriptingCore.h" />
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\spidermonkey_specifics.h" />
     <ClInclude Include="..\Classes\AppDelegate.h" />
-    <ClInclude Include="..\Classes\AppMacros.h" />
-    <ClInclude Include="..\Classes\FirstViewController.h" />
-    <ClInclude Include="..\Classes\RootWindow.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
   <ItemGroup>

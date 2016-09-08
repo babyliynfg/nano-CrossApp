@@ -332,7 +332,10 @@ void CAImageView::setImageAsyncWithFile(const std::string& path)
 {
     CAImageCache::sharedImageCache()->addImageFullPathAsync(path, this, callfuncO_selector(CAImageView::asyncFinish));
 }
-
+void CAImageView::setImageRect(const DRect& rect)
+{
+    CAView::setImageRect(rect);
+}
 void CAImageView::asyncFinish(CrossApp::CAObject *var)
 {
     CAImage* image = dynamic_cast<CAImage*>(var);

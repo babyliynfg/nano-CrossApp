@@ -166,6 +166,10 @@ Only valid for CrossApp-mac. Not supported on CrossApp-ios.
     #endif
 #endif
 
+/** Enable Script binding. */
+#ifndef CC_ENABLE_SCRIPT_BINDING
+#define CC_ENABLE_SCRIPT_BINDING 1
+#endif
 
 /** @def CC_USE_LA88_LABELS
  If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CALabel objects.

@@ -31,6 +31,7 @@
 #include "ccMacros.h"
 #include "game/CGNode.h"
 
+#include "script_support/CCScriptSupport.h"
 NS_CC_BEGIN;
 
 

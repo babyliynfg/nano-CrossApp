@@ -765,20 +765,6 @@ long
 },
 
 /**
- * @method isPvr
- * @param {unsigned char} arg0
- * @param {unsigned long} arg1
- * @return {bool}
- */
-isPvr : function (
-char, 
-long 
-)
-{
-    return false;
-},
-
-/**
  * @method isGif
  * @param {unsigned char} arg0
  * @param {unsigned long} arg1
@@ -819,6 +805,16 @@ CC_WHITE_IMAGE : function (
 },
 
 /**
+ * @method CC_SHADOW_LEFT_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_LEFT_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
  * @method getFontHeight
  * @param {char} arg0
  * @param {unsigned long} arg1
@@ -830,6 +826,14 @@ long
 )
 {
     return 0;
+},
+
+/**
+ * @method reloadAllImages
+ */
+reloadAllImages : function (
+)
+{
 },
 
 /**
@@ -979,12 +983,32 @@ str
 },
 
 /**
+ * @method CC_SHADOW_TOP_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_TOP_IMAGE : function (
+)
+{
+    return ca.CAImage;
+},
+
+/**
  * @method generateMipmapsWithImage
  * @param {ca.CAImage} arg0
  * @return {ca.CAImage}
  */
 generateMipmapsWithImage : function (
 caimage 
+)
+{
+    return ca.CAImage;
+},
+
+/**
+ * @method CC_SHADOW_BOTTOM_IMAGE
+ * @return {ca.CAImage}
+ */
+CC_SHADOW_BOTTOM_IMAGE : function (
 )
 {
     return ca.CAImage;
@@ -1009,11 +1033,13 @@ int
 },
 
 /**
- * @method reloadAllImages
+ * @method CC_SHADOW_RIGHT_IMAGE
+ * @return {ca.CAImage}
  */
-reloadAllImages : function (
+CC_SHADOW_RIGHT_IMAGE : function (
 )
 {
+    return ca.CAImage;
 },
 
 /**
@@ -1559,6 +1585,16 @@ removeFromSuperview : function (
 },
 
 /**
+ * @method enabledTopShadow
+ * @param {bool} arg0
+ */
+enabledTopShadow : function (
+bool 
+)
+{
+},
+
+/**
  * @method setLayout
  * @param {layout_object} arg0
  */
@@ -1883,13 +1919,13 @@ onEnterTransitionDidFinish : function (
 },
 
 /**
- * @method getWorldToViewTransform
- * @return {ca.Mat4}
+ * @method getLayout
+ * @return {layout_object}
  */
-getWorldToViewTransform : function (
+getLayout : function (
 )
 {
-    return ca.Mat4;
+    return ca.DLayout;
 },
 
 /**
@@ -1947,6 +1983,16 @@ str
 },
 
 /**
+ * @method enabledLeftShadow
+ * @param {bool} arg0
+ */
+enabledLeftShadow : function (
+bool 
+)
+{
+},
+
+/**
  * @method getFrame
  * @return {rect_object}
  */
@@ -1976,6 +2022,16 @@ dlayout
 )
 {
     return false;
+},
+
+/**
+ * @method enabledBottomShadow
+ * @param {bool} arg0
+ */
+enabledBottomShadow : function (
+bool 
+)
+{
 },
 
 /**
@@ -2097,13 +2153,13 @@ getAnchorPointInPoints : function (
 },
 
 /**
- * @method getLayout
- * @return {layout_object}
+ * @method getWorldToViewTransform
+ * @return {ca.Mat4}
  */
-getLayout : function (
+getWorldToViewTransform : function (
 )
 {
-    return ca.DLayout;
+    return ca.Mat4;
 },
 
 /**
@@ -2647,6 +2703,16 @@ getScale : function (
 },
 
 /**
+ * @method enabledRightShadow
+ * @param {bool} arg0
+ */
+enabledRightShadow : function (
+bool 
+)
+{
+},
+
+/**
  * @method initWithColor
  * @param {ca._Color4B} arg0
  * @return {bool}
@@ -2896,6 +2962,16 @@ getAnimationDuration : function (
 )
 {
     return 0;
+},
+
+/**
+ * @method setImageRect
+ * @param {rect_object} arg0
+ */
+setImageRect : function (
+drect 
+)
+{
 },
 
 /**
@@ -4626,6 +4702,16 @@ str
 },
 
 /**
+ * @method setTitleTextAlignment
+ * @param {ca.CATextAlignment} arg0
+ */
+setTitleTextAlignment : function (
+catextalignment 
+)
+{
+},
+
+/**
  * @method isAllowsSelected
  * @return {bool}
  */
@@ -5922,11 +6008,11 @@ caimage
 },
 
 /**
- * @method setSelectedIndicatorColor
- * @param {ca._Color4B} arg0
+ * @method setDelegate
+ * @param {ca.CATabBarDelegate} arg0
  */
-setSelectedIndicatorColor : function (
-_color4b 
+setDelegate : function (
+catabbardelegate 
 )
 {
 },
@@ -5981,6 +6067,16 @@ getContentViewFrame : function (
 )
 {
     return ca.DRect;
+},
+
+/**
+ * @method getTitleBoldForSelected
+ * @return {bool}
+ */
+getTitleBoldForSelected : function (
+)
+{
+    return false;
 },
 
 /**
@@ -6072,6 +6168,16 @@ getBackgroundImage : function (
 },
 
 /**
+ * @method setTitleBoldForSelected
+ * @param {bool} arg0
+ */
+setTitleBoldForSelected : function (
+bool 
+)
+{
+},
+
+/**
  * @method setBackgroundImage
  * @param {ca.CAImage} arg0
  */
@@ -6110,11 +6216,11 @@ onExitTransitionDidStart : function (
 },
 
 /**
- * @method setDelegate
- * @param {ca.CATabBarDelegate} arg0
+ * @method setSelectedIndicatorColor
+ * @param {ca._Color4B} arg0
  */
-setDelegate : function (
-catabbardelegate 
+setSelectedIndicatorColor : function (
+_color4b 
 )
 {
 },
@@ -9736,6 +9842,16 @@ getTabBarSelectedBackgroundImage : function (
 },
 
 /**
+ * @method setTabBarTitleBoldForSelected
+ * @param {bool} arg0
+ */
+setTabBarTitleBoldForSelected : function (
+bool 
+)
+{
+},
+
+/**
  * @method getTabBarBackgroundColor
  * @return {ca._Color4B}
  */
@@ -9773,6 +9889,16 @@ getTabBarSelectedIndicatorColor : function (
 )
 {
     return ca._Color4B;
+},
+
+/**
+ * @method getTabBarTitleBoldForSelected
+ * @return {bool}
+ */
+getTabBarTitleBoldForSelected : function (
+)
+{
+    return false;
 },
 
 /**

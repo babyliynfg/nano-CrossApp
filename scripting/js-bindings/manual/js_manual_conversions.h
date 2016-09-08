@@ -34,12 +34,6 @@
 
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32 || CC_TARGET_PLATFORM == CC_PLATFORM_WINRT)
-#ifndef __SSIZE_T
-#define __SSIZE_T
-typedef SSIZE_T ssize_t;
-#endif // __SSIZE_T
-#endif
 
 
 // just a simple utility to avoid mem leaking when using JSString
@@ -123,7 +117,7 @@ bool jsval_to_ccacceleration(JSContext* cx, JS::HandleValue v, CrossApp::CAAccel
 //bool jsval_to_ccarray_of_CCPoint(JSContext* cx, JS::HandleValue v, cocos2d::Point **points, int *numPoints);//**
 //bool jsval_to_ccarray(JSContext* cx, JS::HandleValue v, cocos2d::__Array** ret);//**
 //bool jsval_to_ccdictionary(JSContext* cx, JS::HandleValue v, cocos2d::__Dictionary** ret);//**
-//bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::__Array** 四大
+//bool jsvals_variadic_to_ccarray( JSContext *cx, jsval *vp, int argc, cocos2d::__Array**
 //bool jsval_to_obb(JSContext *cx, JS::HandleValue vp, cocos2d::OBB* ret);//**cocos3d
 //bool jsval_to_ray(JSContext *cx, JS::HandleValue vp, cocos2d::Ray* ret);//**cocos3d
 //
@@ -258,21 +252,21 @@ bool jsval_to_calist(JSContext* cx, JS::HandleValue v, CrossApp::CAList<T>* ret)
 template <class T>
 bool jsval_to_cadeque(JSContext* cx, JS::HandleValue v, CrossApp::CADeque<T>* ret)
 {
-    //创建一个js对象
+
     JS::RootedObject jsobj(cx);
     
-    //判断v是否是一个对象，如果为真，那么把v的值赋给jsobj
+
     bool ok = v.isObject() && JS_ValueToObject( cx, v, &jsobj );
     
-    //检测OK的值
+
     JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
-    //判断jsobj是否是一个JS的Array对象
+
     JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
-    //取出数组的长度
+
     uint32_t len = 0;
     JS_GetArrayLength(cx, jsobj, &len);
     
-    //顺序取出并插入到ret中
+
     for (uint32_t i=0; i < len; i++)
     {
         JS::RootedValue value(cx);
@@ -415,15 +409,15 @@ jsval cavector_to_jsval(JSContext* cx, const CrossApp::CAVector<T>& v)
 template <class T>
 jsval calist_to_jsval(JSContext* cx, const CrossApp::CAList<T>& v)
 {
-    //创建一个js的Array
+
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
     
     int i = 0;
     for (const auto& obj : v)
     {
-        //创建一个临时接受变量
+
         JS::RootedValue arrElement(cx);
-        //首先检查对象是否与JS对象关联。
+
         js_proxy_t* jsproxy = js_get_or_create_proxy(cx, obj);
         if (jsproxy) {
             arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
@@ -442,15 +436,15 @@ jsval calist_to_jsval(JSContext* cx, const CrossApp::CAList<T>& v)
 template <class T>
 jsval cadeque_to_jsval(JSContext* cx, const CrossApp::CADeque<T>& v)
 {
-    //创建一个js的Array
+
     JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
     
     int i = 0;
     for (const auto& obj : v)
     {
-        //创建一个临时接受变量
+
         JS::RootedValue arrElement(cx);
-        //首先检查对象是否与JS对象关联。
+
         js_proxy_t* jsproxy = js_get_or_create_proxy(cx, obj);
         if (jsproxy) {
             arrElement = OBJECT_TO_JSVAL(jsproxy->obj);

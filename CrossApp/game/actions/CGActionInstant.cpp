@@ -24,11 +24,11 @@ void ActionInstant::step(float dt) {
     CC_UNUSED_PARAM(dt);
     float updateDt = 1;
 #if CC_ENABLE_SCRIPT_BINDING
-    if (_scriptType == kScriptTypeJavascript)
-    {
-        if (ScriptEngineManager::sendActionEventToJS(this, kActionUpdate, (void *)&updateDt))
-            return;
-    }
+//    if (_scriptType == kScriptTypeJavascript)
+//    {
+//        if (ScriptEngineManager::sendActionEventToJS(this, kActionUpdate, (void *)&updateDt))
+//            return;
+//    }
 #endif
     update(updateDt);
 }

@@ -37,7 +37,7 @@ var TabBarControllerTest = ca.CAViewController.extend({
         tabBar1.setTag(100);
         tabBar1.setSelectedAtIndex(0);
 
-        var view1 = ca.CAView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_C(0, 0.5)));
+        var view1 = ca.CAView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_H_C(960, 0.5)));
         view1.addSubview(tabBar);
         view1.addSubview(tabBar1);
         view1.setColor(ca.color._getGray());

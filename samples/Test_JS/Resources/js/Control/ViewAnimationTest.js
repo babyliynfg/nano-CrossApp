@@ -41,10 +41,10 @@ var ViewAnimationTest = ca.CAViewController.extend({
         else if (this.AnimationNum == 1)
         {
             //Animation 2
-            var bg = ca.CAImageView.createWithLayout(DLayout(DHorizontalLayout_L_C(0, 0.5), DVerticalLayout_H_C(80, 0.5)));
+            var bg = ca.CAImageView.createWithLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayout_H_C(80, 0.5)));
             bg.setImage(ca.CAImage.create("image/navbg.jpg"));
 
-            this.animation_2_textfield = ca.CATextField.createWithLayout(DLayout(DHorizontalLayout_L_C(90, 0.1), DVerticalLayout_H_C(50, 0.5)));
+            this.animation_2_textfield = ca.CATextField.createWithLayout(DLayout(DHorizontalLayout_L_R(90, 90), DVerticalLayout_H_C(50, 0.5)));
             this.animation_2_textfield.setFontSize(40);
             this.animation_2_textfield.setKeyboardType(ca.KeyboardType.Default);
             this.animation_2_textfield.setVisible(false);
@@ -113,11 +113,11 @@ var ViewAnimationTest = ca.CAViewController.extend({
             this.animation_2_textfield.setVisible(true);
             this.animation_2_btn_cancel.setVisible(false);
             this.animation_2_textfield.setAlpha(0);
-            this.animation_2_textfield.setLayout(DLayout(DHorizontalLayout_L_C(90, 0.1), DVerticalLayout_H_C(50, 0.5)));
+            this.animation_2_textfield.setLayout(DLayout(DHorizontalLayout_L_W(90, 0), DVerticalLayout_H_C(50, 0.5)));
 
             ca.CAViewAnimation.beginAnimations("", null);
             ca.CAViewAnimation.setAnimationDuration(0.3);
-            this.animation_2_textfield.setLayout(DLayout(DHorizontalLayout_L_C(90, 0.5), DVerticalLayout_H_C(50, 0.5)));
+            this.animation_2_textfield.setLayout(DLayout(DHorizontalLayout_L_R(90, 90), DVerticalLayout_H_C(50, 0.5)));
             this.animation_2_textfield.setAlpha(1);
             ca.CAViewAnimation.setAnimationDidStopSelector(this, this.endAction);
             ca.CAViewAnimation.commitAnimations();
@@ -129,7 +129,6 @@ var ViewAnimationTest = ca.CAViewController.extend({
             ca.CAViewAnimation.setAnimationDidStopSelector(this, this.endAction);
             ca.CAViewAnimation.commitAnimations();
         }else if(tag==300){
-
             var imageSize = ca.CAImage.create("image/2.jpg").getContentSize();
             this.animation_3_imageview.setImageRect(ca.drect(0,0,0,imageSize.height));
             this.animation_3_imageview.setLayout(DLayout(DHorizontalLayout_L_W(0, 0), DVerticalLayoutFill));

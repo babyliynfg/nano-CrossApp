@@ -32,7 +32,7 @@ var ProgressTest = ca.CAViewController.extend({
     {
         log("viewOnExitTransitionDidStart------>");
         //一定要在這裡手動釋放
-        //ca.CAScheduler.getScheduler().unscheduleCallbackForTarget(this,this.progressValueChange);
+        ca.CAScheduler.getScheduler().unscheduleCallbackForTarget(this,this.progressValueChange);
     },
     viewOnSizeTransitionDidChanged:function()
     {
