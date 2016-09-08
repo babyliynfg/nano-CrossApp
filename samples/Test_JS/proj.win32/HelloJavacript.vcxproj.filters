@@ -21,12 +21,6 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\FirstViewController.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Classes\RootWindow.cpp">
-      <Filter>Classes</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\scripting\js-bindings\manual\cocos2d_specifics.cpp">
       <Filter>manual</Filter>
     </ClCompile>
@@ -42,21 +36,15 @@
     <ClCompile Include="..\..\..\scripting\js-bindings\auto\jsb_crossapp_auto.cpp">
       <Filter>auto</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_crossapp_delegates_manual.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\AppMacros.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\FirstViewController.h">
-      <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Classes\RootWindow.h">
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\cocos2d_specifics.hpp">
@@ -79,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\scripting\js-bindings\auto\jsb_crossapp_auto.hpp">
       <Filter>auto</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_crossapp_delegates_manual.hpp">
+      <Filter>manual</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
