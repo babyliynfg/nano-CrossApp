@@ -25,15 +25,15 @@ void CCLog(const char * pszFormat, ...)
 }
 
 // ios no MessageBox, use CCLog instead
-void CCMessageBox(const char * pszMsg, const char * pszTitle)
+void CAMessageBox(const char * pszTitle, const char * pszMsg)
 {
     NSString * title = (pszTitle) ? [NSString stringWithUTF8String : pszTitle] : nil;
     NSString * msg = (pszMsg) ? [NSString stringWithUTF8String : pszMsg] : nil;
 
 	NSAlert *alert = [[[NSAlert alloc] init] autorelease];
 	[alert addButtonWithTitle:@"OK"];
-	[alert setMessageText:msg];
-	[alert setInformativeText:title];
+	[alert setMessageText:title];
+	[alert setInformativeText:msg];
 	[alert setAlertStyle:NSWarningAlertStyle];
 
 	NSWindow *window = [[EAGLView sharedEGLView] window];

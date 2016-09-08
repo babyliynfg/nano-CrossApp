@@ -23,7 +23,7 @@ void CCLog(const char * pszFormat, ...)
     __android_log_print(ANDROID_LOG_DEBUG, "CrossApp debug info", "%s", buf);
 }
 
-void CCMessageBox(const char * pszMsg, const char * pszTitle)
+void CAMessageBox(const char * pszTitle, const char * pszMsg)
 {
     showDialogJNI(pszMsg, pszTitle);
 }
