@@ -23,7 +23,7 @@ void CC_DLL CCLog(const char * pszFormat, ...) CC_FORMAT_PRINTF(1, 2);
 /**
 @brief Pop out a message box
 */
-void CC_DLL CCMessageBox(const char * pszMsg, const char * pszTitle);
+void CC_DLL CAMessageBox(const char * pszTitle, const char * pszMsg);
 
 /**
 @brief Enum the language type supported now

@@ -2,7 +2,7 @@
 
 #include "HttpClient.h"
 #include <curl/curl.h>
-#define MAX_THREAD 16
+#define MAX_THREAD 32
 
 #ifndef usleep
 #include "libwebsockets.h"
@@ -10,8 +10,7 @@
 
 NS_CC_BEGIN
 
-static int s_httpClientCount = 0;
-static CAHttpClient *s_pHttpClient[MAX_THREAD] = {0};
+static std::map<ssize_t, CAHttpClient*> s_pHttpClientMaps;
 
 typedef size_t (*write_callback)(void *ptr, size_t size, size_t nmemb, void *stream);
 static size_t writeData(void *ptr, size_t size, size_t nmemb, void *stream)
@@ -253,7 +252,7 @@ public:
     {
         if (!m_curl)
             return false;
-        if (!configureCURL(m_curl, s_pHttpClient[request->getThreadID()]))
+        if (!configureCURL(m_curl, s_pHttpClientMaps[request->getThreadID()]))
             return false;
         /* get custom header data (if set) */
        	std::vector<std::string> headers=request->getHeaders();
@@ -370,25 +369,29 @@ static int processPostFileTask(CAHttpRequest *request, write_callback callback, 
 }
 
 
-CAHttpClient* CAHttpClient::getInstance(int thread)
+CAHttpClient* CAHttpClient::getInstance(ssize_t thread)
 {
     if (thread >= MAX_THREAD)
     {
         return NULL;
     }
-    if (s_pHttpClient[thread] == NULL)
+    
+    if (s_pHttpClientMaps.find(thread) == s_pHttpClientMaps.end())
     {
-        s_pHttpClient[thread] = new CAHttpClient(thread);
+        s_pHttpClientMaps.insert(std::make_pair(thread, new CAHttpClient(thread)));
     }
     
-    return s_pHttpClient[thread];
+    return s_pHttpClientMaps[thread];
 }
 
-void CAHttpClient::destroyInstance(int thread)
+void CAHttpClient::destroyInstance(ssize_t thread)
 {
-    CCAssert(s_pHttpClient[thread], "");
-    CAScheduler::unschedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), s_pHttpClient[thread]);
-    CC_SAFE_DELETE(s_pHttpClient[thread]);
+    if (s_pHttpClientMaps.find(thread) != s_pHttpClientMaps.end())
+    {
+        CAScheduler::unschedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), s_pHttpClientMaps[thread]);
+        CC_SAFE_DELETE(s_pHttpClientMaps[thread]);
+        s_pHttpClientMaps.erase(thread);
+    }
 }
 
 void CAHttpClient::destroyAllInstance()
@@ -399,7 +402,7 @@ void CAHttpClient::destroyAllInstance()
     }
 }
 
-CAHttpClient::CAHttpClient(int thread)
+CAHttpClient::CAHttpClient(ssize_t thread)
 : _timeoutForConnect(30)
 , _timeoutForRead(60)
 , _threadID(thread)
@@ -414,8 +417,6 @@ CAHttpClient::CAHttpClient(int thread)
     CAScheduler::schedule(schedule_selector(CAHttpClient::dispatchResponseCallbacks), this, 0);
     CAScheduler::getScheduler()->pauseTarget(this);
     lazyInitThreadSemphore();
-
-    ++s_httpClientCount;
 }
 
 CAHttpClient::~CAHttpClient()
@@ -426,10 +427,6 @@ CAHttpClient::~CAHttpClient()
     {
         pthread_cond_signal(&s_SleepCondition);
     }
-    
-    s_pHttpClient[_threadID] = NULL;
-    
-    --s_httpClientCount;
 }
 
 bool CAHttpClient::lazyInitThreadSemphore()

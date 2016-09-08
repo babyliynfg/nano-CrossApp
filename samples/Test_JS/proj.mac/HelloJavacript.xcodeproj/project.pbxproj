@@ -33,7 +33,6 @@
 		48D9609E1D58A17000158611 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = 48D9609A1D58A17000158611 /* fonts */; };
 		48D9609F1D58A17000158611 /* animation in Resources */ = {isa = PBXBuildFile; fileRef = 48D9609B1D58A17000158611 /* animation */; };
 		48E141061CED674B0029BABC /* js in Resources */ = {isa = PBXBuildFile; fileRef = 48E141051CED674B0029BABC /* js */; };
-		48E144341CED67980029BABC /* jsb_crossapp_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E1410B1CED67970029BABC /* jsb_crossapp_auto.cpp */; };
 		48E144351CED67980029BABC /* cocos2d_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E1410E1CED67970029BABC /* cocos2d_specifics.cpp */; };
 		48E144371CED67980029BABC /* js_bindings_core.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141141CED67970029BABC /* js_bindings_core.cpp */; };
 		48E144381CED67980029BABC /* js_manual_conversions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48E141161CED67970029BABC /* js_manual_conversions.cpp */; };
@@ -973,7 +972,6 @@
 				B01870F41B844E16006510B5 /* gameswf_impl.cpp in Sources */,
 				B01870B91B844E16006510B5 /* triangulate_sint32.cpp in Sources */,
 				B01870ED1B844E16006510B5 /* gameswf_dlist.cpp in Sources */,
-				48E144341CED67980029BABC /* jsb_crossapp_auto.cpp in Sources */,
 				41BC70E415BF81A5006A0A6C /* AppController.mm in Sources */,
 				B0621C2F1AC3DCB2005EBCA7 /* AppDelegate.cpp in Sources */,
 				B01870D61B844E16006510B5 /* as_math.cpp in Sources */,

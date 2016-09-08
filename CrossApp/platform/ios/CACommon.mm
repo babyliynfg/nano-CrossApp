@@ -22,7 +22,7 @@ void CCLog(const char * pszFormat, ...)
 }
 
 // ios no MessageBox, use CCLog instead
-void CCMessageBox(const char * pszMsg, const char * pszTitle)
+void CAMessageBox(const char * pszTitle, const char * pszMsg)
 {
     NSString * title = (pszTitle) ? [NSString stringWithUTF8String : pszTitle] : nil;
     NSString * msg = (pszMsg) ? [NSString stringWithUTF8String : pszMsg] : nil;
@@ -33,11 +33,6 @@ void CCMessageBox(const char * pszMsg, const char * pszTitle)
                                                 otherButtonTitles: nil];
     [messageBox autorelease];
     [messageBox show];
-}
-
-void CCLuaLog(const char * pszFormat)
-{
-    puts(pszFormat);
 }
 
 NS_CC_END

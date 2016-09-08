@@ -35,7 +35,6 @@
 #define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 
 
-
 // just a simple utility to avoid mem leaking when using JSString
 class JSStringWrapper
 {
