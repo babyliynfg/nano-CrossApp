@@ -1742,32 +1742,7 @@ bool js_crossapp_CAImage_isJpg(JSContext *cx, uint32_t argc, jsval *vp)
     JS_ReportError(cx, "js_crossapp_CAImage_isJpg : wrong number of arguments: %d, was expecting %d", argc, 2);
     return false;
 }
-bool js_crossapp_CAImage_isPvr(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    
-    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-    bool ok = true;
-    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::CAImage* cobj = (CrossApp::CAImage *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAImage_isPvr : Invalid Native Object");
-    if (argc == 2) {
-        const unsigned char* arg0 = nullptr;
-        unsigned long arg1 = 0;
-        #pragma warning NO CONVERSION TO NATIVE FOR unsigned char*
-		ok = false;
-        ok &= jsval_to_ulong(cx, args.get(1), &arg1);
-        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAImage_isPvr : Error processing arguments");
-        bool ret = cobj->isPvr(arg0, arg1);
-        jsval jsret = JSVAL_NULL;
-        jsret = BOOLEAN_TO_JSVAL(ret);
-        args.rval().set(jsret);
-        return true;
-    }
 
-    JS_ReportError(cx, "js_crossapp_CAImage_isPvr : wrong number of arguments: %d, was expecting %d", argc, 2);
-    return false;
-}
 bool js_crossapp_CAImage_isGif(JSContext *cx, uint32_t argc, jsval *vp)
 {
     
@@ -2664,7 +2639,6 @@ void js_register_crossapp_CAImage(JSContext *cx, JS::HandleObject global) {
         JS_FN("isCompressed", js_crossapp_CAImage_isCompressed, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("getDataLenght", js_crossapp_CAImage_getDataLenght, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isJpg", js_crossapp_CAImage_isJpg, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-        JS_FN("isPvr", js_crossapp_CAImage_isPvr, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FN("isGif", js_crossapp_CAImage_isGif, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
         JS_FS_END
     };
