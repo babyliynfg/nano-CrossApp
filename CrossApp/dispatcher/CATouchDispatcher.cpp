@@ -161,14 +161,14 @@ void CATouchController::touchBegan()
     
     CAView* responder = (CAView*)CAApplication::getApplication()->getTouchDispatcher()->getScrollRunningResponder();
     
-    //if (responder && responder->isRunning() && responder->isVisible()
-    //    && responder->getBounds().containsPoint(responder->convertTouchToNodeSpace(m_pTouch)))
-    //{
-    //    m_vTouchesViews.pushBack(responder);
-    //    CAApplication::getApplication()->getTouchDispatcher()->removeScrollRunningResponder(responder);
-    //    this->passingTouchesViews();
-    //}
-    //else
+    if (responder && responder->isRunning() && responder->isVisible()
+        && responder->getBounds().containsPoint(responder->convertTouchToNodeSpace(m_pTouch)))
+    {
+        m_vTouchesViews.pushBack(responder);
+        CAApplication::getApplication()->getTouchDispatcher()->removeScrollRunningResponder(responder);
+        this->passingTouchesViews();
+    }
+    else
     {
         std::vector<CAResponder*> vector;
         
