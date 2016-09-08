@@ -577,7 +577,6 @@ public:
 
 	iterator erase(iterator position)
 	{
-		CCAssert(position >= _data.begin() && position < _data.end(), "Invalid position!");
         CC_SAFE_RELEASE(*position);
 		return _data.erase(position);
 	}
