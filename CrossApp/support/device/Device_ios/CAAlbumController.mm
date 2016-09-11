@@ -39,6 +39,7 @@
 
 -(void)writeImageToPhoto:(CAImage*)image
 {
+    CC_SAFE_RETAIN(image);
     CAImage::PixelFormat pixelFormat = image->getPixelFormat();
     
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
@@ -67,7 +68,7 @@
     CFRelease(imageRef);
     CGColorSpaceRelease(colorSpaceRef);
     CGDataProviderRelease(provider);
-    
+    CC_SAFE_RELEASE_NULL(image);
     if (newImage == nil)
     {
         NSLog(@"Save image have some error");
