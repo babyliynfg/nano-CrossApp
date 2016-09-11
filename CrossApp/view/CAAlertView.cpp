@@ -217,7 +217,7 @@ void CAAlertView::showAlertView() {
     
     m_pBackView->setStencil(backgroundImageView->copy());
 	
-	float alertViewSpaceHeight = 40;
+	float alertViewSpaceHeight = 36;
 
 	if (m_pTitleLabel && !m_pTitleLabel->getText().empty())
     {
@@ -228,7 +228,7 @@ void CAAlertView::showAlertView() {
 		m_pBackView->addSubview(m_pTitleLabel);
 	}
 
-	float alertViewMessageHeight = 150;
+	float alertViewMessageHeight = 140;
 
 	if (m_fAlertViewMessageHeight > alertViewMessageHeight)
     {
@@ -338,11 +338,11 @@ void CAAlertView::addGrayLine(int y) {
 
 void CAAlertView::calcuAlerViewSize()
 {
-	float alertViewSpaceHeight = 40;
+	float alertViewSpaceHeight = 36;
 
 	float alertViewButtonHeight = 88;
 
-	float alertViewMessageHeight = 130;
+	float alertViewMessageHeight = 140;
 
 	m_fAlertViewHeight += alertViewSpaceHeight;
 
@@ -422,12 +422,12 @@ void CAAlertView::show()
     showAlertView();
     
     this->setAlpha(0);
-    m_pBackView->setScale(0.5f);
+    m_pBackView->setColor(CAColor_clear);
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
     this->setAlpha(1.0f);
-    m_pBackView->setScale(1.0f);
+    m_pBackView->setColor(ccc4(64, 64, 64, 64));
     CAViewAnimation::commitAnimations();
 }
 

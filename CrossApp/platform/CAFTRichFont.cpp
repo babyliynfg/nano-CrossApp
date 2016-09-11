@@ -214,7 +214,7 @@ FT_Error CAFTRichFont::initWordGlyph(const LabelElement& label, std::vector<TGly
 	int iFontSize = ft.fontSize;
 	int iLineHeight = (int)(((face->size->metrics.ascender) >> 6) - ((face->size->metrics.descender) >> 6));
 	int	italicsDt = iLineHeight * tan(ITALIC_LEAN_VALUE * 0.15 * M_PI);
-	iLineHeight += iLineHeight / 5;
+//	iLineHeight += iLineHeight * 0.15;
 	FT_UInt previous = 0;
 	FT_Error error = 0;
 

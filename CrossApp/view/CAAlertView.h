@@ -30,9 +30,9 @@ class CAAlertView;
 
 
 #define ALERT_VIEW_TITLE_FONT 34
-#define ALERT_VIEW_MESG_FONT 24
+#define ALERT_VIEW_MESG_FONT 25
 #define ALERT_VIEW_WIDTH 540
-#define ALERT_VIEW_MESG_WIDTH 440
+#define ALERT_VIEW_MESG_WIDTH 490
 
 typedef void (CAObject::*SEL_CAAlertBtnEvent)(int index);
 #define CAAlertView_selector(_SELECTOR) (SEL_CAAlertBtnEvent)(&_SELECTOR)
