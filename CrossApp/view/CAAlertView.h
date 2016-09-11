@@ -29,8 +29,8 @@ class CAAlertViewDelegate;
 class CAAlertView;
 
 
-#define ALERT_VIEW_TITLE_FONT 35
-#define ALERT_VIEW_MESG_FONT 30
+#define ALERT_VIEW_TITLE_FONT 34
+#define ALERT_VIEW_MESG_FONT 24
 #define ALERT_VIEW_WIDTH 540
 #define ALERT_VIEW_MESG_WIDTH 440
 
