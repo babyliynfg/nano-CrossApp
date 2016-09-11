@@ -319,6 +319,7 @@ void CARenderImage::printscreenWithView(CAView* view, DPoint offset, const CACol
     view->setPoint(point);
     
     this->beginWithClear(backgroundColor);
+    view->visitEve();
     view->visit();
     this->end();
     
@@ -476,6 +477,15 @@ void CARenderImage::clearStencil(int stencilValue)
 
     // restore clear color
     glClearStencil(stencilClearValue);
+}
+
+void CARenderImage::visitEve()
+{
+    CAView::visitEve();
+    if (m_pImageView)
+    {
+        m_pImageView->visitEve();
+    }
 }
 
 void CARenderImage::visit()
