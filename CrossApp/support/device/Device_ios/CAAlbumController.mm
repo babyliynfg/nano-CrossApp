@@ -75,12 +75,12 @@
     CFRelease(imageRef);
     CGColorSpaceRelease(colorSpaceRef);
     CGDataProviderRelease(provider);
-    CC_SAFE_RELEASE_NULL(image);
+
     if (newImage == nil)
     {
-        NSLog(@"Save image have some error");    }
+        NSLog(@"Save image have some error");
+    }
 
-    
     UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image: didFinishSavingWithError: contextInfo: ), nil);
     
     //[[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%s",sender.c_str()] error:nil];
