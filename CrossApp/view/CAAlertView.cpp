@@ -224,6 +224,7 @@ void CAAlertView::showAlertView() {
 
 		m_pTitleLabel->setFrame(DRect(0, alertViewSpaceHeight , ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
 		m_pTitleLabel->setFontSize(ALERT_VIEW_TITLE_FONT);
+        m_pTitleLabel->setBold(true);
 		m_pBackView->addSubview(m_pTitleLabel);
 	}
 
