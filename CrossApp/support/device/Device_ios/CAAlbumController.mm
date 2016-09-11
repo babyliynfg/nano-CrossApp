@@ -37,7 +37,7 @@
 	// Do any additional setup after loading the view.
 }
 
-- (void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error tag: (int) tag
+- (void) image: (UIImage *) image didFinishSavingWithError: (NSError *)error contextInfo: (void *) contextInfo;
 {
     CC_SAFE_RELEASE_NULL(self.crossapp_image);
 }
@@ -81,7 +81,7 @@
         NSLog(@"Save image have some error");    }
 
     
-    UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image:didFinishSavingWithError:tag:), nil);
+    UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image: didFinishSavingWithError: contextInfo: ), nil);
     
     //[[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%s",sender.c_str()] error:nil];
 }
