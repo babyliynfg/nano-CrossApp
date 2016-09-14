@@ -802,7 +802,8 @@ void CATableViewCell::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
-    if (m_pTarget->isAllowsSelection() && this->getControlState() == CAControlStateHighlighted)
+    if (m_pTarget->isAllowsSelection()
+        && (this->getControlState() == CAControlStateHighlighted || this->getControlState() == CAControlStateSelected))
     {
         CAIndexPath2E indexPath = CAIndexPath2E(m_nSection, m_nRow);
         
@@ -844,7 +845,10 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             }
             
             this->setControlState(CAControlStateSelected);
-            m_pTarget->m_pSelectedTableCells.insert(indexPath);
+            if (m_bAllowsSelected)
+            {
+                m_pTarget->m_pSelectedTableCells.insert(indexPath);
+            }
             if (m_pTarget->getTableViewDelegate())
             {
                 m_pTarget->getTableViewDelegate()->tableViewDidSelectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
