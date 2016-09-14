@@ -123,7 +123,7 @@ void CAGifView::setGif(CAGif* gif)
         if(m_pGif->getGifImageCounts()>1)
         {
             m_nGifcount = m_pGif->getGifImageCounts();
-            CAScheduler::schedule(schedule_selector(CAGifView::updateGif), this, 0);
+            CAScheduler::getScheduler()->scheduleSelectorUpdate(this, 0, !m_bRunning);
         }
         this->updateGifSize();
     }
@@ -166,7 +166,7 @@ void CAGifView::setRepeatForever(bool repeatForever)
     m_bIsRepeatForever = repeatForever;
 }
 
-void CAGifView::updateGif(float delta)
+void CAGifView::update(float delta)
 {
     CC_RETURN_IF(!m_pGif);
     float ldelta = (uint32_t)(delta * 1000) * m_fTimes;
@@ -186,8 +186,20 @@ void CAGifView::updateGif(float delta)
     }
     if (!m_bIsRepeatForever && m_pGif->getGifImageIndex() >= m_pGif->getGifImageCounts() - 1)
     {
-        CAScheduler::unschedule(schedule_selector(CAGifView::updateGif), this);
+        CAScheduler::getScheduler()->unscheduleUpdate(this);
     }
+}
+
+void CAGifView::onEnter()
+{
+    CAView::onEnter();
+    CAScheduler::getScheduler()->resumeTarget(this);
+}
+
+void CAGifView::onExit()
+{
+    CAView::onExit();
+    CAScheduler::getScheduler()->pauseTarget(this);
 }
 
 

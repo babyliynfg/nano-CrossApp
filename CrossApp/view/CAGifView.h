@@ -35,9 +35,12 @@ public:
     void setRepeatForever(bool repeatForever);
     bool isRepeatForever() { return m_bIsRepeatForever; }
     
+    virtual void onEnter();
+    virtual void onExit();
+    
 protected:
     virtual void updateImageRect();
-    virtual void updateGif(float delta);
+    virtual void update(float delta);
     virtual void setContentSize(const DSize& contentSize);
     void updateGifSize();
     
