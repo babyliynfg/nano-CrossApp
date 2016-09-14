@@ -68,7 +68,7 @@ bool CAFlash::initWithFilePath(const std::string& filePath)
         return false;
     }
     
-    std::string pathKey = CCFileUtils::sharedFileUtils()->fullPathForFilename(filePath.c_str());
+    std::string pathKey = FileUtils::getInstance()->fullPathForFilename(filePath.c_str());
     gameswf::register_file_opener_callback(&CCGameSWF_file_opener);
     gameswf::register_fscommand_callback(&CCGameSWF_fscommand_handler);
     gameswf::register_log_callback(&CCGameSWF_log_handler);
