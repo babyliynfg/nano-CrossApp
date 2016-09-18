@@ -964,7 +964,7 @@ void CAScheduler::update(float dt)
 void CAScheduler::scheduleSelector(SEL_SCHEDULE selector, CAObject *target, float interval, unsigned int repeat, float delay, bool paused)
 {
     CCAssert(target, "Argument target must be non-nullptr");
-    
+    interval = MAX(interval, 1/60.0f);
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);
     

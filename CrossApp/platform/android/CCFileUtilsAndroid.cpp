@@ -265,7 +265,7 @@ string FileUtilsAndroid::getWritablePath()
     if (tmp.length() > 0)
     {
         dir.append(tmp).append("/CrossApp/");
-        
+        this->createDirectory(dir);
         return dir;
     }
     else
