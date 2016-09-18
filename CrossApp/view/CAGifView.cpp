@@ -182,7 +182,7 @@ void CAGifView::update(float delta)
             rect.size = image->getContentSize();
             this->setImageRect(rect);
         }
-        m_fDurTime = 0;
+        m_fDurTime -= m_pGif->getImageDuration();
     }
     if (!m_bIsRepeatForever && m_pGif->getGifImageIndex() >= m_pGif->getGifImageCounts() - 1)
     {
