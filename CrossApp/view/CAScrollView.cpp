@@ -357,7 +357,7 @@ void CAScrollView::setContentOffset(const DPoint& offset, bool animated)
         m_tInertia = DPointZero;
         m_tCloseToPoint = point;
         m_tInitialPoint = m_pContainer->m_obPoint;
-        CAAnimation::schedule(CAAnimation_selector(CAScrollView::closeToPoint), this, 0.25f);
+        CAAnimation::schedule(CAAnimation_selector(CAScrollView::closeToPoint), this, 0.15f);
         this->setTouchEnabledAtSubviews(false);
     }
     else
