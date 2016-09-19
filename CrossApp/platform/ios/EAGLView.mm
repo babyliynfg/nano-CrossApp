@@ -191,6 +191,8 @@ static EAGLView *view = 0;
     [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
     size_ = [renderer_ backingSize];
 
+    [EAGLContext setCurrentContext:context_];
+    
     CrossApp::CAApplication::getApplication()->drawScene();
 }
 
@@ -253,16 +255,6 @@ static EAGLView *view = 0;
     // 1st instruction of the new main loop
     if( multiSampling_ )
         glBindFramebuffer(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);    
-}
-
-- (void) checkContext
-{
-    EAGLContext* tontext = [EAGLContext currentContext];
-    if(!tontext)
-    {
-        [EAGLContext setCurrentContext:context_];
-        [self layoutSubviews];
-    }
 }
 
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat
