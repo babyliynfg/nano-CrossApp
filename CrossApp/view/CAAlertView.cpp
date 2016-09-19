@@ -147,7 +147,7 @@ void CAAlertView::setAlertMessage(std::string var, CAColor4B col)
 
 void CAAlertView::addButton(const std::string& btnText, CAColor4B col, CAImage* pNormalImage, CAImage* pHighlightedImage)
 {
-	CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
+	CAButton* btn = CAButton::create(CAButtonTypeCustom);
 	CCAssert(btn, "");
 	btn->setTitleForState(CAControlStateAll, btnText.c_str());
 	btn->setTitleColorForState(CAControlStateAll, col);
@@ -162,7 +162,7 @@ void CAAlertView::addButton(const std::string& btnText, CAColor4B col, CAImage* 
 	
 	if (pHighlightedImage == NULL)
 	{
-		btn->setBackgroundViewForState(CAControlStateHighlighted, CAView::createWithColor(ccc4(226, 226, 226, 225)));
+		btn->setBackgroundViewForState(CAControlStateHighlighted, CAView::createWithColor(ccc4(206, 206, 211, 255)));
 
 	} else {
 		
@@ -315,16 +315,6 @@ void CAAlertView::adjustButtonView() {
 		m_pBtnTableView->setSeparatorColor(ccc4(206, 206, 211, 255));
 		m_pBackView->addSubview(m_pBtnTableView);
 
-	}
-
-	if (btnCount == 2) {
-
-		m_vAllBtn.at(0)->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom_left.png")));
-		m_vAllBtn.at(1)->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom_right.png")));
-
-	} else {
-
-		m_vAllBtn.back()->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom.png")));
 	}
 }
 
