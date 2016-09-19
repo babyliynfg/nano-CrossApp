@@ -7,13 +7,12 @@
 //
 
 #include "CAGifView.h"
-#include "CrossApp.h"
-#include "images/gif_lib/gif_lib.h"
-
+#include "basics/CAScheduler.h"
 NS_CC_BEGIN
 
 CAGifView::CAGifView()
-:m_fDurTime(0.0f)
+:m_iCurrIndex(0)
+,m_fDurTime(0.0f)
 ,m_fTimes(1.0f)
 ,m_pGif(NULL)
 ,m_bIsRepeatForever(true)
@@ -115,14 +114,8 @@ void CAGifView::setGif(CAGif* gif)
     m_pGif = gif;
     if (m_pGif)
     {
-        CAImage* image = m_pGif->getImage();
-        this->setImage(image);
-        DRect rect = DRectZero;
-        rect.size = image->getContentSize();
-        this->setImageRect(rect);
-        if(m_pGif->getGifImageCounts()>1)
+        if(m_pGif->getImages().size() > 1)
         {
-            m_nGifcount = m_pGif->getGifImageCounts();
             CAScheduler::getScheduler()->scheduleSelectorUpdate(this, 0, !m_bRunning);
         }
         this->updateGifSize();
@@ -134,7 +127,7 @@ void CAGifView::updateGifSize()
     if(m_pGif)
     {
         DSize viewSize = m_obContentSize;
-        DSize imageSize = DSize(m_pGif->getWidth(),m_pGif->getHeight());
+        DSize imageSize = DSize(m_pGif->getPixelsWide(), m_pGif->getPixelsHigh());
         float viewRatio = viewSize.width / viewSize.height;
         float imageRatio = imageSize.width / imageSize.height;
         
@@ -171,20 +164,24 @@ void CAGifView::update(float delta)
     CC_RETURN_IF(!m_pGif);
     float ldelta = (uint32_t)(delta * 1000) * m_fTimes;
     m_fDurTime += ldelta;
-    if(m_fDurTime > m_pGif->getImageDuration())
+    
+    const CAVector<CAImage*>& images = m_pGif->getImages();
+    if(m_fDurTime > m_pGif->getDelay())
     {
-        m_pGif->nextGifImageIndex();
-        CAImage* image = m_pGif->getImage();
+        CAImage* image = images.at(m_iCurrIndex);
         this->setImage(image);
-        if (image)
-        {
-            DRect rect = DRectZero;
-            rect.size = image->getContentSize();
-            this->setImageRect(rect);
-        }
-        m_fDurTime -= m_pGif->getImageDuration();
+        
+        DRect rect = DRectZero;
+        rect.size.width = m_pGif->getPixelsWide();
+        rect.size.height = m_pGif->getPixelsHigh();
+        this->setImageRect(rect);
+        
+        ++m_iCurrIndex;
+        m_iCurrIndex %= images.size();
+        m_fDurTime -= m_pGif->getDelay();
     }
-    if (!m_bIsRepeatForever && m_pGif->getGifImageIndex() >= m_pGif->getGifImageCounts() - 1)
+    
+    if (!m_bIsRepeatForever && m_iCurrIndex >= images.size() - 1)
     {
         CAScheduler::getScheduler()->unscheduleUpdate(this);
     }

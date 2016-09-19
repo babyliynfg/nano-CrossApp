@@ -9,48 +9,64 @@
 #ifndef __CAGIF_VIEW_H__
 #define __CAGIF_VIEW_H__
 
-#include "CrossApp.h"
-#include "../view/CAImageView.h"
+#include "CAView.h"
+#include "images/CAGif.h"
 
 NS_CC_BEGIN
-
-class CAGif;
 
 class CC_DLL CAGifView : public CAView
 {
 public:
+    
     CAGifView();
+    
     ~CAGifView();
+    
 public:
+    
     static CAGifView* createWithFrame(const DRect& rect);
+    
     static CAGifView* createWithCenter(const DRect& rect);
+    
     static CAGifView* createWithLayout(const DLayout& layout);
+    
     static CAGifView* createWithGif(CAGif* gif);
     
     virtual bool init();
+    
     virtual bool initWithGif(CAGif* gif);
 
     void setGif(CAGif* gif);
-    void setTimes(float times);
-    void setRepeatForever(bool repeatForever);
-    bool isRepeatForever() { return m_bIsRepeatForever; }
     
+    CAGif* getGif() { return m_pGif; }
+    
+    void setTimes(float times);
+    
+    void setRepeatForever(bool repeatForever);
+    
+    bool isRepeatForever() { return m_bIsRepeatForever; }
+
     virtual void onEnter();
+    
     virtual void onExit();
     
 protected:
+    
     virtual void updateImageRect();
+    
     virtual void update(float delta);
+    
     virtual void setContentSize(const DSize& contentSize);
+    
     void updateGifSize();
     
 private:
     
     CAGif* m_pGif;
 
-    int m_nGifcount;
-    
     bool m_bIsRepeatForever;
+    
+    int m_iCurrIndex;
     
     float m_fDurTime;
     

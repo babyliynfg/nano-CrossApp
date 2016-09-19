@@ -7,37 +7,36 @@
 //
 
 #include "CAGif.h"
+#include "platform/CAFileUtils.h"
 
 NS_CC_BEGIN
 
-static const unsigned char* s_pData = NULL;
-static int  s_nDataMark = 0;
+static int s_nDataMark = 0;
+static unsigned char* s_pData = nullptr;
 
-static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int size)
+static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int lenght)
 {
-    for(int i=0; i<size; i++, s_nDataMark++)
+    for(int i=0; i<lenght; i++, s_nDataMark++)
     {
         bytes[i] = s_pData[s_nDataMark];
     }
-    return size;
+    return lenght;
 }
 
 CAGif::CAGif()
-:m_fDurTime(0.0f)
-,m_pImage(NULL)
-,m_pDataSize(0)
-,m_pImageData(NULL)
+:m_fDelay(0.0f)
+,m_pData(nullptr)
+,m_uDataLenght(0)
 {
-    m_pImage = new CAImage();
+
 }
 
 CAGif::~CAGif()
 {
-    CC_SAFE_RELEASE(m_pImage);
-    CC_SAFE_DELETE(m_pImageData);
+    CC_SAFE_DELETE(m_pData);
 }
 
-CAGif* CAGif::createWithFilePath(std::string filePath)
+CAGif* CAGif::create(const std::string& filePath)
 {
     CAGif* gif = new CAGif();
     if(gif && gif->initWithFilePath(filePath))
@@ -49,10 +48,10 @@ CAGif* CAGif::createWithFilePath(std::string filePath)
     return NULL;
 }
 
-CAGif* CAGif::createWithData(unsigned char* data)
+CAGif* CAGif::createWithData(unsigned char* data, unsigned long lenght)
 {
     CAGif* gif = new CAGif();
-    if(gif && gif->initWithData(data))
+    if(gif && gif->initWithData(data, lenght))
     {
         gif->autorelease();
         return gif;
@@ -61,81 +60,57 @@ CAGif* CAGif::createWithData(unsigned char* data)
     return NULL;
 }
 
-bool CAGif::initWithFilePath(std::string filePath)
+bool CAGif::initWithFilePath(const std::string& filePath)
 {
-    if(CAGif::init())
+    unsigned long lenght = 0;
+    unsigned char* data = FileUtils::getInstance()->getFileData(filePath, "rb", &lenght);
+    return this->initWithData(data, lenght);
+}
+
+bool CAGif::initWithData(unsigned char* data, unsigned long lenght)
+{
+    if(data == nullptr || lenght == 0 || !CAGif::init())
     {
-        std::string fileFullPath = FileUtils::getInstance()->fullPathForFilename(filePath.c_str());
-        s_pData = FileUtils::getInstance()->getFileData(fileFullPath.c_str(), "rb", &m_pDataSize);
-        if(!s_pData || 0 == m_pDataSize)
-        {
-            return false;
-        }
+        return false;
+    }
+    
+    s_pData = data;
+    
+    int error = 0;
+    m_pGIF = DGifOpen(nullptr, &DecodeCallBackProc, &error);
+    
+    if (nullptr == m_pGIF || DGifSlurp(m_pGIF) != GIF_OK)
+    {
+        DGifCloseFile(m_pGIF);
+        m_pGIF = nullptr;
+        s_pData = nullptr;
         s_nDataMark = 0;
-        int error = 0;
-        m_pGIF = DGifOpen(NULL,&DecodeCallBackProc,&error);
-        if (NULL == m_pGIF || DGifSlurp(m_pGIF) != GIF_OK)
-        {
-            DGifCloseFile(m_pGIF);
-            m_pGIF = NULL;
-            return false;
-        }
-        m_uPixelsWide = m_pGIF->SWidth;
-        m_uPixelsHigh = m_pGIF->SHeight;
-        m_pImageData = (unsigned char*)malloc(sizeof(unsigned char) * m_uPixelsWide * m_uPixelsHigh * 4);
-        for (unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
-        {
-            *(m_pImageData + i * 4)     = '\0';
-            *(m_pImageData + i * 4 + 1) = '\0';
-            *(m_pImageData + i * 4 + 2) = '\0';
-            *(m_pImageData + i * 4 + 3) = '\0';
-        }
-        this->setGifImageWithIndex(0);
-        
-        return true;
+        return false;
     }
-    return false;
-}
-
-bool CAGif::initWithData(unsigned char* data)
-{
-    if(CAGif::init())
+    
+    m_uPixelsWide = m_pGIF->SWidth;
+    m_uPixelsHigh = m_pGIF->SHeight;
+    m_pData = (unsigned char*)malloc(sizeof(unsigned char) * m_uPixelsWide * m_uPixelsHigh * 4);
+    
+    for (unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
     {
-        return true;
+        *(m_pData + i * 4)     = '\0';
+        *(m_pData + i * 4 + 1) = '\0';
+        *(m_pData + i * 4 + 2) = '\0';
+        *(m_pData + i * 4 + 3) = '\0';
     }
-    return false;
-}
 
-unsigned int CAGif::getGifImageIndex()
-{
-    return m_iGIFIndex;
+    m_fDelay = getImageDelay(&m_pGIF->SavedImages[0]);
+    
+    for (int i=0; i<m_pGIF->ImageCount; ++i)
+    {
+        m_vImages.pushBack(this->getImageWithIndex(i));
+    }
+    
+    s_pData = nullptr;
+    s_nDataMark = 0;
+    return true;
 }
-
-unsigned int CAGif::getGifImageCounts()
-{
-    return m_pGIF ? m_pGIF->ImageCount : 0;
-}
-
-float CAGif::getImageDuration()
-{
-    return m_fDurTime;
-}
-
-int CAGif::getWidth()
-{
-   // CCLog("%d", m_uPixelsWide);
-    return m_uPixelsWide;
-}
-
-int CAGif::getHeight()
-{
-    return m_uPixelsHigh;
-}
-
-//const DSize& CAGif::getGifSize()
-//{
-//    return DSize(m_uPixelsWide, m_uPixelsHigh);
-//}
 
 void CAGif::copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width)
 {
@@ -150,12 +125,10 @@ void CAGif::copyLine(unsigned char* dst, const unsigned char* src, const ColorMa
     }
 }
 
-void CAGif::setGifImageWithIndex(unsigned int index)
+CAImage* CAGif::getImageWithIndex(int index)
 {
-    CC_RETURN_IF(m_pGIF == NULL);
-    index = MIN(index, m_pGIF->ImageCount-1);
-    m_iGIFIndex = index;
-    
+    index = MIN(index, m_pGIF->ImageCount - 1);
+ 
     CAColor4B bgColor;
     if (m_pGIF->SColorMap != NULL)
     {
@@ -164,15 +137,15 @@ void CAGif::setGifImageWithIndex(unsigned int index)
     }
     
     static CAColor4B paintingColor;
-    const SavedImage* cur = &m_pGIF->SavedImages[index];
     
-    m_fDurTime = getImageDuration(cur);
+    const SavedImage* prev = &m_pGIF->SavedImages[index - 1];
+    const SavedImage* curr = &m_pGIF->SavedImages[index];
 
     if (index == 0)
     {
         bool trans;
         int disposal;
-        this->getTransparencyAndDisposalMethod(cur, &trans, &disposal);
+        this->getTransparencyAndDisposalMethod(curr, &trans, &disposal);
         if (!trans && m_pGIF->SColorMap != NULL)
         {
             paintingColor = ccc4(0, 0, 0, 0);
@@ -180,20 +153,19 @@ void CAGif::setGifImageWithIndex(unsigned int index)
     }
     else
     {
-        const SavedImage* prev = &m_pGIF->SavedImages[index-1];
-        
         bool curTrans;
         int curDisposal;
         this->getTransparencyAndDisposalMethod(prev, &curTrans, &curDisposal);
-        bool nextTrans;
-        int nextDisposal;
-        this->getTransparencyAndDisposalMethod(cur, &nextTrans, &nextDisposal);
         
-        if (nextTrans || !checkIfCover(cur, prev))
+        bool currTrans;
+        int currDisposal;
+        this->getTransparencyAndDisposalMethod(curr, &currTrans, &currDisposal);
+        
+        if (currTrans || !checkIfCover(curr, prev))
         {
             if (curDisposal == 2)
             {
-                unsigned char* dst = &m_pImageData[(prev->ImageDesc.Top * m_uPixelsWide + prev->ImageDesc.Left) * 4];
+                unsigned char* dst = &m_pData[(prev->ImageDesc.Top * m_uPixelsWide + prev->ImageDesc.Left) * 4];
                 GifWord copyWidth = prev->ImageDesc.Width;
                 
                 if (prev->ImageDesc.Left + copyWidth > m_uPixelsWide)
@@ -227,9 +199,9 @@ void CAGif::setGifImageWithIndex(unsigned int index)
     
     {
         int transparent = -1;
-        for (int i = 0; i < cur->ExtensionBlockCount; ++i)
+        for (int i = 0; i < curr->ExtensionBlockCount; ++i)
         {
-            ExtensionBlock* eb = cur->ExtensionBlocks + i;
+            ExtensionBlock* eb = curr->ExtensionBlocks + i;
             if (eb->Function == GRAPHICS_EXT_FUNC_CODE &&
                 eb->ByteCount == 4)
             {
@@ -241,43 +213,40 @@ void CAGif::setGifImageWithIndex(unsigned int index)
             }
         }
         
-        if (cur->ImageDesc.ColorMap != NULL)
+        if (curr->ImageDesc.ColorMap != NULL)
         {
-            m_pGIF->SColorMap = cur->ImageDesc.ColorMap;
+            m_pGIF->SColorMap = curr->ImageDesc.ColorMap;
         }
         
         if (m_pGIF->SColorMap && m_pGIF->SColorMap->ColorCount == (1 << m_pGIF->SColorMap->BitsPerPixel))
         {
-            unsigned char* src = (unsigned char*)cur->RasterBits;
-            unsigned char* dst = &m_pImageData[(cur->ImageDesc.Top * m_uPixelsWide + cur->ImageDesc.Left) * 4];
+            unsigned char* src = (unsigned char*)curr->RasterBits;
+            unsigned char* dst = &m_pData[(curr->ImageDesc.Top * m_uPixelsWide + curr->ImageDesc.Left) * 4];
             
-            GifWord copyWidth = cur->ImageDesc.Width;
-            if (cur->ImageDesc.Left + copyWidth > m_uPixelsWide)
+            GifWord copyWidth = curr->ImageDesc.Width;
+            if (curr->ImageDesc.Left + copyWidth > m_uPixelsWide)
             {
-                copyWidth = m_uPixelsWide - cur->ImageDesc.Left;
+                copyWidth = m_uPixelsWide - curr->ImageDesc.Left;
             }
             
-            GifWord copyHeight = cur->ImageDesc.Height;
-            if (cur->ImageDesc.Top + copyHeight > m_uPixelsHigh)
+            GifWord copyHeight = curr->ImageDesc.Height;
+            if (curr->ImageDesc.Top + copyHeight > m_uPixelsHigh)
             {
-                copyHeight = m_uPixelsHigh - cur->ImageDesc.Top;
+                copyHeight = m_uPixelsHigh - curr->ImageDesc.Top;
             }
             
             for (; copyHeight > 0; copyHeight--)
             {
                 copyLine(dst, src, m_pGIF->SColorMap, transparent, copyWidth);
-                src += cur->ImageDesc.Width;
+                src += curr->ImageDesc.Width;
                 dst += m_uPixelsWide*4;
             }
         }
     }
-    m_pImage->initWithRawData(m_pImageData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
-}
-
-void CAGif::nextGifImageIndex()
-{
-    int index = (m_iGIFIndex + 1) % this->getGifImageCounts();
-    this->setGifImageWithIndex(index);
+    CAImage* image = new CAImage();
+    image->initWithRawData(m_pData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
+    image->autorelease();
+    return image;
 }
 
 void CAGif::getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal)
@@ -328,7 +297,7 @@ bool CAGif::checkIfWillBeCleared(const SavedImage* frame)
     return false;
 }
 
-float CAGif::getImageDuration(const SavedImage* image)
+float CAGif::getImageDelay(const SavedImage* image)
 {
     float duration = 0;
     for (int j = 0; j < image->ExtensionBlockCount; j++)
@@ -343,7 +312,7 @@ float CAGif::getImageDuration(const SavedImage* image)
             break;
         }
     }
-    duration = duration <= 50 ? 50 : duration;
+    duration = duration <= 100 ? 100 : duration;
     return duration;
 }
 
