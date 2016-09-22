@@ -811,7 +811,7 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         {
             if (m_pTarget->m_pSelectedTableCells.count(indexPath) == 0)
             {
-                this->setControlState(CAControlStateSelected);
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
                 m_pTarget->m_pSelectedTableCells.insert(indexPath);
                 if (m_pTarget->getTableViewDelegate())
                 {
@@ -820,7 +820,7 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
             }
             else
             {
-                this->setControlState(CAControlStateNormal);
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateNormal), 0.05f);
                 m_pTarget->m_pSelectedTableCells.erase(indexPath);
                 if (m_pTarget->getTableViewDelegate())
                 {
@@ -844,7 +844,7 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                 }
             }
             
-            this->setControlState(CAControlStateSelected);
+            this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
             if (m_bAllowsSelected)
             {
                 m_pTarget->m_pSelectedTableCells.insert(indexPath);
@@ -880,22 +880,22 @@ void CATableViewCell::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
         {
             if (m_pTarget->m_pSelectedTableCells.count(CAIndexPath2E(m_nSection, m_nRow)) == 0)
             {
-                this->setControlState(CAControlStateNormal);
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateNormal), 0.05f);
             }
             else
             {
-                this->setControlState(CAControlStateSelected);
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
             }
         }
         else
         {
             if (m_pTarget->m_pSelectedTableCells.count(CAIndexPath2E(m_nSection, m_nRow)) == 0)
             {
-                this->setControlState(CAControlStateNormal);
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateNormal), 0.05f);
             }
             else
             {
-                this->setControlState(CAControlStateSelected);
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
             }
         }
     }

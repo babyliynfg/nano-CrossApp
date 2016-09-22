@@ -124,9 +124,7 @@ public:
     bool init();
     
     void setBadgeText(const std::string& text);
-    
-    virtual void setContentSize(const DSize& contentSize);
-    
+
 protected:
     
     CAScale9ImageView* m_pBackground;

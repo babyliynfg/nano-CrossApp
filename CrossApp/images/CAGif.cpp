@@ -192,7 +192,7 @@ CAImage* CAGif::getImageWithIndex(int index)
             }
             else if (curDisposal == 3)
             {
-                //bm->swap(backup);
+                //swap;
             }
         }
     }
