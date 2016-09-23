@@ -139,8 +139,8 @@ namespace CAAnimation
             Animation* obj = *itr;
             if (obj->m_obInfo.selector == selector && obj->m_obInfo.target == target)
             {
-                itr = _deque.erase(itr);
                 obj->end();
+                itr = _deque.erase(itr);
                 break;
             }
             else

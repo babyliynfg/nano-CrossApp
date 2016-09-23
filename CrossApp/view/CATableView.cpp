@@ -23,6 +23,7 @@ NS_CC_BEGIN
 CATableView::CATableView()
 :m_pTableHeaderView(NULL)
 ,m_pTableFooterView(NULL)
+,m_pDraggingOutCell(NULL)
 ,m_obSeparatorColor(ccc4Int(0xffefeef4))
 ,m_nSeparatorViewHeight(1)
 ,m_nTableHeaderHeight(0)
@@ -30,7 +31,6 @@ CATableView::CATableView()
 ,m_nSections(0)
 ,m_pTableViewDataSource(NULL)
 ,m_pTableViewDelegate(NULL)
-,m_pHighlightedTableCells(NULL)
 ,m_bAllowsSelection(false)
 ,m_bAllowsMultipleSelection(false)
 ,m_bAlwaysTopSectionHeader(true)
@@ -133,42 +133,9 @@ void CATableView::setContentSize(const CrossApp::DSize &var)
 
 bool CATableView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
-    bool isInertia = m_tInertia.getLength() < 1.0f;
     if (!CAScrollView::ccTouchBegan(pTouch, pEvent))
         return false;
     
-    if (m_pContainer->isTouchEnabled() && m_bAllowsSelection && this->isScrollWindowNotOutSide() == false && isInertia)
-    {
-        DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
-        
-        std::map<CAIndexPath2E, CATableViewCell*>::iterator itr;
-        for (itr=m_mpUsedTableCells.begin(); itr!=m_mpUsedTableCells.end(); itr++)
-        {
-            CATableViewCell* cell = itr->second;
-            CC_CONTINUE_IF(cell == NULL);
-            if (cell->getFrame().containsPoint(point) && cell->isVisible())
-            {
-                CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
-                
-                if (m_pHighlightedTableCells != cell)
-                {
-                    if (m_pHighlightedTableCells)
-                    {
-                        m_pHighlightedTableCells->setControlState(CAControlStateNormal);
-                    }
-                    m_pHighlightedTableCells = cell;
-                }
-
-                CC_BREAK_IF(cell->getControlState() == CAControlStateSelected);
-                
-                CAViewAnimation::beginAnimations(m_s__StrID, NULL);
-                CAViewAnimation::setAnimationDuration(0.05f);
-                CAViewAnimation::setAnimationDidStopSelector(cell, CAViewAnimation0_selector(CATableViewCell::setControlStateHighlighted));
-                CAViewAnimation::commitAnimations();
-                break;
-            }
-        }
-    }
     return true;
 }
 
@@ -176,152 +143,28 @@ void CATableView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 {
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CAScrollView::ccTouchMoved(pTouch, pEvent);
-    
-    if (m_pHighlightedTableCells)
-    {
-        CAViewAnimation::removeAnimations(m_s__StrID);
-        
-        if (m_pHighlightedTableCells->getControlState() == CAControlStateHighlighted)
-        {
-            m_pHighlightedTableCells->setControlState(CAControlStateNormal);
-        }
-        
-        m_pHighlightedTableCells = NULL;
-    }
 }
 
 void CATableView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CAScrollView::ccTouchEnded(pTouch, pEvent);
-    
-    if (m_pHighlightedTableCells)
-    {
-        CAViewAnimation::removeAnimations(m_s__StrID);
-        
-        CAIndexPath2E deselectedIndexPath = CAIndexPath2EZero;
-        CAIndexPath2E selectedIndexPath = CAIndexPath2E(m_pHighlightedTableCells->getSection(), m_pHighlightedTableCells->getRow());
-        m_pHighlightedTableCells = NULL;
-        
-        if (m_pSelectedTableCells.count(selectedIndexPath) > 0 && m_bAllowsMultipleSelection)
-        {
-            deselectedIndexPath = selectedIndexPath;
-            selectedIndexPath = CAIndexPath2EZero;
-            m_pSelectedTableCells.erase(deselectedIndexPath);
-        }
-        else
-        {
-            if (!m_pSelectedTableCells.empty() && m_bAllowsMultipleSelection == false)
-            {
-                deselectedIndexPath = *m_pSelectedTableCells.begin();
-                m_pSelectedTableCells.clear();
-                
-            }
-            m_pSelectedTableCells.insert(selectedIndexPath);
-            
-        }
-
-        if (deselectedIndexPath != CAIndexPath2EZero)
-        {
-            if (CATableViewCell* cell = m_mpUsedTableCells[deselectedIndexPath])
-            {
-                cell->setControlState(CAControlStateNormal);
-            }
-            if (m_pTableViewDelegate)
-            {
-                m_pTableViewDelegate->tableViewDidDeselectRowAtIndexPath(this,
-                                                                         deselectedIndexPath.section,
-                                                                         deselectedIndexPath.row);
-            }
-        }
-        
-        if (selectedIndexPath != CAIndexPath2EZero)
-        {
-            if (CATableViewCell* cell = m_mpUsedTableCells[selectedIndexPath])
-            {
-                cell->setControlState(CAControlStateSelected);
-            }
-            if (m_pTableViewDelegate)
-            {
-                m_pTableViewDelegate->tableViewDidSelectRowAtIndexPath(this,
-                                                                       selectedIndexPath.section,
-
-																	   selectedIndexPath.row);
-            }
-        }
-    }
 }
 
 void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 {
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     CAScrollView::ccTouchCancelled(pTouch, pEvent);
-    
-    if (m_pHighlightedTableCells)
-    {
-        CAViewAnimation::removeAnimations(m_s__StrID);
-        
-        if (m_pHighlightedTableCells->getControlState() == CAControlStateHighlighted)
-        {
-            m_pHighlightedTableCells->setControlState(CAControlStateNormal);
-        }
-        m_pHighlightedTableCells = NULL;
-    }
 }
 
 void CATableView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 {
-    if (m_bAllowsSelection)
-    {
-        DPoint point = m_pContainer->convertTouchToNodeSpace(pTouch);
-        
-        std::map<CAIndexPath2E, CATableViewCell*>::iterator itr;
-        for (itr=m_mpUsedTableCells.begin(); itr!=m_mpUsedTableCells.end(); itr++)
-        {
-            CATableViewCell* cell = itr->second;
-            CC_CONTINUE_IF(cell == NULL);
-            if (cell->getFrame().containsPoint(point) && cell->isVisible())
-            {
-                CC_BREAK_IF(cell->getControlState() == CAControlStateDisabled);
-                
-                if (m_pHighlightedTableCells)
-                {
-                    CAIndexPath2E index = CAIndexPath2E(m_pHighlightedTableCells->getSection(), m_pHighlightedTableCells->getRow());
-                    if (m_pSelectedTableCells.count(index))
-                    {
-                        m_pHighlightedTableCells->setControlState(CAControlStateHighlighted);
-                    }
-                    else
-                    {
-                        m_pHighlightedTableCells->setControlState(CAControlStateNormal);
-                    }
-                    
-                }
-                
-                m_pHighlightedTableCells = cell;
-                cell->setControlState(CAControlStateHighlighted);
 
-                break;
-            }
-        }
-    }
 }
 
 void CATableView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
 {
-    if (m_pHighlightedTableCells)
-    {
-        CAIndexPath2E index = CAIndexPath2E(m_pHighlightedTableCells->getSection(), m_pHighlightedTableCells->getRow());
-        if (m_pSelectedTableCells.count(index))
-        {
-            m_pHighlightedTableCells->setControlState(CAControlStateSelected);
-        }
-        else
-        {
-            m_pHighlightedTableCells->setControlState(CAControlStateNormal);
-        }
-        m_pHighlightedTableCells = NULL;
-    }
+
 }
 
 void CATableView::switchPCMode(bool var)
@@ -483,7 +326,7 @@ void CATableView::clearData()
     m_mpUsedTableCells.clear();
     m_vpUsedTableCells.clear();
     m_pSectionHeaderViews.clear();
-    m_pSectionHeaderViews.clear();
+    m_pSectionFooterViews.clear();
 }
 
 void CATableView::reloadViewSizeData()
@@ -650,6 +493,7 @@ void CATableView::loadTableCell()
             CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
             CATableViewCell* cell = m_pTableViewDataSource->tableCellAtIndex(this, m_rTableCellRectss[i][j].size, i, j);
             CC_CONTINUE_IF(cell == NULL);
+            cell->m_pTarget = this;
             cell->m_nSection = i;
             cell->m_nRow = j;
             cell->updateDisplayedAlpha(this->getAlpha());
@@ -831,8 +675,10 @@ float CATableView::getRowHeightInSectionInRow(unsigned int section, unsigned int
 CATableViewCell::CATableViewCell()
 :m_nSection(UINT_NONE)
 ,m_nRow(UINT_NONE)
+,m_nDraggingLength(0)
 {
-
+    this->setHaveNextResponder(false);
+    this->setVerticalScrollEnabled(false);
 }
 
 CATableViewCell::~CATableViewCell()
@@ -875,6 +721,204 @@ void CATableViewCell::disabledTableViewCell()
 {
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
+}
+
+void CATableViewCell::setDraggingLength(unsigned int var)
+{
+    m_nDraggingLength = var;
+    this->setPriorityScroll((bool)(m_nDraggingLength > 0));
+}
+
+bool CATableViewCell::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
+{
+    bool isInertia = m_pTarget->m_tInertia.getLength() < 1.0f;
+    
+    if (this->getControlState() != CAControlStateDisabled
+        && m_pTarget->isAllowsSelection()
+        && m_pTarget->isScrollWindowNotOutSide() == false
+        && isInertia)
+    {
+        if (m_pTarget->isAllowsMultipleSelection())
+        {
+            this->setControlState(CAControlStateHighlighted);
+        }
+        else if (m_pTarget->m_pSelectedTableCells.count(CAIndexPath2E(m_nSection, m_nRow)) == 0)
+        {
+            this->setControlState(CAControlStateHighlighted);
+        }
+    }
+    
+    if (m_pTarget->m_pDraggingOutCell)
+    {
+        m_pTarget->m_pDraggingOutCell->draggingIn();
+        m_pTarget->m_pDraggingOutCell = NULL;
+    }
+    return true;
+}
+
+void CATableViewCell::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
+{
+    if (m_nDraggingLength > 0)
+    {
+        DPoint p_off = DPointZero;
+        
+        p_off = ccpSub(this->convertToNodeSpace(pTouch->getLocation()),
+                       this->convertToNodeSpace(pTouch->getPreviousLocation()));
+        
+        DLayout layout = m_pContentView->getLayout();
+        layout.horizontal.left = MIN(0, layout.horizontal.left + p_off.x);
+        layout.horizontal.right = MAX(0, layout.horizontal.right - p_off.x);
+        layout.horizontal.left = MAX(-(int)m_nDraggingLength, layout.horizontal.left);
+        layout.horizontal.right = MIN((int)m_nDraggingLength, layout.horizontal.right);
+        m_pContentView->setLayout(layout);
+        
+        if (m_pTarget->isAllowsSelection() && this->getControlState() == CAControlStateHighlighted)
+        {
+            if (m_pTarget->isAllowsMultipleSelection())
+            {
+                if (m_pTarget->m_pSelectedTableCells.count(CAIndexPath2E(m_nSection, m_nRow)) == 0)
+                {
+                    this->setControlState(CAControlStateNormal);
+                }
+                else
+                {
+                    this->setControlState(CAControlStateSelected);
+                }
+            }
+            else
+            {
+                if (m_pTarget->m_pSelectedTableCells.count(CAIndexPath2E(m_nSection, m_nRow)) == 0)
+                {
+                    this->setControlState(CAControlStateNormal);
+                }
+                else
+                {
+                    this->setControlState(CAControlStateSelected);
+                }
+            }
+        }
+    }
+}
+
+void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
+{
+    if (m_pTarget->isAllowsSelection()
+        && (this->getControlState() == CAControlStateHighlighted || this->getControlState() == CAControlStateSelected))
+    {
+        CAIndexPath2E indexPath = CAIndexPath2E(m_nSection, m_nRow);
+        
+        if (m_pTarget->isAllowsMultipleSelection())
+        {
+            if (m_pTarget->m_pSelectedTableCells.count(indexPath) == 0)
+            {
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
+                m_pTarget->m_pSelectedTableCells.insert(indexPath);
+                if (m_pTarget->getTableViewDelegate())
+                {
+                    m_pTarget->getTableViewDelegate()->tableViewDidSelectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
+                }
+            }
+            else
+            {
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateNormal), 0.05f);
+                m_pTarget->m_pSelectedTableCells.erase(indexPath);
+                if (m_pTarget->getTableViewDelegate())
+                {
+                    m_pTarget->getTableViewDelegate()->tableViewDidDeselectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
+                }
+            }
+        }
+        else
+        {
+            if (!m_pTarget->m_pSelectedTableCells.empty())
+            {
+                CAIndexPath2E indexPath2 = *m_pTarget->m_pSelectedTableCells.begin();
+                if (CATableViewCell* cell = m_pTarget->m_mpUsedTableCells.at(indexPath2))
+                {
+                    cell->setControlState(CAControlStateNormal);
+                }
+                m_pTarget->m_pSelectedTableCells.clear();
+                if (m_pTarget->getTableViewDelegate())
+                {
+                    m_pTarget->getTableViewDelegate()->tableViewDidDeselectRowAtIndexPath(m_pTarget, indexPath2.section, indexPath2.row);
+                }
+            }
+            
+            this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
+            if (m_bAllowsSelected)
+            {
+                m_pTarget->m_pSelectedTableCells.insert(indexPath);
+            }
+            if (m_pTarget->getTableViewDelegate())
+            {
+                m_pTarget->getTableViewDelegate()->tableViewDidSelectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
+            }
+        }
+    }
+    
+    if (m_nDraggingLength > 0)
+    {
+        DLayout layout = m_pContentView->getLayout();
+        
+        if (((int)layout.horizontal.right) >= ((int)m_nDraggingLength) / 3)
+        {
+            m_pTarget->m_pDraggingOutCell = this;
+            this->draggingOut();
+        }
+        else
+        {
+            this->draggingIn();
+        }
+    }
+}
+
+void CATableViewCell::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
+{
+    if (m_pTarget->isAllowsSelection() && this->getControlState() == CAControlStateHighlighted)
+    {
+        if (m_pTarget->isAllowsMultipleSelection())
+        {
+            if (m_pTarget->m_pSelectedTableCells.count(CAIndexPath2E(m_nSection, m_nRow)) == 0)
+            {
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateNormal), 0.05f);
+            }
+            else
+            {
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
+            }
+        }
+        else
+        {
+            if (m_pTarget->m_pSelectedTableCells.count(CAIndexPath2E(m_nSection, m_nRow)) == 0)
+            {
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateNormal), 0.05f);
+            }
+            else
+            {
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
+            }
+        }
+    }
+}
+
+void CATableViewCell::draggingIn()
+{
+    CAViewAnimation::removeAnimations("dragging" + m_s__StrID);
+    CAViewAnimation::beginAnimations("dragging" + m_s__StrID, NULL);
+    CAViewAnimation::setAnimationDuration(0.15f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    m_pContentView->setLayout(DLayoutFill);
+    CAViewAnimation::commitAnimations();
+}
+
+void CATableViewCell::draggingOut()
+{
+    CAViewAnimation::removeAnimations("dragging" + m_s__StrID);
+    CAViewAnimation::beginAnimations("dragging" + m_s__StrID, NULL);
+    CAViewAnimation::setAnimationDuration(0.15f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    m_pContentView->setLayout(DLayout(DHorizontalLayout_L_R(-(int)m_nDraggingLength, (int)m_nDraggingLength), DVerticalLayoutFill));
+    CAViewAnimation::commitAnimations();
 }
 
 void CATableViewCell::normalCell()

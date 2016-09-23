@@ -73,10 +73,5 @@ void CCEGLView::swapBuffers()
     [[EAGLView sharedEGLView] swapBuffers];
 }
 
-void CCEGLView::checkContext()
-{
-    [[EAGLView sharedEGLView] checkContext];
-}
-
 NS_CC_END
 

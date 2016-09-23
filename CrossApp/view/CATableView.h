@@ -267,16 +267,16 @@ protected:
     std::map<std::string, CAVector<CATableViewCell*> > m_mpFreedTableCells;
     
     std::set<CAIndexPath2E> m_pSelectedTableCells;
-    
-    CATableViewCell* m_pHighlightedTableCells;
-    
+
     std::vector<std::vector<DRect> > m_rLineRectss;
     
     std::map<CAIndexPath2E, CAView*> m_pUsedLines;
     
     CAList<CAView*> m_pFreedLines;
     
+    CATableViewCell* m_pDraggingOutCell;
     
+    friend class CATableViewCell;
 };
 
 class CC_DLL CATableViewCell: public CACell
@@ -294,6 +294,10 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_nRow, Row);
 
+    CC_SYNTHESIZE_READONLY(unsigned int, m_nDraggingLength, DraggingLength);
+    
+    void setDraggingLength(unsigned int var);
+    
 protected:
 
     virtual void normalCell();
@@ -315,6 +319,20 @@ protected:
     CC_DEPRECATED_ATTRIBUTE virtual void disabledTableViewCell();
 
     CC_DEPRECATED_ATTRIBUTE virtual void recoveryTableViewCell(){};
+    
+    virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchMoved(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
+    
+    virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
+    
+    void draggingIn();
+    
+    void draggingOut();
+    
+    CATableView* m_pTarget;
     
     friend class CATableView;
 };

@@ -22,7 +22,6 @@
 #include "CollectionViewTest.h"
 #include "ScrollViewTest.h"
 #include "WebViewTest.h"
-#include "FlashViewTest.h"
 #include "GifViewTest.h"
 #include "PickerViewTest.h"
 #include "StepperTest.h"
@@ -68,7 +67,6 @@ CDUIShowAutoCollectionView::CDUIShowAutoCollectionView():showImageViewNavigation
     m_vTitle.push_back("WebView");
     
     m_vTitle.push_back("GifView");
-    m_vTitle.push_back("FlashView");
     m_vTitle.push_back("VideoPlayer");
     
     m_vTitle.push_back("RenderImage");
@@ -292,7 +290,6 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerPageViewTest, true);
             break;
         }
-            
         case 15:
         {
             ScrollViewTest* ViewContrllerScrollViewTest = new ScrollViewTest();
@@ -409,15 +406,6 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
         }
         case 25:
         {
-            FlashViewTest* ViewContrllerFlashViewTest = new FlashViewTest();
-            ViewContrllerFlashViewTest->init();
-            ViewContrllerFlashViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
-            ViewContrllerFlashViewTest->autorelease();
-            RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerFlashViewTest, true);
-            break;
-        }
-        case 26:
-        {
             VideoPlayerControlViewTest* ViewContrllerVideoPlayerControlViewTest = new VideoPlayerControlViewTest();
             ViewContrllerVideoPlayerControlViewTest->init();
             ViewContrllerVideoPlayerControlViewTest->setNavigationBarItem(CANavigationBarItem::create(m_vTitle.at(item)));
@@ -426,7 +414,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             break;
         }
             
-        case 27:
+        case 26:
         {
             RenderImageTest* ViewContrllerRenderImageTest = new RenderImageTest();
             ViewContrllerRenderImageTest->init();
@@ -435,7 +423,7 @@ void CDUIShowAutoCollectionView::collectionViewDidSelectCellAtIndexPath(CAAutoCo
             RootWindow::getInstance()->getRootNavigationController()->pushViewController(ViewContrllerRenderImageTest, true);
             break;
         }
-        case 28:
+        case 27:
         {
             showViewAnimationNavigationBar = 0;
             ViewAnimationNavigationBar = CANavigationBarItem::create(m_vTitle.at(item));

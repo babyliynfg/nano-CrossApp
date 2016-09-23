@@ -9,48 +9,59 @@
 #ifndef __CAGIF_H__
 #define __CAGIF_H__
 
-#include "CrossApp.h"
+#include "CAImage.h"
+#include "basics/CASTLContainer.h"
 #include "gif_lib/gif_lib.h"
 
 NS_CC_BEGIN
-class CAImage;
 
 class CC_DLL CAGif : public CAObject
 {
 public:
+    
     CAGif();
-    ~CAGif();
-    static CAGif* createWithFilePath(std::string filePath);
-    static CAGif* createWithData(unsigned char* data);
     
-    bool initWithFilePath(std::string filePath);
-    bool initWithData(unsigned char* data);
+    virtual ~CAGif();
     
-    void setGifImageWithIndex(unsigned int index);
-    unsigned int getGifImageIndex();
-    unsigned int getGifImageCounts();
-    void nextGifImageIndex();
-    float getImageDuration();
-    CAImage* getImage() { return m_pImage; }
-    int getWidth();
-    int getHeight();
-protected:
-    void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);
-    bool checkIfCover(const SavedImage* target, const SavedImage* covered);
-    bool checkIfWillBeCleared(const SavedImage* frame);
-    void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width);
-    float getImageDuration(const SavedImage* image);
+    static CAGif* create(const std::string& filePath);
+    
+    CC_DEPRECATED_ATTRIBUTE static CAGif* createWithFilePath(const std::string& filePath) { return CAGif::create(filePath); }
+    
+    static CAGif* createWithData(unsigned char* data, unsigned long lenght);
+
+    bool initWithFilePath(const std::string& filePath);
+    
+    bool initWithData(unsigned char* data, unsigned long lenght);
+
+    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CAImage*>, m_vImages, Images);
+    
+    CC_SYNTHESIZE_READONLY(float, m_fDelay, Delay);
+    
+    CC_SYNTHESIZE_READONLY(unsigned int, m_uPixelsWide, PixelsWide);
+    
+    CC_SYNTHESIZE_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh);
 
 protected:
-    CAImage*        m_pImage;
-    unsigned char*  m_pImageData;
-    unsigned long   m_pDataSize;
+    
+    void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);
+    
+    bool checkIfCover(const SavedImage* target, const SavedImage* covered);
+    
+    bool checkIfWillBeCleared(const SavedImage* frame);
+    
+    void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width);
+    
+    float getImageDelay(const SavedImage* image);
+
+    CAImage* getImageWithIndex(int index);
+    
+protected:
+
+    unsigned char*  m_pData;
+    
+    unsigned long   m_uDataLenght;
+    
     GifFileType*    m_pGIF;
-    int             m_iGIFIndex;
-   // DSize          m_pSize;
-    unsigned int    m_uPixelsWide;
-    unsigned int    m_uPixelsHigh;
-    float           m_fDurTime;
 };
 
 NS_CC_END

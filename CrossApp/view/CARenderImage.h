@@ -16,6 +16,7 @@ public:
 
     virtual ~CARenderImage();
     
+    virtual void visitEve();
     virtual void visit();
     virtual void draw();
 

@@ -147,7 +147,7 @@ void CAAlertView::setAlertMessage(std::string var, CAColor4B col)
 
 void CAAlertView::addButton(const std::string& btnText, CAColor4B col, CAImage* pNormalImage, CAImage* pHighlightedImage)
 {
-	CAButton* btn = CAButton::create(CAButtonTypeSquareRect);
+	CAButton* btn = CAButton::create(CAButtonTypeCustom);
 	CCAssert(btn, "");
 	btn->setTitleForState(CAControlStateAll, btnText.c_str());
 	btn->setTitleColorForState(CAControlStateAll, col);
@@ -162,7 +162,7 @@ void CAAlertView::addButton(const std::string& btnText, CAColor4B col, CAImage* 
 	
 	if (pHighlightedImage == NULL)
 	{
-		btn->setBackgroundViewForState(CAControlStateHighlighted, CAView::createWithColor(ccc4(226, 226, 226, 225)));
+		btn->setBackgroundViewForState(CAControlStateHighlighted, CAView::createWithColor(ccc4(206, 206, 211, 255)));
 
 	} else {
 		
@@ -217,17 +217,18 @@ void CAAlertView::showAlertView() {
     
     m_pBackView->setStencil(backgroundImageView->copy());
 	
-	float alertViewSpaceHeight = 40;
+	float alertViewSpaceHeight = 36;
 
 	if (m_pTitleLabel && !m_pTitleLabel->getText().empty())
     {
 
 		m_pTitleLabel->setFrame(DRect(0, alertViewSpaceHeight , ALERT_VIEW_WIDTH, m_fAlertViewTitleHeight));
 		m_pTitleLabel->setFontSize(ALERT_VIEW_TITLE_FONT);
+        m_pTitleLabel->setBold(true);
 		m_pBackView->addSubview(m_pTitleLabel);
 	}
 
-	float alertViewMessageHeight = 150;
+	float alertViewMessageHeight = 140;
 
 	if (m_fAlertViewMessageHeight > alertViewMessageHeight)
     {
@@ -315,16 +316,6 @@ void CAAlertView::adjustButtonView() {
 		m_pBackView->addSubview(m_pBtnTableView);
 
 	}
-
-	if (btnCount == 2) {
-
-		m_vAllBtn.at(0)->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom_left.png")));
-		m_vAllBtn.at(1)->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom_right.png")));
-
-	} else {
-
-		m_vAllBtn.back()->setBackgroundViewForState(CAControlStateHighlighted, CAScale9ImageView::createWithImage(CAImage::create("source_material/alert_back_bottom.png")));
-	}
 }
 
 void CAAlertView::addGrayLine(int y) {
@@ -337,11 +328,11 @@ void CAAlertView::addGrayLine(int y) {
 
 void CAAlertView::calcuAlerViewSize()
 {
-	float alertViewSpaceHeight = 40;
+	float alertViewSpaceHeight = 36;
 
 	float alertViewButtonHeight = 88;
 
-	float alertViewMessageHeight = 130;
+	float alertViewMessageHeight = 140;
 
 	m_fAlertViewHeight += alertViewSpaceHeight;
 
@@ -421,12 +412,12 @@ void CAAlertView::show()
     showAlertView();
     
     this->setAlpha(0);
-    m_pBackView->setScale(0.5f);
+    m_pBackView->setColor(CAColor_clear);
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
     this->setAlpha(1.0f);
-    m_pBackView->setScale(1.0f);
+    m_pBackView->setColor(ccc4(64, 64, 64, 64));
     CAViewAnimation::commitAnimations();
 }
 

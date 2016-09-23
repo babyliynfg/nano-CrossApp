@@ -205,12 +205,15 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
             DPoint point = DPointZero;
             point.x = m_isOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
             
-            CAViewAnimation::beginAnimations("", NULL);
-            CAViewAnimation::setAnimationDuration(0.2f);
-            CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-            CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CASwitch::updateValueChanged));
-            m_pThumbTintImageView->setFrameOrigin(point);
-            CAViewAnimation::commitAnimations();
+            if (callfunced)
+            {
+                CAViewAnimation::beginAnimations("", NULL);
+                CAViewAnimation::setAnimationDuration(0.2f);
+                CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+                CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CASwitch::updateValueChanged));
+                m_pThumbTintImageView->setFrameOrigin(point);
+                CAViewAnimation::commitAnimations();
+            }
         }
     }
     else
@@ -222,7 +225,10 @@ void CASwitch::updateSwitchState(bool animated, bool callfunced)
             DPoint point = DPointZero;
             point.x = m_isOn ? (m_obContentSize.width - m_pThumbTintImageView->getBounds().size.width) : 0;
             m_pThumbTintImageView->setFrameOrigin(point);
-            updateValueChanged();
+            if (callfunced)
+            {
+                updateValueChanged();
+            }
         }
     }
 }

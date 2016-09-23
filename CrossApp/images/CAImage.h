@@ -359,9 +359,13 @@ protected:
     bool checkIfWillBeCleared(const SavedImage* frame);
     void copyLine(unsigned char* dst, const unsigned char* src, const ColorMapObject* cmap, int transparent, int width);
     void setGifImageWithIndex(unsigned int index);
+    
 public:
+    
     std::wstring m_txt;
-    std::string m_FileName;	
+    
+    std::string m_FileName;
+    
 protected:
     
     bool m_bPremultiplied;
@@ -385,6 +389,7 @@ protected:
     static const PixelFormatInfoMap s_pixelFormatInfoTables;
     
 	friend class CAFTRichFont;
+    
     friend class CAFreeTypeFont;
 };
 

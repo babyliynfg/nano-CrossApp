@@ -228,14 +228,6 @@
 		B09205BD19D554A800CB99C1 /* CAThread.h in Headers */ = {isa = PBXBuildFile; fileRef = B09205B819D554A800CB99C1 /* CAThread.h */; };
 		B093DB411CBC8ADE00E98AD6 /* CALayout.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B093DB3F1CBC8ADE00E98AD6 /* CALayout.cpp */; };
 		B093DB421CBC8ADE00E98AD6 /* CALayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B093DB401CBC8ADE00E98AD6 /* CALayout.h */; };
-		B09B73C71BD1FD47001D82BC /* CAVideoPlayerControlView.h in Headers */ = {isa = PBXBuildFile; fileRef = B09B73BF1BD1FD47001D82BC /* CAVideoPlayerControlView.h */; };
-		B09B73C81BD1FD47001D82BC /* CAVideoPlayerControlViewMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09B73C01BD1FD47001D82BC /* CAVideoPlayerControlViewMac.cpp */; };
-		B09B73C91BD1FD47001D82BC /* CAVideoPlayerDecoder.h in Headers */ = {isa = PBXBuildFile; fileRef = B09B73C11BD1FD47001D82BC /* CAVideoPlayerDecoder.h */; };
-		B09B73CA1BD1FD47001D82BC /* CAVideoPlayerDecoderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09B73C21BD1FD47001D82BC /* CAVideoPlayerDecoderMac.cpp */; };
-		B09B73CB1BD1FD47001D82BC /* CAVideoPlayerRender.h in Headers */ = {isa = PBXBuildFile; fileRef = B09B73C31BD1FD47001D82BC /* CAVideoPlayerRender.h */; };
-		B09B73CC1BD1FD47001D82BC /* CAVideoPlayerRenderMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09B73C41BD1FD47001D82BC /* CAVideoPlayerRenderMac.cpp */; };
-		B09B73CD1BD1FD47001D82BC /* CAVideoPlayerView.h in Headers */ = {isa = PBXBuildFile; fileRef = B09B73C51BD1FD47001D82BC /* CAVideoPlayerView.h */; };
-		B09B73CE1BD1FD47001D82BC /* CAVideoPlayerViewMac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09B73C61BD1FD47001D82BC /* CAVideoPlayerViewMac.cpp */; };
 		B09F30311C9161510090A5D4 /* CAFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B09F302F1C9161510090A5D4 /* CAFont.cpp */; };
 		B09F30321C9161510090A5D4 /* CAFont.h in Headers */ = {isa = PBXBuildFile; fileRef = B09F30301C9161510090A5D4 /* CAFont.h */; };
 		B0A02FED1A8D8E960005CB8F /* CATempTypeFont.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */; };
@@ -662,14 +654,6 @@
 		B093DB3F1CBC8ADE00E98AD6 /* CALayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CALayout.cpp; sourceTree = "<group>"; };
 		B093DB401CBC8ADE00E98AD6 /* CALayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CALayout.h; sourceTree = "<group>"; };
 		B09B73BD1BD1FACE001D82BC /* libSDL.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL.a; path = ../the_third_party/SDL/prebuilt/mac/libSDL.a; sourceTree = "<group>"; };
-		B09B73BF1BD1FD47001D82BC /* CAVideoPlayerControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerControlView.h; sourceTree = "<group>"; };
-		B09B73C01BD1FD47001D82BC /* CAVideoPlayerControlViewMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerControlViewMac.cpp; sourceTree = "<group>"; };
-		B09B73C11BD1FD47001D82BC /* CAVideoPlayerDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerDecoder.h; sourceTree = "<group>"; };
-		B09B73C21BD1FD47001D82BC /* CAVideoPlayerDecoderMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerDecoderMac.cpp; sourceTree = "<group>"; };
-		B09B73C31BD1FD47001D82BC /* CAVideoPlayerRender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerRender.h; sourceTree = "<group>"; };
-		B09B73C41BD1FD47001D82BC /* CAVideoPlayerRenderMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerRenderMac.cpp; sourceTree = "<group>"; };
-		B09B73C51BD1FD47001D82BC /* CAVideoPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVideoPlayerView.h; sourceTree = "<group>"; };
-		B09B73C61BD1FD47001D82BC /* CAVideoPlayerViewMac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVideoPlayerViewMac.cpp; sourceTree = "<group>"; };
 		B09F302F1C9161510090A5D4 /* CAFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAFont.cpp; sourceTree = "<group>"; };
 		B09F30301C9161510090A5D4 /* CAFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAFont.h; sourceTree = "<group>"; };
 		B0A02FEB1A8D8E960005CB8F /* CATempTypeFont.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CATempTypeFont.cpp; sourceTree = "<group>"; };
@@ -890,7 +874,6 @@
 				04EAA0721956D74D00198A8E /* ccTypeInfo.h */,
 				04EAA0731956D74D00198A8E /* ccTypes.h */,
 				D649B27C1D3C64480020414A /* game */,
-				B05D320B1BC60B6F00F9B4C8 /* video */,
 				B074A8B41A722B1600F34F79 /* animation */,
 				B047B91119E9181800F24BE6 /* script_support */,
 				04EAA05D1956D74D00198A8E /* basics */,
@@ -1430,21 +1413,6 @@
 			path = script_support;
 			sourceTree = "<group>";
 		};
-		B05D320B1BC60B6F00F9B4C8 /* video */ = {
-			isa = PBXGroup;
-			children = (
-				B09B73BF1BD1FD47001D82BC /* CAVideoPlayerControlView.h */,
-				B09B73C01BD1FD47001D82BC /* CAVideoPlayerControlViewMac.cpp */,
-				B09B73C11BD1FD47001D82BC /* CAVideoPlayerDecoder.h */,
-				B09B73C21BD1FD47001D82BC /* CAVideoPlayerDecoderMac.cpp */,
-				B09B73C31BD1FD47001D82BC /* CAVideoPlayerRender.h */,
-				B09B73C41BD1FD47001D82BC /* CAVideoPlayerRenderMac.cpp */,
-				B09B73C51BD1FD47001D82BC /* CAVideoPlayerView.h */,
-				B09B73C61BD1FD47001D82BC /* CAVideoPlayerViewMac.cpp */,
-			);
-			path = video;
-			sourceTree = "<group>";
-		};
 		B074A8B41A722B1600F34F79 /* animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1702,7 +1670,6 @@
 				B053DC9F19B6BEC00039E3FA /* CAKeypadDelegate.h in Headers */,
 				04EAB06A1956D75600198A8E /* CAAutoreleasePool.h in Headers */,
 				B0B05FA81BB1483200B891CE /* CADatePickerView.h in Headers */,
-				B09B73CD1BD1FD47001D82BC /* CAVideoPlayerView.h in Headers */,
 				D649B2B61D3CD6A80020414A /* CGActionInstant.h in Headers */,
 				3E21544D1B8180340075448E /* autolink.h in Headers */,
 				04EAB06C1956D75600198A8E /* CACamera.h in Headers */,
@@ -1715,7 +1682,6 @@
 				04EAB0761956D75600198A8E /* CAScheduler.h in Headers */,
 				D65AFE801D3F4C260067B290 /* CGSpriteBatchNode.h in Headers */,
 				B0B05FCE1BB1483200B891CE /* CAWebView.h in Headers */,
-				B09B73C71BD1FD47001D82BC /* CAVideoPlayerControlView.h in Headers */,
 				04EAB0791956D75600198A8E /* ccConfig.h in Headers */,
 				04EAB07A1956D75600198A8E /* ccMacros.h in Headers */,
 				04EAB07B1956D75600198A8E /* ccTypeInfo.h in Headers */,
@@ -1758,7 +1724,6 @@
 				022CAAEC1BF1C41500ED015B /* sqlite3.h in Headers */,
 				D64A8C8E1D34870B00F75021 /* CAQuaternion.h in Headers */,
 				D649B2841D3C64480020414A /* CGSprite.h in Headers */,
-				B09B73C91BD1FD47001D82BC /* CAVideoPlayerDecoder.h in Headers */,
 				B0B05FCC1BB1483200B891CE /* CAView.h in Headers */,
 				D65F35651D38C995004B56A9 /* vec3.h in Headers */,
 				D64A8C9F1D34912200F75021 /* CARect.h in Headers */,
@@ -1788,7 +1753,6 @@
 				D693E7C71D34F75F003D97A4 /* CAVec4.h in Headers */,
 				B0A452EA1C9FF2B2004CBF45 /* deelx.h in Headers */,
 				B0B05FB61BB1483200B891CE /* CAListView.h in Headers */,
-				B09B73CB1BD1FD47001D82BC /* CAVideoPlayerRender.h in Headers */,
 				B0C3BD411ADE70B3009BE71A /* CAClipboard.h in Headers */,
 				B09F30321C9161510090A5D4 /* CAFont.h in Headers */,
 				B0B05FBC1BB1483200B891CE /* CAPullToRefreshView.h in Headers */,
@@ -1989,7 +1953,6 @@
 				B0B05FAD1BB1483200B891CE /* CAGifView.cpp in Sources */,
 				B0B05FB91BB1483200B891CE /* CAPickerView.cpp in Sources */,
 				04EAB0731956D75600198A8E /* CAResponder.cpp in Sources */,
-				B09B73CE1BD1FD47001D82BC /* CAVideoPlayerViewMac.cpp in Sources */,
 				D64A8C9E1D34912200F75021 /* CARect.cpp in Sources */,
 				04EAB0751956D75600198A8E /* CAScheduler.cpp in Sources */,
 				04EAB0891956D75600198A8E /* CCNS.cpp in Sources */,
@@ -2037,7 +2000,6 @@
 				B0A11D991AE8C47600933BF6 /* etc1.cpp in Sources */,
 				04EAB0A11956D75600198A8E /* CABarItem.cpp in Sources */,
 				04EAB0A31956D75600198A8E /* CAViewController.cpp in Sources */,
-				B09B73C81BD1FD47001D82BC /* CAVideoPlayerControlViewMac.cpp in Sources */,
 				D649B2811D3C64480020414A /* CGNode.cpp in Sources */,
 				04EAB0AB1956D75600198A8E /* CAKeypadDispatcher.cpp in Sources */,
 				04EAB0AE1956D75600198A8E /* CATouch.cpp in Sources */,
@@ -2135,10 +2097,8 @@
 				040665C21956F40E003E0D62 /* CAGLProgram.cpp in Sources */,
 				D65F356A1D38C995004B56A9 /* mat3.c in Sources */,
 				B0B05FCD1BB1483200B891CE /* CAWebView.cpp in Sources */,
-				B09B73CA1BD1FD47001D82BC /* CAVideoPlayerDecoderMac.cpp in Sources */,
 				D649B2831D3C64480020414A /* CGSprite.cpp in Sources */,
 				0460ECF51956F97A00D13001 /* CAApplicationCaller.mm in Sources */,
-				B09B73CC1BD1FD47001D82BC /* CAVideoPlayerRenderMac.cpp in Sources */,
 				0460ECF71956F97A00D13001 /* CCEGLView.mm in Sources */,
 				D649B2C11D3CD6A80020414A /* CGActionTween.cpp in Sources */,
 				04DF7CB01984E6D9007352A8 /* CAIndexPath.cpp in Sources */,
@@ -2233,8 +2193,6 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
-					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/mac\"",
-					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
@@ -2279,8 +2237,6 @@
 					"\"$(SRCROOT)/../the_third_party/tiff/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/webp/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/freetype/prebuilt/mac\"",
-					"\"$(SRCROOT)/../the_third_party/SDL/prebuilt/mac\"",
-					"\"$(SRCROOT)/../the_third_party/FFmpeg/prebuilt/mac\"",
 					"\"$(SRCROOT)/../the_third_party/websockets/prebuilt/mac\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";

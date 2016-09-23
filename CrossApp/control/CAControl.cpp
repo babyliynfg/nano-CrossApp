@@ -21,7 +21,6 @@ CAControl::CAControl()
     }
     this->setHaveNextResponder(false);
     this->setMultipleTouchEnabled(false);
-    this->setTouchEventScrollHandOverToSuperview(false);
 }
 
 CAControl::~CAControl()

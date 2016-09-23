@@ -81,29 +81,41 @@ void Timer::update(float dt)
         
         if (_runForever && !_useDelay)
         {
-            if (_elapsed >= _interval || _interval <= 0.017)
+            if (_interval <= 0.017)
             {
                 trigger(MIN(_elapsed, 0.05f));
                 _elapsed = 0;
             }
+            else if (_elapsed >= _interval)
+            {
+                trigger(_elapsed);
+                _elapsed = 0;
+            }
+            
         }
         else
         {
             if (_useDelay)
             {
-                if (_useDelay >= _delay)
+                if (_elapsed >= _delay)
                 {
                     _elapsed = _elapsed - _delay;
-                    trigger(MIN(_elapsed, 0.05f));
+                    trigger(_elapsed);
                     _timesExecuted += 1;
                     _useDelay = false;
                 }
             }
             else
             {
-                if (_elapsed >= _interval)
+                if (_interval <= 0.017)
                 {
                     trigger(MIN(_elapsed, 0.05f));
+                    _elapsed = 0;
+                    _timesExecuted += 1;
+                }
+                else if (_elapsed >= _interval)
+                {
+                    trigger(_elapsed);
                     _elapsed = 0;
                     _timesExecuted += 1;
                 }
@@ -964,7 +976,7 @@ void CAScheduler::update(float dt)
 void CAScheduler::scheduleSelector(SEL_SCHEDULE selector, CAObject *target, float interval, unsigned int repeat, float delay, bool paused)
 {
     CCAssert(target, "Argument target must be non-nullptr");
-    
+    interval = MAX(interval, 1/60.0f);
     tHashTimerEntry *element = nullptr;
     HASH_FIND_PTR(_hashForTimers, &target, element);
     

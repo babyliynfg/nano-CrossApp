@@ -20,7 +20,8 @@
 
 @interface CAAlbumController : UIViewController<UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 
-@property (assign,nonatomic)void *sender;
+@property (assign, nonatomic)CAImage * crossapp_image;
+@property (assign, nonatomic)void * sender;
 
 -(void)openAlbumView:(BOOL)allowEdit;
 

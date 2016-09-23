@@ -371,12 +371,12 @@ CABadgeView::~CABadgeView()
 
 bool CABadgeView::init()
 {
-    m_pBackground = CAScale9ImageView::createWithCenter(DRect(0, 0, 46, 46));
+    m_pBackground = CAScale9ImageView::createWithLayout(DLayout(DHorizontalLayout_W_C(46, 0.5f), DVerticalLayout_H_C(46, 0.5f)));
     m_pBackground->setCapInsets(DRect(22.5, 22.5, 1, 1));
     m_pBackground->setImage(CAImage::create("source_material/bg_badge.png"));
     this->addSubview(m_pBackground);
     
-    m_pTextView = CALabel::createWithCenter(DRect(0, 0, 180, 46));
+    m_pTextView = CALabel::createWithLayout(DLayout(DHorizontalLayout_W_C(180, 0.5f), DVerticalLayout_H_C(46, 0.5f)));
     m_pTextView->setTextAlignment(CATextAlignmentCenter);
     m_pTextView->setVerticalTextAlignmet(CAVerticalTextAlignmentCenter);
     m_pTextView->setFontSize(30);
@@ -393,24 +393,18 @@ void CABadgeView::setBadgeText(const std::string& text)
 {
     this->setVisible(!text.empty());
     
-    m_pTextView->setCenter(DRect(0, 0, 180, 46));
+    m_pTextView->setLayout(DLayout(DHorizontalLayout_W_C(180, 0.5f), DVerticalLayout_H_C(46, 0.5f)));
     m_pTextView->setText(text);
     
-    DRect rect = m_pBackground->getCenter();
-    rect.size.width = CAImage::getStringWidth("", 30, text);
-    if (rect.size.width > 30)
+    int width = CAImage::getStringWidth("", 30, text);
+    if (width > 30)
     {
-        rect.size.width += 16;
+        width += 16;
     }
-    rect.size.width = MIN(rect.size.width, 196);
-    rect.size.width = MAX(rect.size.width, 46);
+    width = MIN(width, 196);
+    width = MAX(width, 46);
 
-    m_pBackground->setCenter(rect);
-}
-
-void CABadgeView::setContentSize(const DSize& contentSize)
-{
-
+    m_pBackground->setLayout(DLayout(DHorizontalLayout_W_C(width, 0.5f), DVerticalLayout_H_C(46, 0.5f)));
 }
 
 #pragma CATabBar

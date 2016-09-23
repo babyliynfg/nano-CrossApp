@@ -37,8 +37,16 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void) image: (UIImage *) image didFinishSavingWithError: (NSError *)error contextInfo: (void *) contextInfo;
+{
+    CC_SAFE_RELEASE_NULL(self.crossapp_image);
+}
+
 -(void)writeImageToPhoto:(CAImage*)image
 {
+    CC_SAFE_RETAIN(image);
+    self.crossapp_image = image;
+    
     CAImage::PixelFormat pixelFormat = image->getPixelFormat();
     
     CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
@@ -67,21 +75,18 @@
     CFRelease(imageRef);
     CGColorSpaceRelease(colorSpaceRef);
     CGDataProviderRelease(provider);
-    
+
     if (newImage == nil)
     {
         NSLog(@"Save image have some error");
     }
-    
-    UIImageWriteToSavedPhotosAlbum(newImage, self, nil, nil);
+
+    UIImageWriteToSavedPhotosAlbum(newImage, self, @selector(image: didFinishSavingWithError: contextInfo: ), nil);
     
     //[[NSFileManager defaultManager] removeItemAtPath:[NSString stringWithFormat:@"%s",sender.c_str()] error:nil];
 }
 
-- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    NSLog(@"%@",error.domain);
-}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

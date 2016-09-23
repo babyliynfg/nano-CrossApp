@@ -160,14 +160,6 @@ void CAApplication::drawScene(float dt)
             m_pRootWindow->visitEve();
         }
         
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-        
-        if (m_pobOpenGLView)
-        {
-            m_pobOpenGLView->checkContext();
-        }
-#endif
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         kmGLPushMatrix();

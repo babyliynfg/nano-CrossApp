@@ -468,11 +468,11 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         
         if (m_bAllowsSelected && m_bSelected)
         {
-            this->setControlState(CAControlStateSelected);
+            this->performSelector(callfunc_selector(CAButton::setControlStateSelected), 0.05f);
         }
         else
         {
-            this->setControlState(CAControlStateNormal);
+            this->performSelector(callfunc_selector(CAButton::setControlStateNormal), 0.05f);
         }
     }
     while (0);
@@ -499,11 +499,11 @@ void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pE
         
     if (m_bAllowsSelected && m_bSelected)
     {
-        this->setControlState(CAControlStateSelected);
+        this->performSelector(callfunc_selector(CAButton::setControlStateSelected), 0.05f);
     }
     else
     {
-        this->setControlState(CAControlStateNormal);
+        this->performSelector(callfunc_selector(CAButton::setControlStateNormal), 0.05f);
     }
     
     if (m_pTarget[CAControlEventTouchCancelled] && m_selTouch[CAControlEventTouchCancelled])
@@ -530,7 +530,7 @@ void CAButton::setControlState(const CAControlState& var)
         m_eControlState = CAControlStateNormal;
     }
     
-    if (m_pBackgroundView[m_eControlState] && m_eControlState != CAControlStateNormal)
+    if (m_pBackgroundView[m_eControlState])
     {
         this->insertSubview(m_pBackgroundView[m_eControlState], -1);
     }

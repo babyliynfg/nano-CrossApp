@@ -207,6 +207,10 @@ protected:
     
     void detectionFromPullToRefreshView();
 
+    void headerWillBeginRefreshing();
+    
+    void footerWillBeginRefreshing();
+    
     bool isHeaderRefreshing();
     
     bool isFooterRefreshing();
