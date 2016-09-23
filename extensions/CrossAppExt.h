@@ -3,7 +3,8 @@
 
 #include "ExtensionMacros.h"
 
-#include "gameswf/CAFlash.h"
-#include "gameswf/CAFlashView.h"
+#include "video/CAVideoPlayerDecoder.h"
+#include "video/CAVideoPlayerControlView.h"
+
 
 #endif /* __CrossApp_EXT_H__ */

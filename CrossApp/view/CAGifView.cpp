@@ -114,7 +114,8 @@ void CAGifView::setGif(CAGif* gif)
     m_pGif = gif;
     if (m_pGif)
     {
-        if(m_pGif->getImages().size() > 1)
+        const CAVector<CAImage*>& images = m_pGif->getImages();
+        if(!images.empty())
         {
             CAScheduler::getScheduler()->scheduleSelectorUpdate(this, 0, !m_bRunning);
         }
