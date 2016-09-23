@@ -520,13 +520,15 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"\n\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"\n",
+					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
+					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
 					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"\n\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"\n",
+					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"",
+					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/ios\"",
 				);
 				OTHER_CFLAGS = "-O2";
@@ -573,13 +575,15 @@
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios\"",
 					"\"$(SRCROOT)/../../../CrossApp/platform/ios/Simulation\"",
 					"\"$(SRCROOT)/../../../CrossApp/the_third_party/freetype/include\"",
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"\n\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"\n",
+					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
+					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/include\"",
 					"\"$(SRCROOT)/../../../extensions/video/SDL/include\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"\n\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"\n",
+					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"",
+					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"",
 					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/ios\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = crossapp.com;

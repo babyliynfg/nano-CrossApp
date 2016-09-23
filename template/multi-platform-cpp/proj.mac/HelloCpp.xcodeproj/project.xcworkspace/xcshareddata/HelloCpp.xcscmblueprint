@@ -7,14 +7,14 @@
     "630594A0C3AF0041EB86DE5D805A5B25A32E1B5D" : 0,
     "69C2B51C43FC8F478CDE1593157F30F04B1F7786" : 0
   },
-  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A8A1E3C9-6A3D-4F6D-83D1-F745A70FDE57",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "659B5791-958B-490F-9C0E-7C548F945D46",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "630594A0C3AF0041EB86DE5D805A5B25A32E1B5D" : "CrossApp_beta",
     "69C2B51C43FC8F478CDE1593157F30F04B1F7786" : "nano-CrossApp\/"
   },
-  "DVTSourceControlWorkspaceBlueprintNameKey" : "Test",
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "HelloCpp",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
-  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "samples\/Test\/proj.mac\/Test.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "template\/multi-platform-cpp\/proj.mac\/HelloCpp.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "http:\/\/git.oschina.net\/liyuanfeng\/CrossApp.git",

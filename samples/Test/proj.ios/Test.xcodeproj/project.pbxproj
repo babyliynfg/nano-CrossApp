@@ -764,8 +764,8 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/ios\"\n",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"\n",
+					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/ios\"",
+					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"",
 				);
 				OTHER_CFLAGS = "-O2";
 				PRODUCT_BUNDLE_IDENTIFIER = com.crossapp.test;
@@ -817,8 +817,8 @@
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/ios\"\n",
-					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"\n",
+					"\"$(SRCROOT)/../../../extensions/video/FFmpeg/prebuilt/ios\"",
+					"\"$(SRCROOT)/../../../extensions/video/SDL/prebuilt/ios\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.crossapp.test;
 				PRODUCT_NAME = HelloCpp;

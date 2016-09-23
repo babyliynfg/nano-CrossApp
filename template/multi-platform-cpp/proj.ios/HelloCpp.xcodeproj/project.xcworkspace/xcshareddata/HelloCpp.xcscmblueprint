@@ -1,16 +1,16 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "9BCA161339B1EB6EE3175CA7A2354E23B29CC6FE",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "69C2B51C43FC8F478CDE1593157F30F04B1F7786",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "630594A0C3AF0041EB86DE5D805A5B25A32E1B5D" : 0,
-    "9BCA161339B1EB6EE3175CA7A2354E23B29CC6FE" : 0
+    "69C2B51C43FC8F478CDE1593157F30F04B1F7786" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B86A7CAA-E8AB-4B60-88D4-7FA228733D9E",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "630594A0C3AF0041EB86DE5D805A5B25A32E1B5D" : "CrossApp_beta",
-    "9BCA161339B1EB6EE3175CA7A2354E23B29CC6FE" : "nano-CrossApp\/"
+    "69C2B51C43FC8F478CDE1593157F30F04B1F7786" : "nano-CrossApp\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "HelloCpp",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -24,7 +24,7 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/babyliynfg\/nano-CrossApp.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9BCA161339B1EB6EE3175CA7A2354E23B29CC6FE"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "69C2B51C43FC8F478CDE1593157F30F04B1F7786"
     }
   ]
 }
