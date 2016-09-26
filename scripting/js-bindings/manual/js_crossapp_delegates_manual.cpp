@@ -319,21 +319,21 @@ private:
 
 
 //**JSB_VideoPlayerControlViewDelegate
-class JSB_VideoPlayerControlViewDelegate: public CAObject, public CAVideoPlayerViewDelegate{
-
-public:
-    JSB_VideoPlayerControlViewDelegate()
-    {
-        _JSDelegate = nullptr;
-    }
-    void setJSDelegate(JS::HandleObject pJSDelegate)
-    {
-        _JSDelegate = pJSDelegate;
-    }
-    
-private:
-    JS::Heap<JSObject*> _JSDelegate;
-};
+//class JSB_VideoPlayerControlViewDelegate: public CAObject, public CAVideoPlayerViewDelegate{
+//
+//public:
+//    JSB_VideoPlayerControlViewDelegate()
+//    {
+//        _JSDelegate = nullptr;
+//    }
+//    void setJSDelegate(JS::HandleObject pJSDelegate)
+//    {
+//        _JSDelegate = pJSDelegate;
+//    }
+//    
+//private:
+//    JS::Heap<JSObject*> _JSDelegate;
+//};
 
 
 

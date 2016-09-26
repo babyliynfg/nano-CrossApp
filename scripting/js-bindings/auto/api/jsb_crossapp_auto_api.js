@@ -6478,6 +6478,14 @@ char
 },
 
 /**
+ * @method visitEve
+ */
+visitEve : function (
+)
+{
+},
+
+/**
  * @method setAutoDraw
  * @param {bool} arg0
  */
@@ -10270,13 +10278,23 @@ CATouchController : function (
 ca.CAGif = {
 
 /**
- * @method getImage
- * @return {ca.CAImage}
+ * @method getDelay
+ * @return {float}
  */
-getImage : function (
+getDelay : function (
 )
 {
-    return ca.CAImage;
+    return 0;
+},
+
+/**
+ * @method getImages
+ * @return {Array}
+ */
+getImages : function (
+)
+{
+    return new Array();
 },
 
 /**
@@ -10294,89 +10312,43 @@ str
 /**
  * @method initWithData
  * @param {unsigned char} arg0
+ * @param {unsigned long} arg1
  * @return {bool}
  */
 initWithData : function (
-char 
+char, 
+long 
 )
 {
     return false;
 },
 
 /**
- * @method setGifImageWithIndex
- * @param {unsigned int} arg0
- */
-setGifImageWithIndex : function (
-int 
-)
-{
-},
-
-/**
- * @method getGifImageIndex
+ * @method getPixelsHigh
  * @return {unsigned int}
  */
-getGifImageIndex : function (
+getPixelsHigh : function (
 )
 {
     return 0;
 },
 
 /**
- * @method getHeight
- * @return {int}
- */
-getHeight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getWidth
- * @return {int}
- */
-getWidth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getImageDuration
- * @return {float}
- */
-getImageDuration : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getGifImageCounts
+ * @method getPixelsWide
  * @return {unsigned int}
  */
-getGifImageCounts : function (
+getPixelsWide : function (
 )
 {
     return 0;
 },
 
 /**
- * @method nextGifImageIndex
- */
-nextGifImageIndex : function (
-)
-{
-},
-
-/**
- * @method createWithFilePath
+ * @method create
  * @param {String} arg0
  * @return {ca.CAGif}
  */
-createWithFilePath : function (
+create : function (
 str 
 )
 {
@@ -10386,10 +10358,12 @@ str
 /**
  * @method createWithData
  * @param {unsigned char} arg0
+ * @param {unsigned long} arg1
  * @return {ca.CAGif}
  */
 createWithData : function (
-char 
+char, 
+long 
 )
 {
     return ca.CAGif;
@@ -10510,6 +10484,22 @@ float
 },
 
 /**
+ * @method onEnter
+ */
+onEnter : function (
+)
+{
+},
+
+/**
+ * @method onExit
+ */
+onExit : function (
+)
+{
+},
+
+/**
  * @method initWithGif
  * @param {ca.CAGif} arg0
  * @return {bool}
@@ -10539,6 +10529,16 @@ setGif : function (
 cagif 
 )
 {
+},
+
+/**
+ * @method getGif
+ * @return {ca.CAGif}
+ */
+getGif : function (
+)
+{
+    return ca.CAGif;
 },
 
 /**
@@ -11968,10 +11968,30 @@ CATableView : function (
 ca.CATableViewCell = {
 
 /**
+ * @method setDraggingLength
+ * @param {unsigned int} arg0
+ */
+setDraggingLength : function (
+int 
+)
+{
+},
+
+/**
  * @method getSection
  * @return {unsigned int}
  */
 getSection : function (
+)
+{
+    return 0;
+},
+
+/**
+ * @method getDraggingLength
+ * @return {unsigned int}
+ */
+getDraggingLength : function (
 )
 {
     return 0;
@@ -16272,290 +16292,6 @@ sharedEngine : function (
  * @constructor
  */
 SimpleAudioEngine : function (
-)
-{
-},
-
-};
-
-/**
- * @class CAFlash
- */
-ca.CAFlash = {
-
-/**
- * @method getIndex
- * @return {int}
- */
-getIndex : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method advance
- * @param {float} arg0
- */
-advance : function (
-float 
-)
-{
-},
-
-/**
- * @method initWithFilePath
- * @param {String} arg0
- * @return {bool}
- */
-initWithFilePath : function (
-str 
-)
-{
-    return false;
-},
-
-/**
- * @method getScaleY
- * @return {float}
- */
-getScaleY : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getScaleX
- * @return {float}
- */
-getScaleX : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getLocalScaleY
- * @return {float}
- */
-getLocalScaleY : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getCounts
- * @return {int}
- */
-getCounts : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getHeight
- * @return {float}
- */
-getHeight : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method setIndex
- * @param {int} arg0
- */
-setIndex : function (
-int 
-)
-{
-},
-
-/**
- * @method getFrameCount
- * @return {float}
- */
-getFrameCount : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getWidth
- * @return {float}
- */
-getWidth : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method getLocalScaleX
- * @return {float}
- */
-getLocalScaleX : function (
-)
-{
-    return 0;
-},
-
-/**
- * @method playRun
- */
-playRun : function (
-)
-{
-},
-
-/**
- * @method display
- * @param {kmMat4} arg0
- */
-display : function (
-kmmat4 
-)
-{
-},
-
-/**
- * @method createWithFilePath
- * @param {String} arg0
- * @return {ca.extension::CAFlash}
- */
-createWithFilePath : function (
-str 
-)
-{
-    return ca.extension::CAFlash;
-},
-
-/**
- * @method CAFlash
- * @constructor
- */
-CAFlash : function (
-)
-{
-},
-
-};
-
-/**
- * @class CAFlashView
- */
-ca.CAFlashView = {
-
-/**
- * @method isRunning
- * @return {bool}
- */
-isRunning : function (
-)
-{
-    return false;
-},
-
-/**
- * @method setFlash
- * @param {ca.extension::CAFlash} arg0
- */
-setFlash : function (
-caflash 
-)
-{
-},
-
-/**
- * @method isRepeatForever
- * @return {bool}
- */
-isRepeatForever : function (
-)
-{
-    return false;
-},
-
-/**
- * @method init
- * @return {bool}
- */
-init : function (
-)
-{
-    return false;
-},
-
-/**
- * @method runAnimation
- */
-runAnimation : function (
-)
-{
-},
-
-/**
- * @method initWithFlash
- * @param {ca.extension::CAFlash} arg0
- * @return {bool}
- */
-initWithFlash : function (
-caflash 
-)
-{
-    return false;
-},
-
-/**
- * @method setRunning
- * @param {bool} arg0
- */
-setRunning : function (
-bool 
-)
-{
-},
-
-/**
- * @method setRepeatForever
- * @param {bool} arg0
- */
-setRepeatForever : function (
-bool 
-)
-{
-},
-
-/**
- * @method stopAnimation
- */
-stopAnimation : function (
-)
-{
-},
-
-/**
- * @method createWithFlash
- * @param {ca.extension::CAFlash} arg0
- * @return {ca.extension::CAFlashView}
- */
-createWithFlash : function (
-caflash 
-)
-{
-    return ca.extension::CAFlashView;
-},
-
-/**
- * @method CAFlashView
- * @constructor
- */
-CAFlashView : function (
 )
 {
 },

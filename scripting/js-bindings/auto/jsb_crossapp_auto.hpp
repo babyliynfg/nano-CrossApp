@@ -808,6 +808,7 @@ bool js_crossapp_CARenderImage_getImageView(JSContext *cx, uint32_t argc, jsval 
 bool js_crossapp_CARenderImage_setClearFlags(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_draw(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_saveToFile(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CARenderImage_visitEve(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_setAutoDraw(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_setClearColor(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CARenderImage_getClearColor(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1292,17 +1293,13 @@ bool js_crossapp_CAGif_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_crossapp_CAGif_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CAGif(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAGif_getImage(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAGif_getDelay(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAGif_getImages(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGif_initWithFilePath(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGif_initWithData(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAGif_setGifImageWithIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAGif_getGifImageIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAGif_getHeight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAGif_getWidth(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAGif_getImageDuration(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAGif_getGifImageCounts(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAGif_nextGifImageIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAGif_createWithFilePath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAGif_getPixelsHigh(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAGif_getPixelsWide(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAGif_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGif_createWithData(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGif_CAGif(JSContext *cx, uint32_t argc, jsval *vp);
 
@@ -1330,9 +1327,12 @@ void js_crossapp_CAGifView_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CAGifView(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
 bool js_crossapp_CAGifView_setTimes(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAGifView_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAGifView_onExit(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGifView_initWithGif(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGifView_init(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGifView_setGif(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAGifView_getGif(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGifView_isRepeatForever(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGifView_setRepeatForever(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAGifView_createWithGif(JSContext *cx, uint32_t argc, jsval *vp);
@@ -1525,7 +1525,9 @@ bool js_crossapp_CATableViewCell_constructor(JSContext *cx, uint32_t argc, jsval
 void js_crossapp_CATableViewCell_finalize(JSContext *cx, JSObject *obj);
 void js_register_crossapp_CATableViewCell(JSContext *cx, JS::HandleObject global);
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CATableViewCell_setDraggingLength(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATableViewCell_getSection(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CATableViewCell_getDraggingLength(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATableViewCell_getRow(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATableViewCell_create(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CATableViewCell_CATableViewCell(JSContext *cx, uint32_t argc, jsval *vp);
@@ -2069,48 +2071,5 @@ bool js_crossapp_SimpleAudioEngine_resumeEffect(JSContext *cx, uint32_t argc, js
 bool js_crossapp_SimpleAudioEngine_end(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_SimpleAudioEngine_sharedEngine(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_SimpleAudioEngine_SimpleAudioEngine(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_CrossApp_extension_CAFlash_class;
-extern JSObject *jsb_CrossApp_extension_CAFlash_prototype;
-
-bool js_crossapp_CAFlash_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_crossapp_CAFlash_finalize(JSContext *cx, JSObject *obj);
-void js_register_crossapp_CAFlash(JSContext *cx, JS::HandleObject global);
-void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAFlash_getIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_advance(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_initWithFilePath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_getScaleY(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_getScaleX(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_getLocalScaleY(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_getCounts(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_getHeight(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_setIndex(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_getFrameCount(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_getWidth(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_getLocalScaleX(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_playRun(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_display(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_createWithFilePath(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlash_CAFlash(JSContext *cx, uint32_t argc, jsval *vp);
-
-extern JSClass  *jsb_CrossApp_extension_CAFlashView_class;
-extern JSObject *jsb_CrossApp_extension_CAFlashView_prototype;
-
-bool js_crossapp_CAFlashView_constructor(JSContext *cx, uint32_t argc, jsval *vp);
-void js_crossapp_CAFlashView_finalize(JSContext *cx, JSObject *obj);
-void js_register_crossapp_CAFlashView(JSContext *cx, JS::HandleObject global);
-void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
-bool js_crossapp_CAFlashView_isRunning(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlashView_setFlash(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlashView_isRepeatForever(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlashView_init(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlashView_runAnimation(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlashView_initWithFlash(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlashView_setRunning(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlashView_setRepeatForever(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlashView_stopAnimation(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlashView_createWithFlash(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_crossapp_CAFlashView_CAFlashView(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif // __crossapp_h__
