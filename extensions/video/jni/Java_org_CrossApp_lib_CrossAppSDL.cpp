@@ -1,12 +1,9 @@
-#include "basics/CAApplication.h"
-#include "platform/CAFileUtils.h"
-#include "ccTypes.h"
-#include "support/CANotificationCenter.h"
-#include "JniHelper.h"
-#include "platform/android/CCApplication.h"
-#include <jni.h>
+
 #include "SDL_main.h"
-	
+#include "CrossApp.h"
+#include "platform/android/jni/JniHelper.h"
+#include <jni.h>
+
 using namespace CrossApp;
 
 extern "C" {

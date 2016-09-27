@@ -35,6 +35,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_extension_static
 
+
 include $(BUILD_SHARED_LIBRARY)
 
 #$(call import-add-path, $(LOCAL_PATH)/../../../..)
