@@ -6,6 +6,7 @@ var FirstViewController = ca.CAViewController.extend({
         this.getView().setColor(ca.color._getGray());
         var img = ca.CAImageView.createWithImage(ca.CAImage.create("r/HelloWorld.png"));
         img.setLayout(DLayoutFill);
+        img.setImageViewScaleType(1);
         this.getView().addSubview(img);
 
         var font = new CAFont();
@@ -19,16 +20,5 @@ var FirstViewController = ca.CAViewController.extend({
         lab.setText("Hello JavaScript");
         lab.setFont(font);
         this.getView().addSubview(lab);
-
-        var btn = ca.CAButton.createWithFrame(ca.rect(200, 400, 300, 100), 1);
-        btn.setTitleForState(0, "Button");
-        btn.addTarget(this, this.btncallback, 0);
-        this.getView().addSubview(btn);
-
     },
-    btncallback: function () {
-        log("btncallback-->");
-
-    },
-
 });

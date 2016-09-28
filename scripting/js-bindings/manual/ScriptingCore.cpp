@@ -1087,10 +1087,8 @@ void ScriptingCore::enableDebugger(unsigned int port)
         // start bg thread
 //        auto t = std::thread(&serverEntryPoint,port);
 //        t.detach();
-        
-//        CAScheduler* scheduler = Director::getInstance()->getScheduler();
-//        scheduler->scheduleUpdate(this->_runLoop, 0, false);
-        CAScheduler::schedule(schedule_selector(SimpleRunLoop::update), this->_runLoop, 0,false);
+
+        CAScheduler::schedule(schedule_selector(SimpleRunLoop::update), this->_runLoop, 0);
     }
 }
 

@@ -713,7 +713,7 @@ void CCDisplayLinkDirector::startAnimation(void)
     }
 
     m_bInvalid = false;
-    CAApplication::getApplication()->updateDraw();
+    m_nDrawCount = 180;
 }
 
 void CCDisplayLinkDirector::mainLoop(void)
