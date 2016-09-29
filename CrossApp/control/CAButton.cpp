@@ -533,6 +533,15 @@ void CAButton::setControlState(const CAControlState& var)
         m_eControlState = CAControlStateNormal;
     }
     
+    if (m_eControlState == CAControlStateSelected)
+    {
+        m_bSelected = true;
+    }
+    else if (m_eControlState == CAControlStateNormal)
+    {
+        m_bSelected = false;
+    }
+    
     if (m_pBackgroundView[m_eControlState])
     {
         this->insertSubview(m_pBackgroundView[m_eControlState], -1);
