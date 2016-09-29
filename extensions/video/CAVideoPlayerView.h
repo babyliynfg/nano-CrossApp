@@ -26,7 +26,7 @@ public:
 	virtual void movieFinishedCallback(CAVideoPlayerView *playerView) {};
 };
 
-class CC_DLL CAVideoPlayerView : public CAView, public CAThread
+class CC_EXT_DLL CAVideoPlayerView : public CAView, public CAThread
 {
 public:
     CAVideoPlayerView();

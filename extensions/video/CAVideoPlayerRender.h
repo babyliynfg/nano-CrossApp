@@ -18,7 +18,7 @@
 NS_CC_EXT_BEGIN
 
 class VPVideoFrame;
-class VPFrameRender 
+class VPFrameRender
 {    
 public:
     VPFrameRender();
@@ -41,7 +41,7 @@ protected:
     std::string _key;
 };
 
-class VPFrameRenderRGB : public VPFrameRender 
+class VPFrameRenderRGB : public VPFrameRender
 {
     GLint _uniformSampler;
     GLuint _texture;
@@ -57,7 +57,7 @@ public:
     virtual bool prepareRender();
 };
 
-class VPFrameRenderYUV : public VPFrameRender 
+class VPFrameRenderYUV : public VPFrameRender
 {
     GLint _uniformSamplers[3];
     GLuint _textures[3];

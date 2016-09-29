@@ -24,7 +24,7 @@ public:
 	virtual void onBackButtonClicked(CAVideoPlayerControlView *playerControlView) {};
 };
 
-class CC_DLL CAVideoPlayerControlView : public CAView
+class CC_EXT_DLL CAVideoPlayerControlView : public CAView
 {
 public:
 	CAVideoPlayerControlView();
