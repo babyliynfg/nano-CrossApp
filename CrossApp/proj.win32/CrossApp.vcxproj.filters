@@ -94,9 +94,6 @@
     <Filter Include="support\sqlite3">
       <UniqueIdentifier>{3b623472-1e34-43bf-a172-60319e7c75ab}</UniqueIdentifier>
     </Filter>
-    <Filter Include="video">
-      <UniqueIdentifier>{9e43e110-153e-4dee-8201-409c7cb17cae}</UniqueIdentifier>
-    </Filter>
     <Filter Include="math">
       <UniqueIdentifier>{e61d24a2-c4ff-4ba6-92c1-742745170c9b}</UniqueIdentifier>
     </Filter>
@@ -459,18 +456,6 @@
     </ClCompile>
     <ClCompile Include="..\support\network\WebSocket.cpp">
       <Filter>support\network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\video\CAVideoPlayerDecoder.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\video\CAVideoPlayerRender.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\video\CAVideoPlayerView.cpp">
-      <Filter>video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\video\CAVideoPlayerControlView.cpp">
-      <Filter>video</Filter>
     </ClCompile>
     <ClCompile Include="..\platform\CAEmojiFont.cpp">
       <Filter>platform</Filter>
@@ -1059,18 +1044,6 @@
       <Filter>support\network</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="..\video\CAVideoPlayerDecoder.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\video\CAVideoPlayerRender.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\video\CAVideoPlayerView.h">
-      <Filter>video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\video\CAVideoPlayerControlView.h">
-      <Filter>video</Filter>
-    </ClInclude>
     <ClInclude Include="..\platform\CAEmojiFont.h">
       <Filter>platform</Filter>
     </ClInclude>

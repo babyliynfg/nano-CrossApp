@@ -77,7 +77,7 @@
     </PreBuildEvent>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\curl\include\win32;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include;$(ProjectDir)..\the_third_party\websockets\include\win32;$(ProjectDir)..\the_third_party\sdl\include;$(ProjectDir)..\the_third_party\FFmpeg\include;$(ProjectDir)..\kazmath\include;$(ProjectDir)..\support\Json;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\curl\include\win32;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include;$(ProjectDir)..\the_third_party\websockets\include\win32;$(ProjectDir)..\kazmath\include;$(ProjectDir)..\support\Json;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;CROSSAPPWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;CROSSAPP_DEBUG=1;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;JSON_DLL_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -98,12 +98,10 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\webp\prebuilt\win32\*.*" "$(OutDir)
 xcopy /Y /Q "$(ProjectDir)..\the_third_party\freetype\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\the_third_party\curl\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\the_third_party\websockets\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\the_third_party\sdl\prebuilt\win32\*.*" "$(OutDir)"
-xcopy /Y /Q "$(ProjectDir)..\the_third_party\FFmpeg\prebuilt\win32\*.*" "$(OutDir)"
 xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;SDL2.lib;avcodec.lib;avformat.lib;avdevice.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;sqlite3.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;sqlite3.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -127,7 +125,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
       </Command>
     </PreBuildEvent>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\curl\include\win32;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include;$(ProjectDir)..\the_third_party\websockets\include\win32;$(ProjectDir)..\the_third_party\sdl\include;$(ProjectDir)..\the_third_party\FFmpeg\include;$(ProjectDir)..\kazmath\include;$(ProjectDir)..\support\Json;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A\include;$(ProjectDir)..;$(ProjectDir)..\platform\win32;$(ProjectDir)..\the_third_party\win32\iconv;$(ProjectDir)..\the_third_party\win32\zlib;$(ProjectDir)..\the_third_party\win32\pthread;$(ProjectDir)..\the_third_party\win32\OGLES;$(ProjectDir)..\the_third_party\curl\include\win32;$(ProjectDir)..\the_third_party\png\include\win32;$(ProjectDir)..\the_third_party\jpeg\include\win32;$(ProjectDir)..\the_third_party\tiff\include\win32;$(ProjectDir)..\the_third_party\webp\include\win32;$(ProjectDir)..\the_third_party\freetype\include;$(ProjectDir)..\the_third_party\websockets\include\win32;$(ProjectDir)..\kazmath\include;$(ProjectDir)..\support\Json;..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;COCOS2DXWIN32_EXPORTS;GL_GLEXT_PROTOTYPES;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;JSON_DLL_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -151,7 +149,7 @@ xcopy /Y /Q "$(ProjectDir)..\the_third_party\FFmpeg\prebuilt\win32\*.*" "$(OutDi
 xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     </PreLinkEvent>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;sqlite3.lib;SDL2.lib;avcodec.lib;avformat.lib;avdevice.lib;avutil.lib;postproc.lib;swresample.lib;swscale.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;libzlib.lib;libpng.lib;libjpeg.lib;libtiff.lib;libwebp.lib;libiconv.lib;pthreadVCE2.lib;freetype260.lib;libcurl_imp.lib;websockets.lib;sqlite3.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries> ;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -308,10 +306,6 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\kazmath\src\vec4.c" />
     <ClCompile Include="..\kazmath\src\GL\mat4stack.c" />
     <ClCompile Include="..\kazmath\src\GL\matrix.c" />
-    <ClCompile Include="..\video\CAVideoPlayerControlView.cpp" />
-    <ClCompile Include="..\video\CAVideoPlayerDecoder.cpp" />
-    <ClCompile Include="..\video\CAVideoPlayerRender.cpp" />
-    <ClCompile Include="..\video\CAVideoPlayerView.cpp" />
     <ClCompile Include="..\view\CAActivityIndicatorView.cpp" />
     <ClCompile Include="..\view\CAAlertView.cpp" />
     <ClCompile Include="..\view\CAAutoCollectionView.cpp" />
@@ -522,10 +516,6 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\kazmath\include\kazmath\vec4.h" />
     <ClInclude Include="..\kazmath\include\kazmath\GL\mat4stack.h" />
     <ClInclude Include="..\kazmath\include\kazmath\GL\matrix.h" />
-    <ClInclude Include="..\video\CAVideoPlayerControlView.h" />
-    <ClInclude Include="..\video\CAVideoPlayerDecoder.h" />
-    <ClInclude Include="..\video\CAVideoPlayerRender.h" />
-    <ClInclude Include="..\video\CAVideoPlayerView.h" />
     <ClInclude Include="..\view\CAActivityIndicatorView.h" />
     <ClInclude Include="..\view\CAAlertView.h" />
     <ClInclude Include="..\view\CAAutoCollectionView.h" />

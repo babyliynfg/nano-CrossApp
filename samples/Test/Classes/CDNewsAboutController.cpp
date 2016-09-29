@@ -230,7 +230,7 @@ void CDNewsAboutController::tableViewDidSelectRowAtIndexPath(CATableView* table,
     {
         _waitview = CAView::createWithColor(ccc4(0,0,0,128));
         _waitview->setLayout(DLayoutFill);
-        this->getView()->insertSubview(_waitview, CAWindowZOderTop);
+        this->getView()->insertSubview(_waitview, CAWindowZOrderTop);
         
         CAActivityIndicatorView* p_pLoading = CAActivityIndicatorView::createWithLayout(DLayoutFill);
         p_pLoading->setStyle(CAActivityIndicatorViewStyleWhiteLarge);

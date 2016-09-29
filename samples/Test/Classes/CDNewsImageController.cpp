@@ -139,7 +139,7 @@ void CDNewsImageController::viewDidLoad()
         CommonHttpManager::getInstance()->send_get(tempUrl, key_value, this,CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
         {
             p_pLoading = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayout_W_C(50, 0.5), DVerticalLayout_H_C(0, 0.5)));
-            this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
+            this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
             p_pLoading->setLoadingMinTime(0.5f);
             p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsImageController::initImageCollectionView));
         }
@@ -230,7 +230,7 @@ void CDNewsImageController::buttonCallBack(CAControl* btn,DPoint point)
                                                CommonHttpJson_selector(CDNewsImageController::onRequestFinished));
     {
         p_pLoading = CAActivityIndicatorView::createWithLayout(DLayout(DHorizontalLayout_W_C(50, 0.5), DVerticalLayout_T_H(50, 0.5)));
-        this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
+        this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
         p_pLoading->setLoadingMinTime(0.5f);
         p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsImageController::initImageCollectionView));
     }

@@ -17,7 +17,6 @@
 
 USING_NS_CC;
 
-
 NS_CC_EXT_BEGIN
 
 extern "C" 
@@ -93,7 +92,7 @@ public:
 
 };
 
-class VPVideoFrameRGB : public VPVideoFrame 
+class VPVideoFrameRGB : public VPVideoFrame
 {
 public:
     VPVideoFrameRGB();
@@ -123,7 +122,7 @@ typedef void (CAObject::*SEL_DecoderAudioCallback)(unsigned char *stream, int le
 #define decoder_audio_selector(_SELECTOR) (SEL_DecoderAudioCallback)(&_SELECTOR)
 
 
-class VPDecoder 
+class VPDecoder
 {
 public:
     VPDecoder();
