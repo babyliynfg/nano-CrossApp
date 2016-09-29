@@ -147,7 +147,7 @@ void CDNewsViewController::viewDidLoad()
         
         
         p_pLoading = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
+        this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
         p_pLoading->setLoadingMinTime(0.5f);
         p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
     }
@@ -209,7 +209,7 @@ void CDNewsViewController::buttonCallBack(CAControl* btn,DPoint point)
                                                CommonHttpJson_selector(CDNewsViewController::onRequestFinished));
     {
         p_pLoading = CAActivityIndicatorView::createWithLayout(DLayoutFill);
-        this->getView()->insertSubview(p_pLoading, CAWindowZOderTop);
+        this->getView()->insertSubview(p_pLoading, CAWindowZOrderTop);
         p_pLoading->setLoadingMinTime(0.5f);
         p_pLoading->setTargetOnCancel(this, callfunc_selector(CDNewsViewController::initNewsTableView));
     }

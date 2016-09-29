@@ -1,16 +1,16 @@
 {
-  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "69C2B51C43FC8F478CDE1593157F30F04B1F7786",
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "9BCA161339B1EB6EE3175CA7A2354E23B29CC6FE",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "630594A0C3AF0041EB86DE5D805A5B25A32E1B5D" : 0,
-    "69C2B51C43FC8F478CDE1593157F30F04B1F7786" : 0
+    "9BCA161339B1EB6EE3175CA7A2354E23B29CC6FE" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A8A1E3C9-6A3D-4F6D-83D1-F745A70FDE57",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "630594A0C3AF0041EB86DE5D805A5B25A32E1B5D" : "CrossApp_beta",
-    "69C2B51C43FC8F478CDE1593157F30F04B1F7786" : "nano-CrossApp\/"
+    "9BCA161339B1EB6EE3175CA7A2354E23B29CC6FE" : "nano-CrossApp\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "Test",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -24,7 +24,7 @@
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.oschina.net\/liyuanfeng\/nano-CrossApp.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "69C2B51C43FC8F478CDE1593157F30F04B1F7786"
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9BCA161339B1EB6EE3175CA7A2354E23B29CC6FE"
     }
   ]
 }

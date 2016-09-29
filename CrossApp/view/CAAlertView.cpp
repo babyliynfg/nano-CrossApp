@@ -42,7 +42,7 @@ bool CAAlertView::init()
 		return false;
 	}
 
-	this->setColor(ccc4(127,127,127,127));
+	this->setColor(ccc4(0, 0, 0, 66));
     this->setLayout(DLayoutFill);
 
 	return true;
@@ -203,11 +203,9 @@ void CAAlertView::showAlertView() {
 	calcuAlerViewSize();
 
 	DSize winSize = this->getBounds().size;
-
-    DRect rect = DRect(winSize.width/2, winSize.height/2, ALERT_VIEW_WIDTH, m_fAlertViewHeight);
     
     m_pBackView = CAClippingView::create();
-    m_pBackView->setCenter(rect);
+    m_pBackView->setLayout(DLayout(DHorizontalLayout_W_C(ALERT_VIEW_WIDTH, 0.5f), DVerticalLayout_H_C(m_fAlertViewHeight, 0.5f)));
     this->addSubview(m_pBackView);
     m_pBackView->setAlphaThreshold(0.5f);
     
@@ -412,12 +410,12 @@ void CAAlertView::show()
     showAlertView();
     
     this->setAlpha(0);
-    m_pBackView->setColor(CAColor_clear);
+    m_pBackView->setScale(0.5f);
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
     this->setAlpha(1.0f);
-    m_pBackView->setColor(ccc4(64, 64, 64, 64));
+    m_pBackView->setScale(1.0f);
     CAViewAnimation::commitAnimations();
 }
 
