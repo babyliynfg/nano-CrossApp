@@ -679,6 +679,7 @@ CATableViewCell::CATableViewCell()
 {
     this->setHaveNextResponder(false);
     this->setVerticalScrollEnabled(false);
+    this->setMultipleTouchEnabled(false);
 }
 
 CATableViewCell::~CATableViewCell()
