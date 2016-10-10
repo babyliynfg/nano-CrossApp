@@ -161,7 +161,7 @@ void CASlider::layoutSubViews()
     {
         float thumbDiameter = m_obContentSize.height;
         float totalWidth = m_obContentSize.width;
-        float percent = m_fValue / (m_fMaxValue - m_fMinValue);
+        float percent = (m_fValue - m_fMinValue) / (m_fMaxValue - m_fMinValue);
         float centerX = ((totalWidth - thumbDiameter) * percent) + thumbDiameter/2;
         
         m_pThumbTintImageView->setCenter(DRect(centerX, thumbDiameter / 2, thumbDiameter, thumbDiameter));
@@ -175,6 +175,8 @@ void CASlider::setValue(float value)
     if (m_fValue != value)
     {
         m_fValue = value;
+        m_fValue = MAX(m_fValue, m_fMinValue);
+        m_fValue = MIN(m_fValue, m_fMaxValue);
         this->layoutSubViews();
     }
 }
@@ -184,6 +186,7 @@ void CASlider::setMinValue(float minValue)
     if (m_fMinValue != minValue)
     {
         m_fMinValue = minValue;
+        m_fValue = MAX(m_fValue, m_fMinValue);
         this->layoutSubViews();
     }
 }
@@ -193,6 +196,7 @@ void CASlider::setMaxValue(float maxValue)
     if (m_fMaxValue != maxValue)
     {
         m_fMaxValue = maxValue;
+        m_fValue = MIN(m_fValue, m_fMaxValue);
         this->layoutSubViews();
     }
 }
@@ -269,10 +273,8 @@ void CASlider::ccTouchMoved(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         return;
     
     DRect bounds = getBounds();
-    float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width);
-    value = (point.x <= 0) ? m_fMinValue : ((point.x >= bounds.size.width) ? m_fMaxValue : value);
+    float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width) + m_fMinValue;
     this->setValue(value);
-    
     if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
     {
         ((CAObject *)m_pTarget[CAControlEventTouchValueChanged]->*m_selTouch[CAControlEventTouchValueChanged])(this, point);
@@ -291,7 +293,7 @@ void CASlider::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
     DRect bounds = getBounds();
     if (bounds.containsPoint(point))
     {
-        float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width);
+        float value = (m_fMaxValue - m_fMinValue) * (point.x / bounds.size.width) + m_fMinValue;
         this->setValue(value);
         if (m_pTarget[CAControlEventTouchValueChanged] && m_selTouch[CAControlEventTouchValueChanged])
         {
