@@ -165,8 +165,8 @@ void CASlider::layoutSubViews()
         float centerX = ((totalWidth - thumbDiameter) * percent) + thumbDiameter/2;
         
         m_pThumbTintImageView->setCenter(DRect(centerX, thumbDiameter / 2, thumbDiameter, thumbDiameter));
-        m_pMinTrackTintImageView->setLayout(DLayout(DHorizontalLayout_L_W(thumbDiameter/2, centerX), DVerticalLayout_H_C(m_fTrackHeight, 0.5f)));
-        m_pMaxTrackTintImageView->setLayout(DLayout(DHorizontalLayout_L_R(centerX, thumbDiameter/2), DVerticalLayout_H_C(m_fTrackHeight, 0.5f)));
+        m_pMinTrackTintImageView->setLayout(DLayout(DHorizontalLayout_L_W(thumbDiameter/2, centerX - thumbDiameter/2), DVerticalLayout_H_C(m_fTrackHeight, 0.5f)));
+        m_pMaxTrackTintImageView->setLayout(DLayout(DHorizontalLayout_L_R(centerX - thumbDiameter/2, thumbDiameter/2), DVerticalLayout_H_C(m_fTrackHeight, 0.5f)));
     }
 }
 
