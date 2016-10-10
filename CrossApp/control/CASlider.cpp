@@ -114,17 +114,19 @@ bool CASlider::init()
         return false;
     }
     
-    this->setMinTrackTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
-    m_pMinTrackTintImageView = CAScale9ImageView::createWithImage(m_pMinTrackTintImage);
+    m_pMinTrackTintImageView = CAScale9ImageView::create();
     this->addSubview(m_pMinTrackTintImageView);
+    this->setMinTrackTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
     
-    this->setMaxTrackTintImage(CAImage::create("source_material/btn_square_disabled.png"));
-    m_pMaxTrackTintImageView = CAScale9ImageView::createWithImage(m_pMaxTrackTintImage);
+    
+    m_pMaxTrackTintImageView = CAScale9ImageView::create();
     this->addSubview(m_pMaxTrackTintImageView);
+    this->setMaxTrackTintImage(CAImage::create("source_material/btn_square_disabled.png"));
     
-    this->setThumbTintImage(CAImage::create("source_material/slider_indicator.png"));
-    m_pThumbTintImageView = CAImageView::createWithImage(m_pThumbTintImage);
+    
+    m_pThumbTintImageView = CAImageView::create();
     this->addSubview(m_pThumbTintImageView);
+    this->setThumbTintImage(CAImage::create("source_material/slider_indicator.png"));
     
     return true;
 }
@@ -247,7 +249,7 @@ void CASlider::setThumbTintImage(CAImage* image)
         m_pThumbTintImage = image;
         if (m_pThumbTintImageView)
         {
-            ((CAScale9ImageView*)m_pThumbTintImageView)->setImage(m_pThumbTintImage);
+            m_pThumbTintImageView->setImage(m_pThumbTintImage);
             const DSize size = this->getBounds().size;
             m_pThumbTintImageView->setFrame(DRect(0, 0, size.height, size.height));
         }
