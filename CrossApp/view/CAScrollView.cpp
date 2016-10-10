@@ -1438,14 +1438,7 @@ void CAIndicator::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
 
 void CAIndicator::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 {
-    if (m_pIndicator->getBounds().containsPoint(m_pIndicator->convertTouchToNodeSpace(pTouch)))
-    {
-        m_pIndicator->setColor(CAColor_gray);
-    }
-    else
-    {
-        m_pIndicator->setColor(CAColor_white);
-    }
+    m_pIndicator->setColor(CAColor_gray);
 }
 
 void CAIndicator::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
