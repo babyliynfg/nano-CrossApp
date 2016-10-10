@@ -968,7 +968,12 @@ void CAScrollView::deaccelerateScrolling(float dt)
 
 void CAScrollView::initIndicator()
 {
-    const char indicatorSize = 6;
+    char indicatorSize = 6;
+    
+    if (m_bPCMode)
+    {
+        indicatorSize = 16;
+    }
     
     if (m_pIndicatorHorizontal == NULL)
     {
