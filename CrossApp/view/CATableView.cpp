@@ -157,16 +157,6 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     CAScrollView::ccTouchCancelled(pTouch, pEvent);
 }
 
-void CATableView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
-{
-
-}
-
-void CATableView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
-{
-
-}
-
 void CATableView::switchPCMode(bool var)
 {
     CAScrollView::switchPCMode(var);
