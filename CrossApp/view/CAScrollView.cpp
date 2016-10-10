@@ -453,6 +453,11 @@ void CAScrollView::setContainerPoint(const DPoint& point, const DSize& size)
 
 bool CAScrollView::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
 {
+    if (m_bPCMode)
+    {
+        return true;
+    }
+    
     do
     {
         CC_BREAK_IF(m_vTouches.size() > 2);
@@ -674,6 +679,7 @@ void CAScrollView::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
 
 void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
 {
+    CC_RETURN_IF(m_bPCMode);
     CC_RETURN_IF(m_vTouches.contains(pTouch) == false);
     if (m_vTouches.size() == 1)
     {

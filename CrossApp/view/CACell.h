@@ -40,6 +40,12 @@ public:
 
     CAView* getViewWithID(const std::string &tag);
     
+public:
+    
+    virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
+    
+    virtual void mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent);
+    
 protected:
 
     virtual void normalCell();

@@ -190,10 +190,6 @@ public:
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
     
-    virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
-    
-    virtual void mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent);
-    
 private:
     
     using CAScrollView::setBounceHorizontal;
@@ -327,7 +323,7 @@ protected:
     virtual void ccTouchEnded(CATouch *pTouch, CAEvent *pEvent);
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
-    
+
     void draggingIn();
     
     void draggingOut();
