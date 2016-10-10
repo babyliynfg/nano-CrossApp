@@ -167,8 +167,8 @@ void CASlider::layoutSubViews()
         float maxLeft = centerX + halfThumbWidth;
         
         m_pThumbTintImageView->setCenter(DRect(centerX, m_obContentSize.height / 2, m_obContentSize.height, m_obContentSize.height));
-        m_pMinTrackTintImageView->setLayout(DLayout(DHorizontalLayout_L_W(0, minRight), DVerticalLayout_H_C(m_fTrackHeight, 0.5f)));
-        m_pMaxTrackTintImageView->setLayout(DLayout(DHorizontalLayout_R_W(0, maxLeft), DVerticalLayout_H_C(m_fTrackHeight, 0.5f)));
+        m_pMinTrackTintImageView->setLayout(DLayout(DHorizontalLayout_L_W(0, maxLeft), DVerticalLayout_H_C(m_fTrackHeight, 0.5f)));
+        m_pMaxTrackTintImageView->setLayout(DLayout(DHorizontalLayout_R_W(0, minRight), DVerticalLayout_H_C(m_fTrackHeight, 0.5f)));
     }
 }
 
