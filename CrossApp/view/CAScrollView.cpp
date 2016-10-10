@@ -1305,7 +1305,9 @@ bool CAIndicator::init()
     this->setColor(CAColor_clear);
     CAImage* image = CAImage::create("source_material/indicator.png");
     
+    DSize size = image->getContentSize();
     m_pIndicator = CAScale9ImageView::createWithImage(image);
+    ((CAScale9ImageView*)m_pIndicator)->setCapInsets(DRect(size.width / 2 - 1, size.height / 2 - 1, 2, 2));
     this->addSubview(m_pIndicator);
     this->setAlpha(0.0f);
     
