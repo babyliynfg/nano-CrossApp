@@ -772,13 +772,26 @@ void CAScrollView::switchPCMode(bool var)
     m_bPCMode = var;
     this->setMouseScrollWheelEnabled(m_bPCMode);
     this->setPriorityScroll(!m_bPCMode);
+
+    char indicatorSize = 6;
+    
+    if (m_bPCMode)
+    {
+        indicatorSize = 16;
+    }
+    
     if (m_pIndicatorHorizontal)
     {
         m_pIndicatorHorizontal->switchPCMode(m_bPCMode);
+        m_pIndicatorHorizontal->setLayout(DLayout(DHorizontalLayout_L_R(indicatorSize * 2, indicatorSize * 2),
+                                                  DVerticalLayout_B_H(indicatorSize, indicatorSize)));
     }
+    
     if (m_pIndicatorVertical)
     {
         m_pIndicatorVertical->switchPCMode(m_bPCMode);
+        m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(indicatorSize, indicatorSize),
+                                                DVerticalLayout_T_B(indicatorSize * 2, indicatorSize * 2)));
     }
 }
 
