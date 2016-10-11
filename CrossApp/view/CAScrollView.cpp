@@ -318,6 +318,7 @@ void CAScrollView::setShowsScrollIndicators(bool var)
         m_pIndicatorHorizontal->setVisible(var && m_bShowsHorizontalScrollIndicator);
         m_pIndicatorVertical->setVisible(var && m_bShowsVerticalScrollIndicator);
     }
+    this->updateIndicatorLayout();
 }
 
 bool CAScrollView::isShowsScrollIndicators()
@@ -329,6 +330,7 @@ void CAScrollView::setShowsHorizontalScrollIndicator(bool var)
 {
     m_bShowsHorizontalScrollIndicator = var;
     m_pIndicatorHorizontal->setVisible(var);
+    this->updateIndicatorLayout();
 }
 
 bool CAScrollView::isShowsHorizontalScrollIndicator()
@@ -340,6 +342,7 @@ void CAScrollView::setShowsVerticalScrollIndicator(bool var)
 {
     m_bShowsVerticalScrollIndicator = var;
     m_pIndicatorVertical->setVisible(var);
+    this->updateIndicatorLayout();
 }
 
 bool CAScrollView::isShowsVerticalScrollIndicator()
