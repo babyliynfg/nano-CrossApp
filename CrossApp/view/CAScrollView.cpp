@@ -775,37 +775,6 @@ void CAScrollView::switchPCMode(bool var)
     this->updateIndicatorLayout();
 }
 
-void CAScrollView::updateIndicatorLayout()
-{
-    char indicatorSize = 6;
-    
-    if (m_bPCMode)
-    {
-        indicatorSize = 16;
-    }
-    
-    m_pIndicatorHorizontal->switchPCMode(m_bPCMode);
-    m_pIndicatorVertical->switchPCMode(m_bPCMode);
-    
-    if (m_pIndicatorHorizontal->isVisible() && m_pIndicatorVertical->isVisible() == false)
-    {
-        m_pIndicatorHorizontal->setLayout(DLayout(DHorizontalLayout_L_R(6, 6),
-                                                  DVerticalLayout_B_H(6, indicatorSize)));
-    }
-    else if (m_pIndicatorVertical->isVisible() && m_pIndicatorHorizontal->isVisible() == false)
-    {
-        m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(6, indicatorSize),
-                                                DVerticalLayout_T_B(6, 6)));
-    }
-    else if (m_pIndicatorHorizontal->isVisible() && m_pIndicatorVertical->isVisible())
-    {
-        m_pIndicatorHorizontal->setLayout(DLayout(DHorizontalLayout_L_R(6, 6 + indicatorSize),
-                                                  DVerticalLayout_B_H(6, indicatorSize)));
-        m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(6, indicatorSize),
-                                                DVerticalLayout_T_B(6, 6 +  + indicatorSize)));
-    }
-}
-
 void CAScrollView::updatePointOffset(float dt)
 {
     CC_RETURN_IF(m_vTouches.size() == 0);
@@ -994,6 +963,40 @@ void CAScrollView::initIndicator()
     }
     
     this->updateIndicatorLayout();
+}
+
+void CAScrollView::updateIndicatorLayout()
+{
+    if (m_pIndicatorHorizontal && m_pIndicatorVertical)
+    {
+        char indicatorSize = 6;
+        
+        if (m_bPCMode)
+        {
+            indicatorSize = 16;
+        }
+        
+        m_pIndicatorHorizontal->switchPCMode(m_bPCMode);
+        m_pIndicatorVertical->switchPCMode(m_bPCMode);
+        
+        if (m_pIndicatorHorizontal->isVisible() && m_pIndicatorVertical->isVisible() == false)
+        {
+            m_pIndicatorHorizontal->setLayout(DLayout(DHorizontalLayout_L_R(6, 6),
+                                                      DVerticalLayout_B_H(6, indicatorSize)));
+        }
+        else if (m_pIndicatorVertical->isVisible() && m_pIndicatorHorizontal->isVisible() == false)
+        {
+            m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(6, indicatorSize),
+                                                    DVerticalLayout_T_B(6, 6)));
+        }
+        else if (m_pIndicatorHorizontal->isVisible() && m_pIndicatorVertical->isVisible())
+        {
+            m_pIndicatorHorizontal->setLayout(DLayout(DHorizontalLayout_L_R(6, 6 + indicatorSize),
+                                                      DVerticalLayout_B_H(6, indicatorSize)));
+            m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(6, indicatorSize),
+                                                    DVerticalLayout_T_B(6, 6 +  + indicatorSize)));
+        }
+    }
 }
 
 void CAScrollView::showIndicator()
