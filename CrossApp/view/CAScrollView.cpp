@@ -210,6 +210,7 @@ void CAScrollView::setViewSize(const DSize& var)
             this->getScrollWindowNotOutPoint(point);
             this->setContainerPoint(point);
         }
+        this->update(0);
     }
 }
 
@@ -999,7 +1000,7 @@ void CAScrollView::updateIndicatorLayout()
             m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(6, indicatorSize),
                                                     DVerticalLayout_T_B(6, 6 +  + indicatorSize)));
         }
-        CAScrollView::update(0);
+        this->update(0);
     }
 }
 
@@ -1013,7 +1014,7 @@ void CAScrollView::showIndicator()
     {
         m_pIndicatorVertical->setHide(false);
     }
-    CAScrollView::update(0);
+    this->update(0);
 }
 
 void CAScrollView::hideIndicator()
