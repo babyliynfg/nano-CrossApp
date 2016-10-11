@@ -772,7 +772,11 @@ void CAScrollView::switchPCMode(bool var)
     m_bPCMode = var;
     this->setMouseScrollWheelEnabled(m_bPCMode);
     this->setPriorityScroll(!m_bPCMode);
+    this->updateIndicatorLayout();
+}
 
+void CAScrollView::updateIndicatorLayout()
+{
     char indicatorSize = 6;
     
     if (m_bPCMode)
@@ -780,18 +784,25 @@ void CAScrollView::switchPCMode(bool var)
         indicatorSize = 16;
     }
     
-    if (m_pIndicatorHorizontal)
-    {
-        m_pIndicatorHorizontal->switchPCMode(m_bPCMode);
-        m_pIndicatorHorizontal->setLayout(DLayout(DHorizontalLayout_L_R(indicatorSize * 2, indicatorSize * 2),
-                                                  DVerticalLayout_B_H(indicatorSize, indicatorSize)));
-    }
+    m_pIndicatorHorizontal->switchPCMode(m_bPCMode);
+    m_pIndicatorVertical->switchPCMode(m_bPCMode);
     
-    if (m_pIndicatorVertical)
+    if (m_pIndicatorHorizontal->isVisible() && m_pIndicatorVertical->isVisible() == false)
     {
-        m_pIndicatorVertical->switchPCMode(m_bPCMode);
-        m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(indicatorSize, indicatorSize),
-                                                DVerticalLayout_T_B(indicatorSize * 2, indicatorSize * 2)));
+        m_pIndicatorHorizontal->setLayout(DLayout(DHorizontalLayout_L_R(6, 6),
+                                                  DVerticalLayout_B_H(6, indicatorSize)));
+    }
+    else if (m_pIndicatorVertical->isVisible() && m_pIndicatorHorizontal->isVisible() == false)
+    {
+        m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(6, indicatorSize),
+                                                DVerticalLayout_T_B(6, 6)));
+    }
+    else if (m_pIndicatorHorizontal->isVisible() && m_pIndicatorVertical->isVisible())
+    {
+        m_pIndicatorHorizontal->setLayout(DLayout(DHorizontalLayout_L_R(6, 6 + indicatorSize),
+                                                  DVerticalLayout_B_H(6, indicatorSize)));
+        m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(6, indicatorSize),
+                                                DVerticalLayout_T_B(6, 6 +  + indicatorSize)));
     }
 }
 
@@ -968,18 +979,9 @@ void CAScrollView::deaccelerateScrolling(float dt)
 
 void CAScrollView::initIndicator()
 {
-    char indicatorSize = 6;
-    
-    if (m_bPCMode)
-    {
-        indicatorSize = 16;
-    }
-    
     if (m_pIndicatorHorizontal == NULL)
     {
         m_pIndicatorHorizontal = CAIndicator::create(CAIndicator::CAIndicatorTypeHorizontal, this);
-        m_pIndicatorHorizontal->setLayout(DLayout(DHorizontalLayout_L_R(indicatorSize * 2, indicatorSize * 2),
-                                                  DVerticalLayout_B_H(indicatorSize, indicatorSize)));
         m_vChildInThis.pushBack(m_pIndicatorHorizontal);
         this->insertSubview(m_pIndicatorHorizontal, 1);
     }
@@ -987,11 +989,11 @@ void CAScrollView::initIndicator()
     if (m_pIndicatorVertical == NULL)
     {
         m_pIndicatorVertical = CAIndicator::create(CAIndicator::CAIndicatorTypeVertical, this);
-        m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(indicatorSize, indicatorSize),
-                                                DVerticalLayout_T_B(indicatorSize * 2, indicatorSize * 2)));
         m_vChildInThis.pushBack(m_pIndicatorVertical);
         this->insertSubview(m_pIndicatorVertical, 1);
     }
+    
+    this->updateIndicatorLayout();
 }
 
 void CAScrollView::showIndicator()
@@ -1432,18 +1434,21 @@ void CAIndicator::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
     m_pIndicator->setCenterOrigin(point);
     
     DSize indictor_size = ccpSub(m_obContentSize, size);
-    DPoint indictor_point = ccpSub(point, ccpMult(size, 0.5f));
-    DSize view_size = ccpSub(m_pMyScrollView->getViewSize(), m_pMyScrollView->getBounds().size);
-    DPoint view_offset = m_pMyScrollView->getContentOffset();
-    if (m_eType == CAIndicatorTypeHorizontal)
+    if (!indictor_size.equals(DSizeZero))
     {
-        view_offset.x = indictor_point.x / indictor_size.width * view_size.width;
+        DPoint indictor_point = ccpSub(point, ccpMult(size, 0.5f));
+        DSize view_size = ccpSub(m_pMyScrollView->getViewSize(), m_pMyScrollView->getBounds().size);
+        DPoint view_offset = m_pMyScrollView->getContentOffset();
+        if (m_eType == CAIndicatorTypeHorizontal)
+        {
+            view_offset.x = indictor_point.x / indictor_size.width * view_size.width;
+        }
+        else
+        {
+            view_offset.y = indictor_point.y / indictor_size.height * view_size.height;
+        }
+        m_pMyScrollView->setContentOffset(view_offset, false);
     }
-    else
-    {
-        view_offset.y = indictor_point.y / indictor_size.height * view_size.height;
-    }
-    m_pMyScrollView->setContentOffset(view_offset, false);
 }
 
 void CAIndicator::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)

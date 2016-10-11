@@ -221,6 +221,8 @@ protected:
     
     void updatePointOffset(float dt = 0);
     
+    void updateIndicatorLayout();
+    
 public:
     
     virtual bool ccTouchBegan(CATouch *pTouch, CAEvent *pEvent);
