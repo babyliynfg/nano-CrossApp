@@ -452,10 +452,11 @@ bool CATextField::resignFirstResponder()
     [textField_MAC resignFirstResponder];
     
     this->showTextField();
+
+    this->hideNativeTextField();
     
     this->showImage();
     
-    this->hideNativeTextField();
     return result;
 }
 
@@ -508,6 +509,8 @@ void CATextField::delayShowImage()
 
 void CATextField::showImage()
 {
+    [textField_MAC setFrameOrigin:CGPointMake(-50000, -50000)];
+    
     NSImage* image_MAC = [[[NSImage alloc]initWithData:[textField_MAC dataWithPDFInsideRect:[textField_MAC bounds]]]autorelease];
     
     NSData* data_MAC = [image_MAC TIFFRepresentationUsingCompression:NSTIFFCompressionNone factor:MAC_SCALE];
@@ -518,8 +521,6 @@ void CATextField::showImage()
     CAImage *image = CAImage::createWithImageDataNoCache(data, data_MAC.length);
     free(data);
     m_pImgeView->setImage(image);
-
-    CAScheduler::unschedule(schedule_selector(CATextField::showImage), this);
 }
 
 CATextField* CATextField::createWithFrame(const DRect& frame)
