@@ -999,6 +999,7 @@ void CAScrollView::updateIndicatorLayout()
             m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(6, indicatorSize),
                                                     DVerticalLayout_T_B(6, 6 +  + indicatorSize)));
         }
+        CAScrollView::update(0);
     }
 }
 
