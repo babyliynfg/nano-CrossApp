@@ -21,6 +21,7 @@ CAScale9ImageView::CAScale9ImageView()
 , m_obOriginalSize(DSizeZero)
 , m_pScale9ImageView(NULL)
 , m_bUpdatePositions(false)
+, m_bAutoCapInsets(true)
 {
     memset(m_pImageView, 0, sizeof(m_pImageView));
 }
@@ -286,6 +287,7 @@ void CAScale9ImageView::setCapInsets(const DRect& capInsets)
 {
     CC_RETURN_IF(m_obCapInsets.equals(capInsets));
     m_obCapInsets = capInsets;
+    m_bAutoCapInsets = false;
     this->updateCapInset();
 }
 
@@ -294,7 +296,7 @@ void CAScale9ImageView::updateCapInset()
     float w = m_obOriginalSize.width;
     float h = m_obOriginalSize.height;
     
-    if ( m_obCapInsets.equals(DRectZero) )
+    if (m_bAutoCapInsets)
     {
         m_obCapInsets = DRect(w/3, h/3, w/3, h/3);
     }
@@ -337,6 +339,7 @@ void CAScale9ImageView::updateDisplayedColor(const CrossApp::CAColor4B &color)
 void CAScale9ImageView::setInsetLeft(float insetLeft)
 {
     this->m_fInsetLeft = insetLeft;
+    m_bAutoCapInsets = false;
     DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
@@ -351,6 +354,7 @@ void CAScale9ImageView::setInsetLeft(float insetLeft)
 void CAScale9ImageView::setInsetTop(float insetTop)
 {
     this->m_fInsetTop = insetTop;
+    m_bAutoCapInsets = false;
     DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
@@ -365,6 +369,7 @@ void CAScale9ImageView::setInsetTop(float insetTop)
 void CAScale9ImageView::setInsetRight(float insetRight)
 {
     this->m_fInsetRight = insetRight;
+    m_bAutoCapInsets = false;
     DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {
@@ -379,6 +384,7 @@ void CAScale9ImageView::setInsetRight(float insetRight)
 void CAScale9ImageView::setInsetBottom(float insetBottom)
 {
     this->m_fInsetBottom = insetBottom;
+    m_bAutoCapInsets = false;
     DRect insets = m_obCapInsets;
     if (m_fInsetLeft != 0 && m_fInsetTop != 0 && m_fInsetRight != 0 && m_fInsetBottom != 0)
     {

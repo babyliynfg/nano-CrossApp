@@ -95,6 +95,8 @@ protected:
     
     DRect m_rFrame[9];
     
+    bool m_bAutoCapInsets;
+    
     bool m_bUpdatePositions;
     
 };
