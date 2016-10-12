@@ -35,24 +35,38 @@ static void avStreamFPSTimeBase(AVStream *st, float defaultTimeBase, float *pFPS
 {
     float fps, timebase;
     
-    if (st->time_base.den && st->time_base.num)
-        timebase = av_q2d(st->time_base);
-    else if(st->codec->time_base.den && st->codec->time_base.num)
+    timebase = defaultTimeBase;
+    
+    if(st->codec->time_base.den && st->codec->time_base.num)
+    {
         timebase = av_q2d(st->codec->time_base);
-    else
-        timebase = defaultTimeBase;
+    }
+    
+    if (st->time_base.den && st->time_base.num)
+    {
+        timebase = av_q2d(st->time_base);
+    }
+
+    fps = 1.0 / timebase;
+    
+    if (st->r_frame_rate.den && st->r_frame_rate.num)
+    {
+        fps = av_q2d(st->r_frame_rate);
+    }
     
     if (st->avg_frame_rate.den && st->avg_frame_rate.num)
+    {
         fps = av_q2d(st->avg_frame_rate);
-    else if (st->r_frame_rate.den && st->r_frame_rate.num)
-        fps = av_q2d(st->r_frame_rate);
-    else
-        fps = 1.0 / timebase;
-    
+    }
+
     if (pFPS)
+    {
         *pFPS = fps;
+    }
     if (pTimeBase)
+    {
         *pTimeBase = timebase;
+    }
 }
 
 static void copyFrameData(unsigned char *src, unsigned char **dst, int linesize, int width, int height, int *dstLength)
@@ -215,13 +229,13 @@ void VPDecoder::setPosition(float seconds)
     _isEOF = false;
     
 	if (m_iVideoStream != -1) {
-		long long ts = (long long)(seconds / m_fVideoTimeBase);
+		long long ts = (long long)(m_fPosition / m_fVideoTimeBase / 4);
 		avformat_seek_file(m_pFormatCtx, m_iVideoStream, 0, ts, ts, AVSEEK_FLAG_FRAME);
 		avcodec_flush_buffers(m_pVideoCodecCtx);
     }
     
 	if (m_iAudioStream != -1) {
-		long long ts = (long long)(seconds / m_fAudioTimeBase);
+		long long ts = (long long)(m_fPosition / m_fAudioTimeBase / 4);
 		avformat_seek_file(m_pFormatCtx, m_fAudioTimeBase, 0, ts, ts, AVSEEK_FLAG_FRAME);
 		avcodec_flush_buffers(m_pAudioCodecCtx);
     }
@@ -311,7 +325,7 @@ int VPDecoder::interrupt_cb(void *ctx)
 {
 	VPDecoder* pDecoder = (VPDecoder*)ctx;
 
-	if ( pDecoder->m_iTimeoutCnt > 150 )
+	if ( pDecoder->m_iTimeoutCnt > 0xffff)
 	{
 		pDecoder->m_iTimeoutCnt = 0;
 		return 1;
@@ -347,7 +361,7 @@ VPError VPDecoder::openInput(std::string path)
 		avformat_close_input(&m_pFormatCtx);
         return kErrorStreamInfoNotFound;
     }
-    
+
 	av_dump_format(m_pFormatCtx, 0, path.c_str(), false);
     return kErrorNone;
 }
@@ -653,7 +667,7 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
 {
 	if (m_pVideoFrame==NULL || !m_pVideoFrame->data[0])
         return NULL;
-    
+
     VPVideoFrame *frame = NULL;
     
 	if (m_videoFrameFormat == kVideoFrameFormatYUV) {
@@ -710,13 +724,12 @@ VPVideoFrame* VPDecoder::handleVideoFrame()
 		rgbFrame->setLineSize(m_pAVPicture->linesize[0]);
 		rgbFrame->setData((char*)m_pAVPicture->data[0]);
         rgbFrame->setDataLength(rgbFrame->getLineSize() * m_pVideoCodecCtx->height);
-        
         frame = rgbFrame;
     }    
     
 	frame->setWidth(m_pVideoCodecCtx->width);
 	frame->setHeight(m_pVideoCodecCtx->height);
-	frame->setPosition(av_frame_get_best_effort_timestamp(m_pVideoFrame) * m_fVideoTimeBase);
+    frame->setPosition(av_frame_get_best_effort_timestamp(m_pVideoFrame)* m_fVideoTimeBase);
     
 	const long long frameDuration = av_frame_get_pkt_duration(m_pVideoFrame);
     if (frameDuration) {
@@ -887,21 +900,21 @@ std::vector<VPFrame*> VPDecoder::decodeFrames(float minDuration)
 					CCLog("decode video error, skip packet");
                     break;
                 }
-                
-                if (gotframe) 
-				{
+                    
+                if (gotframe) {
+                    
                     VPVideoFrame *frame = this->handleVideoFrame();
                     if (frame)
-					{
+                    {
                         result.push_back((VPFrame*)frame);
                         
-						if (isValidVideo())
-						{
-							m_fPosition = frame->getPosition();
-							decodedDuration += frame->getDuration();
-							if (decodedDuration > minDuration)
-								finished = true;
-						}
+                        if (isValidVideo())
+                        {
+                            m_fPosition = frame->getPosition();
+                            decodedDuration += frame->getDuration();
+                            if (decodedDuration > minDuration)
+                                finished = true;
+                        }
                     }
                 }
                 

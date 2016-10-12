@@ -84,7 +84,7 @@ void CACell::setBackgroundView(CrossApp::CAView *var)
 }
 
 CAView* CACell::getBackgroundView()
-{
+{ 
     return m_pBackgroundView;
 }
 

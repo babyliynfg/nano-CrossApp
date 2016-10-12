@@ -125,6 +125,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
     CAImage* barImage = CAImage::create("source_material/vdo_progress_bar.png");
     m_playSlider = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(32, 32), DVerticalLayout_T_H(25, 56)));
     m_playSlider->setThumbTintImage(barImage);
+    m_playSlider->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onSlideDragging));
     m_playSlider->addTargetForTouchUpSide(this, CAControl_selector(CAVideoPlayerControlView::onSlideChanged));
     bottomPanel->addSubview(m_playSlider);
     
@@ -191,9 +192,13 @@ std::string CAVideoPlayerControlView::formatTimeInterval(float seconds, bool isL
 	return std::string(output);
 }
 
+void CAVideoPlayerControlView::onSlideDragging(CAControl* control, DPoint point)
+{
+    m_playTimeLabel->setText(formatTimeInterval(m_glView->getDuration() * m_playSlider->getValue(), false).append(" / ").append(formatTimeInterval(m_glView->getDuration() - 1, false)));
+}
+
 void CAVideoPlayerControlView::onSlideChanged(CAControl* control, DPoint point)
 {
-	CCLog("CAVideoPlayerControlView::onSlideChanged");
 	float moviePosition = m_playSlider->getValue() * m_glView->getDuration();
 	m_glView->setPosition(moviePosition);
 	

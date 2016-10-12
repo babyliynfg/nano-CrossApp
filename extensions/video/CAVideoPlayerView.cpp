@@ -36,6 +36,7 @@ CAVideoPlayerView::CAVideoPlayerView()
 , m_pCurAudioFrame(NULL)
 , m_uCurAudioFramePos(0)
 , m_pLoadingView(NULL)
+
 {
 }
 
@@ -366,8 +367,8 @@ void CAVideoPlayerView::setPosition(float position)
         m_isBuffered = true;
         pause();
         CAThread::clear(true);
+        m_isSetPosWaiting = true;
         setDecodePosition(position);
-		m_isSetPosWaiting = true;
     }
 }
 
@@ -431,13 +432,13 @@ void CAVideoPlayerView::setVPPosition(float p)
 	
 	float position = MIN(m_pDecoder->getDuration(), MAX(0, p));
 	m_pDecoder->setPosition(position);
-
+    
 	m_aLock.Lock();
-	m_fMoviePosition = position + m_pDecoder->getStartTime();
+	m_fMoviePosition = m_pDecoder->getPosition() + m_pDecoder->getStartTime();
 	m_fBufferedDuration = 0;
 	CC_SAFE_DELETE(m_pCurAudioFrame);
 	m_uCurAudioFramePos = 0;
-	m_aLock.UnLock();
+    m_aLock.UnLock();
 }
 
 void CAVideoPlayerView::decodeProcess()
@@ -465,8 +466,9 @@ bool CAVideoPlayerView::decodeProcessThread(void* param)
 	{
 		if (pMsg->param1 == ThreadMsgType_SetPosition)
 		{
+            pMsg->pAVGLView->m_isSetPosWaiting = false;
 			pMsg->pAVGLView->setVPPosition(pMsg->param2);
-			pMsg->pAVGLView->m_isSetPosWaiting = false;
+            
 		}
 		if (pMsg->param1 == ThreadMsgType_DecodeFrame)
 		{
