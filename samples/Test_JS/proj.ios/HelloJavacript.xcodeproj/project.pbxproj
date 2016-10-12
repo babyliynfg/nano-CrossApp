@@ -40,6 +40,7 @@
 		480EDDFF1D95326900C758DA /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDDFE1D95326900C758DA /* libSDL2.a */; };
 		480EDE021D9532E400C758DA /* crossapp_specifics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 480EDE001D9532E400C758DA /* crossapp_specifics.cpp */; };
 		480EDE051D9538EC00C758DA /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 480EDE041D9538EC00C758DA /* libiconv.tbd */; };
+		480EDE961D9546E200C758DA /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 481DCA251D4B19C000C31DA9 /* libwebsockets.a */; };
 		48114A9C1CC7784A00A85EAA /* jsb_crossapp_auto.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48114A9A1CC7784A00A85EAA /* jsb_crossapp_auto.cpp */; };
 		481DCA281D4B23B300C31DA9 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 481DCA271D4B23B300C31DA9 /* CoreMotion.framework */; };
 		4840494A1CC8C66400BECCC7 /* js in Resources */ = {isa = PBXBuildFile; fileRef = 484049491CC8C66400BECCC7 /* js */; };
@@ -186,6 +187,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				480EDE961D9546E200C758DA /* libwebsockets.a in Frameworks */,
 				480EDE051D9538EC00C758DA /* libiconv.tbd in Frameworks */,
 				480EDDFF1D95326900C758DA /* libSDL2.a in Frameworks */,
 				480EDDF71D95324B00C758DA /* libavcodec.a in Frameworks */,

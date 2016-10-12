@@ -6,10 +6,12 @@
 //
 //
 
+
 #include "js_crossapp_delegates_manual.hpp"
 #include "crossapp_specifics.hpp"
 #include "jsb_crossapp_auto.hpp"
-
+#include "CrossAppExt.h"
+#include "CrossApp.h"
 typedef CAMap<std::string,CAObject*> CADelegateMap;
 
 //JSB_TextFieldDelegate
@@ -319,21 +321,22 @@ private:
 
 
 //**JSB_VideoPlayerControlViewDelegate
-//class JSB_VideoPlayerControlViewDelegate: public CAObject, public CAVideoPlayerViewDelegate{
-//
-//public:
-//    JSB_VideoPlayerControlViewDelegate()
-//    {
-//        _JSDelegate = nullptr;
-//    }
-//    void setJSDelegate(JS::HandleObject pJSDelegate)
-//    {
-//        _JSDelegate = pJSDelegate;
-//    }
-//    
-//private:
-//    JS::Heap<JSObject*> _JSDelegate;
-//};
+class JSB_VideoPlayerControlViewDelegate: public CAObject, public extension::CAVideoPlayerControlViewDelegate
+{
+
+public:
+    JSB_VideoPlayerControlViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
+    void setJSDelegate(JS::HandleObject pJSDelegate)
+    {
+        _JSDelegate = pJSDelegate;
+    }
+    
+private:
+    JS::Heap<JSObject*> _JSDelegate;
+};
 
 
 
@@ -2155,14 +2158,16 @@ public:
     }
     virtual void didSelectRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
     {
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+
         jsval args[3];
         
         js_proxy_t * p = jsb_get_native_proxy(pickerView);
         if (!p) return;
         
         args[0] = OBJECT_TO_JSVAL(p->obj);
-        args[1] = uint32_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), row);
-        args[2] = uint32_to_jsval(ScriptingCore::getInstance()->getGlobalContext(), component);
+        args[1] = uint32_to_jsval(cx, row);
+        args[2] = uint32_to_jsval(cx, component);
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "didSelectRow", 3, args);
 
     }
@@ -2197,7 +2202,7 @@ static bool js_crossapp_CAPickerView_setPickerViewDelegate(JSContext *cx, uint32
         
         userDict->insert(KEY_PICKERVIEW_DELEGATE,nativeDelegate);
         cobj->setPickerViewDelegate(nativeDelegate);
-//        nativeDelegate->release();
+        nativeDelegate->release();
         
         args.rval().setUndefined();
         return true;
@@ -2250,7 +2255,10 @@ public:
         unsigned index = 0;
         if (ok) {
             bool isSucceed = jsval_to_uint(cx, retval, &index);
-            if (isSucceed) return index;
+            if (isSucceed)
+            {
+                return index;
+            }
         }
         return index;
     }
@@ -2299,18 +2307,25 @@ public:
         JS::RootedValue retval(cx);
         
         js_proxy_t * p = jsb_get_native_proxy(pickerView);
-        jsval args[2];
+        jsval args[3];
         args[0] = OBJECT_TO_JSVAL(p->obj);
-        args[1] = uint32_to_jsval(cx, component);
+        args[1] = uint32_to_jsval(cx, row);
+        args[2] = uint32_to_jsval(cx, component);
         
-        bool ok =ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "rowHeightForComponent",2, args,&retval);
+        bool ok =ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "titleForRow",3, args,&retval);
         std::string str;
         if (ok) {
             bool isSucceed = jsval_to_std_string(cx, retval, &str);
-            if (isSucceed) return str.c_str();
+            if (isSucceed){
+                char buff[256] = {0};
+                sprintf(buff, "%s",str.c_str());
+                static std::string ret;
+                ret = std::string(buff);
+                return ret.c_str();
+            }
+            
         }
-        
-        return NULL;
+        return nullptr;
     }
     
     virtual CAView* viewForRow(CAPickerView* pickerView, unsigned int row, unsigned int component)
@@ -2351,6 +2366,7 @@ public:
         jsval args[3];
         args[0] = OBJECT_TO_JSVAL(p->obj);
         args[1] = uint32_to_jsval(cx, component);
+   
         args[2] = dsize_to_jsval(cx, size);
         
         bool ok =ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "viewForSelect", 3, args,&retval);
@@ -2397,7 +2413,7 @@ static bool js_crossapp_CAPickerView_setPickerViewDataSource(JSContext *cx, uint
         
         cobj->setPickerViewDataSource(pNativeSource);
         
-//        pNativeSource->release();
+        pNativeSource->release();
         
         args.rval().setUndefined();
         return true;
@@ -2407,10 +2423,95 @@ static bool js_crossapp_CAPickerView_setPickerViewDataSource(JSContext *cx, uint
     return false;
 }
 
+//
+#define KEY_DATE_PICKERVIEW_DELEGATE  "DatePickerViewDelegate"
+class JSB_DatePickerViewDelegate: public CAObject,public CADatePickerViewDelegate
+{
+public:
 
+    JSB_DatePickerViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
+    virtual ~JSB_DatePickerViewDelegate()
+    {
+        _JSDelegate = nullptr;
+    }
+    void setJSDataSource(JS::HandleObject pJSDelegate)
+    {
+        _JSDelegate = pJSDelegate;
+    }
+    virtual void didSelectRow(const struct tm& tm)
+    {
+        JSContext *cx = ScriptingCore::getInstance()->getGlobalContext();
+        JS::RootedValue retval(cx);
+        
+        //        args[0] = tm_to_jsval(&tm);
+        jsval args[1];
+        args[0] = JSVAL_NULL;
+        JS::RootedObject proto(cx);
+        JS::RootedObject parent(cx);
+        JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+        if (!tmp)
+        {
+            args[0] = JSVAL_NULL;
+        }
+        else
+        {
+        
+            bool ok = JS_DefineProperty(cx, tmp, "tm_sec", tm.tm_sec, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+            JS_DefineProperty(cx, tmp, "tm_min", tm.tm_min, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+            JS_DefineProperty(cx, tmp, "tm_hour", tm.tm_hour, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+            JS_DefineProperty(cx, tmp, "tm_mday", tm.tm_mday, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+            JS_DefineProperty(cx, tmp, "tm_mon", tm.tm_mon, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+            JS_DefineProperty(cx, tmp, "tm_year", tm.tm_year, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+            JS_DefineProperty(cx, tmp, "tm_isdst", tm.tm_isdst, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+            if (ok) {
+                args[0] = OBJECT_TO_JSVAL(tmp);
+            }
+        }
+        bool ok =ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(_JSDelegate), "didSelectRow", 1, args,&retval);
+    }
+private:
+    JS::Heap<JSObject*> _JSDelegate;
+};
 
-
-
+static bool js_crossapp_CADatePickerView_setDelegate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView * cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
+    if (argc == 1)
+    {
+        JSB_DatePickerViewDelegate* pNativeSource = new (std::nothrow) JSB_DatePickerViewDelegate();
+        JS::RootedObject jsdata(cx, args.get(0).toObjectOrNull());
+        pNativeSource->setJSDataSource(jsdata);
+        
+        JS_SetProperty(cx, obj, "m_pDelegate", args.get(0));
+        
+        CAMap<std::string,CAObject*>* userDict = static_cast<CAMap<std::string,CAObject*>*>(cobj->getUserObject());
+        if (NULL == userDict)
+        {
+            userDict = new (std::nothrow) CAMap<std::string,CAObject*>();
+            cobj->setUserObject(userDict);
+            userDict->release();
+        }
+        
+        userDict->insert(KEY_DATE_PICKERVIEW_DELEGATE,pNativeSource);
+        
+        cobj->setDelegate(pNativeSource);
+        
+        pNativeSource->release();
+        
+        args.rval().setUndefined();
+        return true;
+    }
+    
+    JS_ReportError(cx, "wrong number of arguments");
+    return false;
+}
 
 
 void register_all_crossapp_delegates_manual(JSContext* cx, JS::HandleObject global)
@@ -2463,6 +2564,10 @@ void register_all_crossapp_delegates_manual(JSContext* cx, JS::HandleObject glob
     tmpObj.set(jsb_CrossApp_CAPickerView_prototype);
     JS_DefineFunction(cx, tmpObj, "setPickerViewDelegate", js_crossapp_CAPickerView_setPickerViewDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "setPickerViewDataSource", js_crossapp_CAPickerView_setPickerViewDataSource, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
+    tmpObj.set(jsb_CrossApp_CADatePickerView_prototype);
+    JS_DefineFunction(cx, tmpObj, "setDelegate", js_crossapp_CADatePickerView_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    
 
     tmpObj.set(jsb_CrossApp_CATextField_prototype);
     JS_DefineFunction(cx, tmpObj, "setDelegate", js_crossapp_CATextField_setDelegate, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);

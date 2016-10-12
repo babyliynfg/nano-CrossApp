@@ -1,8 +1,8 @@
 \#include "${out_file}.hpp"
 #if $macro_judgement
 $macro_judgement
-#end if 
-\#include "cocos2d_specifics.hpp"
+#end if
+\#include "crossapp_specifics.hpp"
 #for header in $headers
     #set include_header = os.path.basename(header)
     #if $replace_headers.has_key(include_header)
@@ -15,7 +15,7 @@ $macro_judgement
 #for header in $cpp_headers
 \#include "${header}"
 #end for
-#end if 
+#end if
 
 template<class T>
 static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -39,7 +39,7 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
         JS::RootedObject proto(cx, typeClass->proto.get());
         JS::RootedObject parent(cx, typeClass->parentProto.get());
         JS::RootedObject _tmp(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-        
+
     #if $script_control_cpp
         T* cobj = new T();
         js_proxy_t *pp = jsb_new_proxy(cobj, _tmp);
@@ -63,5 +63,5 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }

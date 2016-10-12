@@ -356,6 +356,7 @@ jsval ulong_to_jsval(JSContext* cx, unsigned long v);
 jsval long_long_to_jsval(JSContext* cx, long long v);
 jsval std_string_to_jsval(JSContext* cx, const std::string& v);
 jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length = -1);
+//jsval tm_to_jsval(JSContext* cx, const struct tm& v);
 jsval dpoint_to_jsval(JSContext* cx, const CrossApp::DPoint& v);
 
 jsval viodpointe_to_javal(JSContext *cx, JS::HandleValue v, void* context);
@@ -371,6 +372,7 @@ jsval cacolor4f_to_jsval(JSContext* cx, const CrossApp::CAColor4F& v);
 //jsval ccdictionary_to_jsval(JSContext* cx, cocos2d::__Dictionary *dict);//**
 //jsval ccarray_to_jsval(JSContext* cx, cocos2d::__Array *arr);
 jsval ccacceleration_to_jsval(JSContext* cx, const CrossApp::CAAcceleration& v);
+
 //jsval ccaffinetransform_to_jsval(JSContext* cx, const cocos2d::AffineTransform& t);
 //jsval FontDefinition_to_jsval(JSContext* cx, const cocos2d::FontDefinition& t);
 //jsval quaternion_to_jsval(JSContext* cx, const cocos2d::Quaternion& q);

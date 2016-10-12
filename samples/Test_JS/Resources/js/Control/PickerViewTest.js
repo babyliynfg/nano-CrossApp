@@ -38,21 +38,23 @@ var adressTag = new Array(
     "澳门特别行政区"
 );
 
+
 var PickerViewTest = ca.CAViewController.extend({
-    city_value:null,
+    city_value: null,
+    p_pickerView:null,
     ctor: function () {
         this._super();
 
-        this.getView().setColor(ca.color._getGray());
+        //this.getView().setColor(ca.color._getGray());
 
-        var p_pickerView = ca.CAPickerView.createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)));
-        p_pickerView.setPickerViewDelegate(this);
-        p_pickerView.setPickerViewDataSource(this);
-        p_pickerView.setFontSizeNormal(40);
-        p_pickerView.setFontSizeSelected(40);
-        p_pickerView.setFontColorNormal(ca.BLACK);
-        p_pickerView.setFontColorSelected(ca.BLACK);
-        p_pickerView.reloadAllComponents();
+        this.p_pickerView = ca.CAPickerView.createWithLayout(DLayout(DHorizontalLayout_L_R(10, 10), DVerticalLayout_T_H(200, 400)));
+        this.p_pickerView.setPickerViewDelegate(this);
+        this.p_pickerView.setPickerViewDataSource(this);
+        this.p_pickerView.setFontSizeNormal(40);
+        this.p_pickerView.setFontSizeSelected(40);
+        this.p_pickerView.setFontColorNormal(ca.BLACK);
+        this.p_pickerView.setFontColorSelected(ca.BLACK);
+        this.p_pickerView.reloadAllComponents();
 
         this.city_value = ca.CALabel.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_T_H(100, 40)));
         this.city_value.setText("天津");
@@ -62,7 +64,7 @@ var PickerViewTest = ca.CAViewController.extend({
         this.city_value.setVerticalTextAlignmet(ca.CAVerticalTextAlignment.CAVerticalTextAlignmentCenter);
 
         var view1 = ca.CAView.createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayoutFill));
-        view1.addSubview(p_pickerView);
+        view1.addSubview(this.p_pickerView);
         view1.addSubview(this.city_value);
         view1.setColor(ca.WHITE);
         this.getView().addSubview(view1);
@@ -75,12 +77,11 @@ var PickerViewTest = ca.CAViewController.extend({
     },
 
     numberOfRowsInComponent: function (pickerView, component) {
-        log("numberOfRowsInComponent");
+        //log("numberOfRowsInComponent");
         return 34;
     },
-
     widthForComponent: function (pickerView, component) {
-        return 680;
+        return 400;
     },
 
     rowHeightForComponent: function (pickerView, component) {

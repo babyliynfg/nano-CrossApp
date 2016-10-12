@@ -18,7 +18,7 @@ var RenderImageTest = ca.CAViewController.extend({
         scrollRect.x = 100;
         scrollRect.y = 100;
         scrollRect.width = ca.winSize.width - 200;
-        scrollRect.height = ca.winSize.height - 200;
+        scrollRect.height = ca.winSize.height - 400;
 
         var m_clvImage = ca.CAClippingView.create();
         m_clvImage.setStencil(this.getStencil(ca.dsize(scrollRect.width,scrollRect.height), index));
@@ -58,22 +58,23 @@ var RenderImageTest = ca.CAViewController.extend({
         imv.setImageViewScaleType(ca.CAImageViewScaleType.CAImageViewScaleTypeFitImageInside);
         scrollView.addSubview(imv);
 
-        m_clv = ca.CAClippingView.create();
-        m_clv.setStencil(this.getStencil(ca.dsize(scrollRect.width,scrollRect.height), index));
-        m_clv.setFrame(scrollRect);
-        m_clv.setInverted(true);
-        m_clv.setTouchEnabled(false);
-        this.getView().addSubview(m_clv);
-
-        var ivRect = ca.drect(0,0,0,0);
-        ivRect.height = ca.winSize.height;
-        ivRect.width = ca.winSize.width;
-        ivRect.x = scrollRect.x *-1;
-        ivRect.y = scrollRect.y * -1;
-
-        var iv = ca.CAView.createWithColor(ca.color(0,0,0,128));
-        iv.setFrame(ivRect);
-        m_clv.addSubview(iv);
+                                                 
+//        var m_clv = ca.CAClippingView.create();
+//        m_clv.setStencil(this.getStencil(ca.dsize(scrollRect.width,scrollRect.height), index));
+//        m_clv.setFrame(scrollRect);
+//        m_clv.setInverted(true);
+//        m_clv.setTouchEnabled(false);
+//        this.getView().addSubview(m_clv);
+//
+//        var ivRect = ca.drect(0,0,0,0);
+//        ivRect.height = ca.winSize.height;
+//        ivRect.width = ca.winSize.width;
+//        ivRect.x = scrollRect.x *-1;
+//        ivRect.y = scrollRect.y * -1;
+//
+//        var iv = ca.CAView.createWithColor(ca.color(0,0,0,128));
+//        iv.setFrame(ivRect);
+//        m_clv.addSubview(iv);
     },
     getStencil: function(size, index)
     {
