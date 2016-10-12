@@ -41891,8 +41891,8 @@ void js_register_crossapp_SimpleAudioEngine(JSContext *cx, JS::HandleObject glob
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
-JSClass  *jsb_CrossApp_extension_CAVideoPlayerControlView_class;
-JSObject *jsb_CrossApp_extension_CAVideoPlayerControlView_prototype;
+JSClass  *jsb_extension_CAVideoPlayerControlView_class;
+JSObject *jsb_extension_CAVideoPlayerControlView_prototype;
 
 bool js_crossapp_CAVideoPlayerControlView_getPlayerControlViewDelegate(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -41900,14 +41900,14 @@ bool js_crossapp_CAVideoPlayerControlView_getPlayerControlViewDelegate(JSContext
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    extension::CAVideoPlayerControlView* cobj = (extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_getPlayerControlViewDelegate : Invalid Native Object");
     if (argc == 0) {
-        CrossApp::extension::CAVideoPlayerControlViewDelegate* ret = cobj->getPlayerControlViewDelegate();
+        extension::CAVideoPlayerControlViewDelegate* ret = cobj->getPlayerControlViewDelegate();
         jsval jsret = JSVAL_NULL;
         do {
             if (ret) {
-                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::extension::CAVideoPlayerControlViewDelegate>(cx, (CrossApp::extension::CAVideoPlayerControlViewDelegate*)ret);
+                js_proxy_t *jsProxy = js_get_or_create_proxy<extension::CAVideoPlayerControlViewDelegate>(cx, (extension::CAVideoPlayerControlViewDelegate*)ret);
                 jsret = OBJECT_TO_JSVAL(jsProxy->obj);
             } else {
                 jsret = JSVAL_NULL;
@@ -41927,7 +41927,7 @@ bool js_crossapp_CAVideoPlayerControlView_setShowBackButton(JSContext *cx, uint3
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    extension::CAVideoPlayerControlView* cobj = (extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_setShowBackButton : Invalid Native Object");
     if (argc == 1) {
         bool arg0;
@@ -41948,7 +41948,7 @@ bool js_crossapp_CAVideoPlayerControlView_setTitle(JSContext *cx, uint32_t argc,
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    extension::CAVideoPlayerControlView* cobj = (extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_setTitle : Invalid Native Object");
     if (argc == 1) {
         std::string arg0;
@@ -41969,7 +41969,7 @@ bool js_crossapp_CAVideoPlayerControlView_setUrl(JSContext *cx, uint32_t argc, j
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    extension::CAVideoPlayerControlView* cobj = (extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_setUrl : Invalid Native Object");
     if (argc == 1) {
         std::string arg0;
@@ -41990,17 +41990,17 @@ bool js_crossapp_CAVideoPlayerControlView_setPlayerControlViewDelegate(JSContext
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    extension::CAVideoPlayerControlView* cobj = (extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_setPlayerControlViewDelegate : Invalid Native Object");
     if (argc == 1) {
-        CrossApp::extension::CAVideoPlayerControlViewDelegate* arg0 = nullptr;
+        extension::CAVideoPlayerControlViewDelegate* arg0 = nullptr;
         do {
             if (args.get(0).isNull()) { arg0 = nullptr; break; }
             if (!args.get(0).isObject()) { ok = false; break; }
             js_proxy_t *jsProxy;
             JSObject *tmpObj = args.get(0).toObjectOrNull();
             jsProxy = jsb_get_js_proxy(tmpObj);
-            arg0 = (CrossApp::extension::CAVideoPlayerControlViewDelegate*)(jsProxy ? jsProxy->ptr : NULL);
+            arg0 = (extension::CAVideoPlayerControlViewDelegate*)(jsProxy ? jsProxy->ptr : NULL);
             JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
         } while (0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_setPlayerControlViewDelegate : Error processing arguments");
@@ -42018,7 +42018,7 @@ bool js_crossapp_CAVideoPlayerControlView_getTitle(JSContext *cx, uint32_t argc,
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    extension::CAVideoPlayerControlView* cobj = (extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_getTitle : Invalid Native Object");
     if (argc == 0) {
         std::string ret = cobj->getTitle();
@@ -42038,7 +42038,7 @@ bool js_crossapp_CAVideoPlayerControlView_setFullPath(JSContext *cx, uint32_t ar
     bool ok = true;
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    extension::CAVideoPlayerControlView* cobj = (extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_setFullPath : Invalid Native Object");
     if (argc == 1) {
         std::string arg0;
@@ -42058,7 +42058,7 @@ bool js_crossapp_CAVideoPlayerControlView_getShowBackButton(JSContext *cx, uint3
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
-    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    extension::CAVideoPlayerControlView* cobj = (extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
     JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_getShowBackButton : Invalid Native Object");
     if (argc == 0) {
         bool ret = cobj->getShowBackButton();
@@ -42079,11 +42079,11 @@ bool js_crossapp_CAVideoPlayerControlView_createWithFrame(JSContext *cx, uint32_
         CrossApp::DRect arg0;
         ok &= jsval_to_drect(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_createWithFrame : Error processing arguments");
-        CrossApp::extension::CAVideoPlayerControlView* ret = CrossApp::extension::CAVideoPlayerControlView::createWithFrame(arg0);
+        extension::CAVideoPlayerControlView* ret = extension::CAVideoPlayerControlView::createWithFrame(arg0);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::extension::CAVideoPlayerControlView>(cx, (CrossApp::extension::CAVideoPlayerControlView*)ret);
+            js_proxy_t *jsProxy = js_get_or_create_proxy<extension::CAVideoPlayerControlView>(cx, (extension::CAVideoPlayerControlView*)ret);
             jsret = OBJECT_TO_JSVAL(jsProxy->obj);
         } else {
             jsret = JSVAL_NULL;
@@ -42103,11 +42103,11 @@ bool js_crossapp_CAVideoPlayerControlView_createWithLayout(JSContext *cx, uint32
         CrossApp::DLayout arg0;
         ok &= jsval_to_dlayout(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_createWithLayout : Error processing arguments");
-        CrossApp::extension::CAVideoPlayerControlView* ret = CrossApp::extension::CAVideoPlayerControlView::createWithLayout(arg0);
+        extension::CAVideoPlayerControlView* ret = extension::CAVideoPlayerControlView::createWithLayout(arg0);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::extension::CAVideoPlayerControlView>(cx, (CrossApp::extension::CAVideoPlayerControlView*)ret);
+            js_proxy_t *jsProxy = js_get_or_create_proxy<extension::CAVideoPlayerControlView>(cx, (extension::CAVideoPlayerControlView*)ret);
             jsret = OBJECT_TO_JSVAL(jsProxy->obj);
         } else {
             jsret = JSVAL_NULL;
@@ -42127,11 +42127,11 @@ bool js_crossapp_CAVideoPlayerControlView_createWithCenter(JSContext *cx, uint32
         CrossApp::DRect arg0;
         ok &= jsval_to_drect(cx, args.get(0), &arg0);
         JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_createWithCenter : Error processing arguments");
-        CrossApp::extension::CAVideoPlayerControlView* ret = CrossApp::extension::CAVideoPlayerControlView::createWithCenter(arg0);
+        extension::CAVideoPlayerControlView* ret = extension::CAVideoPlayerControlView::createWithCenter(arg0);
         jsval jsret = JSVAL_NULL;
         do {
         if (ret) {
-            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::extension::CAVideoPlayerControlView>(cx, (CrossApp::extension::CAVideoPlayerControlView*)ret);
+            js_proxy_t *jsProxy = js_get_or_create_proxy<extension::CAVideoPlayerControlView>(cx, (extension::CAVideoPlayerControlView*)ret);
             jsret = OBJECT_TO_JSVAL(jsProxy->obj);
         } else {
             jsret = JSVAL_NULL;
@@ -42147,8 +42147,8 @@ bool js_crossapp_CAVideoPlayerControlView_constructor(JSContext *cx, uint32_t ar
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     bool ok = true;
-    CrossApp::extension::CAVideoPlayerControlView* cobj = new (std::nothrow) CrossApp::extension::CAVideoPlayerControlView();
-    TypeTest<CrossApp::extension::CAVideoPlayerControlView> t;
+    extension::CAVideoPlayerControlView* cobj = new (std::nothrow) extension::CAVideoPlayerControlView();
+    TypeTest<extension::CAVideoPlayerControlView> t;
     js_type_class_t *typeClass = nullptr;
     std::string typeName = t.s_name();
     auto typeMapIter = _js_global_type_map.find(typeName);
@@ -42161,7 +42161,7 @@ bool js_crossapp_CAVideoPlayerControlView_constructor(JSContext *cx, uint32_t ar
     args.rval().set(OBJECT_TO_JSVAL(obj));
     // link the native object with the javascript object
     js_proxy_t* p = jsb_new_proxy(cobj, obj);
-    AddNamedObjectRoot(cx, &p->obj, "CrossApp::extension::CAVideoPlayerControlView");
+    AddNamedObjectRoot(cx, &p->obj, "extension::CAVideoPlayerControlView");
     if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
         ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
     return true;
@@ -42169,13 +42169,13 @@ bool js_crossapp_CAVideoPlayerControlView_constructor(JSContext *cx, uint32_t ar
 
 extern JSObject *jsb_CrossApp_CAView_prototype;
 
-void js_CrossApp_extension_CAVideoPlayerControlView_finalize(JSFreeOp *fop, JSObject *obj) {
+void js_extension_CAVideoPlayerControlView_finalize(JSFreeOp *fop, JSObject *obj) {
     CCLOGINFO("jsbindings: finalizing JS object %p (CAVideoPlayerControlView)", obj);
     js_proxy_t* nproxy;
     js_proxy_t* jsproxy;
     jsproxy = jsb_get_js_proxy(obj);
     if (jsproxy) {
-        CrossApp::extension::CAVideoPlayerControlView *nobj = static_cast<CrossApp::extension::CAVideoPlayerControlView *>(jsproxy->ptr);
+        extension::CAVideoPlayerControlView *nobj = static_cast<extension::CAVideoPlayerControlView *>(jsproxy->ptr);
         nproxy = jsb_get_native_proxy(jsproxy->ptr);
 
         if (nobj) {
@@ -42186,17 +42186,17 @@ void js_CrossApp_extension_CAVideoPlayerControlView_finalize(JSFreeOp *fop, JSOb
     }
 }
 void js_register_crossapp_CAVideoPlayerControlView(JSContext *cx, JS::HandleObject global) {
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class = (JSClass *)calloc(1, sizeof(JSClass));
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class->name = "CAVideoPlayerControlView";
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class->addProperty = JS_PropertyStub;
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class->delProperty = JS_DeletePropertyStub;
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class->getProperty = JS_PropertyStub;
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class->setProperty = JS_StrictPropertyStub;
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class->enumerate = JS_EnumerateStub;
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class->resolve = JS_ResolveStub;
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class->convert = JS_ConvertStub;
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class->finalize = js_CrossApp_extension_CAVideoPlayerControlView_finalize;
-    jsb_CrossApp_extension_CAVideoPlayerControlView_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+    jsb_extension_CAVideoPlayerControlView_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_extension_CAVideoPlayerControlView_class->name = "CAVideoPlayerControlView";
+    jsb_extension_CAVideoPlayerControlView_class->addProperty = JS_PropertyStub;
+    jsb_extension_CAVideoPlayerControlView_class->delProperty = JS_DeletePropertyStub;
+    jsb_extension_CAVideoPlayerControlView_class->getProperty = JS_PropertyStub;
+    jsb_extension_CAVideoPlayerControlView_class->setProperty = JS_StrictPropertyStub;
+    jsb_extension_CAVideoPlayerControlView_class->enumerate = JS_EnumerateStub;
+    jsb_extension_CAVideoPlayerControlView_class->resolve = JS_ResolveStub;
+    jsb_extension_CAVideoPlayerControlView_class->convert = JS_ConvertStub;
+    jsb_extension_CAVideoPlayerControlView_class->finalize = js_extension_CAVideoPlayerControlView_finalize;
+    jsb_extension_CAVideoPlayerControlView_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 
     static JSPropertySpec properties[] = {
         JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
@@ -42222,10 +42222,10 @@ void js_register_crossapp_CAVideoPlayerControlView(JSContext *cx, JS::HandleObje
         JS_FS_END
     };
 
-    jsb_CrossApp_extension_CAVideoPlayerControlView_prototype = JS_InitClass(
+    jsb_extension_CAVideoPlayerControlView_prototype = JS_InitClass(
         cx, global,
         JS::RootedObject(cx, jsb_CrossApp_CAView_prototype),
-        jsb_CrossApp_extension_CAVideoPlayerControlView_class,
+        jsb_extension_CAVideoPlayerControlView_class,
         js_crossapp_CAVideoPlayerControlView_constructor, 0, // constructor
         properties,
         funcs,
@@ -42237,14 +42237,14 @@ void js_register_crossapp_CAVideoPlayerControlView(JSContext *cx, JS::HandleObje
 //  JS_SetPropertyAttributes(cx, global, "CAVideoPlayerControlView", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
 
     // add the proto and JSClass to the type->js info hash table
-    TypeTest<CrossApp::extension::CAVideoPlayerControlView> t;
+    TypeTest<extension::CAVideoPlayerControlView> t;
     js_type_class_t *p;
     std::string typeName = t.s_name();
     if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
     {
         p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
-        p->jsclass = jsb_CrossApp_extension_CAVideoPlayerControlView_class;
-        p->proto = jsb_CrossApp_extension_CAVideoPlayerControlView_prototype;
+        p->jsclass = jsb_extension_CAVideoPlayerControlView_class;
+        p->proto = jsb_extension_CAVideoPlayerControlView_prototype;
         p->parentProto = jsb_CrossApp_CAView_prototype;
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }

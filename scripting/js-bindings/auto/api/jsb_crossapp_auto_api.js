@@ -16429,12 +16429,12 @@ ca.CAVideoPlayerControlView = {
 
 /**
  * @method getPlayerControlViewDelegate
- * @return {ca.extension::CAVideoPlayerControlViewDelegate}
+ * @return {extension::CAVideoPlayerControlViewDelegate}
  */
 getPlayerControlViewDelegate : function (
 )
 {
-    return ca.extension::CAVideoPlayerControlViewDelegate;
+    return extension::CAVideoPlayerControlViewDelegate;
 },
 
 /**
@@ -16469,7 +16469,7 @@ str
 
 /**
  * @method setPlayerControlViewDelegate
- * @param {ca.extension::CAVideoPlayerControlViewDelegate} arg0
+ * @param {extension::CAVideoPlayerControlViewDelegate} arg0
  */
 setPlayerControlViewDelegate : function (
 cavideoplayercontrolviewdelegate 
@@ -16510,37 +16510,37 @@ getShowBackButton : function (
 /**
  * @method createWithFrame
  * @param {rect_object} arg0
- * @return {ca.extension::CAVideoPlayerControlView}
+ * @return {extension::CAVideoPlayerControlView}
  */
 createWithFrame : function (
 drect 
 )
 {
-    return ca.extension::CAVideoPlayerControlView;
+    return extension::CAVideoPlayerControlView;
 },
 
 /**
  * @method createWithLayout
  * @param {layout_object} arg0
- * @return {ca.extension::CAVideoPlayerControlView}
+ * @return {extension::CAVideoPlayerControlView}
  */
 createWithLayout : function (
 dlayout 
 )
 {
-    return ca.extension::CAVideoPlayerControlView;
+    return extension::CAVideoPlayerControlView;
 },
 
 /**
  * @method createWithCenter
  * @param {rect_object} arg0
- * @return {ca.extension::CAVideoPlayerControlView}
+ * @return {extension::CAVideoPlayerControlView}
  */
 createWithCenter : function (
 drect 
 )
 {
-    return ca.extension::CAVideoPlayerControlView;
+    return extension::CAVideoPlayerControlView;
 },
 
 /**

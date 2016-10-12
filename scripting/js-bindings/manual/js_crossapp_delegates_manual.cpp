@@ -321,7 +321,7 @@ private:
 
 
 //**JSB_VideoPlayerControlViewDelegate
-class JSB_VideoPlayerControlViewDelegate: public CAObject, public CrossApp::extension::CAVideoPlayerControlViewDelegate
+class JSB_VideoPlayerControlViewDelegate: public CAObject, public extension::CAVideoPlayerControlViewDelegate
 {
 
 public:

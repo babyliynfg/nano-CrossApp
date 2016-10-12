@@ -2090,8 +2090,8 @@ bool js_crossapp_SimpleAudioEngine_end(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_SimpleAudioEngine_sharedEngine(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_SimpleAudioEngine_SimpleAudioEngine(JSContext *cx, uint32_t argc, jsval *vp);
 
-extern JSClass  *jsb_CrossApp_extension_CAVideoPlayerControlView_class;
-extern JSObject *jsb_CrossApp_extension_CAVideoPlayerControlView_prototype;
+extern JSClass  *jsb_extension_CAVideoPlayerControlView_class;
+extern JSObject *jsb_extension_CAVideoPlayerControlView_prototype;
 
 bool js_crossapp_CAVideoPlayerControlView_constructor(JSContext *cx, uint32_t argc, jsval *vp);
 void js_crossapp_CAVideoPlayerControlView_finalize(JSContext *cx, JSObject *obj);
