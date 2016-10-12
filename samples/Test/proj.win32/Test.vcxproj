@@ -31,7 +31,7 @@
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '10.0'">v100</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0'">v110</PlatformToolset>
     <PlatformToolset Condition="'$(VisualStudioVersion)' == '11.0' and exists('$(MSBuildProgramFiles32)\Microsoft SDKs\Windows\v7.1A')">v110_xp</PlatformToolset>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v120_xp</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -85,6 +85,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -143,7 +144,6 @@
     <ClCompile Include="..\Classes\Control\AutoCollectionViewVerticalTest.cpp" />
     <ClCompile Include="..\Classes\Control\ButtonTest.cpp" />
     <ClCompile Include="..\Classes\Control\CollectionViewTest.cpp" />
-    <ClCompile Include="..\Classes\Control\FlashViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\GifViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\ImageViewTest.cpp" />
     <ClCompile Include="..\Classes\Control\LabelTest.cpp" />
@@ -187,7 +187,6 @@
     <ClInclude Include="..\Classes\Control\AutoCollectionViewVerticalTest.h" />
     <ClInclude Include="..\Classes\Control\ButtonTest.h" />
     <ClInclude Include="..\Classes\Control\CollectionViewTest.h" />
-    <ClInclude Include="..\Classes\Control\FlashViewTest.h" />
     <ClInclude Include="..\Classes\Control\GifViewTest.h" />
     <ClInclude Include="..\Classes\Control\ImageViewTest.h" />
     <ClInclude Include="..\Classes\Control\LabelTest.h" />

@@ -3,7 +3,6 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := CrossApp_cpp_shared
-#LOCAL_SHARED_LIBRARIES += cocos_ffmpeg_shared
 LOCAL_MODULE_FILENAME := libCrossApp_cpp
 LOCAL_CPPFLAGS := -std=c++11 -pthread -frtti -fexceptions
 
@@ -36,7 +35,6 @@ LOCAL_C_INCLUDES := $(MY_ALL_DIRS)
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += cocosdenshion_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_extension_static
-#LOCAL_SHARED_LIBRARIES += cocos_ffmpeg_shared
 LOCAL_WHOLE_STATIC_LIBRARIES += scriptingcore-spidermonkey
 
 include $(BUILD_SHARED_LIBRARY)

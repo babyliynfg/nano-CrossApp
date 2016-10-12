@@ -117,7 +117,7 @@ void CATextToolBarView::show(CAView* pView)
 
 	if (CAWindow *rootWindow = CAApplication::getApplication()->getRootWindow())
 	{
-		rootWindow->insertSubview(this, CAWindowZOderTop);
+		rootWindow->insertSubview(this, CAWindowZOrderTop);
 	}
 	becomeFirstResponder();
     m_pControlView = pView;

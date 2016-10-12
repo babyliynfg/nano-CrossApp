@@ -74,8 +74,80 @@ public:
 		t.fInterval = afterDelay;
 		m_vDelayTimerVect.AddElement(t);
 	}
-
-	void updateDelayTimers(float dt)
+    
+    void cancelPreviousPerformRequests(CAObject* pOwnerObj, SEL_CallFunc callFunc)
+    {
+        std::vector<tDelayTimerElement> vTimers = m_vDelayTimerVect.GetQueueElements();
+        
+        std::vector<tDelayTimerElement>::iterator it = vTimers.begin();
+        while (it != vTimers.end())
+        {
+            if (it->pOwnerObj == pOwnerObj && it->func1 == callFunc)
+            {
+                CC_SAFE_RELEASE(it->pOwnerObj);
+                CC_SAFE_RELEASE(it->pObj);
+                it = vTimers.erase(it);
+            }
+            else
+            {
+                it++;
+            }
+        }
+        for (size_t i = 0; i < vTimers.size(); i++)
+        {
+            m_vDelayTimerVect.AddElement(vTimers[i]);
+        }
+    }
+    
+    void cancelPreviousPerformRequests(CAObject* pOwnerObj, SEL_CallFuncO callFunc)
+    {
+        std::vector<tDelayTimerElement> vTimers = m_vDelayTimerVect.GetQueueElements();
+        
+        std::vector<tDelayTimerElement>::iterator it = vTimers.begin();
+        while (it != vTimers.end())
+        {
+            if (it->pOwnerObj == pOwnerObj && it->func2 == callFunc)
+            {
+                CC_SAFE_RELEASE(it->pOwnerObj);
+                CC_SAFE_RELEASE(it->pObj);
+                it = vTimers.erase(it);
+            }
+            else
+            {
+                it++;
+            }
+        }
+        for (size_t i = 0; i < vTimers.size(); i++)
+        {
+            m_vDelayTimerVect.AddElement(vTimers[i]);
+        }
+    }
+    
+    void cancelPreviousPerformRequestsAll(CAObject* pOwnerObj)
+    {
+        std::vector<tDelayTimerElement> vTimers = m_vDelayTimerVect.GetQueueElements();
+        
+        std::vector<tDelayTimerElement>::iterator it = vTimers.begin();
+        while (it != vTimers.end())
+        {
+            if (it->pOwnerObj == pOwnerObj)
+            {
+                CC_SAFE_RELEASE(it->pOwnerObj);
+                CC_SAFE_RELEASE(it->pObj);
+                it = vTimers.erase(it);
+            }
+            else
+            {
+                it++;
+            }
+        }
+        for (size_t i = 0; i < vTimers.size(); i++)
+        {
+            m_vDelayTimerVect.AddElement(vTimers[i]);
+        }
+    }
+    
+    void updateDelayTimers(float dt)
 	{
 		std::vector<tDelayTimerElement> vTimers = m_vDelayTimerVect.GetQueueElements();
 
@@ -204,6 +276,21 @@ void CAObject::performSelector(SEL_CallFunc callFunc, float afterDelay)
 void CAObject::performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay)
 {
 	CAObjectHelper::getInstance()->performSelector(this, callFunc, objParam, afterDelay);
+}
+
+void CAObject::cancelPreviousPerformRequests(SEL_CallFunc callFunc)
+{
+    CAObjectHelper::getInstance()->cancelPreviousPerformRequests(this, callFunc);
+}
+
+void CAObject::cancelPreviousPerformRequests(SEL_CallFuncO callFunc, CAObject* objParam)
+{
+    CAObjectHelper::getInstance()->cancelPreviousPerformRequests(this, callFunc);
+}
+
+void CAObject::cancelPreviousPerformRequestsAll(CAObject* objParam)
+{
+    CAObjectHelper::getInstance()->cancelPreviousPerformRequestsAll(this);
 }
 
 void CAObject::updateDelayTimers(float t)

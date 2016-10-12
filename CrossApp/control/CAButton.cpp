@@ -518,6 +518,9 @@ void CAButton::setControlState(const CAControlState& var)
 
     CC_RETURN_IF(var == CAControlStateAll);
     
+    this->cancelPreviousPerformRequests(callfunc_selector(CAButton::setControlStateSelected));
+    this->cancelPreviousPerformRequests(callfunc_selector(CAButton::setControlStateNormal));
+    
     for (int i=0; i<CAControlStateAll; i++)
     {
         this->removeSubview(m_pBackgroundView[i]);
@@ -530,6 +533,15 @@ void CAButton::setControlState(const CAControlState& var)
         m_eControlState = CAControlStateNormal;
     }
     
+    if (m_eControlState == CAControlStateSelected)
+    {
+        m_bSelected = true;
+    }
+    else if (m_eControlState == CAControlStateNormal)
+    {
+        m_bSelected = false;
+    }
+    
     if (m_pBackgroundView[m_eControlState])
     {
         this->insertSubview(m_pBackgroundView[m_eControlState], -1);
@@ -537,11 +549,6 @@ void CAButton::setControlState(const CAControlState& var)
     else if (m_pBackgroundView[CAControlStateNormal])
     {
         this->insertSubview(m_pBackgroundView[CAControlStateNormal], -1);
-    }
-    
-    if (m_eControlState != CAControlStateHighlighted)
-    {
-        m_bSelected = m_eControlState == CAControlStateSelected ? true : false;
     }
     
     CAImage* image = NULL;
@@ -658,8 +665,8 @@ bool CAButton::setTouchBegin(const DPoint& point)
     if (m_bAllowsSelected)
     {
         m_bBeforeTouchSelected = m_bSelected;
-        m_bSelected = !m_bSelected;
-        
+        m_bSelected = !m_bBeforeTouchSelected;
+
         if (m_pTarget[CAControlEventTouchDown] && m_selTouch[CAControlEventTouchDown])
         {
             if (m_bSelected)

@@ -61,7 +61,7 @@ void CAWindow::setRootViewController(CrossApp::CAViewController *var)
         var->retain();
         m_pRootViewController = var;
         m_pRootViewController->addViewFromSuperview(this);
-        m_pRootViewController->getView()->setZOrder(CAWindowZOderBottom);
+        m_pRootViewController->getView()->setZOrder(CAWindowZOrderBottom);
     }
 }
 
@@ -78,7 +78,7 @@ void CAWindow::presentModalViewController(CAViewController* controller, bool ani
     m_pModalViewController = controller;
     
     m_pModalViewController->addViewFromSuperview(this);
-    m_pModalViewController->getView()->setZOrder(CAWindowZOderCenter);
+    m_pModalViewController->getView()->setZOrder(CAWindowZOrderCenter);
     m_pModalViewController->viewDidAppear();
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();

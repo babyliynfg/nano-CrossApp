@@ -167,7 +167,6 @@ platform/android/jni/Java_org_CrossApp_lib_CrossAppRenderer.cpp \
 platform/android/jni/Java_org_CrossApp_lib_CrossAppAccelerometer.cpp \
 platform/android/jni/JniHelper.cpp \
 platform/android/jni/TouchesJni.cpp \
-platform/android/jni/Java_org_CrossApp_lib_CrossAppSDL.cpp \
 game/CGNode.cpp \
 game/CGSprite.cpp \
 game/CGSpriteFrame.cpp \
@@ -221,22 +220,6 @@ LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_webp_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_freetype_static
 LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_curl_static
 LOCAL_WHOLE_STATIC_LIBRARIES += libwebsockets_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_libsdl_static
-
-
-LOCAL_SRC_FILES += video/CAVideoPlayerControlView.cpp \
-                   video/CAVideoPlayerDecoder.cpp \
-                   video/CAVideoPlayerRender.cpp \
-                   video/CAVideoPlayerView.cpp
-
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avcodec_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avformat_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avresample_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_avutil_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_swresample_static
-LOCAL_WHOLE_STATIC_LIBRARIES += CrossApp_swscale_static
-
-
 
 # define the macro to compile through support/zip_support/ioapi.c
 LOCAL_CFLAGS   :=  -Wno-psabi
@@ -259,5 +242,3 @@ $(call import-module,webp/prebuilt/android)
 $(call import-module,freetype/prebuilt/android)
 $(call import-module,curl/prebuilt/android)
 $(call import-module,websockets/prebuilt/android)
-$(call import-module,FFmpeg/prebuilt/android)
-$(call import-module,SDL/prebuilt/android)

@@ -84,6 +84,12 @@ public:
     
 	void performSelector(SEL_CallFuncO callFunc, CAObject* objParam, float afterDelay);
 
+    void cancelPreviousPerformRequests(SEL_CallFunc callFunc);
+    
+    void cancelPreviousPerformRequests(SEL_CallFuncO callFunc, CAObject* objParam);
+    
+    void cancelPreviousPerformRequestsAll(CAObject* objParam);
+    
 	static void updateDelayTimers(float t);
     
     CC_SYNTHESIZE(void*, m_pUserData, UserData);

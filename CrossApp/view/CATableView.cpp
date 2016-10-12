@@ -157,16 +157,6 @@ void CATableView::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     CAScrollView::ccTouchCancelled(pTouch, pEvent);
 }
 
-void CATableView::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
-{
-
-}
-
-void CATableView::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
-{
-
-}
-
 void CATableView::switchPCMode(bool var)
 {
     CAScrollView::switchPCMode(var);
@@ -497,6 +487,7 @@ void CATableView::loadTableCell()
             cell->m_nSection = i;
             cell->m_nRow = j;
             cell->updateDisplayedAlpha(this->getAlpha());
+            cell->setMouseMovedEnabled(m_bPCMode);
             m_pContainer->addSubview(cell);
             cell->setFrame(m_rTableCellRectss[i][j]);
             m_mpUsedTableCells[indexPath] = cell;
@@ -679,6 +670,7 @@ CATableViewCell::CATableViewCell()
 {
     this->setHaveNextResponder(false);
     this->setVerticalScrollEnabled(false);
+    this->setMultipleTouchEnabled(false);
 }
 
 CATableViewCell::~CATableViewCell()
@@ -830,28 +822,38 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         }
         else
         {
-            if (!m_pTarget->m_pSelectedTableCells.empty())
+            if (m_pTarget->m_pSelectedTableCells.count(indexPath) == 0)
             {
-                CAIndexPath2E indexPath2 = *m_pTarget->m_pSelectedTableCells.begin();
-                if (CATableViewCell* cell = m_pTarget->m_mpUsedTableCells.at(indexPath2))
+                if (!m_pTarget->m_pSelectedTableCells.empty())
                 {
-                    cell->setControlState(CAControlStateNormal);
+                    CAIndexPath2E indexPath2 = *m_pTarget->m_pSelectedTableCells.begin();
+                    if (CATableViewCell* cell = m_pTarget->m_mpUsedTableCells.at(indexPath2))
+                    {
+                        cell->setControlState(CAControlStateNormal);
+                    }
+                    m_pTarget->m_pSelectedTableCells.clear();
+                    if (m_pTarget->getTableViewDelegate())
+                    {
+                        m_pTarget->getTableViewDelegate()->tableViewDidDeselectRowAtIndexPath(m_pTarget, indexPath2.section, indexPath2.row);
+                    }
                 }
-                m_pTarget->m_pSelectedTableCells.clear();
+                
+                this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
+                if (m_bAllowsSelected)
+                {
+                    m_pTarget->m_pSelectedTableCells.insert(indexPath);
+                }
                 if (m_pTarget->getTableViewDelegate())
                 {
-                    m_pTarget->getTableViewDelegate()->tableViewDidDeselectRowAtIndexPath(m_pTarget, indexPath2.section, indexPath2.row);
+                    m_pTarget->getTableViewDelegate()->tableViewDidSelectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
                 }
             }
-            
-            this->performSelector(callfunc_selector(CATableViewCell::setControlStateSelected), 0.05f);
-            if (m_bAllowsSelected)
+            else
             {
-                m_pTarget->m_pSelectedTableCells.insert(indexPath);
-            }
-            if (m_pTarget->getTableViewDelegate())
-            {
-                m_pTarget->getTableViewDelegate()->tableViewDidSelectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
+                if (m_pTarget->getTableViewDelegate())
+                {
+                    m_pTarget->getTableViewDelegate()->tableViewDidSelectRowAtIndexPath(m_pTarget, indexPath.section, indexPath.row);
+                }
             }
         }
     }

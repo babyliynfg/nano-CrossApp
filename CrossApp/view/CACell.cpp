@@ -180,4 +180,20 @@ void CACell::resetCell()
     m_pContentView->setRotation(0);
 }
 
+void CACell::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
+{
+    if (m_bAllowsSelected == false)
+    {
+        this->setControlStateHighlighted();
+    }
+}
+
+void CACell::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
+{
+    if (m_bAllowsSelected == false)
+    {
+        this->setControlStateNormal();
+    }
+}
+
 NS_CC_END

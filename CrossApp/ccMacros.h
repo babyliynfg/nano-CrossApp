@@ -197,7 +197,11 @@ It should work same as apples CFSwapInt32LittleToHost(..)
 // This message is posted in CrossApp/platform/android/jni/MessageJni.cpp.
 #define EVENT_COME_TO_BACKGROUND    "event_come_to_background"
 
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID || CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 #define LINE_WIDTH MAX(s_px_to_dip(2.0f) + 0.01f, 2.01f)
+#else
+#define LINE_WIDTH MAX(s_px_to_dip(1.0f) + 0.01f, 1.01f)
+#endif
 
 
 #if CC_NODE_RENDER_SUBPIXEL
