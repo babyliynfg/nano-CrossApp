@@ -1921,6 +1921,24 @@ bool js_crossapp_CAPickerView_createWithLayout(JSContext *cx, uint32_t argc, jsv
 bool js_crossapp_CAPickerView_createWithCenter(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_CAPickerView_CAPickerView(JSContext *cx, uint32_t argc, jsval *vp);
 
+extern JSClass  *jsb_CrossApp_CADatePickerView_class;
+extern JSObject *jsb_CrossApp_CADatePickerView_prototype;
+
+bool js_crossapp_CADatePickerView_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CADatePickerView_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CADatePickerView(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CADatePickerView_getDelegate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_onExit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_init(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_setDate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_create(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_createWithFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_createWithLayout(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_createWithCenter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CADatePickerView_CADatePickerView(JSContext *cx, uint32_t argc, jsval *vp);
+
 extern JSClass  *jsb_CrossApp_CADrawView_class;
 extern JSObject *jsb_CrossApp_CADrawView_prototype;
 
@@ -2071,5 +2089,25 @@ bool js_crossapp_SimpleAudioEngine_resumeEffect(JSContext *cx, uint32_t argc, js
 bool js_crossapp_SimpleAudioEngine_end(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_SimpleAudioEngine_sharedEngine(JSContext *cx, uint32_t argc, jsval *vp);
 bool js_crossapp_SimpleAudioEngine_SimpleAudioEngine(JSContext *cx, uint32_t argc, jsval *vp);
+
+extern JSClass  *jsb_CrossApp_extension_CAVideoPlayerControlView_class;
+extern JSObject *jsb_CrossApp_extension_CAVideoPlayerControlView_prototype;
+
+bool js_crossapp_CAVideoPlayerControlView_constructor(JSContext *cx, uint32_t argc, jsval *vp);
+void js_crossapp_CAVideoPlayerControlView_finalize(JSContext *cx, JSObject *obj);
+void js_register_crossapp_CAVideoPlayerControlView(JSContext *cx, JS::HandleObject global);
+void register_all_crossapp(JSContext* cx, JS::HandleObject obj);
+bool js_crossapp_CAVideoPlayerControlView_getPlayerControlViewDelegate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_setShowBackButton(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_setTitle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_setUrl(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_setPlayerControlViewDelegate(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_getTitle(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_setFullPath(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_getShowBackButton(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_createWithFrame(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_createWithLayout(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_createWithCenter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_CAVideoPlayerControlView_CAVideoPlayerControlView(JSContext *cx, uint32_t argc, jsval *vp);
 
 #endif // __crossapp_h__

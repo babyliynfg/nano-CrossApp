@@ -15143,6 +15143,130 @@ CAPickerView : function (
 };
 
 /**
+ * @class CADatePickerView
+ */
+ca.CADatePickerView = {
+
+/**
+ * @method getDelegate
+ * @return {ca.CADatePickerViewDelegate}
+ */
+getDelegate : function (
+)
+{
+    return ca.CADatePickerViewDelegate;
+},
+
+/**
+ * @method onEnter
+ */
+onEnter : function (
+)
+{
+},
+
+/**
+ * @method onExit
+ */
+onExit : function (
+)
+{
+},
+
+/**
+ * @method init
+ * @return {bool}
+ */
+init : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method setDate
+ * @param {int} arg0
+ * @param {int} arg1
+ * @param {int} arg2
+ * @param {bool} arg3
+ */
+setDate : function (
+int, 
+int, 
+int, 
+bool 
+)
+{
+},
+
+/**
+ * @method create
+ * @param {ca.CADatePickerMode} arg0
+ * @return {ca.CADatePickerView}
+ */
+create : function (
+cadatepickermode 
+)
+{
+    return ca.CADatePickerView;
+},
+
+/**
+ * @method createWithFrame
+ * @param {rect_object} arg0
+ * @param {ca.CADatePickerMode} arg1
+ * @return {ca.CADatePickerView}
+ */
+createWithFrame : function (
+drect, 
+cadatepickermode 
+)
+{
+    return ca.CADatePickerView;
+},
+
+/**
+ * @method createWithLayout
+ * @param {layout_object} arg0
+ * @param {ca.CADatePickerMode} arg1
+ * @return {ca.CADatePickerView}
+ */
+createWithLayout : function (
+dlayout, 
+cadatepickermode 
+)
+{
+    return ca.CADatePickerView;
+},
+
+/**
+ * @method createWithCenter
+ * @param {rect_object} arg0
+ * @param {ca.CADatePickerMode} arg1
+ * @return {ca.CADatePickerView}
+ */
+createWithCenter : function (
+drect, 
+cadatepickermode 
+)
+{
+    return ca.CADatePickerView;
+},
+
+/**
+ * @method CADatePickerView
+ * @constructor
+ * @param {ca.CADatePickerMode} arg0
+ */
+CADatePickerView : function (
+cadatepickermode 
+)
+{
+},
+
+};
+
+/**
  * @class CADrawView
  */
 ca.CADrawView = {
@@ -16292,6 +16416,138 @@ sharedEngine : function (
  * @constructor
  */
 SimpleAudioEngine : function (
+)
+{
+},
+
+};
+
+/**
+ * @class CAVideoPlayerControlView
+ */
+ca.CAVideoPlayerControlView = {
+
+/**
+ * @method getPlayerControlViewDelegate
+ * @return {ca.extension::CAVideoPlayerControlViewDelegate}
+ */
+getPlayerControlViewDelegate : function (
+)
+{
+    return ca.extension::CAVideoPlayerControlViewDelegate;
+},
+
+/**
+ * @method setShowBackButton
+ * @param {bool} arg0
+ */
+setShowBackButton : function (
+bool 
+)
+{
+},
+
+/**
+ * @method setTitle
+ * @param {String} arg0
+ */
+setTitle : function (
+str 
+)
+{
+},
+
+/**
+ * @method setUrl
+ * @param {String} arg0
+ */
+setUrl : function (
+str 
+)
+{
+},
+
+/**
+ * @method setPlayerControlViewDelegate
+ * @param {ca.extension::CAVideoPlayerControlViewDelegate} arg0
+ */
+setPlayerControlViewDelegate : function (
+cavideoplayercontrolviewdelegate 
+)
+{
+},
+
+/**
+ * @method getTitle
+ * @return {String}
+ */
+getTitle : function (
+)
+{
+    return ;
+},
+
+/**
+ * @method setFullPath
+ * @param {String} arg0
+ */
+setFullPath : function (
+str 
+)
+{
+},
+
+/**
+ * @method getShowBackButton
+ * @return {bool}
+ */
+getShowBackButton : function (
+)
+{
+    return false;
+},
+
+/**
+ * @method createWithFrame
+ * @param {rect_object} arg0
+ * @return {ca.extension::CAVideoPlayerControlView}
+ */
+createWithFrame : function (
+drect 
+)
+{
+    return ca.extension::CAVideoPlayerControlView;
+},
+
+/**
+ * @method createWithLayout
+ * @param {layout_object} arg0
+ * @return {ca.extension::CAVideoPlayerControlView}
+ */
+createWithLayout : function (
+dlayout 
+)
+{
+    return ca.extension::CAVideoPlayerControlView;
+},
+
+/**
+ * @method createWithCenter
+ * @param {rect_object} arg0
+ * @return {ca.extension::CAVideoPlayerControlView}
+ */
+createWithCenter : function (
+drect 
+)
+{
+    return ca.extension::CAVideoPlayerControlView;
+},
+
+/**
+ * @method CAVideoPlayerControlView
+ * @constructor
+ */
+CAVideoPlayerControlView : function (
 )
 {
 },

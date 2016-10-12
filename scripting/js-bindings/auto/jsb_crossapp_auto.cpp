@@ -25,7 +25,7 @@ static bool dummy_constructor(JSContext *cx, uint32_t argc, jsval *vp) {
         JS::RootedObject proto(cx, typeClass->proto.get());
         JS::RootedObject parent(cx, typeClass->parentProto.get());
         JS::RootedObject _tmp(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
-        
+
         args.rval().set(OBJECT_TO_JSVAL(_tmp));
         return true;
     }
@@ -42,7 +42,7 @@ static bool js_is_native_obj(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     args.rval().setBoolean(true);
-    return true;    
+    return true;
 }
 JSClass  *jsb_CrossApp_CAScheduler_class;
 JSObject *jsb_CrossApp_CAScheduler_prototype;
@@ -38709,6 +38709,324 @@ void js_register_crossapp_CAPickerView(JSContext *cx, JS::HandleObject global) {
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_CADatePickerView_class;
+JSObject *jsb_CrossApp_CADatePickerView_prototype;
+
+bool js_crossapp_CADatePickerView_getDelegate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_getDelegate : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::CADatePickerViewDelegate* ret = cobj->getDelegate();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CADatePickerViewDelegate>(cx, (CrossApp::CADatePickerViewDelegate*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_getDelegate : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CADatePickerView_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_onEnter : Invalid Native Object");
+    if (argc == 0) {
+        cobj->onEnter();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_onEnter : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CADatePickerView_onExit(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_onExit : Invalid Native Object");
+    if (argc == 0) {
+        cobj->onExit();
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_onExit : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CADatePickerView_init(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_init : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->init();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CADatePickerView_setDate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::CADatePickerView* cobj = (CrossApp::CADatePickerView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CADatePickerView_setDate : Invalid Native Object");
+    if (argc == 4) {
+        int arg0 = 0;
+        int arg1 = 0;
+        int arg2 = 0;
+        bool arg3;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
+        arg3 = JS::ToBoolean(args.get(3));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_setDate : Error processing arguments");
+        cobj->setDate(arg0, arg1, arg2, arg3);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_setDate : wrong number of arguments: %d, was expecting %d", argc, 4);
+    return false;
+}
+bool js_crossapp_CADatePickerView_create(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::CADatePickerMode arg0;
+        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_create : Error processing arguments");
+        CrossApp::CADatePickerView* ret = CrossApp::CADatePickerView::create(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CADatePickerView>(cx, (CrossApp::CADatePickerView*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_create : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADatePickerView_createWithFrame(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        CrossApp::DRect arg0;
+        CrossApp::CADatePickerMode arg1;
+        ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_createWithFrame : Error processing arguments");
+        CrossApp::CADatePickerView* ret = CrossApp::CADatePickerView::createWithFrame(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CADatePickerView>(cx, (CrossApp::CADatePickerView*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_createWithFrame : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADatePickerView_createWithLayout(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        CrossApp::DLayout arg0;
+        CrossApp::CADatePickerMode arg1;
+        ok &= jsval_to_dlayout(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_createWithLayout : Error processing arguments");
+        CrossApp::CADatePickerView* ret = CrossApp::CADatePickerView::createWithLayout(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CADatePickerView>(cx, (CrossApp::CADatePickerView*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_createWithLayout : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADatePickerView_createWithCenter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 2) {
+        CrossApp::DRect arg0;
+        CrossApp::CADatePickerMode arg1;
+        ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        ok &= jsval_to_int32(cx, args.get(1), (int32_t *)&arg1);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_createWithCenter : Error processing arguments");
+        CrossApp::CADatePickerView* ret = CrossApp::CADatePickerView::createWithCenter(arg0, arg1);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::CADatePickerView>(cx, (CrossApp::CADatePickerView*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CADatePickerView_createWithCenter : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CADatePickerView_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::CADatePickerMode arg0;
+    ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
+    JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CADatePickerView_constructor : Error processing arguments");
+    CrossApp::CADatePickerView* cobj = new (std::nothrow) CrossApp::CADatePickerView(arg0);
+    TypeTest<CrossApp::CADatePickerView> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::CADatePickerView");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_CAControl_prototype;
+
+void js_CrossApp_CADatePickerView_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (CADatePickerView)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::CADatePickerView *nobj = static_cast<CrossApp::CADatePickerView *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_CADatePickerView(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_CADatePickerView_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_CADatePickerView_class->name = "CADatePickerView";
+    jsb_CrossApp_CADatePickerView_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_CADatePickerView_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_CADatePickerView_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_CADatePickerView_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_CADatePickerView_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_CADatePickerView_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_CADatePickerView_class->convert = JS_ConvertStub;
+    jsb_CrossApp_CADatePickerView_class->finalize = js_CrossApp_CADatePickerView_finalize;
+    jsb_CrossApp_CADatePickerView_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getDelegate", js_crossapp_CADatePickerView_getDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onEnter", js_crossapp_CADatePickerView_onEnter, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("onExit", js_crossapp_CADatePickerView_onExit, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("init", js_crossapp_CADatePickerView_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setDate", js_crossapp_CADatePickerView_setDate, 4, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("create", js_crossapp_CADatePickerView_create, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithFrame", js_crossapp_CADatePickerView_createWithFrame, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithLayout", js_crossapp_CADatePickerView_createWithLayout, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithCenter", js_crossapp_CADatePickerView_createWithCenter, 2, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_CADatePickerView_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_CAControl_prototype),
+        jsb_CrossApp_CADatePickerView_class,
+        js_crossapp_CADatePickerView_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CADatePickerView", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::CADatePickerView> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_CADatePickerView_class;
+        p->proto = jsb_CrossApp_CADatePickerView_prototype;
+        p->parentProto = jsb_CrossApp_CAControl_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
 JSClass  *jsb_CrossApp_CADrawView_class;
 JSObject *jsb_CrossApp_CADrawView_prototype;
 
@@ -41573,6 +41891,364 @@ void js_register_crossapp_SimpleAudioEngine(JSContext *cx, JS::HandleObject glob
         _js_global_type_map.insert(std::make_pair(typeName, p));
     }
 }
+JSClass  *jsb_CrossApp_extension_CAVideoPlayerControlView_class;
+JSObject *jsb_CrossApp_extension_CAVideoPlayerControlView_prototype;
+
+bool js_crossapp_CAVideoPlayerControlView_getPlayerControlViewDelegate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_getPlayerControlViewDelegate : Invalid Native Object");
+    if (argc == 0) {
+        CrossApp::extension::CAVideoPlayerControlViewDelegate* ret = cobj->getPlayerControlViewDelegate();
+        jsval jsret = JSVAL_NULL;
+        do {
+            if (ret) {
+                js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::extension::CAVideoPlayerControlViewDelegate>(cx, (CrossApp::extension::CAVideoPlayerControlViewDelegate*)ret);
+                jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+            } else {
+                jsret = JSVAL_NULL;
+            }
+        } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_getPlayerControlViewDelegate : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_setShowBackButton(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_setShowBackButton : Invalid Native Object");
+    if (argc == 1) {
+        bool arg0;
+        arg0 = JS::ToBoolean(args.get(0));
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_setShowBackButton : Error processing arguments");
+        cobj->setShowBackButton(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_setShowBackButton : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_setTitle(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_setTitle : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_setTitle : Error processing arguments");
+        cobj->setTitle(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_setTitle : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_setUrl(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_setUrl : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_setUrl : Error processing arguments");
+        cobj->setUrl(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_setUrl : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_setPlayerControlViewDelegate(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_setPlayerControlViewDelegate : Invalid Native Object");
+    if (argc == 1) {
+        CrossApp::extension::CAVideoPlayerControlViewDelegate* arg0 = nullptr;
+        do {
+            if (args.get(0).isNull()) { arg0 = nullptr; break; }
+            if (!args.get(0).isObject()) { ok = false; break; }
+            js_proxy_t *jsProxy;
+            JSObject *tmpObj = args.get(0).toObjectOrNull();
+            jsProxy = jsb_get_js_proxy(tmpObj);
+            arg0 = (CrossApp::extension::CAVideoPlayerControlViewDelegate*)(jsProxy ? jsProxy->ptr : NULL);
+            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
+        } while (0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_setPlayerControlViewDelegate : Error processing arguments");
+        cobj->setPlayerControlViewDelegate(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_setPlayerControlViewDelegate : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_getTitle(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_getTitle : Invalid Native Object");
+    if (argc == 0) {
+        std::string ret = cobj->getTitle();
+        jsval jsret = JSVAL_NULL;
+        jsret = std_string_to_jsval(cx, ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_getTitle : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_setFullPath(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_setFullPath : Invalid Native Object");
+    if (argc == 1) {
+        std::string arg0;
+        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_setFullPath : Error processing arguments");
+        cobj->setFullPath(arg0);
+        args.rval().setUndefined();
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_setFullPath : wrong number of arguments: %d, was expecting %d", argc, 1);
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_getShowBackButton(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
+    js_proxy_t *proxy = jsb_get_js_proxy(obj);
+    CrossApp::extension::CAVideoPlayerControlView* cobj = (CrossApp::extension::CAVideoPlayerControlView *)(proxy ? proxy->ptr : NULL);
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CAVideoPlayerControlView_getShowBackButton : Invalid Native Object");
+    if (argc == 0) {
+        bool ret = cobj->getShowBackButton();
+        jsval jsret = JSVAL_NULL;
+        jsret = BOOLEAN_TO_JSVAL(ret);
+        args.rval().set(jsret);
+        return true;
+    }
+
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_getShowBackButton : wrong number of arguments: %d, was expecting %d", argc, 0);
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_createWithFrame(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::DRect arg0;
+        ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_createWithFrame : Error processing arguments");
+        CrossApp::extension::CAVideoPlayerControlView* ret = CrossApp::extension::CAVideoPlayerControlView::createWithFrame(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::extension::CAVideoPlayerControlView>(cx, (CrossApp::extension::CAVideoPlayerControlView*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_createWithFrame : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_createWithLayout(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::DLayout arg0;
+        ok &= jsval_to_dlayout(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_createWithLayout : Error processing arguments");
+        CrossApp::extension::CAVideoPlayerControlView* ret = CrossApp::extension::CAVideoPlayerControlView::createWithLayout(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::extension::CAVideoPlayerControlView>(cx, (CrossApp::extension::CAVideoPlayerControlView*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_createWithLayout : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_createWithCenter(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    if (argc == 1) {
+        CrossApp::DRect arg0;
+        ok &= jsval_to_drect(cx, args.get(0), &arg0);
+        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CAVideoPlayerControlView_createWithCenter : Error processing arguments");
+        CrossApp::extension::CAVideoPlayerControlView* ret = CrossApp::extension::CAVideoPlayerControlView::createWithCenter(arg0);
+        jsval jsret = JSVAL_NULL;
+        do {
+        if (ret) {
+            js_proxy_t *jsProxy = js_get_or_create_proxy<CrossApp::extension::CAVideoPlayerControlView>(cx, (CrossApp::extension::CAVideoPlayerControlView*)ret);
+            jsret = OBJECT_TO_JSVAL(jsProxy->obj);
+        } else {
+            jsret = JSVAL_NULL;
+        }
+    } while (0);
+        args.rval().set(jsret);
+        return true;
+    }
+    JS_ReportError(cx, "js_crossapp_CAVideoPlayerControlView_createWithCenter : wrong number of arguments");
+    return false;
+}
+bool js_crossapp_CAVideoPlayerControlView_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
+    bool ok = true;
+    CrossApp::extension::CAVideoPlayerControlView* cobj = new (std::nothrow) CrossApp::extension::CAVideoPlayerControlView();
+    TypeTest<CrossApp::extension::CAVideoPlayerControlView> t;
+    js_type_class_t *typeClass = nullptr;
+    std::string typeName = t.s_name();
+    auto typeMapIter = _js_global_type_map.find(typeName);
+    CCAssert(typeMapIter != _js_global_type_map.end(), "Can't find the class type!");
+    typeClass = typeMapIter->second;
+    CCAssert(typeClass, "The value is null.");
+    JS::RootedObject proto(cx, typeClass->proto.get());
+    JS::RootedObject parent(cx, typeClass->parentProto.get());
+    JS::RootedObject obj(cx, JS_NewObject(cx, typeClass->jsclass, proto, parent));
+    args.rval().set(OBJECT_TO_JSVAL(obj));
+    // link the native object with the javascript object
+    js_proxy_t* p = jsb_new_proxy(cobj, obj);
+    AddNamedObjectRoot(cx, &p->obj, "CrossApp::extension::CAVideoPlayerControlView");
+    if (JS_HasProperty(cx, obj, "_ctor", &ok) && ok)
+        ScriptingCore::getInstance()->executeFunctionWithOwner(OBJECT_TO_JSVAL(obj), "_ctor", args);
+    return true;
+}
+
+extern JSObject *jsb_CrossApp_CAView_prototype;
+
+void js_CrossApp_extension_CAVideoPlayerControlView_finalize(JSFreeOp *fop, JSObject *obj) {
+    CCLOGINFO("jsbindings: finalizing JS object %p (CAVideoPlayerControlView)", obj);
+    js_proxy_t* nproxy;
+    js_proxy_t* jsproxy;
+    jsproxy = jsb_get_js_proxy(obj);
+    if (jsproxy) {
+        CrossApp::extension::CAVideoPlayerControlView *nobj = static_cast<CrossApp::extension::CAVideoPlayerControlView *>(jsproxy->ptr);
+        nproxy = jsb_get_native_proxy(jsproxy->ptr);
+
+        if (nobj) {
+            jsb_remove_proxy(nproxy, jsproxy);
+            delete nobj;
+        }
+        else jsb_remove_proxy(nullptr, jsproxy);
+    }
+}
+void js_register_crossapp_CAVideoPlayerControlView(JSContext *cx, JS::HandleObject global) {
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class = (JSClass *)calloc(1, sizeof(JSClass));
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class->name = "CAVideoPlayerControlView";
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class->addProperty = JS_PropertyStub;
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class->delProperty = JS_DeletePropertyStub;
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class->getProperty = JS_PropertyStub;
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class->setProperty = JS_StrictPropertyStub;
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class->enumerate = JS_EnumerateStub;
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class->resolve = JS_ResolveStub;
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class->convert = JS_ConvertStub;
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class->finalize = js_CrossApp_extension_CAVideoPlayerControlView_finalize;
+    jsb_CrossApp_extension_CAVideoPlayerControlView_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+
+    static JSPropertySpec properties[] = {
+        JS_PSG("__nativeObj", js_is_native_obj, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_PS_END
+    };
+
+    static JSFunctionSpec funcs[] = {
+        JS_FN("getPlayerControlViewDelegate", js_crossapp_CAVideoPlayerControlView_getPlayerControlViewDelegate, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setShowBackButton", js_crossapp_CAVideoPlayerControlView_setShowBackButton, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setTitle", js_crossapp_CAVideoPlayerControlView_setTitle, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setUrl", js_crossapp_CAVideoPlayerControlView_setUrl, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setPlayerControlViewDelegate", js_crossapp_CAVideoPlayerControlView_setPlayerControlViewDelegate, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getTitle", js_crossapp_CAVideoPlayerControlView_getTitle, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("setFullPath", js_crossapp_CAVideoPlayerControlView_setFullPath, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("getShowBackButton", js_crossapp_CAVideoPlayerControlView_getShowBackButton, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    static JSFunctionSpec st_funcs[] = {
+        JS_FN("createWithFrame", js_crossapp_CAVideoPlayerControlView_createWithFrame, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithLayout", js_crossapp_CAVideoPlayerControlView_createWithLayout, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FN("createWithCenter", js_crossapp_CAVideoPlayerControlView_createWithCenter, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+        JS_FS_END
+    };
+
+    jsb_CrossApp_extension_CAVideoPlayerControlView_prototype = JS_InitClass(
+        cx, global,
+        JS::RootedObject(cx, jsb_CrossApp_CAView_prototype),
+        jsb_CrossApp_extension_CAVideoPlayerControlView_class,
+        js_crossapp_CAVideoPlayerControlView_constructor, 0, // constructor
+        properties,
+        funcs,
+        NULL, // no static properties
+        st_funcs);
+    // make the class enumerable in the registered namespace
+//  bool found;
+//FIXME: Removed in Firefox v27
+//  JS_SetPropertyAttributes(cx, global, "CAVideoPlayerControlView", JSPROP_ENUMERATE | JSPROP_READONLY, &found);
+
+    // add the proto and JSClass to the type->js info hash table
+    TypeTest<CrossApp::extension::CAVideoPlayerControlView> t;
+    js_type_class_t *p;
+    std::string typeName = t.s_name();
+    if (_js_global_type_map.find(typeName) == _js_global_type_map.end())
+    {
+        p = (js_type_class_t *)malloc(sizeof(js_type_class_t));
+        p->jsclass = jsb_CrossApp_extension_CAVideoPlayerControlView_class;
+        p->proto = jsb_CrossApp_extension_CAVideoPlayerControlView_prototype;
+        p->parentProto = jsb_CrossApp_CAView_prototype;
+        _js_global_type_map.insert(std::make_pair(typeName, p));
+    }
+}
 void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     // Get the ns
     JS::RootedObject ns(cx);
@@ -41582,6 +42258,7 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CAView(cx, ns);
     js_register_crossapp_CAScrollView(cx, ns);
     js_register_crossapp_CANavigationBar(cx, ns);
+    js_register_crossapp_CAVideoPlayerControlView(cx, ns);
     js_register_crossapp_CAEvent(cx, ns);
     js_register_crossapp_CAControl(cx, ns);
     js_register_crossapp_CAStepper(cx, ns);
@@ -41647,5 +42324,6 @@ void register_all_crossapp(JSContext* cx, JS::HandleObject obj) {
     js_register_crossapp_CAAutoCollectionViewDataSource(cx, ns);
     js_register_crossapp_CAClippingView(cx, ns);
     js_register_crossapp_CATableViewCell(cx, ns);
+    js_register_crossapp_CADatePickerView(cx, ns);
 }
 

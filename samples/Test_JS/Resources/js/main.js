@@ -3,8 +3,8 @@ require('js/rootwindow.js');
 ca.app.run();
 
 var caapplication = ca.CAApplication.getApplication();
-var window = new RootWindow()
-window.init();
-caapplication.runWindow(window);
+var rootWindow = new RootWindow()
+rootWindow.init();
+caapplication.runWindow(rootWindow);
 
-ca.RootWindow = window;
+ca.RootWindow = rootWindow;

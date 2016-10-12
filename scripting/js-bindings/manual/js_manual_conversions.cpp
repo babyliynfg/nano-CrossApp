@@ -2263,6 +2263,25 @@ jsval c_string_to_jsval(JSContext* cx, const char* v, size_t length)
 
     return ret;
 }
+//jsval tm_to_jsval(JSContext* cx, const struct tm& v)
+//{
+//    JS::RootedObject proto(cx);
+//    JS::RootedObject parent(cx);
+//    JS::RootedObject tmp(cx, JS_NewObject(cx, NULL, proto, parent));
+//    if (!tmp) return JSVAL_NULL;
+//    
+//    bool ok = JS_DefineProperty(cx, tmp, "tm_sec", v.tm_sec, JSPROP_ENUMERATE | JSPROP_PERMANENT) &&
+//    JS_DefineProperty(cx, tmp, "tm_min", v.tm_min, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+//    JS_DefineProperty(cx, tmp, "tm_hour", v.tm_hour, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+//    JS_DefineProperty(cx, tmp, "tm_mday", v.tm_mday, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+//    JS_DefineProperty(cx, tmp, "tm_mon", v.tm_mon, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+//    JS_DefineProperty(cx, tmp, "tm_year", v.tm_year, JSPROP_ENUMERATE | JSPROP_PERMANENT)&&
+//    JS_DefineProperty(cx, tmp, "tm_isdst", v.tm_isdst, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    if (ok) {
+//        return OBJECT_TO_JSVAL(tmp);
+//    }
+//    return JSVAL_NULL;
+//}
 
 jsval dpoint_to_jsval(JSContext* cx, const DPoint& v)
 {
@@ -2496,8 +2515,10 @@ jsval cacolor4f_to_jsval(JSContext* cx, const CAColor4F& v)
 //    
 //    return JSVAL_NULL;
 //}
-//
-//
+
+
+
+
 //jsval meshVertexAttrib_to_jsval(JSContext* cx, const cocos2d::MeshVertexAttrib& q)
 //{
 //    JS::RootedObject tmp(cx, JS_NewObject(cx, nullptr, JS::NullPtr(), JS::NullPtr()));
