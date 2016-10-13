@@ -366,6 +366,8 @@ public:
     
     std::string m_FileName;
     
+    static ssize_t getImagesCount();
+    
 protected:
     
     bool m_bPremultiplied;
