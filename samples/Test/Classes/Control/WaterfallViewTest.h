@@ -29,9 +29,7 @@ public:
     std::vector<CAColor4B> colorArr;
     
     std::vector<std::string> m_vTitle;
-    
-    CAWaterfallViewCell* p_Cell;
-    
+
     CAPullToRefreshView* headerRefreshView;
     CAPullToRefreshView* footerRefreshView;
     

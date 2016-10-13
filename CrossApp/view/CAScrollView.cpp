@@ -210,7 +210,11 @@ void CAScrollView::setViewSize(const DSize& var)
             this->getScrollWindowNotOutPoint(point);
             this->setContainerPoint(point);
         }
-        this->update(0);
+        
+        if (m_bRunning)
+        {
+            this->updateIndicator();
+        }
     }
 }
 
@@ -440,7 +444,6 @@ void CAScrollView::setContentSize(const CrossApp::DSize &var)
 {
     CAView::setContentSize(var);
     this->setViewSize(m_obViewSize);
-    this->update(0);
 }
 
 void CAScrollView::setContainerPoint(const DPoint& point, const DSize& size)
@@ -878,7 +881,6 @@ void CAScrollView::deaccelerateScrolling(float dt)
         m_tInertia = DPointZero;
         this->getScrollWindowNotOutPoint(point);
         this->setContainerPoint(point);
-        this->update(0);
         this->hideIndicator();
         this->stopDeaccelerateScroll();
         
@@ -1000,7 +1002,11 @@ void CAScrollView::updateIndicatorLayout()
             m_pIndicatorVertical->setLayout(DLayout(DHorizontalLayout_R_W(6, indicatorSize),
                                                     DVerticalLayout_T_B(6, 6 +  + indicatorSize)));
         }
-        this->update(0);
+        
+        if (m_bRunning)
+        {
+            this->updateIndicator();
+        }
     }
 }
 
@@ -1014,7 +1020,6 @@ void CAScrollView::showIndicator()
     {
         m_pIndicatorVertical->setHide(false);
     }
-    this->update(0);
 }
 
 void CAScrollView::hideIndicator()
@@ -1026,7 +1031,7 @@ void CAScrollView::hideIndicator()
     }
 }
 
-void CAScrollView::update(float dt)
+void CAScrollView::updateIndicator()
 {
     if ((m_pIndicatorHorizontal && m_pIndicatorHorizontal->isVisible())
         || (m_pIndicatorVertical && m_pIndicatorVertical->isVisible()))
@@ -1046,6 +1051,11 @@ void CAScrollView::update(float dt)
             m_pIndicatorVertical->setIndicator(m_obContentSize, rect);
         }
     }
+}
+
+void CAScrollView::update(float dt)
+{
+    this->updateIndicatorLayout();
 }
 
 void CAScrollView::getScrollWindowNotOutPoint(DPoint& point)

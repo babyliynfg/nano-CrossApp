@@ -28,6 +28,7 @@ CAWaterfallView::CAWaterfallView()
 
 CAWaterfallView::~CAWaterfallView()
 {
+    m_mpUsedWaterfallCells.clear();
 	CC_SAFE_RELEASE_NULL(m_pWaterfallHeaderView);
 	CC_SAFE_RELEASE_NULL(m_pWaterfallFooterView);
 	m_pWaterfallViewDataSource = NULL;
@@ -38,10 +39,13 @@ void CAWaterfallView::onEnterTransitionDidFinish()
 {
 	CAScrollView::onEnterTransitionDidFinish();
 
-	CAViewAnimation::beginAnimations("", NULL);
-	CAViewAnimation::setAnimationDuration(0);
-	CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAWaterfallView::firstReloadData));
-	CAViewAnimation::commitAnimations();
+    if (m_mpUsedWaterfallCells.empty())
+    {
+        CAViewAnimation::beginAnimations("", NULL);
+        CAViewAnimation::setAnimationDuration(0);
+        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAWaterfallView::firstReloadData));
+        CAViewAnimation::commitAnimations();
+    }
 }
 
 void CAWaterfallView::onExitTransitionDidStart()
@@ -435,20 +439,20 @@ void CAWaterfallView::reloadViewSizeData()
 
 void CAWaterfallView::clearData()
 {
-	m_mpUsedWaterfallCells.clear();
-	m_rUsedWaterfallCellRects.clear();
-	m_nColumnHeightVect.clear();
-
-	for (int i = 0; i < m_vpUsedWaterfallCells.size(); i++)
+    m_mpUsedWaterfallCells.clear();
+    
+    for (auto& cell : m_vpUsedWaterfallCells)
 	{
-		CAWaterfallViewCell* cell = m_vpUsedWaterfallCells.at(i);
 		CC_CONTINUE_IF(cell == NULL);
 		m_mpFreedWaterfallCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
 		cell->resetCell();
 	}
 	m_vpUsedWaterfallCells.clear();
-
+    
+    m_rUsedWaterfallCellRects.clear();
+    m_nColumnHeightVect.clear();
+    
 	m_pHighlightedWaterfallCells = NULL;
 }
 
@@ -564,28 +568,28 @@ void CAWaterfallView::loadWaterfallCell()
 	{
 		CC_CONTINUE_IF(itr->second != NULL);
 
-		int r = itr->first;
-		DRect cellRect = m_rUsedWaterfallCellRects[r];
+		int index = itr->first;
+		DRect cellRect = m_rUsedWaterfallCellRects[index];
 		CC_CONTINUE_IF(!rect.intersectsRect(cellRect));
 
-		CAWaterfallViewCell* cell = m_pWaterfallViewDataSource->waterfallCellAtIndex(this, cellRect.size, r);
+		CAWaterfallViewCell* cell = m_pWaterfallViewDataSource->waterfallCellAtIndex(this, cellRect.size, index);
 		if (cell)
 		{
-			cell->m_nItem = r;
+			cell->m_nItem = index;
 			cell->updateDisplayedAlpha(this->getAlpha());
+            cell->setFrame(cellRect);
 			this->addSubview(cell);
-			cell->setFrame(cellRect);
-			itr->second = cell;
+            m_mpUsedWaterfallCells[index] = cell;
 			m_vpUsedWaterfallCells.pushBack(cell);
 
-			if (m_pSelectedWaterfallCells.count(r))
+			if (m_pSelectedWaterfallCells.count(index))
 			{
 				cell->setControlState(CAControlStateSelected);
 			}
 
 			if (m_pWaterfallViewDataSource)
 			{
-				m_pWaterfallViewDataSource->waterfallViewWillDisplayCellAtIndex(this, cell, r);
+				m_pWaterfallViewDataSource->waterfallViewWillDisplayCellAtIndex(this, cell, index);
 			}
 		}
 	}

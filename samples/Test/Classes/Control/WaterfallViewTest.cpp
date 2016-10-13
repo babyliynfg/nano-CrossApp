@@ -72,12 +72,12 @@ void WaterfallViewTest::refreshData2(float interval)
 
 void WaterfallViewTest::scrollViewHeaderBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(WaterfallViewTest::refreshData1), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(WaterfallViewTest::refreshData1), this, 0.1, 0, 0.5f + CCRANDOM_0_1(), false);
 }
 
 void WaterfallViewTest::scrollViewFooterBeginRefreshing(CAScrollView* view)
 {
-    CAScheduler::schedule(schedule_selector(WaterfallViewTest::refreshData2), this, 0.1, 0, 1.0f + CCRANDOM_0_1() * 2, false);
+    CAScheduler::schedule(schedule_selector(WaterfallViewTest::refreshData2), this, 0.1, 0, 0.5f + CCRANDOM_0_1(), false);
 }
 
 void WaterfallViewTest::waterfallViewDidSelectCellAtIndexPath(CAWaterfallView *waterfallView, unsigned int itemIndex)
@@ -101,7 +101,7 @@ void WaterfallViewTest::waterfallViewDidDeselectCellAtIndexPath(CAWaterfallView 
 //Necessary
 CAWaterfallViewCell* WaterfallViewTest::waterfallCellAtIndex(CAWaterfallView *waterfallView, const DSize& cellSize, unsigned int itemIndex)
 {
-    p_Cell = Waterfall->dequeueReusableCellWithIdentifier("CrossApp");
+    CAWaterfallViewCell* p_Cell = Waterfall->dequeueReusableCellWithIdentifier("CrossApp");
     if (p_Cell == NULL)
     {
         p_Cell = CAWaterfallViewCell::create("CrossApp");

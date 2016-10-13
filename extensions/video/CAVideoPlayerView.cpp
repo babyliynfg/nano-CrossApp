@@ -468,7 +468,6 @@ bool CAVideoPlayerView::decodeProcessThread(void* param)
 		{
             pMsg->pAVGLView->m_isSetPosWaiting = false;
 			pMsg->pAVGLView->setVPPosition(pMsg->param2);
-            
 		}
 		if (pMsg->param1 == ThreadMsgType_DecodeFrame)
 		{

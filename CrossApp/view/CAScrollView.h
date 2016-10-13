@@ -190,7 +190,7 @@ protected:
     bool isScrollWindowNotMaxOutSide(const DPoint& point);
     
     virtual void update(float dt);
-    
+
     void deaccelerateScrolling(float dt);
     
     void closeToPoint(float dt, float now, float total);
@@ -201,6 +201,8 @@ protected:
     
     void hideIndicator();
 
+    void updateIndicator();
+    
     void layoutPullToRefreshView();
     
     void changedFromPullToRefreshView();

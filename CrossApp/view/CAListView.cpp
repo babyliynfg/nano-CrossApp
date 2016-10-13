@@ -488,9 +488,8 @@ void CAListView::clearData()
 
 	m_mpUsedListCells.clear();
 
-	for (int i = 0; i < m_vpUsedListCells.size(); i++)
+	for (auto& cell : m_vpUsedListCells)
 	{
-		CAListViewCell* cell = m_vpUsedListCells.at(i);
 		CC_CONTINUE_IF(cell == NULL);
 		m_mpFreedListCells[cell->getReuseIdentifier()].pushBack(cell);
 		cell->removeFromSuperview();
@@ -609,7 +608,7 @@ void CAListView::loadCell()
 		{
             cell->m_nIndex = index;
             cell->updateDisplayedAlpha(this->getAlpha());
-			addSubview(cell);
+			this->addSubview(cell);
 			cell->setFrame(cellRect);
             m_mpUsedListCells[index] = cell;
             m_vpUsedListCells.pushBack(cell);
