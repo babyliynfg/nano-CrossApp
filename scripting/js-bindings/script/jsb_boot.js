@@ -1680,7 +1680,7 @@ ca.app = /** @lends ca.app# */{
     
         this.config = config;
     
-        ca.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
+//        ca.director.setDisplayStats(this.config[CONFIG_KEY.showFPS]);
 //        ca.director.setAnimationInterval(1.0/this.config[CONFIG_KEY.frameRate]);
     }
 };

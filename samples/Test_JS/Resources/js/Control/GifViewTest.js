@@ -5,7 +5,7 @@ var GifViewTest = ca.CAViewController.extend({
     ctor: function () {
         this._super();
         this.getView().setColor(ca.color._getGray());
-        var GifView = ca.CAGifView.createWithGif(ca.CAGif.createWithFilePath("image/gifview1.gif"));
+        var GifView = ca.CAGifView.createWithGif(ca.CAGif.create("image/gifview1.gif"));
         GifView.setLayout(DLayout(DHorizontalLayout_W_C(400, 0.5), DVerticalLayout_H_C(400, 0.5)));
         //设置Gif永远重复
         GifView.setRepeatForever(true);

@@ -44,11 +44,10 @@ var ProgressTest = ca.CAViewController.extend({
 
     },
     progressValueChange: function (dt) {
-        log("progressValueChange------>");
         var currentValue = this.progress.getProgress() + 0.001;
         this.progress.setProgress(currentValue);
         var valueText = currentValue*100-0.1;
-        this.progress_value.setText(valueText);
+        this.progress_value.setText(valueText.toFixed(1));
         if(null == this.progress){
             ca.CAScheduler.getScheduler().unscheduleCallbackForTarget(this,this.progressValueChange);
         }

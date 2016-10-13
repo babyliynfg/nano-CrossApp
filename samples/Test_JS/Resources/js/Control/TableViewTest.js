@@ -53,7 +53,7 @@ var TableViewTest = ca.CAViewController.extend({
         showIndex = 0;
         //VIEWLIST.clear();
 
-        var p_TableView = ca.CATableView.createWithLayout(DLayout(DHorizontalLayout_L_R(0, 50), DVerticalLayoutFill));
+        var p_TableView = ca.CATableView.createWithLayout(DLayout(DHorizontalLayout_L_R(0, 0), DVerticalLayoutFill));
         p_TableView.setTableViewDataSource(this);
         p_TableView.setTableViewDelegate(this);
         p_TableView.setAllowsSelection(true);

@@ -36,7 +36,6 @@ var iconTag = new Array(
     "image/WebView.png",
 
     "image/GifView.png",
-    "image/FlashView.png",
     "image/Video.png",
 
     "image/RenderImage.png",
@@ -85,7 +84,6 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
         this.m_vTitle.push("WebView");
 
         this.m_vTitle.push("GifView");
-        this.m_vTitle.push("FlashView");
         this.m_vTitle.push("VideoPlayer");
 
         this.m_vTitle.push("RenderImage");
@@ -404,16 +402,16 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerGifViewTest, true);
                 break;
             }
+//            case 25:
+//            {
+//                var ViewContrllerFlashViewTest = new FlashViewTest();
+//                ViewContrllerFlashViewTest.init();
+//                ViewContrllerFlashViewTest.setNavigationBarItem(ca.CANavigationBarItem.create(this.m_vTitle[item]));
+//                //ViewContrllerFlashViewTest.autorelease();
+//                ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerFlashViewTest, true);
+//                break;
+//            }
             case 25:
-            {
-                var ViewContrllerFlashViewTest = new FlashViewTest();
-                ViewContrllerFlashViewTest.init();
-                ViewContrllerFlashViewTest.setNavigationBarItem(ca.CANavigationBarItem.create(this.m_vTitle[item]));
-                //ViewContrllerFlashViewTest.autorelease();
-                ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerFlashViewTest, true);
-                break;
-            }
-            case 26:
             {
                 var ViewContrllerVideoPlayerControlViewTest = new VideoPlayerControlViewTest();
                 ViewContrllerVideoPlayerControlViewTest.init();
@@ -423,7 +421,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 break;
             }
 
-            case 27:
+            case 26:
             {
                 var ViewContrllerRenderImageTest = new RenderImageTest();
                 ViewContrllerRenderImageTest.init();
@@ -432,7 +430,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerRenderImageTest, true);
                 break;
             }
-            case 28:
+            case 27:
             {
                 //showViewAnimationNavigationBar = 0;
                 var ViewAnimationNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
@@ -594,18 +592,6 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
             case 10:
             {
                 ViewContrllerImageViewTest = new LabelTest(this.Num);
-                //showLabelNavigationBar = 0;
-                //LabelNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
-                //
-                //CABarButtonItem* LabelRightBtn = CABarButtonItem.create("", CAImage.create("source_material/btn_right_white.png"), null);
-                //LabelRightBtn.setTarget(this, CAControl_selector(CDUIShowAutoCollectionView.LabelRightBtnRightcallback));
-                //LabelNavigationBar.addRightButtonItem(LabelRightBtn);
-                //
-                //LabelTest* ViewContrllerLabelTest = new LabelTest();
-                //ViewContrllerLabelTest.init();
-                //ViewContrllerLabelTest.setNavigationBarItem(LabelNavigationBar);
-                //ViewContrllerLabelTest.autorelease();
-                //ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerLabelTest, true);
                 break;
             }
             case 11:{break;}
@@ -624,8 +610,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
             case 24:{break;}
             case 25:{break;}
             case 26:{break;}
-            case 27:{break;}
-            case 28:
+            case 27:
             {
                 ViewContrllerImageViewTest = new ViewAnimationTest(this.Num);
                 break;
