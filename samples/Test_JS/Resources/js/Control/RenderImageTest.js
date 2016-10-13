@@ -106,6 +106,4 @@ var RenderImageTest = ca.CAViewController.extend({
         }
         return null;
     }
-
-
 });

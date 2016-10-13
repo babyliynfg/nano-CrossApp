@@ -38,7 +38,7 @@ var iconTag = new Array(
     "image/GifView.png",
     "image/Video.png",
 
-    "image/RenderImage.png",
+//    "image/RenderImage.png",
     "image/Video.png",
     "image/CollectionView.png"
 );
@@ -86,7 +86,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
         this.m_vTitle.push("GifView");
         this.m_vTitle.push("VideoPlayer");
 
-        this.m_vTitle.push("RenderImage");
+//        this.m_vTitle.push("RenderImage");
         this.m_vTitle.push("Animation");
 
 
@@ -421,16 +421,16 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
                 break;
             }
 
+//            case 26:
+//            {
+//                var ViewContrllerRenderImageTest = new RenderImageTest();
+//                ViewContrllerRenderImageTest.init();
+//                ViewContrllerRenderImageTest.setNavigationBarItem(ca.CANavigationBarItem.create(this.m_vTitle[item]));
+//                //ViewContrllerRenderImageTest.autorelease();
+//                ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerRenderImageTest, true);
+//                break;
+//            }
             case 26:
-            {
-                var ViewContrllerRenderImageTest = new RenderImageTest();
-                ViewContrllerRenderImageTest.init();
-                ViewContrllerRenderImageTest.setNavigationBarItem(ca.CANavigationBarItem.create(this.m_vTitle[item]));
-                //ViewContrllerRenderImageTest.autorelease();
-                ca.RootWindow.getRootNavigationController().pushViewController(ViewContrllerRenderImageTest, true);
-                break;
-            }
-            case 27:
             {
                 //showViewAnimationNavigationBar = 0;
                 var ViewAnimationNavigationBar = ca.CANavigationBarItem.create(this.m_vTitle[item]);
@@ -470,7 +470,7 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
             p_Cell = ca.CACollectionViewCell.create("CrossApp");
             p_Cell.setAllowsSelected(false);
 
-            var itemImage = ca.CAView.createWithLayout(DLayout(DLayoutFill));
+            var itemImage = ca.CAView.createWithLayout(DLayoutFill);
             itemImage.setTag(99);
             p_Cell.addSubview(itemImage);
 
@@ -609,8 +609,8 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
             case 23:{break;}
             case 24:{break;}
             case 25:{break;}
-            case 26:{break;}
-            case 27:
+//            case 26:{break;}
+            case 26:
             {
                 ViewContrllerImageViewTest = new ViewAnimationTest(this.Num);
                 break;
@@ -622,8 +622,6 @@ var CDUIShowAutoCollectionView = ca.CAViewController.extend({
         ViewContrllerImageViewTest.init();
         ViewContrllerImageViewTest.setNavigationBarItem(ImageViewNavigationBar);
         //ViewContrllerImageViewTest.autorelease();
-
-
 
         if(this.Num >= ViewContrllerImageViewTest.maxNum)
         {
