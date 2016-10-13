@@ -86,7 +86,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -126,7 +125,6 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\js-bindings\spidermonkey\prebuilt\w
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
-      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -139,7 +137,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\js-bindings\spidermonkey\prebuilt\w
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\scripting\js-bindings\auto\jsb_crossapp_auto.cpp" />
-    <ClCompile Include="..\..\..\scripting\js-bindings\manual\cocos2d_specifics.cpp" />
+    <ClCompile Include="..\..\..\scripting\js-bindings\manual\crossapp_specifics.cpp" />
     <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_bindings_core.cpp" />
     <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_crossapp_delegates_manual.cpp" />
     <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_manual_conversions.cpp" />
@@ -149,7 +147,7 @@ xcopy /Y /Q "$(ProjectDir)..\..\..\scripting\js-bindings\spidermonkey\prebuilt\w
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\scripting\js-bindings\auto\jsb_crossapp_auto.hpp" />
-    <ClInclude Include="..\..\..\scripting\js-bindings\manual\cocos2d_specifics.hpp" />
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\crossapp_specifics.hpp" />
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_bindings_config.h" />
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_bindings_core.h" />
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_crossapp_delegates_manual.hpp" />
