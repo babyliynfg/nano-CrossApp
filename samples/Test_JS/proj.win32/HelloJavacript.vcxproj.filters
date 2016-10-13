@@ -21,9 +21,6 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\scripting\js-bindings\manual\cocos2d_specifics.cpp">
-      <Filter>manual</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_bindings_core.cpp">
       <Filter>manual</Filter>
     </ClCompile>
@@ -39,6 +36,9 @@
     <ClCompile Include="..\..\..\scripting\js-bindings\manual\js_crossapp_delegates_manual.cpp">
       <Filter>manual</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\scripting\js-bindings\manual\crossapp_specifics.cpp">
+      <Filter>manual</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -46,9 +46,6 @@
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\scripting\js-bindings\manual\cocos2d_specifics.hpp">
-      <Filter>manual</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_bindings_config.h">
       <Filter>manual</Filter>
@@ -69,6 +66,9 @@
       <Filter>auto</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\scripting\js-bindings\manual\js_crossapp_delegates_manual.hpp">
+      <Filter>manual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\scripting\js-bindings\manual\crossapp_specifics.hpp">
       <Filter>manual</Filter>
     </ClInclude>
   </ItemGroup>
