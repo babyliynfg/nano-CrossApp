@@ -7,8 +7,9 @@
 #define NS_CC_EXT_END                       }
 #define USING_NS_CC_EXT                     using namespace extension
 
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WIN32)
-#define CC_EXT_DLL  //__declspec(dllexport)
+
+#if defined(_WIN32) || defined(_WINRT) || defined(_WP8)
+#define CC_EXT_DLL  __declspec(dllexport)
 #else
 #define CC_EXT_DLL
 #endif

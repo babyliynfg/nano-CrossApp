@@ -41,10 +41,9 @@ CATableView::CATableView()
 
 CATableView::~CATableView()
 {
-    std::map<std::string, CAVector<CATableViewCell*> >::iterator itr;
-    for (itr=m_mpFreedTableCells.begin(); itr!=m_mpFreedTableCells.end(); itr++)
+    for (auto& pair : m_mpFreedTableCells)
     {
-        itr->second.clear();
+        pair.second.clear();
     }
     m_vpUsedTableCells.clear();
     m_mpFreedTableCells.clear();
@@ -191,10 +190,9 @@ void CATableView::setAllowsSelection(bool var)
     m_bAllowsSelection = var;
     CC_RETURN_IF(!m_bAllowsSelection);
     CC_RETURN_IF(m_pSelectedTableCells.empty());
-    std::set<CAIndexPath2E>::iterator itr;
-    for (itr=m_pSelectedTableCells.begin(); itr!=m_pSelectedTableCells.end(); itr++)
+    for (auto& indexPath : m_pSelectedTableCells)
     {
-        if (CATableViewCell* cell = m_mpUsedTableCells[(*itr)])
+        if (CATableViewCell* cell = m_mpUsedTableCells[indexPath])
         {
             cell->setControlState(CAControlStateNormal);
         }
@@ -207,9 +205,9 @@ void CATableView::setAllowsMultipleSelection(bool var)
     m_bAllowsMultipleSelection = var;
     CC_RETURN_IF(m_pSelectedTableCells.empty());
     std::set<CAIndexPath2E>::iterator itr;
-    for (itr=m_pSelectedTableCells.begin(); itr!=m_pSelectedTableCells.end(); itr++)
+    for (auto& indexPath : m_pSelectedTableCells)
     {
-        if (CATableViewCell* cell = m_mpUsedTableCells[(*itr)])
+        if (CATableViewCell* cell = m_mpUsedTableCells[indexPath])
         {
             cell->setControlState(CAControlStateNormal);
         }
@@ -224,10 +222,9 @@ void CATableView::setSelectRowAtIndexPath(unsigned int section, unsigned int row
     
     if (!m_pSelectedTableCells.empty() && m_bAllowsMultipleSelection == false)
     {
-        std::set<CAIndexPath2E>::iterator itr;
-        for (itr=m_pSelectedTableCells.begin(); itr!=m_pSelectedTableCells.end(); itr++)
+        for (auto& indexPath : m_pSelectedTableCells)
         {
-            if (CATableViewCell* cell = m_mpUsedTableCells[(*itr)])
+            if (CATableViewCell* cell = m_mpUsedTableCells[indexPath])
             {
                 cell->setControlState(CAControlStateNormal);
             }
@@ -279,37 +276,34 @@ void CATableView::clearData()
     m_nRowsInSections.clear();
     m_nSectionHeaderHeights.clear();
     m_nSectionFooterHeights.clear();
-    std::vector<std::vector<unsigned int> >::iterator itr;
-    for (itr=m_nRowHeightss.begin(); itr!=m_nRowHeightss.end(); itr++)
+    
+    for (auto& vec : m_nRowHeightss)
     {
-        itr->clear();
+        vec.clear();
     }
     m_nRowHeightss.clear();
     
-    std::vector<std::vector<DRect> >::iterator itr2;
-    for (itr2=m_rTableCellRectss.begin(); itr2!=m_rTableCellRectss.end(); itr2++)
+    for (auto& vec : m_rTableCellRectss)
     {
-        itr2->clear();
+        vec.clear();
     }
     m_rTableCellRectss.clear();
     
     m_rSectionRects.clear();
     
-    std::vector<std::vector<DRect> >::iterator itr3;
-    for (itr3=m_rLineRectss.begin(); itr3!=m_rLineRectss.end(); itr3++)
+    for (auto& vec : m_rLineRectss)
     {
-        itr3->clear();
+        vec.clear();
     }
     m_rLineRectss.clear();
     m_pUsedLines.clear();
     
-    std::map<CAIndexPath2E, CATableViewCell*>::iterator itr4;
-    for (itr4=m_mpUsedTableCells.begin(); itr4!=m_mpUsedTableCells.end(); itr4++)
+    for (auto& pair : m_mpUsedTableCells)
     {
-        CATableViewCell* cell = itr4->second;
+        CATableViewCell* cell = pair.second;
         CC_CONTINUE_IF(cell == NULL);
         m_mpFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
-        itr4->second = NULL;
+        pair.second = NULL;
         cell->removeFromSuperview();
         cell->resetCell();
     }
@@ -521,12 +515,9 @@ void CATableView::recoveryTableCell()
     rect.origin.y -= rect.size.height * 0.1f;
     rect.size.height *= 1.2f;
     
-    std::map<CAIndexPath2E, CATableViewCell*>::iterator itr;
-    for (itr=m_mpUsedTableCells.begin();
-         itr!=m_mpUsedTableCells.end();
-         itr++)
+    for (auto& pair : m_mpUsedTableCells)
     {
-        CATableViewCell* cell = itr->second;
+        CATableViewCell* cell = pair.second;
         CC_CONTINUE_IF(cell == NULL);
         DRect cellRect = cell->getFrame();
 
@@ -534,14 +525,14 @@ void CATableView::recoveryTableCell()
         m_mpFreedTableCells[cell->getReuseIdentifier()].pushBack(cell);
         cell->removeFromSuperview();
         cell->resetCell();
-        itr->second = NULL;
+        pair.second = NULL;
         m_vpUsedTableCells.eraseObject(cell);
         
-        CAView* line = m_pUsedLines[itr->first];
+        CAView* line = m_pUsedLines[pair.first];
         CC_CONTINUE_IF(line == NULL);
         m_pFreedLines.pushBack(line);
         line->removeFromSuperview();
-        m_pUsedLines[itr->first] = NULL;
+        m_pUsedLines[pair.first] = NULL;
     }
 }
 
@@ -562,39 +553,42 @@ void CATableView::updateSectionHeaderAndFooterRects()
     DRect rect = this->getBounds();
 	rect.origin = getContentOffset();
     
-    std::vector<DRect>::iterator itr;
-    for (itr=m_rSectionRects.begin(); itr!=m_rSectionRects.end(); itr++)
+    int i = 0;
+    for (auto& r : m_rSectionRects)
     {
-        CC_CONTINUE_IF(!rect.intersectsRect(*itr));
-        int i = (int)(itr - m_rSectionRects.begin());
-        CAView* header = NULL;
-        CAView* footer = NULL;
-        float headerHeight = m_nSectionHeaderHeights[i];
-        float footerHeight = m_nSectionFooterHeights[i];
-        if (m_pSectionHeaderViews.find(i) != m_pSectionHeaderViews.end())
+        if (rect.intersectsRect(r))
         {
-            header = m_pSectionHeaderViews[i];
+            CAView* header = NULL;
+            CAView* footer = NULL;
+            float headerHeight = m_nSectionHeaderHeights[i];
+            float footerHeight = m_nSectionFooterHeights[i];
+            if (m_pSectionHeaderViews.find(i) != m_pSectionHeaderViews.end())
+            {
+                header = m_pSectionHeaderViews[i];
+            }
+            if (m_pSectionFooterViews.find(i) != m_pSectionFooterViews.end())
+            {
+                footer = m_pSectionFooterViews[i];
+            }
+            if (header && m_bAlwaysTopSectionHeader)
+            {
+                DPoint p1 = rect.origin;
+                p1.y = MAX(p1.y, r.origin.y);
+                p1.y = MIN(p1.y, r.origin.y + r.size.height
+                           - headerHeight - footerHeight);
+                header->setFrameOrigin(p1);
+            }
+            if (footer && m_bAlwaysBottomSectionFooter)
+            {
+                DPoint p2 = DPointZero;
+                p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,
+                           r.origin.y + r.size.height - footerHeight);
+                p2.y = MAX(p2.y, r.origin.y + headerHeight);
+                footer->setFrameOrigin(p2);
+            }
+
         }
-        if (m_pSectionFooterViews.find(i) != m_pSectionFooterViews.end())
-        {
-            footer = m_pSectionFooterViews[i];
-        }
-        if (header && m_bAlwaysTopSectionHeader)
-        {
-            DPoint p1 = rect.origin;
-            p1.y = MAX(p1.y, itr->origin.y);
-            p1.y = MIN(p1.y, itr->origin.y + itr->size.height
-                       - headerHeight - footerHeight);
-            header->setFrameOrigin(p1);
-        }
-        if (footer && m_bAlwaysBottomSectionFooter)
-        {
-            DPoint p2 = DPointZero;
-            p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,
-                       itr->origin.y + itr->size.height - footerHeight);
-            p2.y = MAX(p2.y, itr->origin.y + headerHeight);
-            footer->setFrameOrigin(p2);
-        }
+        ++i;
     }
 }
 
