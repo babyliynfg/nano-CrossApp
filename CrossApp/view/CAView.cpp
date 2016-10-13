@@ -120,15 +120,12 @@ CAView::~CAView(void)
     CC_SAFE_RELEASE(m_pCamera);
     CC_SAFE_RELEASE(m_pShaderProgram);
     
-    if(!m_obSubviews.empty())
+    for (auto& subview : m_obSubviews)
     {
-        CAVector<CAView*>::iterator itr;
-        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-        {
-            (*itr)->setSuperview(NULL);
-        }
+        subview->setSuperview(NULL);
     }
     m_obSubviews.clear();
+    
     CC_SAFE_RELEASE(m_pobImage);
     if (m_pCGNode)
     {
@@ -1030,15 +1027,11 @@ CAView* CAView::getSubviewByTag(int aTag)
 {
     CCAssert( aTag != TagInvalid, "Invalid tag");
     
-    if(!m_obSubviews.empty())
+    for (auto& subview : m_obSubviews)
     {
-        CAVector<CAView*>::iterator itr;
-        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+        if (subview->m_nTag == aTag)
         {
-            if ((*itr)->m_nTag == aTag)
-            {
-                return *itr;
-            }
+            return subview;
         }
     }
     return NULL;
@@ -1048,15 +1041,11 @@ CAView* CAView::getSubviewByTextTag(const std::string& textTag)
 {
     CCAssert( !textTag.empty(), "Invalid tag");
     
-    if(!m_obSubviews.empty())
+    for (auto& subview : m_obSubviews)
     {
-        CAVector<CAView*>::iterator itr;
-        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+        if (subview->m_sTextTag.compare(textTag) == 0)
         {
-            if ((*itr)->m_sTextTag.compare(textTag) == 0)
-            {
-                return *itr;
-            }
+            return subview;
         }
     }
     return NULL;
@@ -1167,25 +1156,22 @@ void CAView::removeAllSubviews()
     {
         if (m_pobBatchView)
         {
-            CAVector<CAView*>::iterator itr;
-            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+            for (auto& subview : m_obSubviews)
             {
-                m_pobBatchView->removeViewFromAtlas(*itr);
+                m_pobBatchView->removeViewFromAtlas(subview);
             }
         }
 
-        CAVector<CAView*>::iterator itr;
-        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
+        for (auto& subview : m_obSubviews)
         {
             if(m_bRunning)
             {
-                (*itr)->onExitTransitionDidStart();
-                (*itr)->onExit();
+                subview->onExitTransitionDidStart();
+                subview->onExit();
             }
             
-            (*itr)->setSuperview(NULL);
+            subview->setSuperview(NULL);
         }
-        
         m_obSubviews.clear();
     }
 
@@ -1241,9 +1227,10 @@ void CAView::sortAllSubviews()
     
         if (m_pobBatchView)
         {
-            CAVector<CAView*>::iterator itr;
-            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-                if(m_bRunning) (*itr)->sortAllSubviews();
+            for (auto& subview : m_obSubviews)
+            {
+                if(m_bRunning) subview->sortAllSubviews();
+            }
         }
         
         m_bReorderChildDirty = false;
@@ -1576,11 +1563,9 @@ void CAView::visit()
 
 void CAView::visitEve(void)
 {
-    CAVector<CAView*>::iterator itr=m_obSubviews.begin();
-    while (itr!=m_obSubviews.end())
+    for (auto& subview : m_obSubviews)
     {
-        (*itr)->visitEve();
-        itr++;
+        subview->visitEve();
     }
     
     if (m_pCGNode)
@@ -1647,13 +1632,9 @@ void CAView::onEnter()
     m_bRunning = true;
     this->updateDraw();
     
-    if (!m_obSubviews.empty())
+    for (auto& subview : m_obSubviews)
     {
-        CAVector<CAView*>::iterator itr;
-        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-        {
-            (*itr)->onEnter();
-        }
+        subview->onEnter();
     }
     
     if (m_pCGNode)
@@ -1704,11 +1685,10 @@ void CAView::onExitTransitionDidStart()
         }
     }
 #endif
-    if (!m_obSubviews.empty())
+    
+    for (auto& subview : m_obSubviews)
     {
-        CAVector<CAView*>::iterator itr;
-        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-            (*itr)->onExitTransitionDidStart();
+        subview->onExitTransitionDidStart();
     }
     
     if (m_pCGNode)
@@ -1736,11 +1716,9 @@ void CAView::onExit()
 #endif
     m_bRunning = false;
     
-    if (!m_obSubviews.empty())
+    for (auto& subview : m_obSubviews)
     {
-        CAVector<CAView*>::iterator itr;
-        for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-            (*itr)->onExit();
+        subview->onExit();
     }
     
     if (m_pCGNode)
@@ -2104,8 +2082,10 @@ void CAView::updateTransform()
         setDirty(false);
     }
     
-    for (const auto& var : m_obSubviews)
-        var->updateTransform();
+    for (auto& subview : m_obSubviews)
+    {
+        subview->updateTransform();
+    }
     
 #if CC_SPRITE_DEBUG_DRAW
     // draw bounding box
@@ -2505,11 +2485,9 @@ void CAView::setDirtyRecursively(bool bValue)
     // recursively set dirty
     if (m_bHasChildren)
     {
-        if (!m_obSubviews.empty())
+        for (auto& subview : m_obSubviews)
         {
-            CAVector<CAView*>::iterator itr;
-            for (itr=m_obSubviews.begin(); itr!=m_obSubviews.end(); itr++)
-                (*itr)->setDirtyRecursively(bValue);
+            subview->setDirtyRecursively(bValue);
         }
     }
 }
