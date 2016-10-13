@@ -962,9 +962,9 @@ CAImage::PixelFormat CAImage::convertDataToFormat(const unsigned char* data, uns
 
 static std::set<CAImage*> s_pImages;
 
-ssize_t CAImage::getImagesCount()
+const std::set<CAImage*>& CAImage::getImagesSet()
 {
-    return s_pImages.size();
+    return s_pImages;
 }
 
 static const unsigned char* s_pData = NULL;

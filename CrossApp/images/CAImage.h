@@ -20,6 +20,7 @@
 #include "gif_lib/gif_lib.h"
 #include <list>
 #include <map>
+#include <set>
 
 NS_CC_BEGIN
 
@@ -366,7 +367,7 @@ public:
     
     std::string m_FileName;
     
-    static ssize_t getImagesCount();
+    static const std::set<CAImage*>& getImagesSet();
     
 protected:
     
