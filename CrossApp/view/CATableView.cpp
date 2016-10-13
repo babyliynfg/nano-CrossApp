@@ -556,35 +556,37 @@ void CATableView::updateSectionHeaderAndFooterRects()
     int i = 0;
     for (auto& r : m_rSectionRects)
     {
-        CC_CONTINUE_IF(!rect.intersectsRect(r));
-        
-        CAView* header = NULL;
-        CAView* footer = NULL;
-        float headerHeight = m_nSectionHeaderHeights[i];
-        float footerHeight = m_nSectionFooterHeights[i];
-        if (m_pSectionHeaderViews.find(i) != m_pSectionHeaderViews.end())
+        if (rect.intersectsRect(r))
         {
-            header = m_pSectionHeaderViews[i];
-        }
-        if (m_pSectionFooterViews.find(i) != m_pSectionFooterViews.end())
-        {
-            footer = m_pSectionFooterViews[i];
-        }
-        if (header && m_bAlwaysTopSectionHeader)
-        {
-            DPoint p1 = rect.origin;
-            p1.y = MAX(p1.y, r.origin.y);
-            p1.y = MIN(p1.y, r.origin.y + r.size.height
-                       - headerHeight - footerHeight);
-            header->setFrameOrigin(p1);
-        }
-        if (footer && m_bAlwaysBottomSectionFooter)
-        {
-            DPoint p2 = DPointZero;
-            p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,
-                       r.origin.y + r.size.height - footerHeight);
-            p2.y = MAX(p2.y, r.origin.y + headerHeight);
-            footer->setFrameOrigin(p2);
+            CAView* header = NULL;
+            CAView* footer = NULL;
+            float headerHeight = m_nSectionHeaderHeights[i];
+            float footerHeight = m_nSectionFooterHeights[i];
+            if (m_pSectionHeaderViews.find(i) != m_pSectionHeaderViews.end())
+            {
+                header = m_pSectionHeaderViews[i];
+            }
+            if (m_pSectionFooterViews.find(i) != m_pSectionFooterViews.end())
+            {
+                footer = m_pSectionFooterViews[i];
+            }
+            if (header && m_bAlwaysTopSectionHeader)
+            {
+                DPoint p1 = rect.origin;
+                p1.y = MAX(p1.y, r.origin.y);
+                p1.y = MIN(p1.y, r.origin.y + r.size.height
+                           - headerHeight - footerHeight);
+                header->setFrameOrigin(p1);
+            }
+            if (footer && m_bAlwaysBottomSectionFooter)
+            {
+                DPoint p2 = DPointZero;
+                p2.y = MIN(rect.origin.y + this->getBounds().size.height - footerHeight,
+                           r.origin.y + r.size.height - footerHeight);
+                p2.y = MAX(p2.y, r.origin.y + headerHeight);
+                footer->setFrameOrigin(p2);
+            }
+
         }
         ++i;
     }
