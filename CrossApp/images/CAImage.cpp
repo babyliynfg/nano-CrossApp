@@ -1002,10 +1002,7 @@ CAImage::~CAImage()
     CCLOGINFO("CrossApp: deallocing CAImage %u.", m_uName);
     CC_SAFE_RELEASE(m_pShaderProgram);
     
-    if(m_uName)
-    {
-        ccGLDeleteTexture(m_uName);
-    }
+    this->freeName();
 
     releaseData();
 

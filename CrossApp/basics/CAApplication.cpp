@@ -515,21 +515,19 @@ void CAApplication::purgeDirector()
 
     CC_SAFE_RELEASE_NULL(m_pFPSLabel);
 
+    CAHttpClient::destroyAllInstance();
+    CADownloadManager::destroyInstance();
+    ActionManager::destroyInstance();
+    CAUserDefault::destroyInstance();
+    CANotificationCenter::destroyInstance();
+    
     // purge all managed caches
     ccDrawFree();
     CAImageCache::purgeSharedImageCache();
     CAShaderCache::purgeSharedShaderCache();
     FileUtils::destroyInstance();
-    CAHttpClient::destroyAllInstance();
-    CADownloadManager::destroyInstance();
-    ActionManager::destroyInstance();
-    
-    // CrossApp specific data structures
-    CAUserDefault::destroyInstance();
-    CANotificationCenter::destroyInstance();
-
     ccGLInvalidateStateCache();
-        
+    
     // OpenGL view
     m_pobOpenGLView->end();
     m_pobOpenGLView = NULL;
