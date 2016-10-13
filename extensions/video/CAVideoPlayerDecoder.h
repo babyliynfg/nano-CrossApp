@@ -205,7 +205,7 @@ private:
     float m_fAudioTimeBase;
     float m_fPosition;
 	int m_iTimeoutCnt;
- 
+    
     void *m_pswrBuffer;
     unsigned int m_uswrBufferSize;
 
@@ -213,6 +213,7 @@ private:
 
     bool _isEOF;
     float _fps;
+    
 };
 
 NS_CC_EXT_END

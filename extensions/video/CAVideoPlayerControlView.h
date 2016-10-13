@@ -24,7 +24,7 @@ public:
 	virtual void onBackButtonClicked(CAVideoPlayerControlView *playerControlView) {};
 };
 
-class CC_EXT_DLL CAVideoPlayerControlView : public CAView
+class CC_EXT_DLL CAVideoPlayerControlView: public CAView
 {
 public:
 	CAVideoPlayerControlView();
@@ -44,6 +44,7 @@ public:
 
 protected:
 	virtual bool init();
+    void onSlideDragging(CAControl* control, DPoint point);
 	void onSlideChanged(CAControl* control, DPoint point);
 	void onButtonPause(CAControl* control, DPoint point);
 	void onButtonBack(CAControl* control, DPoint point);
