@@ -20,6 +20,7 @@
 #include "gif_lib/gif_lib.h"
 #include <list>
 #include <map>
+#include <set>
 
 NS_CC_BEGIN
 
@@ -365,6 +366,10 @@ public:
     std::wstring m_txt;
     
     std::string m_FileName;
+    
+    static const std::set<CAImage*>& getImagesSet();
+    
+    static void purgeCAImage();
     
 protected:
     

@@ -962,6 +962,11 @@ CAImage::PixelFormat CAImage::convertDataToFormat(const unsigned char* data, uns
 
 static std::set<CAImage*> s_pImages;
 
+const std::set<CAImage*>& CAImage::getImagesSet()
+{
+    return s_pImages;
+}
+
 static const unsigned char* s_pData = NULL;
 static int  s_pDataMark = 0;
 
@@ -1002,10 +1007,7 @@ CAImage::~CAImage()
     CCLOGINFO("CrossApp: deallocing CAImage %u.", m_uName);
     CC_SAFE_RELEASE(m_pShaderProgram);
     
-    if(m_uName)
-    {
-        ccGLDeleteTexture(m_uName);
-    }
+    this->freeName();
 
     releaseData();
 
@@ -3085,4 +3087,19 @@ void CAImage::reloadAllImages()
         (*itr)->repremultipliedImageData();
     }
 }
+
+void CAImage::purgeCAImage()
+{
+    CC_SAFE_DELETE(s_white_image);
+    s_white_image = nullptr;
+    CC_SAFE_DELETE(s_shadow_left_image);
+    s_shadow_left_image = nullptr;
+    CC_SAFE_DELETE(s_shadow_right_image);
+    s_shadow_right_image = nullptr;
+    CC_SAFE_DELETE(s_shadow_top_image);
+    s_shadow_top_image = nullptr;
+    CC_SAFE_DELETE(s_shadow_bottom_image);
+    s_shadow_bottom_image = nullptr;
+}
+
 NS_CC_END
