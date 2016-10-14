@@ -1,11 +1,57 @@
 
+**********************************************************************************
 
+#### CrossApp v1.5.1 正式版（CrossApp-Js v1.0.1 Beta）更新内容：
+
+C++部分:
+
+#####1.优化UI编辑器
+
+#####2.优化CARenderImage截屏
+
+#####3.优化CAAlertViewUI布局
+
+#####4.优化文字加粗效果
+
+#####5.优化CASheduler
+
+#####6.优化CATableView，新增cell左滑功能
+
+#####7.删除CAFlash组件，以及取消对flash格式文件的支持
+
+#####8.优化视频播放组件
+
+#####9.优化CASwitch
+
+#####10.优化CABar
+
+#####11.优化CAAnimation
+
+#####12.优化CAAnimation
+
+#####13.优化CAScale9ImageView
+
+#####14.优化CASlider
+
+#####15.优化CAScrollView
+
+#####16.优化稳定性，以及大量的细节的优化
+
+JavaScript部分:
+
+#####1.解决CAPickerView内容显示bug
+
+#####2.解决Win32平台类库引用bug
+
+#####3.添加CADatePickerView和CADatePickerVIewDelegate的JavaScript代理实现
+
+#####4.新增视频组件CAVideoPlayerControlVIew的支持
 
 **********************************************************************************
 
 #### CrossApp v1.5.0 正式版（CrossApp-Js v1.0.0 Beta）更新内容：
 
-#####1.新增支持Javascript语言开发支持，
+#####1.新增支持Javascript语言开发支持
 
 #####2.优化UI编辑器，添加数据库升级功能，完美支持多人协作开发
 
