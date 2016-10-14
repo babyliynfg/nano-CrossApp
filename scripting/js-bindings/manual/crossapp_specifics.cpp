@@ -131,732 +131,6 @@ void JSTouchDelegate::mouseScrollWheel(CATouch* pTouch, float off_x, float off_y
 
 }
 
-//bool js_cocos2dx_Sprite_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    bool ok = true;
-//
-//    do {
-//        if (argc == 1) {
-//            std::string arg0;
-//            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-//            if (!ok) { ok = true; break; }
-//            cocos2d::Sprite* ret = cocos2d::Sprite::create(arg0);
-//            jsval jsret = JSVAL_NULL;
-//            do {
-//                if (ret) {
-//                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
-//                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-//                } else {
-//                    jsret = JSVAL_NULL;
-//                }
-//            } while (0);
-//            args.rval().set(jsret);
-//            return true;
-//        }
-//    } while (0);
-//
-//    do {
-//        if (argc == 0) {
-//            cocos2d::Sprite* ret = cocos2d::Sprite::create();
-//            jsval jsret = JSVAL_NULL;
-//            do {
-//                if (ret) {
-//                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
-//                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-//                } else {
-//                    jsret = JSVAL_NULL;
-//                }
-//            } while (0);
-//            args.rval().set(jsret);
-//            return true;
-//        }
-//    } while (0);
-//
-//    do {
-//        if (argc == 2) {
-//            std::string arg0;
-//            ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-//            if (!ok) { ok = true; break; }
-//            cocos2d::Rect arg1;
-//            ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
-//            if (!ok) { ok = true; break; }
-//            cocos2d::Sprite* ret = cocos2d::Sprite::create(arg0, arg1);
-//            jsval jsret = JSVAL_NULL;
-//            do {
-//                if (ret) {
-//                    js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Sprite>(cx, (cocos2d::Sprite*)ret);
-//                    jsret = OBJECT_TO_JSVAL(jsProxy->obj);
-//                } else {
-//                    jsret = JSVAL_NULL;
-//                }
-//            } while (0);
-//            args.rval().set(jsret);
-//            return true;
-//        }
-//    } while (0);
-//    JS_ReportError(cx, "js_cocos2dx_Sprite_create : wrong number of arguments");
-//    return false;
-//}
-
-//bool js_CrossApp_CAView_create(JSContext *cx, uint32_t argc, jsval *vp){
-//    
-//}
-
-
-//// cc.EventTouch#getTouches
-//bool js_cocos2dx_EventTouch_getTouches(JSContext *cx, uint32_t argc, jsval *vp) {
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    JSObject *obj = args.thisv().toObjectOrNull();
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    cocos2d::EventTouch* cobj = (cocos2d::EventTouch *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventTouch_getTouches : Invalid Native Object");
-//    if (argc == 0) {
-//        const std::vector<cocos2d::Touch*>& ret = cobj->getTouches();
-//        JS::RootedObject jsretArr(cx, JS_NewArrayObject(cx, 0));
-//        
-//        int i = 0;
-//        for (cocos2d::Touch* touchObj : ret)
-//        {
-//            JS::RootedValue arrElement(cx);
-//            
-//            //First, check whether object is associated with js object.
-//            js_proxy_t* jsproxy = js_get_or_create_proxy<cocos2d::Touch>(cx, touchObj);
-//            if (jsproxy) {
-//                arrElement = OBJECT_TO_JSVAL(jsproxy->obj);
-//            }
-//            if (!JS_SetElement(cx, jsretArr, i, arrElement)) {
-//                break;
-//            }
-//            ++i;
-//        }
-//        
-////        JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsretArr));
-//        args.rval().set(OBJECT_TO_JSVAL(jsretArr));
-//        return true;
-//    }
-//    
-//    JS_ReportError(cx, "js_cocos2dx_EventTouch_getTouches : wrong number of arguments: %d, was expecting %d", argc, 0);
-//    return false;
-//}
-//
-//// cc.EventTouch#setTouches
-//bool js_cocos2dx_EventTouch_setTouches(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-////    jsval *argv = JS_ARGV(cx, vp);
-//    bool ok = true;
-//    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    cocos2d::EventTouch* cobj = (cocos2d::EventTouch *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_EventTouch_setTouches : Invalid Native Object");
-//    if (argc == 1) {
-//        std::vector<Touch*> arg0;
-//        JS::RootedObject jsobj(cx, args.get(0).toObjectOrNull());
-////        ok = argv->isObject() && JS_ValueToObject( cx, JS::RootedValue(cx, *argv), &jsobj );
-//        JSB_PRECONDITION3( ok, cx, false, "Error converting value to object");
-//        JSB_PRECONDITION3( jsobj && JS_IsArrayObject( cx, jsobj),  cx, false, "Object must be an array");
-//        
-//        uint32_t len = 0;
-//        JS_GetArrayLength(cx, jsobj, &len);
-//        
-//        for (uint32_t i=0; i < len; i++)
-//        {
-//            JS::RootedValue value(cx);
-//            if (JS_GetElement(cx, jsobj, i, &value))
-//            {
-//                JSObject *tmp = value.toObjectOrNull();
-//                proxy = jsb_get_js_proxy(tmp);
-//                cocos2d::Touch* touchObj = (cocos2d::Touch *)(proxy ? proxy->ptr : NULL);
-//                if (touchObj) {
-//                    arg0.push_back(touchObj);
-//                }
-//            }
-//        }
-//        cobj->setTouches(arg0);
-////        args.rval().setUndefined();
-//        args.rval().setUndefined();
-//        return true;
-//    }
-//    
-//    JS_ReportError(cx, "js_cocos2dx_EventTouch_setTouches : wrong number of arguments: %d, was expecting %d", argc, 1);
-//    return false;
-//}
-//
-//static void addCallBackAndThis(JSObject *obj, jsval callback, jsval &thisObj)
-//{
-//    if(callback != JSVAL_VOID) {
-//        ScriptingCore::getInstance()->setReservedSpot(0, obj, callback);
-//    }
-//    if(thisObj != JSVAL_VOID) {
-//        ScriptingCore::getInstance()->setReservedSpot(1, obj, thisObj);
-//    }
-//}
-//
-//template<class T>
-//JSObject* bind_menu_item(JSContext *cx, T* nativeObj, jsval callback, jsval thisObj) {    
-//    js_proxy_t *p = jsb_get_native_proxy(nativeObj);
-//    if (p) {
-//        addCallBackAndThis(p->obj, callback, thisObj);
-//        return p->obj;
-//    } else {
-//        js_type_class_t *classType = js_get_type_from_native<T>(nativeObj);
-//        assert(classType);
-//        JS::RootedObject proto(cx, classType->proto);
-//        JS::RootedObject parent(cx, classType->parentProto);
-//        JSObject *tmp = JS_NewObject(cx, classType->jsclass, proto, parent);
-//
-//        // bind nativeObj <-> JSObject
-//        js_proxy_t *proxy = jsb_new_proxy(nativeObj, tmp);
-//        JS::AddNamedObjectRoot(cx, &proxy->obj, typeid(*nativeObj).name());
-//        addCallBackAndThis(tmp, callback, thisObj);
-//
-//        return tmp;
-//    }
-//}
-//
-//bool js_cocos2dx_CCMenu_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-////    jsval *argv = JS_ARGV(cx, vp);
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    if (argc > 0) {
-//        Vector<MenuItem*> items;
-//        uint32_t i = 0;
-//        while (i < argc) {
-//            js_proxy_t *proxy;
-//            JSObject *tmpObj = args.get(i).toObjectOrNull();
-//            proxy = jsb_get_js_proxy(tmpObj);
-//            cocos2d::MenuItem *item = (cocos2d::MenuItem*)(proxy ? proxy->ptr : NULL);
-//            TEST_NATIVE_OBJECT(cx, item)
-//            items.pushBack(item);
-//            i++;
-//        }
-//        cocos2d::Menu* ret = cocos2d::Menu::createWithArray(items);
-//        jsval jsret;
-//        do {
-//            if (ret) {
-//                js_proxy_t *p = jsb_get_native_proxy(ret);
-//                if (p) {
-//                    jsret = OBJECT_TO_JSVAL(p->obj);
-//                } else {
-//                    // create a new js obj of that class
-//                    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Menu>(cx, ret);
-//                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-//                }
-//            } else {
-//                jsret = JSVAL_NULL;
-//            }
-//        } while (0);
-////        args.rval().set(jsret);
-//        args.rval().set(jsret);
-//        return true;
-//    }
-//    if (argc == 0) {
-//        cocos2d::Menu* ret = cocos2d::Menu::create();
-//        jsval jsret;
-//        do {
-//            if (ret) {
-//                js_proxy_t *p = jsb_get_native_proxy(ret);
-//                if (p) {
-//                    jsret = OBJECT_TO_JSVAL(p->obj);
-//                } else {
-//                    // create a new js obj of that class
-//                    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::Menu>(cx, ret);
-//                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-//                }
-//            } else {
-//                jsret = JSVAL_NULL;
-//            }
-//        } while (0);
-////        JS_SET_RVAL(cx, vp, jsret);
-//        args.rval().set(jsret);
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments");
-//    return false;
-//}
-//
-//bool js_cocos2dx_CCSequence_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-////    jsval *argv = JS_ARGV(cx, vp);
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    if (argc > 0) {
-//        Vector<FiniteTimeAction*> array;
-//        if (argc == 1 && JS_IsArrayObject(cx, JS::RootedObject(cx, args.get(0).toObjectOrNull()))) {
-//            bool ok = true;
-//            ok &= jsval_to_ccvector(cx, args.get(0), &array);
-//            JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//        } else {
-//            uint32_t i = 0;
-//            while (i < argc) {
-//                js_proxy_t *proxy;
-//                JSObject *tmpObj = args.get(i).toObjectOrNull();
-//                proxy = jsb_get_js_proxy(tmpObj);
-//                cocos2d::FiniteTimeAction *item = (cocos2d::FiniteTimeAction*)(proxy ? proxy->ptr : NULL);
-//                TEST_NATIVE_OBJECT(cx, item)
-//                array.pushBack(item);
-//                i++;
-//            }
-//        }
-//        cocos2d::FiniteTimeAction* ret = cocos2d::Sequence::create(array);
-//        jsval jsret;
-//        do {
-//            if (ret) {
-//                js_proxy_t *p = jsb_get_native_proxy(ret);
-//                if (p) {
-//                    jsret = OBJECT_TO_JSVAL(p->obj);
-//                } else {
-//                    // create a new js obj of that class
-//                    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::FiniteTimeAction>(cx, ret);
-//                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-//                }
-//            } else {
-//                jsret = JSVAL_NULL;
-//            }
-//        } while (0);
-////        JS_SET_RVAL(cx, vp, jsret);
-//        args.rval().set(jsret);
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments");
-//    return false;
-//}
-//
-//bool js_cocos2dx_CCSpawn_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    if (argc > 0) {
-//        Vector<FiniteTimeAction*> array;
-//        if (argc == 1 && JS_IsArrayObject(cx, JS::RootedObject(cx, args.get(0).toObjectOrNull()))) {
-//            bool ok = true;
-//            ok &= jsval_to_ccvector(cx, args.get(0), &array);
-//            JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//        } else {
-//            uint32_t i = 0;
-//            while (i < argc) {
-//                js_proxy_t *proxy;
-//                JSObject *tmpObj = args[i].toObjectOrNull();
-//                proxy = jsb_get_js_proxy(tmpObj);
-//                cocos2d::FiniteTimeAction *item = (cocos2d::FiniteTimeAction*)(proxy ? proxy->ptr : NULL);
-//                TEST_NATIVE_OBJECT(cx, item)
-//                array.pushBack(item);
-//                i++;
-//            }
-//        }
-//        cocos2d::FiniteTimeAction* ret = cocos2d::Spawn::create(array);
-//        jsval jsret;
-//        do {
-//            if (ret) {
-//                js_proxy_t *p = jsb_get_native_proxy(ret);
-//                if (p) {
-//                    jsret = OBJECT_TO_JSVAL(p->obj);
-//                } else {
-//                    // create a new js obj of that class
-//                    js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::FiniteTimeAction>(cx, ret);
-//                    jsret = OBJECT_TO_JSVAL(proxy->obj);
-//                }
-//            } else {
-//                jsret = JSVAL_NULL;
-//            }
-//        } while (0);
-//        args.rval().set(jsret);
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments");
-//    return false;
-//}
-//
-//bool js_cocos2dx_CCMenuItem_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc >= 1) {
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        cocos2d::MenuItem* ret = cocos2d::MenuItem::create();
-//        JSObject *obj = bind_menu_item<cocos2d::MenuItem>(cx, ret, args.get(0), argc == 2? args.get(1) : JSVAL_VOID);
-//        args.rval().set(OBJECT_TO_JSVAL(obj));
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments");
-//    return false;
-//}
-//
-//// "create" in JS
-//// cc.MenuItemSprite.create( normalSprite, selectedSprite, [disabledSprite], [callback_fn], [this]
-//bool js_cocos2dx_CCMenuItemSprite_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc >= 2 && argc <= 5) {
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        js_proxy_t *proxy;
-//        JSObject *tmpObj;
-//        
-//        tmpObj = args.get(0).toObjectOrNull();
-//        proxy = jsb_get_js_proxy(tmpObj);
-//        cocos2d::Node* arg0 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
-//        TEST_NATIVE_OBJECT(cx, arg0);
-//
-//        tmpObj = args.get(1).toObjectOrNull();
-//        proxy = jsb_get_js_proxy(tmpObj);
-//        cocos2d::Node* arg1 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
-//        TEST_NATIVE_OBJECT(cx, arg1);
-//
-//        int last = 2;
-//        bool thirdArgIsCallback = false;
-//
-//        jsval jsCallback = JSVAL_VOID;
-//        jsval jsThis = JSVAL_VOID;
-//
-//        cocos2d::Node* arg2 = NULL;
-//        if (argc >= 3) {
-//            tmpObj = args.get(2).toObjectOrNull();
-//            thirdArgIsCallback = JS_ObjectIsFunction(cx, tmpObj);
-//            if (!thirdArgIsCallback) { 
-//                proxy = jsb_get_js_proxy(tmpObj);
-//                arg2 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
-//                TEST_NATIVE_OBJECT(cx, arg2);
-//                last = 3;
-//            }
-//        }
-//        cocos2d::MenuItemSprite* ret = cocos2d::MenuItemSprite::create(arg0, arg1, arg2);
-//        if (argc >= 3) { 
-//            if (thirdArgIsCallback) {
-//                //cc.MenuItemSprite.create( normalSprite, selectedSprite, callback_fn, [this] )
-//                jsCallback = args.get(last++);
-//                if (argc == 4) {
-//                    jsThis = args.get(last);
-//                }
-//            }
-//            else { 
-//                //cc.MenuItemSprite.create( normalSprite, selectedSprite, disabledSprite, callback_fn, [this] )
-//                if (argc >= 4) {
-//                    jsCallback = args.get(last++);
-//                    if (argc == 5) {
-//                        jsThis = args.get(last);
-//                    }
-//                }
-//            }
-//        }
-//
-//        JSObject *obj = bind_menu_item<cocos2d::MenuItemSprite>(cx, ret, jsCallback, jsThis);
-//
-//        args.rval().set(OBJECT_TO_JSVAL(obj));
-//        return true;
-//    }
-//    JS_ReportError(cx, "Invalid number of arguments. Expecting: 2 <= args <= 5");
-//    return false;
-//}
-//
-//// "create" in JS:
-//// cc.MenuItemLabel.create( label, callback_fn, [this] );
-//bool js_cocos2dx_CCMenuItemLabel_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc >= 1 && argc <= 3) {
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        js_proxy_t *proxy;
-//        JSObject *tmpObj = args.get(0).toObjectOrNull();
-//        proxy = jsb_get_js_proxy(tmpObj);
-//        cocos2d::Node* arg0 = (cocos2d::Node*)(proxy ? proxy->ptr : NULL);
-//        TEST_NATIVE_OBJECT(cx, arg0)
-//        cocos2d::MenuItemLabel* ret = cocos2d::MenuItemLabel::create(arg0);
-//        JSObject *obj = bind_menu_item<cocos2d::MenuItemLabel>(cx, ret, (argc >= 2 ? args.get(1) : JSVAL_VOID), (argc == 3 ? args.get(2) : JSVAL_VOID) );
-//        args.rval().set(OBJECT_TO_JSVAL(obj));
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d or %d or %d", argc, 1, 2, 3);
-//    return false;
-//}
-//
-//bool js_cocos2dx_CCMenuItemAtlasFont_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc >= 5) {
-//        bool ok = true;
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        JSStringWrapper arg0(args.get(0));
-//        JSStringWrapper arg1(args.get(1));
-//        int arg2; ok &= jsval_to_int32(cx, args.get(2), &arg2);
-//        int arg3; ok &= jsval_to_int32(cx, args.get(3), &arg3);
-//        int arg4; ok &= jsval_to_int32(cx, args.get(4), &arg4);
-//        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//        cocos2d::MenuItemAtlasFont* ret = cocos2d::MenuItemAtlasFont::create(arg0.get(), arg1.get(), arg2, arg3, arg4);
-//        JSObject *obj = bind_menu_item<cocos2d::MenuItemAtlasFont>(cx, ret, (argc >= 6 ? args.get(5) : JSVAL_VOID), (argc == 7 ? args.get(6) : JSVAL_VOID));
-//        args.rval().set(OBJECT_TO_JSVAL(obj));
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments");
-//    return false;
-//}
-//
-//// "create" in JS
-//// cc.MenuItemFont.create( string, callback_fn, [this] );
-//bool js_cocos2dx_CCMenuItemFont_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc >= 1 && argc <= 3) {
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        JSStringWrapper arg0(args.get(0));
-//        cocos2d::MenuItemFont* ret = cocos2d::MenuItemFont::create(arg0.get());
-//        JSObject *obj = bind_menu_item<cocos2d::MenuItemFont>(cx, ret, (argc >= 2 ? args.get(1) : JSVAL_VOID), (argc == 3 ? args.get(2) : JSVAL_VOID));
-//        args.rval().set(OBJECT_TO_JSVAL(obj));
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d or %d or %d", argc, 1, 2, 3);
-//    return false;
-//}
-//
-//
-//bool js_cocos2dx_CCMenuItemToggle_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc >= 1) {
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        cocos2d::MenuItemToggle* ret = cocos2d::MenuItemToggle::create();
-//
-//        for (uint32_t i=0; i < argc; i++) {
-//            js_proxy_t *proxy;
-//            JSObject *tmpObj = args.get(i).toObjectOrNull();
-//            proxy = jsb_get_js_proxy(tmpObj);
-//            cocos2d::MenuItem* item = (cocos2d::MenuItem*)(proxy ? proxy->ptr : NULL);
-//            TEST_NATIVE_OBJECT(cx, item)
-//            ret->addSubItem(item);
-//        }
-//
-//        ret->setSelectedIndex(0);
-//        
-//        jsval jsret;
-//        if (ret) {
-//            js_proxy_t *proxy = jsb_get_native_proxy(ret);
-//            if (proxy) {
-//                jsret = OBJECT_TO_JSVAL(proxy->obj);
-//            } else {
-//                // create a new js obj of that class
-//                proxy = js_get_or_create_proxy<cocos2d::MenuItemToggle>(cx, ret);
-//                jsret = OBJECT_TO_JSVAL(proxy->obj);
-//            }
-//        } else {
-//            jsret = JSVAL_NULL;
-//        }
-//        
-//        args.rval().set(jsret);
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments");
-//    return false;
-//}
-//
-//bool js_cocos2dx_MenuItem_setCallback(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    bool ok = true;
-//    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    cocos2d::MenuItem* cobj = (cocos2d::MenuItem *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_MenuItem_setCallback : Invalid Native Object");
-//    if (argc == 1 || argc == 2) {
-//        std::function<void (cocos2d::Ref *)> arg0;
-//        do {
-//		    if(JS_TypeOfValue(cx, args[0]) == JSTYPE_FUNCTION)
-//		    {
-//                JSObject* thisObj;
-//                if (args.get(1).isObject())
-//                {
-//                    thisObj = args.get(1).toObjectOrNull();
-//                }
-//                else
-//                {
-//                    thisObj = JS_THIS_OBJECT(cx, vp);
-//                }
-//                std::shared_ptr<JSFunctionWrapper> func(new JSFunctionWrapper(cx, thisObj, args[0]));
-//		        auto lambda = [=](cocos2d::Ref* larg0) -> void {
-//		            jsval largv[1];
-//                    do {
-//                        if (larg0) {
-//                            js_proxy_t *jsProxy = js_get_or_create_proxy<cocos2d::Ref>(cx, (cocos2d::Ref*)larg0);
-//                            largv[0] = OBJECT_TO_JSVAL(jsProxy->obj);
-//                        } else {
-//                            largv[0] = JSVAL_NULL;
-//                        }
-//                    } while (0);
-//                    JS::RootedValue rval(cx);
-//		            bool invoke_ok = func->invoke(1, &largv[0], &rval);
-//		            if (!invoke_ok && JS_IsExceptionPending(cx)) {
-//		                JS_ReportPendingException(cx);
-//		            }
-//		        };
-//		        arg0 = lambda;
-//		    }
-//		    else
-//		    {
-//		        arg0 = nullptr;
-//		    }
-//		} while(0)
-//		;
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_MenuItem_setCallback : Error processing arguments");
-//        cobj->setCallback(arg0);
-//        args.rval().setUndefined();
-//        return true;
-//    }
-//
-//    JS_ReportError(cx, "js_cocos2dx_MenuItem_setCallback : wrong number of arguments: %d, was expecting %d", argc, 1);
-//    return false;
-//}
-//
-//bool js_cocos2dx_CCAnimation_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    bool ok = true;
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    if (argc <= 3) {
-//        cocos2d::Animation* ret = nullptr;
-//        double arg1 = 0.0f;
-//        if (argc == 2) {
-//            Vector<SpriteFrame*> arg0;
-//            if (argc > 0) {
-//                ok &= jsval_to_ccvector(cx, args.get(0), &arg0);
-//                JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//            }
-//            ok &= JS::ToNumber(cx, JS::RootedValue(cx, args.get(1)), &arg1);
-//            JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//            ret = cocos2d::Animation::createWithSpriteFrames(arg0, arg1);
-//        } else if (argc == 3) {
-//            Vector<AnimationFrame*> arg0;
-//            if (argc > 0) {
-//                ok &= jsval_to_ccvector(cx, args.get(0), &arg0);
-//                JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//            }
-//            unsigned int loops;
-//            ok &= JS::ToNumber(cx, JS::RootedValue(cx, args.get(1)), &arg1);
-//            ok &= jsval_to_uint32(cx, args.get(2), &loops);
-//            JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//            ret = cocos2d::Animation::create(arg0, arg1, loops);
-//        } else if (argc == 1) {
-//            Vector<SpriteFrame*> arg0;
-//            if (argc > 0) {
-//                ok &= jsval_to_ccvector(cx, args.get(0), &arg0);
-//                JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//            }
-//            ret = cocos2d::Animation::createWithSpriteFrames(arg0);
-//        } else if (argc == 0) {
-//            ret = cocos2d::Animation::create();
-//        }
-//        jsval jsret;
-//        if (ret) {
-//            js_proxy_t *proxy = jsb_get_native_proxy(ret);
-//            if (proxy) {
-//                jsret = OBJECT_TO_JSVAL(proxy->obj);
-//            } else {
-//                // create a new js obj of that class
-//                proxy = js_get_or_create_proxy<cocos2d::Animation>(cx, ret);
-//                jsret = OBJECT_TO_JSVAL(proxy->obj);
-//            }
-//        } else {
-//            jsret = JSVAL_NULL;
-//        }
-//        args.rval().set(jsret);
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments");
-//    return false;
-//}
-//
-//bool js_cocos2dx_CCScene_init(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    JSObject *obj = args.thisv().toObjectOrNull();
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    cocos2d::Scene* cobj = (cocos2d::Scene *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Scene_init : Invalid Native Object");
-//    if (argc == 0) {
-//        bool ret = cobj->init();
-//        jsval jsret = JSVAL_NULL;
-//        jsret = BOOLEAN_TO_JSVAL(ret);
-//        args.rval().set(jsret);
-//        return true;
-//    }
-//    
-//    JS_ReportError(cx, "js_cocos2dx_Scene_init : wrong number of arguments: %d, was expecting %d", argc, 0);
-//    return false;
-//}
-//
-//bool js_cocos2dx_CCLayerMultiplex_create(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    Vector<Layer*> arg0;
-//    bool ok = true;
-//    ok &= jsvals_variadic_to_ccvector(cx, args, &arg0);
-//    JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//    
-//    cocos2d::LayerMultiplex* ret = cocos2d::LayerMultiplex::createWithArray(arg0);
-//    jsval jsret;
-//    do {
-//        if (ret) {
-//            js_proxy_t *proxy = js_get_or_create_proxy<cocos2d::LayerMultiplex>(cx, ret);
-//            jsret = OBJECT_TO_JSVAL(proxy->obj);
-//        } else {
-//            jsret = JSVAL_NULL;
-//        }
-//    } while (0);
-//    args.rval().set(jsret);
-//    return true;
-//}
-//
-//bool js_cocos2dx_JSTouchDelegate_registerStandardDelegate(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc == 1 || argc == 2)
-//    {
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//
-//        JSTouchDelegate *touch = new JSTouchDelegate();
-//        
-//        int priority = 1;
-//        if (argc == 2)
-//        {
-//            priority = args.get(1).toInt32();
-//        }
-//        
-//        touch->registerStandardDelegate(priority);
-//        
-//        JS::RootedObject jsobj(cx, args.get(0).toObjectOrNull());
-//        touch->setJSObject(jsobj);
-//        JSTouchDelegate::setDelegateForJSObject(jsobj, touch);
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 2);
-//    return false;
-//}
-//
-//bool js_cocos2dx_JSTouchDelegate_registerTargetedDelegate(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc == 3)
-//    {
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//
-//        JSTouchDelegate *touch = new JSTouchDelegate();
-//        touch->registerTargetedDelegate(args.get(0).toInt32(), args.get(1).toBoolean());
-//        
-//        JS::RootedObject jsobj(cx, args.get(2).toObjectOrNull());
-//        touch->setJSObject(jsobj);
-//        JSTouchDelegate::setDelegateForJSObject(jsobj, touch);
-//
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 3);
-//    return false;
-//}
-//
-//bool js_cocos2dx_JSTouchDelegate_unregisterTouchDelegate(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc == 1) {
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        JSObject* jsobj = args.get(0).toObjectOrNull();
-//        JSTouchDelegate* pDelegate = JSTouchDelegate::getDelegateForJSObject(jsobj);
-//        if (pDelegate)
-//        {
-//            pDelegate->unregisterTouchDelegate();
-//            JSTouchDelegate::removeDelegateForJSObject(jsobj);
-//        }
-//        
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-//    return false;
-//}
-
-
 //JSTouch
 bool js_crossapp_JSTouchView_addTouchView(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -1093,7 +367,7 @@ const jsval JSCallbackWrapper::getJSExtraData() const
 
 // callFunc.initWithFunction( func, this, [data])
 // callFunc.initWithFunction( func )
-//bool js_cocos2dx_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CallFunc_initWithFunction(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    if (argc >= 1 && argc <= 3) {
 //        JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -2407,403 +1681,7 @@ bool js_crossapp_CAViewAnimation_setAnimationDidStopSelector_2(JSContext *cx, ui
     return false;
 }
 
-
-//
-//bool js_CCNode_unschedule(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc == 1) {
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        
-//        JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-//        js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//        cocos2d::Node *node = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//        JSB_PRECONDITION2(node, cx, false, "Invalid Native Object");
-//        
-//        Scheduler *sched = node->getScheduler();
-//        
-//        auto targetArray = JSScheduleWrapper::getTargetForSchedule(args.get(0));
-//        CCLOGINFO("unschedule target number: %d", targetArray->count());
-//        Ref* tmp = NULL;
-//        CCARRAY_FOREACH(targetArray, tmp)
-//        {
-//            JSScheduleWrapper* target = static_cast<JSScheduleWrapper*>(tmp);
-//            if (node == target->getTarget())
-//            {
-//                sched->unschedule(schedule_selector(JSScheduleWrapper::scheduleFunc), target);
-//                JSScheduleWrapper::removeTargetForJSObject(obj, target);
-//                break;
-//            }
-//        }
-//        
-//        args.rval().setUndefined();
-//    }
-//    return true;
-//}
-//
-//bool js_cocos2dx_CCNode_unscheduleAllSelectors(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//    TEST_NATIVE_OBJECT(cx, cobj)
-//    
-//    if (argc == 0)
-//    {
-//        cobj->unscheduleAllCallbacks();
-//
-//        __Array *arr = JSScheduleWrapper::getTargetForJSObject(obj);
-//        // If there aren't any targets, just return true.
-//        // Otherwise, the for loop will break immediately. 
-//        // It will lead to logic errors. 
-//        // For details to reproduce it, please refer to SchedulerTest/SchedulerUpdate.
-//        if(! arr) return true;
-//        JSScheduleWrapper* wrapper = NULL;
-//        for(ssize_t i = 0; i < arr->count(); ++i) {
-//            wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
-//            if(wrapper) {
-//                cobj->getScheduler()->unscheduleAllForTarget(wrapper);
-//            }
-//        }
-//        
-//        JSScheduleWrapper::removeAllTargetsForJSObject(obj);
-//        
-//        args.rval().setUndefined();
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-//    return false;
-//}
-//
-//bool js_CCNode_scheduleOnce(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc >= 1) {
-//        bool ok = true;
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        
-//        JS::RootedValue thisValue(cx, args.thisv());
-//        JS::RootedObject obj(cx, thisValue.toObjectOrNull());
-//        js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//        cocos2d::Node *node = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//        
-//        Scheduler *sched = node->getScheduler();
-//        
-//        JSScheduleWrapper *tmpCobj = NULL;
-//
-//        //
-//        // delay
-//        //
-//        double delay;
-//        if( argc >= 2 ) {
-//            ok &= JS::ToNumber(cx, JS::RootedValue(cx, args.get(1)), &delay );
-//            JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//        }
-//        
-//        bool bFound = false;
-//        auto pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
-//        Ref* pObj = NULL;
-//        CCARRAY_FOREACH(pTargetArr, pObj)
-//        {
-//            JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
-//            if (args.get(0) == pTarget->getJSCallbackFunc())
-//            {
-//                tmpCobj = pTarget;
-//                bFound = true;
-//                break;
-//            }
-//        }
-//
-//        if (!bFound)
-//        {
-//            tmpCobj = new JSScheduleWrapper();
-//            tmpCobj->autorelease();
-//            tmpCobj->setJSCallbackThis(thisValue);
-//            tmpCobj->setJSCallbackFunc(args.get(0));
-//            tmpCobj->setTarget(node);
-//
-//            JSScheduleWrapper::setTargetForSchedule(args.get(0), tmpCobj);
-//            JSScheduleWrapper::setTargetForJSObject(obj, tmpCobj);
-//        }
-//
-//        if(argc == 1) {
-//            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, 0, 0.0f, !node->isRunning());
-//        } else {
-//            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, 0, delay, !node->isRunning());
-//        }
-//
-//        /* We shouldn't set the js callback function to reserved slot,
-//           since the target object may execute more than one schedule.
-//           Therefore, previous js callback function will be replaced 
-//           by the current one. For example:
-//              this.scheduleOnce(function() { temporary function 1 }, 0.5);
-//              this.scheduleOnce(function() { temporary function 2 }, 0.5);
-//           In this case, the temporary function 1 will be removed from reserved slot 0.
-//           And temporary function 2 will be set to reserved slot 0 of this object.
-//           If gc is triggered before the 'JSScheduleWrapper::scheduleFunc' is invoked, 
-//           crash will happen. You could simply reproduce it by adding '__jsc__.garbageCollect();' after scheduleOnce.
-//           
-//           [Solution] Because one schedule corresponds to one JSScheduleWrapper, we root 
-//           the js callback function in JSScheduleWrapper::setJSCallbackFunc and unroot it 
-//           at the destructor of JSScheduleWrapper.
-//        */
-//        //jsb_set_reserved_slot(proxy->obj, 0, args.get(0));
-//
-//        args.rval().setUndefined();
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments");
-//    return false;
-//}
-//
-//bool js_CCNode_schedule(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    if (argc >= 1) {
-//        bool ok = true;
-//        JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//        
-//        JS::RootedValue thisValue(cx, args.thisv());
-//        JS::RootedObject obj(cx, thisValue.toObjectOrNull());
-//        js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//        cocos2d::Node *node = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//        Scheduler *sched = node->getScheduler();
-//
-//        JSScheduleWrapper *tmpCobj = NULL;
-//
-//        double interval = 0.0;
-//        if( argc >= 2 ) {
-//            ok &= JS::ToNumber(cx, JS::RootedValue(cx, args.get(1)), &interval );
-//        }
-//        
-//        //
-//        // repeat
-//        //
-//        double repeat = 0.0;
-//        if( argc >= 3 ) {
-//            ok &= JS::ToNumber(cx, JS::RootedValue(cx, args.get(2)), &repeat );
-//        }
-//        
-//        //
-//        // delay
-//        //
-//        double delay = 0.0;
-//        if( argc >= 4 ) {
-//            ok &= JS::ToNumber(cx, JS::RootedValue(cx, args.get(3)), &delay );
-//        }
-//        
-//        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//        
-//        bool bFound = false;
-//        auto pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
-//        Ref* pObj = NULL;
-//        CCARRAY_FOREACH(pTargetArr, pObj)
-//        {
-//            JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
-//            if (args.get(0) == pTarget->getJSCallbackFunc())
-//            {
-//                tmpCobj = pTarget;
-//                bFound = true;
-//                break;
-//            }
-//        }
-//
-//        if (!bFound)
-//        {
-//            tmpCobj = new JSScheduleWrapper();
-//            tmpCobj->autorelease();
-//            tmpCobj->setJSCallbackThis(thisValue);
-//            tmpCobj->setJSCallbackFunc(args.get(0));
-//            tmpCobj->setTarget(node);
-//            JSScheduleWrapper::setTargetForSchedule(args.get(0), tmpCobj);
-//            JSScheduleWrapper::setTargetForJSObject(obj, tmpCobj);
-//        }
-//        
-//        if(argc == 1) {
-//            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, 0, !node->isRunning());
-//        }else if(argc == 2) {
-//            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, !node->isRunning());
-//        }else if(argc == 3) {
-//            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, 0, !node->isRunning());
-//        }else if (argc == 4) {
-//            sched->schedule(schedule_selector(JSScheduleWrapper::scheduleFunc), tmpCobj, interval, (unsigned int)repeat, delay, !node->isRunning());
-//        }
-//        
-//        // I comment next line with the same reason in the js_CCNode_scheduleOnce.
-//        //jsb_set_reserved_slot(proxy->obj, 0, args.get(0));
-//
-//        args.rval().setUndefined();
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments");
-//    return false;
-//}
-//
-//bool js_cocos2dx_CCNode_scheduleUpdateWithPriority(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    bool ok = true;
-//    JS::RootedValue thisValue(cx, args.thisv());
-//    JS::RootedObject obj(cx, thisValue.toObjectOrNull());
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
-//    if (argc == 1) {
-//        int arg0 = 0;
-//        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-//        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//        
-//        bool isFoundUpdate = false;
-//        ok = JS_HasProperty(cx, obj, "update", &isFoundUpdate);
-//        JS::RootedValue jsUpdateFunc(cx);
-//        if (ok && isFoundUpdate) {
-//            ok = JS_GetProperty(cx, obj, "update", &jsUpdateFunc);
-//        }
-//        
-//        // if no 'update' property, return true directly.
-//        if (!ok) {
-//            args.rval().setUndefined();
-//            return true;
-//        }
-//        
-//        JSScheduleWrapper* tmpCobj = NULL;
-//        
-//        bool bFound = false;
-//        auto pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
-//        Ref* pObj = NULL;
-//        CCARRAY_FOREACH(pTargetArr, pObj)
-//        {
-//            JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
-//            if (jsUpdateFunc == pTarget->getJSCallbackFunc())
-//            {
-//                tmpCobj = pTarget;
-//                bFound = true;
-//                break;
-//            }
-//        }
-//        
-//        if (!bFound)
-//        {
-//            tmpCobj = new JSScheduleWrapper();
-//            tmpCobj->autorelease();
-//            tmpCobj->setJSCallbackThis(thisValue);
-//            tmpCobj->setJSCallbackFunc(jsUpdateFunc);
-//            tmpCobj->setTarget(cobj);
-//            tmpCobj->setUpdateSchedule(true);
-//            JSScheduleWrapper::setTargetForSchedule(jsUpdateFunc, tmpCobj);
-//            JSScheduleWrapper::setTargetForJSObject(obj, tmpCobj);
-//        }
-//        
-//        tmpCobj->setPriority(arg0);
-//        cobj->getScheduler()->scheduleUpdate(tmpCobj, arg0, !cobj->isRunning());
-//        
-//        args.rval().setUndefined();
-//        return true;
-//    }
-//    
-//    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-//    return false;
-//}
-//
-//bool js_cocos2dx_CCNode_unscheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//    TEST_NATIVE_OBJECT(cx, cobj)
-//    
-//    if (argc == 0)
-//    {
-//        cobj->unscheduleUpdate();
-//        do {
-//            __Array *arr = JSScheduleWrapper::getTargetForJSObject(obj);
-//            // If there aren't any targets, just return true.
-//            // Otherwise, the for loop will break immediately.
-//            // It will lead to logic errors.
-//            // For details to reproduce it, please refer to SchedulerTest/SchedulerUpdate.
-//            if(! arr) return true;
-//            
-//            JSScheduleWrapper* wrapper = NULL;
-//            for(ssize_t i = 0; i < arr->count(); ++i) {
-//                wrapper = (JSScheduleWrapper*)arr->getObjectAtIndex(i);
-//                if(wrapper && wrapper->isUpdateSchedule()) {
-//                    cobj->getScheduler()->unscheduleUpdate(wrapper);
-//                    CCAssert(OBJECT_TO_JSVAL(obj) == wrapper->getJSCallbackThis(), "Wrong target object.");
-//                    JSScheduleWrapper::removeTargetForJSObject(obj, wrapper);
-//                    break;
-//                }
-//            }
-//        } while (0);
-//        
-//        args.rval().setUndefined();
-//        return true;
-//    }
-//    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 0);
-//    return false;
-//}
-//
-//bool js_cocos2dx_CCNode_scheduleUpdate(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    bool ok = true;
-//    JS::RootedValue thisValue(cx, args.thisv());
-//    JS::RootedObject obj(cx, thisValue.toObjectOrNull());
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
-//    if (argc == 0) {
-//        
-//        bool isFoundUpdate = false;
-//        ok = JS_HasProperty(cx, obj, "update", &isFoundUpdate);
-//        JS::RootedValue jsUpdateFunc(cx);
-//        if (ok && isFoundUpdate) {
-//            ok = JS_GetProperty(cx, obj, "update", &jsUpdateFunc);
-//        }
-//        
-//        // if no 'update' property, return true directly.
-//        if (!ok) {
-//            args.rval().setUndefined();
-//            return true;
-//        }
-//        
-//        JSScheduleWrapper* tmpCobj = NULL;
-//        
-//        bool bFound = false;
-//        auto pTargetArr = JSScheduleWrapper::getTargetForJSObject(obj);
-//        Ref* pObj = NULL;
-//        CCARRAY_FOREACH(pTargetArr, pObj)
-//        {
-//            JSScheduleWrapper* pTarget = static_cast<JSScheduleWrapper*>(pObj);
-//            if (jsUpdateFunc == pTarget->getJSCallbackFunc())
-//            {
-//                tmpCobj = pTarget;
-//                bFound = true;
-//                break;
-//            }
-//        }
-//        
-//        if (!bFound)
-//        {
-//            tmpCobj = new JSScheduleWrapper();
-//            tmpCobj->autorelease();
-//            tmpCobj->setJSCallbackThis(thisValue);
-//            tmpCobj->setJSCallbackFunc(jsUpdateFunc);
-//            tmpCobj->setTarget(cobj);
-//            tmpCobj->setUpdateSchedule(true);
-//            JSScheduleWrapper::setTargetForSchedule(jsUpdateFunc, tmpCobj);
-//            JSScheduleWrapper::setTargetForJSObject(obj, tmpCobj);
-//        }
-//        
-//        cobj->getScheduler()->scheduleUpdate(tmpCobj, 0, !cobj->isRunning());
-//        
-//        args.rval().setUndefined();
-//        return true;
-//    }
-//    
-//    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-//    return false;
-//}
-//
-bool js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CCScheduler_unscheduleAllSelectorsForTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -3182,7 +2060,7 @@ bool js_CCScheduler_unscheduleCallbackForTarget(JSContext *cx, uint32_t argc, js
     return false;
 }
 
-bool js_cocos2dx_CCScheduler_unscheduleAll(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CCScheduler_unscheduleAll(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
@@ -3200,30 +2078,8 @@ bool js_cocos2dx_CCScheduler_unscheduleAll(JSContext *cx, uint32_t argc, jsval *
     return false;
 }
 
-//bool js_cocos2dx_CCScheduler_unscheduleAllCallbacksWithMinPriority(JSContext *cx, uint32_t argc, jsval *vp)
-//{
-//    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
-//    bool ok = true;
-//    JSObject *obj = JS_THIS_OBJECT(cx, vp);
-//    js_proxy_t *proxy = jsb_get_js_proxy(obj);
-//    CrossApp::CAScheduler* cobj = (CrossApp::CAScheduler *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "Invalid Native Object");
-//    if (argc == 1) {
-//        int arg0;
-//        ok &= jsval_to_int32(cx, args.get(0), (int32_t *)&arg0);
-//        JSB_PRECONDITION2(ok, cx, false, "Error processing arguments");
-//        cobj->unscheduleAllWithMinPriority(arg0);
-//        JSScheduleWrapper::removeAllTargetsForMinPriority(arg0);
-//        args.rval().setUndefined();
-//        return true;
-//    }
-//    
-//    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
-//    return false;
-//}
 
-
-bool js_cocos2dx_CCScheduler_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CCScheduler_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -3249,7 +2105,7 @@ bool js_cocos2dx_CCScheduler_pauseTarget(JSContext *cx, uint32_t argc, jsval *vp
     return false;
 }
 
-bool js_cocos2dx_CCScheduler_resumeTarget(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CCScheduler_resumeTarget(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -3275,7 +2131,7 @@ bool js_cocos2dx_CCScheduler_resumeTarget(JSContext *cx, uint32_t argc, jsval *v
     return false;
 }
 
-bool js_cocos2dx_CCScheduler_isTargetPaused(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_CCScheduler_isTargetPaused(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -3311,39 +2167,39 @@ bool js_forceGC(JSContext *cx, uint32_t argc, jsval *vp) {
     return true;
 }
 
-bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_retain(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAObject* cobj = (CrossApp::CAObject *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_retain : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_retain : Invalid Native Object");
     
     cobj->retain();
     args.rval().setUndefined();
     return true;
 }
 
-bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_release(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAObject* cobj = (CrossApp::CAObject *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_release : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_release : Invalid Native Object");
     
     cobj->release();
     args.rval().setUndefined();
     return true;
 }
 
-bool js_cocos2dx_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_onEnter : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Node_onEnter : Invalid Native Object");
     
     ScriptingCore::getInstance()->setCalledFromScript(true);
     cobj->onEnter();
@@ -3351,13 +2207,13 @@ bool js_cocos2dx_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp)
     return true;
 }
 
-bool js_cocos2dx_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_onExit : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Node_onExit : Invalid Native Object");
     
     ScriptingCore::getInstance()->setCalledFromScript(true);
     cobj->onExit();
@@ -3365,13 +2221,13 @@ bool js_cocos2dx_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp)
     return true;
 }
 
-bool js_cocos2dx_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_onEnterTransitionDidFinish : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Node_onEnterTransitionDidFinish : Invalid Native Object");
     
     ScriptingCore::getInstance()->setCalledFromScript(true);
     cobj->onEnterTransitionDidFinish();
@@ -3379,13 +2235,13 @@ bool js_cocos2dx_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, j
     return true;
 }
 
-bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
+bool js_crossapp_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp)
 {
     JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
     JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
     js_proxy_t *proxy = jsb_get_js_proxy(obj);
     CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
-    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_onExitTransitionDidStart : Invalid Native Object");
+    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Node_onExitTransitionDidStart : Invalid Native Object");
     
     ScriptingCore::getInstance()->setCalledFromScript(true);
     cobj->onExitTransitionDidStart();
@@ -3393,13 +2249,13 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
     return true;
 }
 
-//bool js_cocos2dx_Node_cleanup(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Node_cleanup(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    CrossApp::CAView* cobj = (CrossApp::CAView *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_cleanup : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Node_cleanup : Invalid Native Object");
 //    
 //    ScriptingCore::getInstance()->setCalledFromScript(true);
 //    cobj->cleanup();
@@ -3407,7 +2263,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return true;
 //}
 
-//bool js_cocos2dx_CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCNode_setPosition(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -3439,7 +2295,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCNode_setContentSize(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCNode_setContentSize(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -3471,7 +2327,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCNode_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCNode_setAnchorPoint(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -3503,18 +2359,18 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCNode_setColor(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCNode_setColor(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setColor : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Node_setColor : Invalid Native Object");
 //    if (argc == 1) {
 //        cocos2d::Color3B arg0;
 //        ok &= jsval_to_cccolor3b(cx, args.get(0), &arg0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Node_setColor : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Node_setColor : Error processing arguments");
 //        cobj->setColor(arg0);
 //        
 ////        int32_t alpha;
@@ -3526,17 +2382,17 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //		return true;
 //	}
 //    
-//    JS_ReportError(cx, "js_cocos2dx_Node_setColor : wrong number of arguments: %d, was expecting %d", argc, 1);
+//    JS_ReportError(cx, "js_crossapp_Node_setColor : wrong number of arguments: %d, was expecting %d", argc, 1);
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCNode_pause(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCNode_pause(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_pause : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Node_pause : Invalid Native Object");
 //    if (argc == 0) {
 //        do {
 ////            JSObject *tmpObj = obj;
@@ -3558,17 +2414,17 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_Node_pause : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_Node_pause : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCNode_resume(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCNode_resume(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_resume : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Node_resume : Invalid Native Object");
 //    if (argc == 0) {
 //        do {
 ////            JSObject *tmpObj = obj;
@@ -3590,25 +2446,25 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_Node_resume : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_Node_resume : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCNode_convertToWorldSpace(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCNode_convertToWorldSpace(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CCNode_convertToWorldSpace : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CCNode_convertToWorldSpace : Invalid Native Object");
 //    cocos2d::Vec2 arg0;
 //    if (argc == 1) {
 //        ok &= jsval_to_vector2(cx, args.get(0), &arg0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CCNode_convertToWorldSpace : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CCNode_convertToWorldSpace : Error processing arguments");
 //    }
 //    else if (argc != 0) {
-//        JS_ReportError(cx, "js_cocos2dx_CCNode_convertToWorldSpace : wrong number of arguments: %d, was expecting 0 or 1", argc);
+//        JS_ReportError(cx, "js_crossapp_CCNode_convertToWorldSpace : wrong number of arguments: %d, was expecting 0 or 1", argc);
 //        return false;
 //    }
 //    
@@ -3619,21 +2475,21 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return true;
 //}
 //
-//bool js_cocos2dx_CCNode_convertToWorldSpaceAR(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCNode_convertToWorldSpaceAR(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Node* cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CCNode_convertToWorldSpaceAR : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CCNode_convertToWorldSpaceAR : Invalid Native Object");
 //    cocos2d::Vec2 arg0;
 //    if (argc == 1) {
 //        ok &= jsval_to_vector2(cx, args.get(0), &arg0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CCNode_convertToWorldSpaceAR : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CCNode_convertToWorldSpaceAR : Error processing arguments");
 //    }
 //    else if (argc != 0) {
-//        JS_ReportError(cx, "js_cocos2dx_CCNode_convertToWorldSpaceAR : wrong number of arguments: %d, was expecting 0 or 1", argc);
+//        JS_ReportError(cx, "js_crossapp_CCNode_convertToWorldSpaceAR : wrong number of arguments: %d, was expecting 0 or 1", argc);
 //        return false;
 //    }
 //    
@@ -3644,7 +2500,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return true;
 //}
 //
-//bool js_cocos2dx_CCTMXLayer_getTiles(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCTMXLayer_getTiles(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
@@ -3674,13 +2530,13 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //
 //// Actions
 //
-//bool js_cocos2dx_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ActionInterval_repeat(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::ActionInterval* cobj = (cocos2d::ActionInterval *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_repeat : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionInterval_repeat : Invalid Native Object");
 //
 //    if (argc == 1)
 //    {
@@ -3690,7 +2546,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        }
 //        int timesInt = (int)times;
 //        if (timesInt <= 0) {
-//            JS_ReportError(cx, "js_cocos2dx_ActionInterval_repeat : Repeat times must be greater than 0");
+//            JS_ReportError(cx, "js_crossapp_ActionInterval_repeat : Repeat times must be greater than 0");
 //        }
 //        
 //        cocos2d::Repeat* action = cocos2d::Repeat::create(cobj, timesInt);
@@ -3705,17 +2561,17 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_ActionInterval_repeat : wrong number of arguments: %d, was expecting %d", argc, 1);
+//    JS_ReportError(cx, "js_crossapp_ActionInterval_repeat : wrong number of arguments: %d, was expecting %d", argc, 1);
 //    return false;
 //}
 //
-//bool js_cocos2dx_ActionInterval_repeatForever(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ActionInterval_repeatForever(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::ActionInterval* cobj = (cocos2d::ActionInterval *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_repeatForever : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionInterval_repeatForever : Invalid Native Object");
 //    
 //    if (argc == 0) {
 //        cocos2d::RepeatForever* action = cocos2d::RepeatForever::create(cobj);
@@ -3730,17 +2586,17 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_ActionInterval_repeatForever : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_ActionInterval_repeatForever : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
 //
-//bool js_cocos2dx_ActionInterval_speed(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ActionInterval_speed(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::ActionInterval* cobj = (cocos2d::ActionInterval *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_speed : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionInterval_speed : Invalid Native Object");
 //
 //    if (argc == 1)
 //    {
@@ -3749,7 +2605,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //            return false;
 //        }
 //        if (speed < 0) {
-//            JS_ReportError(cx, "js_cocos2dx_ActionInterval_speed : Speed must not be negative");
+//            JS_ReportError(cx, "js_crossapp_ActionInterval_speed : Speed must not be negative");
 //            return false;
 //        }
 //        
@@ -3765,7 +2621,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_ActionInterval_speed : wrong number of arguments: %d, was expecting %d", argc, 1);
+//    JS_ReportError(cx, "js_crossapp_ActionInterval_speed : wrong number of arguments: %d, was expecting %d", argc, 1);
 //    return false;
 //}
 //
@@ -3807,13 +2663,13 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    EASE_CUBIC_INOUT
 //};
 //
-//bool js_cocos2dx_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ActionInterval_easing(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::ActionInterval* cobj = (cocos2d::ActionInterval *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ActionInterval_easing : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ActionInterval_easing : Invalid Native Object");
 //    
 //    cocos2d::ActionInterval* currentAction = cobj;
 //    JS::RootedObject tmp(cx);
@@ -3942,7 +2798,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //            continue;
 //        
 //        if (!ok || !action) {
-//            JS_ReportError(cx, "js_cocos2dx_ActionInterval_easing : Invalid action: At least one action was expecting parameter");
+//            JS_ReportError(cx, "js_crossapp_ActionInterval_easing : Invalid action: At least one action was expecting parameter");
 //            return false;
 //        }
 //        
@@ -4014,7 +2870,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    T* cobj = (T *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Bezier_initWithDuration : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Bezier_initWithDuration : Invalid Native Object");
 //    if (argc == 2) {
 //        double arg0;
 //        cocos2d::_ccBezierConfig arg1;
@@ -4028,7 +2884,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        arg1.controlPoint_2 = arr[1];
 //        arg1.endPosition = arr[2];
 //
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Bezier_initWithDuration : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Bezier_initWithDuration : Error processing arguments");
 //        bool ret = cobj->initWithDuration(arg0, arg1);
 //        delete [] arr;
 //        jsval jsret = JSVAL_NULL;
@@ -4037,7 +2893,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_BezierTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
+//    JS_ReportError(cx, "js_crossapp_BezierTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
 //    return false;
 //}
 //
@@ -4147,7 +3003,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    T* cobj = (T *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CatmullRom_initWithDuration : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CatmullRom_initWithDuration : Invalid Native Object");
 //    if (argc == 2) {
 //        double arg0;
 //        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args.get(0)), &arg0);
@@ -4162,7 +3018,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        }
 //               
 //        
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CatmullRom_initWithDuration : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CatmullRom_initWithDuration : Error processing arguments");
 //        bool ret = cobj->initWithDuration(arg0, arg1);
 //        delete [] arr;
 //        jsval jsret = JSVAL_NULL;
@@ -4171,7 +3027,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_CatmullRom_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
+//    JS_ReportError(cx, "js_crossapp_CatmullRom_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 2);
 //    return false;
 //}
 //
@@ -4202,14 +3058,14 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return js_CardinalSplineActions_create<cocos2d::CardinalSplineTo>(cx, argc, vp);
 //}
 //
-//bool js_cocos2dx_CardinalSplineTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CardinalSplineTo_initWithDuration(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::CardinalSplineTo* cobj = (cocos2d::CardinalSplineTo *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CardinalSplineTo_initWithDuration : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CardinalSplineTo_initWithDuration : Invalid Native Object");
 //    if (argc == 3) {
 //        double arg0;
 //        
@@ -4225,7 +3081,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        }
 //
 //        ok &= JS::ToNumber( cx, JS::RootedValue(cx, args.get(2)), &arg2);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CardinalSplineTo_initWithDuration : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CardinalSplineTo_initWithDuration : Error processing arguments");
 //        bool ret = cobj->initWithDuration(arg0, arg1, arg2);
 //        
 //        delete [] arr;
@@ -4235,7 +3091,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_CardinalSplineTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 3);
+//    JS_ReportError(cx, "js_crossapp_CardinalSplineTo_initWithDuration : wrong number of arguments: %d, was expecting %d", argc, 3);
 //    return false;
 //}
 //
@@ -4255,7 +3111,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return js_CatmullRomActions_initWithDuration<cocos2d::CatmullRomTo>(cx, argc, vp);
 //}
 //
-//bool js_cocos2dx_ccGLEnableVertexAttribs(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccGLEnableVertexAttribs(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    bool ok = true;
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4276,7 +3132,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //
 //
 //
-//bool js_cocos2dx_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    bool ok = true;
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4299,7 +3155,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpDistanceSQ(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpDistanceSQ(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    bool ok = true;
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4322,7 +3178,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpDistance(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpDistance(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    bool ok = true;
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
@@ -4345,7 +3201,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpClamp(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpClamp(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4369,7 +3225,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpLengthSQ(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpLengthSQ(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4389,7 +3245,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpLength(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpLength(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4410,7 +3266,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpNeg(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpNeg(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4431,7 +3287,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpSub(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpSub(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4454,7 +3310,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpMult(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpMult(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4479,7 +3335,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpMidpoint(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpMidpoint(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4503,7 +3359,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //}
 //
 //
-//bool js_cocos2dx_ccpDot(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpDot(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4526,7 +3382,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpCross(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpCross(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4549,7 +3405,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpPerp(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpPerp(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4571,7 +3427,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //}
 //
 //
-//bool js_cocos2dx_ccpRPerp(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpRPerp(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4593,7 +3449,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //}
 //
 //
-//bool js_cocos2dx_ccpProject(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpProject(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4616,7 +3472,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpRotate(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpRotate(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4639,7 +3495,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4660,7 +3516,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccobbGetCorners(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccobbGetCorners(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc == 1)
@@ -4690,7 +3546,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccobbIntersects(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccobbIntersects(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc == 2)
@@ -4710,7 +3566,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccrayIntersectsObb(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccrayIntersectsObb(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc == 2)
@@ -4732,7 +3588,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccmat4CreateTranslation(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccmat4CreateTranslation(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc == 1)
@@ -4753,7 +3609,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccmat4CreateRotation(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccmat4CreateRotation(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc == 1)
@@ -4774,7 +3630,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccmat4Multiply(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccmat4Multiply(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc == 2)
@@ -4796,7 +3652,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccmat4MultiplyVec3(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccmat4MultiplyVec3(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc == 2)
@@ -4818,7 +3674,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccmat4GetInversed(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccmat4GetInversed(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc == 1)
@@ -4837,7 +3693,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccmat4TransformVector(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccmat4TransformVector(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc >= 2)
@@ -4878,7 +3734,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccmat4TransformPoint(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccmat4TransformPoint(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc >= 2)
@@ -4901,7 +3757,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_ccquatMultiply(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ccquatMultiply(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    if(argc == 2)
@@ -4923,7 +3779,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_Sprite_create(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Sprite_create(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -4987,18 +3843,18 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //            return true;
 //        }
 //    } while (0);
-//    JS_ReportError(cx, "js_cocos2dx_Sprite_create : wrong number of arguments");
+//    JS_ReportError(cx, "js_crossapp_Sprite_create : wrong number of arguments");
 //    return false;
 //}
 //
-//bool js_cocos2dx_Sprite_initWithPolygon(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Sprite_initWithPolygon(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Sprite* cobj = (cocos2d::Sprite *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Sprite_initWithPolygon : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Sprite_initWithPolygon : Invalid Native Object");
 //    if (argc == 1) {
 //        cocos2d::PolygonInfo *arg0;
 //        do {
@@ -5010,7 +3866,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //            arg0 = (cocos2d::PolygonInfo*)(jsProxy ? jsProxy->ptr : NULL);
 //            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 //        } while (0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Sprite_initWithPolygon : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Sprite_initWithPolygon : Error processing arguments");
 //        bool ret = cobj->initWithPolygon(*arg0);
 //        jsval jsret = JSVAL_NULL;
 //        jsret = BOOLEAN_TO_JSVAL(ret);
@@ -5018,18 +3874,18 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_Sprite_initWithPolygon : wrong number of arguments: %d, was expecting %d", argc, 1);
+//    JS_ReportError(cx, "js_crossapp_Sprite_initWithPolygon : wrong number of arguments: %d, was expecting %d", argc, 1);
 //    return false;
 //}
 //
-//bool js_cocos2dx_Sprite_setPolygonInfo(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Sprite_setPolygonInfo(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Sprite* cobj = (cocos2d::Sprite *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Sprite_setPolygonInfo : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Sprite_setPolygonInfo : Invalid Native Object");
 //    if (argc == 1) {
 //        cocos2d::PolygonInfo *arg0;
 //        do {
@@ -5041,17 +3897,17 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //            arg0 = (cocos2d::PolygonInfo*)(jsProxy ? jsProxy->ptr : NULL);
 //            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 //        } while (0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Sprite_setPolygonInfo : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Sprite_setPolygonInfo : Error processing arguments");
 //        cobj->setPolygonInfo(*arg0);
 //        args.rval().setUndefined();
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_Sprite_setPolygonInfo : wrong number of arguments: %d, was expecting %d", argc, 1);
+//    JS_ReportError(cx, "js_crossapp_Sprite_setPolygonInfo : wrong number of arguments: %d, was expecting %d", argc, 1);
 //    return false;
 //}
 //
-//bool js_cocos2dx_Sprite_textureLoaded(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Sprite_textureLoaded(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
@@ -5067,7 +3923,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return true;
 //}
 //
-//bool js_cocos2dx_CCTexture2D_setTexParameters(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCTexture2D_setTexParameters(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
@@ -5100,7 +3956,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;       
 //}
 //
-//bool js_cocos2dx_CCMenu_alignItemsInRows(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCMenu_alignItemsInRows(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
@@ -5117,11 +3973,11 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        args.rval().setUndefined();
 //        return true;
 //    }
-//    JS_ReportError(cx, "Error in js_cocos2dx_CCMenu_alignItemsInRows");
+//    JS_ReportError(cx, "Error in js_crossapp_CCMenu_alignItemsInRows");
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCMenu_alignItemsInColumns(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCMenu_alignItemsInColumns(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject jsthis(cx, args.thisv().toObjectOrNull());
@@ -5139,17 +3995,17 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        args.rval().setUndefined();
 //        return true;
 //    }
-//    JS_ReportError(cx, "Error in js_cocos2dx_CCMenu_alignItemsInColumns");
+//    JS_ReportError(cx, "Error in js_crossapp_CCMenu_alignItemsInColumns");
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCLayer_init(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCLayer_init(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Layer* cobj = (cocos2d::Layer *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CCLayer_init : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CCLayer_init : Invalid Native Object");
 //    if (argc == 0) {
 //        bool ret = cobj->init();
 //        jsval jsret = JSVAL_NULL;
@@ -5158,13 +4014,13 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_CCLayer_init : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_CCLayer_init : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
 //
 //
 //// TMXLayer
-//bool js_cocos2dx_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCTMXLayer_getTileFlagsAt(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -5228,7 +4084,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return OBJECT_TO_JSVAL(jsretArr);
 //}
 //
-//bool js_cocos2dx_CCFileUtils_setSearchResolutionsOrder(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCFileUtils_setSearchResolutionsOrder(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -5249,7 +4105,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCFileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCFileUtils_setSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -5269,7 +4125,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    JS_ReportError(cx, "wrong number of arguments: %d, was expecting %d", argc, 1);
 //    return false;
 //}
-//bool js_cocos2dx_CCFileUtils_getSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCFileUtils_getSearchPaths(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
@@ -5288,7 +4144,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCFileUtils_getDataFromFile(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCFileUtils_getDataFromFile(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -5327,14 +4183,14 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCFileUtils_writeDataToFile(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCFileUtils_writeDataToFile(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::FileUtils* cobj = (cocos2d::FileUtils *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_CCFileUtils_writeDataToFile : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_CCFileUtils_writeDataToFile : Invalid Native Object");
 //    if (argc == 2) {
 //        Data arg0;
 //        std::string arg1;
@@ -5350,7 +4206,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        }
 //        
 //        ok &= jsval_to_std_string(cx, args.get(1), &arg1);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_CCFileUtils_writeDataToFile : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_CCFileUtils_writeDataToFile : Error processing arguments");
 //        bool ret = cobj->writeDataToFile(arg0, arg1);
 //        jsval jsret = JSVAL_NULL;
 //        jsret = BOOLEAN_TO_JSVAL(ret);
@@ -5358,11 +4214,11 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_CCFileUtils_writeDataToFile : wrong number of arguments: %d, was expecting %d", argc, 2);
+//    JS_ReportError(cx, "js_crossapp_CCFileUtils_writeDataToFile : wrong number of arguments: %d, was expecting %d", argc, 2);
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCFileUtils_getSearchResolutionsOrder(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCFileUtils_getSearchResolutionsOrder(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -5381,7 +4237,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//static bool js_cocos2dx_FileUtils_createDictionaryWithContentsOfFile(JSContext *cx, uint32_t argc, jsval *vp)
+//static bool js_crossapp_FileUtils_createDictionaryWithContentsOfFile(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -5404,7 +4260,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCGLProgram_setUniformLocationWith4f(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCGLProgram_setUniformLocationWith4f(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -5449,7 +4305,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCGLProgram_setUniformLocationWithMatrixfvUnion(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCGLProgram_setUniformLocationWithMatrixfvUnion(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -5492,7 +4348,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_CCGLProgram_create(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCGLProgram_create(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -5531,7 +4387,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //}
 //
 //
-//bool js_cocos2dx_CCGLProgram_createWithString(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCGLProgram_createWithString(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -5567,7 +4423,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    
 //}
 //
-//bool js_cocos2dx_CCGLProgram_getProgram(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_CCGLProgram_getProgram(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
@@ -5584,14 +4440,14 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return false;
 //}
 //
-//bool js_cocos2dx_GLProgramState_setVertexAttribPointer(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_GLProgramState_setVertexAttribPointer(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::GLProgramState* cobj = (cocos2d::GLProgramState *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramState_setVertexAttribPointer : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_GLProgramState_setVertexAttribPointer : Invalid Native Object");
 //    if (argc == 6) {
 //        std::string arg0;
 //        int arg1;
@@ -5606,23 +4462,23 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        ok &= jsval_to_int32(cx, args.get(4), (int32_t *)&arg4);
 //        ok &= jsval_to_long(cx, args.get(5), &arg5);
 //
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_GLProgramState_setVertexAttribPointer : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_GLProgramState_setVertexAttribPointer : Error processing arguments");
 //        cobj->setVertexAttribPointer(arg0, arg1, arg2, arg3, arg4, (GLvoid*)arg5);
 //        args.rval().setUndefined();
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_GLProgramState_setVertexAttribPointer : wrong number of arguments: %d, was expecting %d", argc, 6);
+//    JS_ReportError(cx, "js_crossapp_GLProgramState_setVertexAttribPointer : wrong number of arguments: %d, was expecting %d", argc, 6);
 //    return false;
 //}
 //
-//bool js_cocos2dx_GLProgramState_setUniformVec4(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_GLProgramState_setUniformVec4(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t* proxy = jsb_get_js_proxy(obj);
 //    cocos2d::GLProgramState* cobj = (cocos2d::GLProgramState *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_GLProgramState_setUniformVec4 : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_GLProgramState_setUniformVec4 : Invalid Native Object");
 //    bool ok = true;
 //    if(argc == 2)
 //    {
@@ -5654,11 +4510,11 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //            }
 //        } while(0);
 //    }
-//    JS_ReportError(cx, "js_cocos2dx_GLProgramState_setUniformVec4 : wrong number of arguments: %d, was expecting %d", argc, 2);
+//    JS_ReportError(cx, "js_crossapp_GLProgramState_setUniformVec4 : wrong number of arguments: %d, was expecting %d", argc, 2);
 //    return false;
 //}
 //
-//#define js_cocos2dx_CCCamera_getXYZ(funcName) \
+//#define js_crossapp_CCCamera_getXYZ(funcName) \
 //    bool ok = true;                                                                                                  \
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);                                                                               \
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);                                                                            \
@@ -5694,13 +4550,13 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //
 //
 //
-//bool js_cocos2dx_SpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_SpriteBatchNode_getDescendants(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::SpriteBatchNode* cobj = (cocos2d::SpriteBatchNode *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_SpriteBatchNode_getDescendants : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_SpriteBatchNode_getDescendants : Invalid Native Object");
 //    if (argc == 0) {
 //        std::vector<Sprite*> ret = cobj->getDescendants();
 //        
@@ -5717,18 +4573,18 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_SpriteBatchNode_getDescendants : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_SpriteBatchNode_getDescendants : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
 //
-//bool js_cocos2dx_NodeGrid_setGrid(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_NodeGrid_setGrid(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::NodeGrid* cobj = (cocos2d::NodeGrid *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_NodeGrid_setGrid : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_NodeGrid_setGrid : Invalid Native Object");
 //    if (argc == 1) {
 //        cocos2d::GridBase* arg0;
 //        do {
@@ -5739,13 +4595,13 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //            arg0 = (cocos2d::GridBase*)(proxy ? proxy->ptr : NULL);
 //            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 //        } while (0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_NodeGrid_setGrid : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_NodeGrid_setGrid : Error processing arguments");
 //        cobj->setGrid(arg0);
 //        args.rval().setUndefined();
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_NodeGrid_setGrid : wrong number of arguments: %d, was expecting %d", argc, 1);
+//    JS_ReportError(cx, "js_crossapp_NodeGrid_setGrid : wrong number of arguments: %d, was expecting %d", argc, 1);
 //    return false;
 //}
 //
@@ -5935,7 +4791,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return true;
 //}
 //
-//bool js_cocos2dx_Label_createWithTTF(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Label_createWithTTF(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    if (argc < 2)
 //        return false;
@@ -5952,7 +4808,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    cocos2d::Label* ret = nullptr;
 //
 //    if (argc == 2) {
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Label_createWithTTF : Error processing arguments");
 //        ret = cocos2d::Label::createWithTTF(ttfConfig, text);
 //        jsval jsret = JSVAL_NULL;
 //        if (ret) {
@@ -5965,7 +4821,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    if (argc == 3) {
 //        int arg2;
 //        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Label_createWithTTF : Error processing arguments");
 //        TextHAlignment alignment = TextHAlignment(arg2);
 //        ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment);
 //        jsval jsret = JSVAL_NULL;
@@ -5980,7 +4836,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        int arg2,arg3;
 //        ok &= jsval_to_int32(cx, args.get(2), (int32_t *)&arg2);
 //        ok &= jsval_to_int32(cx, args.get(3), (int32_t *)&arg3);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_createWithTTF : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Label_createWithTTF : Error processing arguments");
 //        TextHAlignment alignment = TextHAlignment(arg2);
 //        ret = cocos2d::Label::createWithTTF(ttfConfig, text, alignment, arg3);
 //        jsval jsret = JSVAL_NULL;
@@ -5992,18 +4848,18 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_Label_createWithTTF : wrong number of arguments");
+//    JS_ReportError(cx, "js_crossapp_Label_createWithTTF : wrong number of arguments");
 //    return false;
 //}
 //
-//bool js_cocos2dx_Label_setTTFConfig(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Label_setTTFConfig(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JSObject *obj = JS_THIS_OBJECT(cx, vp);
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Label* cobj = (cocos2d::Label *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Label_setTTFConfig : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Label_setTTFConfig : Invalid Native Object");
 //
 //    if (argc == 1) {
 //        TTFConfig ttfConfig("");
@@ -6011,17 +4867,17 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //            if (!args.get(0).isObject()) { ok = false; break; }
 //            ok &= jsval_to_TTFConfig(cx, args.get(0), &ttfConfig);
 //        } while (0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Label_setTTFConfig : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Label_setTTFConfig : Error processing arguments");
 //        cobj->setTTFConfig(ttfConfig);
 //        args.rval().setUndefined();
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_Label_setTTFConfig : wrong number of arguments");
+//    JS_ReportError(cx, "js_crossapp_Label_setTTFConfig : wrong number of arguments");
 //    return false;
 //}
 //
-//bool js_cocos2dx_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_RenderTexture_saveToFile(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -6031,7 +4887,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    obj = JS_THIS_OBJECT(cx, vp);
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cobj = (cocos2d::RenderTexture *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_RenderTexture_saveToFile : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_RenderTexture_saveToFile : Invalid Native Object");
 //    do {
 //        if (argc == 2) {
 //            std::string arg0;
@@ -6179,25 +5035,25 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        }
 //    } while(0);
 //    
-//    JS_ReportError(cx, "js_cocos2dx_RenderTexture_saveToFile : wrong number of arguments");
+//    JS_ReportError(cx, "js_crossapp_RenderTexture_saveToFile : wrong number of arguments");
 //    return false;
 //}
 //
-//bool js_cocos2dx_Camera_unproject(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Camera_unproject(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_unproject : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Camera_unproject : Invalid Native Object");
 //    if (argc >= 2) {
 //        cocos2d::Size arg0;
 //        cocos2d::Vec3 arg1;
 //        cocos2d::Vec3 ret;
 //        ok &= jsval_to_ccsize(cx, args.get(0), &arg0);
 //        ok &= jsval_to_vector3(cx, args.get(1), &arg1);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_unproject : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Camera_unproject : Error processing arguments");
 //        cobj->unproject(arg0, &arg1, &ret);
 //        args.rval().set(vector3_to_jsval(cx, ret));
 //        return true;
@@ -6206,23 +5062,23 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    {
 //        cocos2d::Vec3 arg0;
 //        ok &= jsval_to_vector3(cx, args.get(0), &arg0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_unproject : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Camera_unproject : Error processing arguments");
 //        cocos2d::Vec3 ret = cobj->unproject(arg0);
 //        args.rval().set(vector3_to_jsval(cx, ret));
 //        return true;
 //    }
-//    JS_ReportError(cx, "js_cocos2dx_Camera_unproject : wrong number of arguments: %d, was expecting %d", argc, 3);
+//    JS_ReportError(cx, "js_crossapp_Camera_unproject : wrong number of arguments: %d, was expecting %d", argc, 3);
 //    return false;
 //}
 //
-//bool js_cocos2dx_Camera_isVisibleInFrustum(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Camera_isVisibleInFrustum(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Camera* cobj = (cocos2d::Camera *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Camera_isVisibleInFrustum : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Camera_isVisibleInFrustum : Invalid Native Object");
 //    if (argc == 1) {
 //         cocos2d::Vec3  min;
 //        JS::RootedValue jsmin(cx);
@@ -6236,7 +5092,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //
 //        cocos2d::AABB aabb(min, max);
 //
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Camera_isVisibleInFrustum : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Camera_isVisibleInFrustum : Error processing arguments");
 //        bool ret = cobj->isVisibleInFrustum(&aabb);
 //        jsval jsret = JSVAL_NULL;
 //        jsret = BOOLEAN_TO_JSVAL(ret);
@@ -6244,11 +5100,11 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //
-//    JS_ReportError(cx, "js_cocos2dx_Camera_isVisibleInFrustum : wrong number of arguments: %d, was expecting %d", argc, 1);
+//    JS_ReportError(cx, "js_crossapp_Camera_isVisibleInFrustum : wrong number of arguments: %d, was expecting %d", argc, 1);
 //    return false;
 //}
 //
-//bool js_cocos2dx_Node_setAdditionalTransform(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Node_setAdditionalTransform(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -6258,7 +5114,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    obj = args.thisv().toObjectOrNull();
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cobj = (cocos2d::Node *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Node_setAdditionalTransform : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Node_setAdditionalTransform : Invalid Native Object");
 //
 //    do {
 //        if (argc == 1) {
@@ -6282,18 +5138,18 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        }
 //    } while(0);
 //
-//    JS_ReportError(cx, "js_cocos2dx_Node_setAdditionalTransform : wrong number of arguments");
+//    JS_ReportError(cx, "js_crossapp_Node_setAdditionalTransform : wrong number of arguments");
 //    return false;
 //}
 //
-//bool js_cocos2dx_ClippingNode_init(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ClippingNode_init(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::ClippingNode* cobj = (cocos2d::ClippingNode *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ClippingNode_init : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ClippingNode_init : Invalid Native Object");
 //    if (argc == 0) {
 //        bool ret = cobj->init();
 //        jsval jsret = JSVAL_NULL;
@@ -6311,7 +5167,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //            arg0 = (cocos2d::Node*)(jsProxy ? jsProxy->ptr : NULL);
 //            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 //        } while (0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_ClippingNode_init : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_ClippingNode_init : Error processing arguments");
 //        bool ret = cobj->init(arg0);
 //        jsval jsret = JSVAL_NULL;
 //        jsret = BOOLEAN_TO_JSVAL(ret);
@@ -6319,7 +5175,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_ClippingNode_init : wrong number of arguments: %d, was expecting %d", argc, 1);
+//    JS_ReportError(cx, "js_crossapp_ClippingNode_init : wrong number of arguments: %d, was expecting %d", argc, 1);
 //    return false;
 //}
 //
@@ -6328,7 +5184,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //JSClass  *jsb_cocos2d_EventKeyboard_class;
 //JSObject *jsb_cocos2d_EventKeyboard_prototype;
 //
-//bool js_cocos2dx_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_EventKeyboard_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -6342,7 +5198,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    bool arg1;
 //    arg1 = JS::ToBoolean(JS::RootedValue(cx, args.get(1)));
 //    
-//    JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_EventKeyboard_constructor : Error processing arguments");
+//    JSB_PRECONDITION2(ok, cx, false, "js_crossapp_EventKeyboard_constructor : Error processing arguments");
 //    
 //    cocos2d::EventKeyboard* cobj = new (std::nothrow) cocos2d::EventKeyboard(arg0, arg1);
 //    cocos2d::Ref *_ccobj = dynamic_cast<cocos2d::Ref *>(cobj);
@@ -6378,7 +5234,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //    return true;
 //}
 //
-//void js_register_cocos2dx_EventKeyboard(JSContext *cx, JS::HandleObject global) {
+//void js_register_crossapp_EventKeyboard(JSContext *cx, JS::HandleObject global) {
 //    jsb_cocos2d_EventKeyboard_class = (JSClass *)calloc(1, sizeof(JSClass));
 //    jsb_cocos2d_EventKeyboard_class->name = "EventKeyboard";
 //    jsb_cocos2d_EventKeyboard_class->addProperty = JS_PropertyStub;
@@ -6406,7 +5262,7 @@ bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsv
 //                                                       cx, global,
 //                                                       JS::RootedObject(cx, jsb_cocos2d_Event_prototype),
 //                                                       jsb_cocos2d_EventKeyboard_class,
-//                                                       js_cocos2dx_EventKeyboard_constructor, 0, // constructor
+//                                                       js_crossapp_EventKeyboard_constructor, 0, // constructor
 //                                                       properties,
 //                                                       funcs,
 //                                                       NULL, // no static properties
@@ -6465,14 +5321,14 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //
 //#include "physics3d/CCPhysics3D.h"
 //
-//bool js_cocos2dx_Scene_setPhysics3DDebugCamera(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Scene_setPhysics3DDebugCamera(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Scene* cobj = (cocos2d::Scene *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Scene_setPhysics3DDebugCamera : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Scene_setPhysics3DDebugCamera : Invalid Native Object");
 //    if (argc == 1)
 //    {
 //        cocos2d::Camera* arg0;
@@ -6485,22 +5341,22 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //            arg0 = (cocos2d::Camera*)(jsProxy ? jsProxy->ptr : NULL);
 //            JSB_PRECONDITION2( arg0, cx, false, "Invalid Native Object");
 //        } while (0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Scene_setPhysics3DDebugCamera : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Scene_setPhysics3DDebugCamera : Error processing arguments");
 //        cobj->setPhysics3DDebugCamera(arg0);
 //        args.rval().setUndefined();
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_Scene_setPhysics3DDebugCamera : wrong number of arguments: %d, was expecting %d", argc, 1);
+//    JS_ReportError(cx, "js_crossapp_Scene_setPhysics3DDebugCamera : wrong number of arguments: %d, was expecting %d", argc, 1);
 //    return false;
 //}
-//bool js_cocos2dx_Scene_initWithPhysics(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Scene_initWithPhysics(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Scene* cobj = (cocos2d::Scene *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Scene_initWithPhysics : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Scene_initWithPhysics : Invalid Native Object");
 //    if (argc == 0)
 //    {
 //        bool ret = cobj->initWithPhysics();
@@ -6510,16 +5366,16 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_Scene_initWithPhysics : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_Scene_initWithPhysics : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
-//bool js_cocos2dx_Scene_getPhysics3DWorld(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Scene_getPhysics3DWorld(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::Scene* cobj = (cocos2d::Scene *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_Scene_getPhysics3DWorld : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_Scene_getPhysics3DWorld : Invalid Native Object");
 //    if (argc == 0)
 //    {
 //        cocos2d::Physics3DWorld* ret = cobj->getPhysics3DWorld();
@@ -6539,19 +5395,19 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_Scene_getPhysics3DWorld : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_Scene_getPhysics3DWorld : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
 //#endif //CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS
 //#if CC_USE_NAVMESH
-//bool js_cocos2dx_Scene_setNavMeshDebugCamera(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Scene_setNavMeshDebugCamera(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //	JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //	bool ok = true;
 //	JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //	cocos2d::Scene* cobj = (cocos2d::Scene *)(proxy ? proxy->ptr : NULL);
-//	JSB_PRECONDITION2(cobj, cx, false, "js_cocos2dx_Scene_setNavMeshDebugCamera : Invalid Native Object");
+//	JSB_PRECONDITION2(cobj, cx, false, "js_crossapp_Scene_setNavMeshDebugCamera : Invalid Native Object");
 //	if (argc == 1) {
 //		cocos2d::Camera* arg0;
 //		do {
@@ -6563,23 +5419,23 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //			arg0 = (cocos2d::Camera*)(jsProxy ? jsProxy->ptr : NULL);
 //			JSB_PRECONDITION2(arg0, cx, false, "Invalid Native Object");
 //		} while (0);
-//		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Scene_setNavMeshDebugCamera : Error processing arguments");
+//		JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Scene_setNavMeshDebugCamera : Error processing arguments");
 //		cobj->setNavMeshDebugCamera(arg0);
 //		args.rval().setUndefined();
 //		return true;
 //	}
 //
-//	JS_ReportError(cx, "js_cocos2dx_Scene_setNavMeshDebugCamera : wrong number of arguments: %d, was expecting %d", argc, 1);
+//	JS_ReportError(cx, "js_crossapp_Scene_setNavMeshDebugCamera : wrong number of arguments: %d, was expecting %d", argc, 1);
 //	return false;
 //}
-//bool js_cocos2dx_Scene_setNavMesh(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Scene_setNavMesh(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //	JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //	bool ok = true;
 //	JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //	cocos2d::Scene* cobj = (cocos2d::Scene *)(proxy ? proxy->ptr : NULL);
-//	JSB_PRECONDITION2(cobj, cx, false, "js_cocos2dx_Scene_setNavMesh : Invalid Native Object");
+//	JSB_PRECONDITION2(cobj, cx, false, "js_crossapp_Scene_setNavMesh : Invalid Native Object");
 //	if (argc == 1) {
 //		cocos2d::NavMesh* arg0;
 //		do {
@@ -6591,22 +5447,22 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //			arg0 = (cocos2d::NavMesh*)(jsProxy ? jsProxy->ptr : NULL);
 //			JSB_PRECONDITION2(arg0, cx, false, "Invalid Native Object");
 //		} while (0);
-//		JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_Scene_setNavMesh : Error processing arguments");
+//		JSB_PRECONDITION2(ok, cx, false, "js_crossapp_Scene_setNavMesh : Error processing arguments");
 //		cobj->setNavMesh(arg0);
 //		args.rval().setUndefined();
 //		return true;
 //	}
 //
-//	JS_ReportError(cx, "js_cocos2dx_Scene_setNavMesh : wrong number of arguments: %d, was expecting %d", argc, 1);
+//	JS_ReportError(cx, "js_crossapp_Scene_setNavMesh : wrong number of arguments: %d, was expecting %d", argc, 1);
 //	return false;
 //}
-//bool js_cocos2dx_Scene_getNavMesh(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_Scene_getNavMesh(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //	JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //	JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //	js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //	cocos2d::Scene* cobj = (cocos2d::Scene *)(proxy ? proxy->ptr : NULL);
-//	JSB_PRECONDITION2(cobj, cx, false, "js_cocos2dx_Scene_getNavMesh : Invalid Native Object");
+//	JSB_PRECONDITION2(cobj, cx, false, "js_crossapp_Scene_getNavMesh : Invalid Native Object");
 //	if (argc == 0) {
 //		cocos2d::NavMesh* ret = cobj->getNavMesh();
 //		jsval jsret = JSVAL_NULL;
@@ -6623,7 +5479,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //		return true;
 //	}
 //
-//	JS_ReportError(cx, "js_cocos2dx_Scene_getNavMesh : wrong number of arguments: %d, was expecting %d", argc, 0);
+//	JS_ReportError(cx, "js_crossapp_Scene_getNavMesh : wrong number of arguments: %d, was expecting %d", argc, 0);
 //	return false;
 //}
 //#endif //CC_USE_NAVMESH
@@ -6631,13 +5487,13 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //JSClass  *jsb_cocos2d_PolygonInfo_class;
 //JSObject *jsb_cocos2d_PolygonInfo_prototype;
 //
-//bool js_cocos2dx_PolygonInfo_getArea(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_PolygonInfo_getArea(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::PolygonInfo* cobj = (cocos2d::PolygonInfo *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_PolygonInfo_getArea : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_PolygonInfo_getArea : Invalid Native Object");
 //    if (argc == 0)
 //    {
 //        const float ret = cobj->getArea();
@@ -6647,16 +5503,16 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_PolygonInfo_getArea : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_PolygonInfo_getArea : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
-//bool js_cocos2dx_PolygonInfo_getTriaglesCount(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_PolygonInfo_getTriaglesCount(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::PolygonInfo* cobj = (cocos2d::PolygonInfo *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_PolygonInfo_getTriaglesCount : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_PolygonInfo_getTriaglesCount : Invalid Native Object");
 //    if (argc == 0)
 //    {
 //        const unsigned int ret = cobj->getTriaglesCount();
@@ -6666,16 +5522,16 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_PolygonInfo_getTriaglesCount : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_PolygonInfo_getTriaglesCount : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
-//bool js_cocos2dx_PolygonInfo_getVertCount(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_PolygonInfo_getVertCount(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::PolygonInfo* cobj = (cocos2d::PolygonInfo *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_PolygonInfo_getVertCount : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_PolygonInfo_getVertCount : Invalid Native Object");
 //    if (argc == 0)
 //    {
 //        const unsigned int ret = cobj->getVertCount();
@@ -6685,7 +5541,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_PolygonInfo_getVertCount : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_PolygonInfo_getVertCount : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
 //
@@ -6765,7 +5621,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //    return false;
 //}
 //
-//bool js_cocos2dx_PolygonInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_PolygonInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
@@ -6805,7 +5661,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //    }
 //}
 //
-//void js_register_cocos2dx_PolygonInfo(JSContext *cx, JS::HandleObject global)
+//void js_register_crossapp_PolygonInfo(JSContext *cx, JS::HandleObject global)
 //{
 //    jsb_cocos2d_PolygonInfo_class = (JSClass *)calloc(1, sizeof(JSClass));
 //    jsb_cocos2d_PolygonInfo_class->name = "PolygonInfo";
@@ -6829,9 +5685,9 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //    
 //    static JSFunctionSpec funcs[] =
 //    {
-//        JS_FN("getArea", js_cocos2dx_PolygonInfo_getArea, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-//        JS_FN("getTriaglesCount", js_cocos2dx_PolygonInfo_getTriaglesCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
-//        JS_FN("getVertCount", js_cocos2dx_PolygonInfo_getVertCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+//        JS_FN("getArea", js_crossapp_PolygonInfo_getArea, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+//        JS_FN("getTriaglesCount", js_crossapp_PolygonInfo_getTriaglesCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+//        JS_FN("getVertCount", js_crossapp_PolygonInfo_getVertCount, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 //        JS_FS_END
 //    };
 //    
@@ -6841,7 +5697,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //                                                     cx, global,
 //                                                     JS::NullPtr(), // parent proto
 //                                                     jsb_cocos2d_PolygonInfo_class,
-//                                                     js_cocos2dx_PolygonInfo_constructor, 0, // constructor
+//                                                     js_crossapp_PolygonInfo_constructor, 0, // constructor
 //                                                     properties,
 //                                                     funcs,
 //                                                     NULL, // no static properties
@@ -6864,14 +5720,14 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //JSClass  *jsb_cocos2d_AutoPolygon_class;
 //JSObject *jsb_cocos2d_AutoPolygon_prototype;
 //
-//bool js_cocos2dx_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_AutoPolygon_generatePolygon(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    if (argc == 1) {
 //        std::string arg0;
 //        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_AutoPolygon_generatePolygon : Error processing arguments");
 //        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0));
 //        jsval jsret = JSVAL_NULL;
 //        do {
@@ -6890,7 +5746,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //        cocos2d::Rect arg1;
 //        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
 //        ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_AutoPolygon_generatePolygon : Error processing arguments");
 //        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1));
 //        jsval jsret = JSVAL_NULL;
 //        do {
@@ -6911,7 +5767,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //        ok &= jsval_to_std_string(cx, args.get(0), &arg0);
 //        ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
 //        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_AutoPolygon_generatePolygon : Error processing arguments");
 //        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2));
 //        jsval jsret = JSVAL_NULL;
 //        do {
@@ -6934,7 +5790,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //        ok &= jsval_to_ccrect(cx, args.get(1), &arg1);
 //        ok &= JS::ToNumber( cx, args.get(2), &arg2) && !isnan(arg2);
 //        ok &= JS::ToNumber( cx, args.get(3), &arg3) && !isnan(arg3);
-//        JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_generatePolygon : Error processing arguments");
+//        JSB_PRECONDITION2(ok, cx, false, "js_crossapp_AutoPolygon_generatePolygon : Error processing arguments");
 //        cocos2d::PolygonInfo* ret = new cocos2d::PolygonInfo(cocos2d::AutoPolygon::generatePolygon(arg0, arg1, arg2, arg3));
 //        jsval jsret = JSVAL_NULL;
 //        do {
@@ -6948,17 +5804,17 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //        args.rval().set(jsret);
 //        return true;
 //    }
-//    JS_ReportError(cx, "js_cocos2dx_AutoPolygon_generatePolygon : wrong number of arguments");
+//    JS_ReportError(cx, "js_crossapp_AutoPolygon_generatePolygon : wrong number of arguments");
 //    return false;
 //}
 //
-//bool js_cocos2dx_AutoPolygon_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_AutoPolygon_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    bool ok = true;
 //    std::string arg0;
 //    ok &= jsval_to_std_string(cx, args.get(0), &arg0);
-//    JSB_PRECONDITION2(ok, cx, false, "js_cocos2dx_AutoPolygon_constructor : Error processing arguments");
+//    JSB_PRECONDITION2(ok, cx, false, "js_crossapp_AutoPolygon_constructor : Error processing arguments");
 //    cocos2d::AutoPolygon* cobj = new (std::nothrow) cocos2d::AutoPolygon(arg0);
 //    TypeTest<cocos2d::AutoPolygon> t;
 //    js_type_class_t *typeClass = nullptr;
@@ -6994,7 +5850,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //    }
 //}
 //
-//void js_register_cocos2dx_AutoPolygon(JSContext *cx, JS::HandleObject global) {
+//void js_register_crossapp_AutoPolygon(JSContext *cx, JS::HandleObject global) {
 //    jsb_cocos2d_AutoPolygon_class = (JSClass *)calloc(1, sizeof(JSClass));
 //    jsb_cocos2d_AutoPolygon_class->name = "AutoPolygon";
 //    jsb_cocos2d_AutoPolygon_class->addProperty = JS_PropertyStub;
@@ -7017,7 +5873,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //    };
 //    
 //    static JSFunctionSpec st_funcs[] = {
-//        JS_FN("generatePolygon", js_cocos2dx_AutoPolygon_generatePolygon, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
+//        JS_FN("generatePolygon", js_crossapp_AutoPolygon_generatePolygon, 1, JSPROP_PERMANENT | JSPROP_ENUMERATE),
 //        JS_FS_END
 //    };
 //    
@@ -7025,7 +5881,7 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //                                                     cx, global,
 //                                                     JS::NullPtr(), // parent proto
 //                                                     jsb_cocos2d_AutoPolygon_class,
-//                                                     js_cocos2dx_AutoPolygon_constructor, 0, // constructor
+//                                                     js_crossapp_AutoPolygon_constructor, 0, // constructor
 //                                                     properties,
 //                                                     funcs,
 //                                                     NULL, // no static properties
@@ -7049,13 +5905,13 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //    }
 //}
 //
-//bool js_cocos2dx_ComponentJS_getScriptObject(JSContext *cx, uint32_t argc, jsval *vp)
+//bool js_crossapp_ComponentJS_getScriptObject(JSContext *cx, uint32_t argc, jsval *vp)
 //{
 //    JS::CallArgs args = JS::CallArgsFromVp(argc, vp);
 //    JS::RootedObject obj(cx, args.thisv().toObjectOrNull());
 //    js_proxy_t *proxy = jsb_get_js_proxy(obj);
 //    cocos2d::ComponentJS* cobj = (cocos2d::ComponentJS *)(proxy ? proxy->ptr : NULL);
-//    JSB_PRECONDITION2( cobj, cx, false, "js_cocos2dx_ComponentJS_getScriptObject : Invalid Native Object");
+//    JSB_PRECONDITION2( cobj, cx, false, "js_crossapp_ComponentJS_getScriptObject : Invalid Native Object");
 //    if (argc == 0) {
 //        JSObject* ret = static_cast<JSObject*>(cobj->getScriptObject());
 //        jsval jsret = OBJECT_TO_JSVAL(ret);
@@ -7063,14 +5919,14 @@ void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string
 //        return true;
 //    }
 //    
-//    JS_ReportError(cx, "js_cocos2dx_ComponentJS_getScriptObject : wrong number of arguments: %d, was expecting %d", argc, 0);
+//    JS_ReportError(cx, "js_crossapp_ComponentJS_getScriptObject : wrong number of arguments: %d, was expecting %d", argc, 0);
 //    return false;
 //}
 //
 
 
 
-void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
+void register_crossapp_js_core(JSContext* cx, JS::HandleObject global)
 {
     JS::RootedObject ccObj(cx);
     JS::RootedObject jsbObj(cx);
@@ -7079,8 +5935,8 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     get_or_create_js_obj(cx, global, "ca", &ccObj);
     get_or_create_js_obj(cx, global, "jsb", &jsbObj);
 //    
-//    js_register_cocos2dx_PolygonInfo(cx, jsbObj);
-//    js_register_cocos2dx_AutoPolygon(cx, jsbObj);
+//    js_register_crossapp_PolygonInfo(cx, jsbObj);
+//    js_register_crossapp_AutoPolygon(cx, jsbObj);
 //
 //    JS_GetProperty(cx, ccObj, "PlistParser", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
@@ -7090,112 +5946,112 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 //    
 //    JS_GetProperty(cx, ccObj, "Label", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "createWithTTF", js_cocos2dx_Label_createWithTTF, 4, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "createWithTTF", js_crossapp_Label_createWithTTF, 4, JSPROP_READONLY | JSPROP_PERMANENT);
 //    
 //    tmpObj.set(jsb_cocos2d_Label_prototype);
-//    JS_DefineFunction(cx, tmpObj, "setTTFConfig", js_cocos2dx_Label_setTTFConfig, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setTTFConfig", js_crossapp_Label_setTTFConfig, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //
 //    tmpObj.set(jsb_cocos2d_NodeGrid_prototype);
-//    JS_DefineFunction(cx, tmpObj, "setGrid", js_cocos2dx_NodeGrid_setGrid, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setGrid", js_crossapp_NodeGrid_setGrid, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     
     tmpObj.set(jsb_CrossApp_CAView_prototype);
-    JS_DefineFunction(cx, tmpObj, "onEnter", js_cocos2dx_Node_onEnter, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "onExit", js_cocos2dx_Node_onExit, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "onEnterTransitionDidFinish", js_cocos2dx_Node_onEnterTransitionDidFinish, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "onExitTransitionDidStart", js_cocos2dx_Node_onExitTransitionDidStart, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "onEnter", js_crossapp_Node_onEnter, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "onExit", js_crossapp_Node_onExit, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "onEnterTransitionDidFinish", js_crossapp_Node_onEnterTransitionDidFinish, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "onExitTransitionDidStart", js_crossapp_Node_onExitTransitionDidStart, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
     
 //    tmpObj.set(jsb_cocos2d_Node_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "onEnter", js_cocos2dx_Node_onEnter, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "onExit", js_cocos2dx_Node_onExit, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "onEnterTransitionDidFinish", js_cocos2dx_Node_onEnterTransitionDidFinish, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "onExitTransitionDidStart", js_cocos2dx_Node_onExitTransitionDidStart, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "cleanup", js_cocos2dx_Node_cleanup, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "onEnter", js_crossapp_Node_onEnter, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "onExit", js_crossapp_Node_onExit, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "onEnterTransitionDidFinish", js_crossapp_Node_onEnterTransitionDidFinish, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "onExitTransitionDidStart", js_crossapp_Node_onExitTransitionDidStart, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "cleanup", js_crossapp_Node_cleanup, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
 //    JS_DefineFunction(cx, tmpObj, "schedule", js_CCNode_schedule, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    JS_DefineFunction(cx, tmpObj, "scheduleOnce", js_CCNode_scheduleOnce, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "scheduleUpdateWithPriority", js_cocos2dx_CCNode_scheduleUpdateWithPriority, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "unscheduleUpdate", js_cocos2dx_CCNode_unscheduleUpdate, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "scheduleUpdate", js_cocos2dx_CCNode_scheduleUpdate, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "scheduleUpdateWithPriority", js_crossapp_CCNode_scheduleUpdateWithPriority, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "unscheduleUpdate", js_crossapp_CCNode_unscheduleUpdate, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "scheduleUpdate", js_crossapp_CCNode_scheduleUpdate, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    JS_DefineFunction(cx, tmpObj, "unschedule", js_CCNode_unschedule, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacks", js_cocos2dx_CCNode_unscheduleAllSelectors, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setPosition", js_cocos2dx_CCNode_setPosition, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setContentSize", js_cocos2dx_CCNode_setContentSize, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setAnchorPoint", js_cocos2dx_CCNode_setAnchorPoint, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setColor", js_cocos2dx_CCNode_setColor, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "pause", js_cocos2dx_CCNode_pause, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "resume", js_cocos2dx_CCNode_resume, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "convertToWorldSpace", js_cocos2dx_CCNode_convertToWorldSpace, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "convertToWorldSpaceAR", js_cocos2dx_CCNode_convertToWorldSpaceAR, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setAdditionalTransform", js_cocos2dx_Node_setAdditionalTransform, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacks", js_crossapp_CCNode_unscheduleAllSelectors, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setPosition", js_crossapp_CCNode_setPosition, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setContentSize", js_crossapp_CCNode_setContentSize, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setAnchorPoint", js_crossapp_CCNode_setAnchorPoint, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setColor", js_crossapp_CCNode_setColor, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "pause", js_crossapp_CCNode_pause, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "resume", js_crossapp_CCNode_resume, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "convertToWorldSpace", js_crossapp_CCNode_convertToWorldSpace, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "convertToWorldSpaceAR", js_crossapp_CCNode_convertToWorldSpaceAR, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setAdditionalTransform", js_crossapp_Node_setAdditionalTransform, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
 //    tmpObj.set(jsb_cocos2d_EventListener_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    
 //    tmpObj.set(jsb_cocos2d_Touch_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    
 //    tmpObj.set(jsb_cocos2d_EventTouch_prototype);
-//    JS_DefineFunction(cx, tmpObj, "getTouches", js_cocos2dx_EventTouch_getTouches, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setTouches", js_cocos2dx_EventTouch_setTouches, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "getTouches", js_crossapp_EventTouch_getTouches, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setTouches", js_crossapp_EventTouch_setTouches, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    
 //    tmpObj.set(jsb_cocos2d_GLProgram_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setUniformLocationF32", js_cocos2dx_CCGLProgram_setUniformLocationWith4f, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "getProgram", js_cocos2dx_CCGLProgram_getProgram, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setUniformLocationWithMatrixfvUnion", js_cocos2dx_CCGLProgram_setUniformLocationWithMatrixfvUnion, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setUniformLocationF32", js_crossapp_CCGLProgram_setUniformLocationWith4f, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "getProgram", js_crossapp_CCGLProgram_getProgram, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setUniformLocationWithMatrixfvUnion", js_crossapp_CCGLProgram_setUniformLocationWithMatrixfvUnion, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    
 //    tmpObj.set(jsb_cocos2d_GLProgramState_prototype);
-//    JS_DefineFunction(cx, tmpObj, "setVertexAttribPointer", js_cocos2dx_GLProgramState_setVertexAttribPointer, 6, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setUniformVec4", js_cocos2dx_GLProgramState_setUniformVec4, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setVertexAttribPointer", js_crossapp_GLProgramState_setVertexAttribPointer, 6, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setUniformVec4", js_crossapp_GLProgramState_setUniformVec4, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
     tmpObj.set(jsb_CrossApp_CAScheduler_prototype);
-    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "resumeTarget", js_cocos2dx_CCScheduler_resumeTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "pauseTarget", js_cocos2dx_CCScheduler_pauseTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "resumeTarget", js_crossapp_CCScheduler_resumeTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "pauseTarget", js_crossapp_CCScheduler_pauseTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    JS_DefineFunction(cx, tmpObj, "scheduleUpdateForTarget", js_CCScheduler_scheduleUpdateForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    JS_DefineFunction(cx, tmpObj, "unscheduleUpdate", js_CCScheduler_unscheduleUpdateForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "schedule", js_CCScheduler_scheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "scheduleCallbackForTarget", js_CCScheduler_scheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "unschedule", js_CCScheduler_unscheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     JS_DefineFunction(cx, tmpObj, "unscheduleCallbackForTarget", js_CCScheduler_unscheduleCallbackForTarget, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleAllForTarget", js_cocos2dx_CCScheduler_unscheduleAllSelectorsForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacks", js_cocos2dx_CCScheduler_unscheduleAll, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacksWithMinPriority", js_cocos2dx_CCScheduler_unscheduleAllCallbacksWithMinPriority, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "isTargetPaused", js_cocos2dx_CCScheduler_isTargetPaused, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unscheduleAllForTarget", js_crossapp_CCScheduler_unscheduleAllSelectorsForTarget, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacks", js_crossapp_CCScheduler_unscheduleAll, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "unscheduleAllCallbacksWithMinPriority", js_crossapp_CCScheduler_unscheduleAllCallbacksWithMinPriority, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "isTargetPaused", js_crossapp_CCScheduler_isTargetPaused, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
 //    tmpObj.set(jsb_cocos2d_ActionManager_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
 //    tmpObj.set(jsb_cocos2d_TMXLayer_prototype);
-//    JS_DefineFunction(cx, tmpObj, "getTileFlagsAt", js_cocos2dx_CCTMXLayer_getTileFlagsAt, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "getTileFlagsAt", js_crossapp_CCTMXLayer_getTileFlagsAt, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
 //    tmpObj.set(jsb_cocos2d_Texture2D_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setTexParameters", js_cocos2dx_CCTexture2D_setTexParameters, 4, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setTexParameters", js_crossapp_CCTexture2D_setTexParameters, 4, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
 
 //    tmpObj.set(jsb_cocos2d_Menu_prototype);
-//    JS_DefineFunction(cx, tmpObj, "alignItemsInRows", js_cocos2dx_CCMenu_alignItemsInRows, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "alignItemsInColumns", js_cocos2dx_CCMenu_alignItemsInColumns, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "alignItemsInRows", js_crossapp_CCMenu_alignItemsInRows, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "alignItemsInColumns", js_crossapp_CCMenu_alignItemsInColumns, 1, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
 
 //    tmpObj.set(jsb_cocos2d_Layer_prototype);
-//    JS_DefineFunction(cx, tmpObj, "init", js_cocos2dx_CCLayer_init, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "init", js_crossapp_CCLayer_init, 0, JSPROP_ENUMERATE  | JSPROP_PERMANENT);
 
 //    tmpObj.set(jsb_cocos2d_FileUtils_prototype);
-//    JS_DefineFunction(cx, tmpObj, "setSearchResolutionsOrder", js_cocos2dx_CCFileUtils_setSearchResolutionsOrder, 1, JSPROP_PERMANENT );
-//    JS_DefineFunction(cx, tmpObj, "setSearchPaths", js_cocos2dx_CCFileUtils_setSearchPaths, 1, JSPROP_PERMANENT );
-//    JS_DefineFunction(cx, tmpObj, "getSearchPaths", js_cocos2dx_CCFileUtils_getSearchPaths, 0, JSPROP_PERMANENT );
-//    JS_DefineFunction(cx, tmpObj, "getSearchResolutionsOrder", js_cocos2dx_CCFileUtils_getSearchResolutionsOrder, 0, JSPROP_PERMANENT );
-//    JS_DefineFunction(cx, tmpObj, "createDictionaryWithContentsOfFile", js_cocos2dx_FileUtils_createDictionaryWithContentsOfFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "getDataFromFile", js_cocos2dx_CCFileUtils_getDataFromFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "writeDataToFile", js_cocos2dx_CCFileUtils_writeDataToFile, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setSearchResolutionsOrder", js_crossapp_CCFileUtils_setSearchResolutionsOrder, 1, JSPROP_PERMANENT );
+//    JS_DefineFunction(cx, tmpObj, "setSearchPaths", js_crossapp_CCFileUtils_setSearchPaths, 1, JSPROP_PERMANENT );
+//    JS_DefineFunction(cx, tmpObj, "getSearchPaths", js_crossapp_CCFileUtils_getSearchPaths, 0, JSPROP_PERMANENT );
+//    JS_DefineFunction(cx, tmpObj, "getSearchResolutionsOrder", js_crossapp_CCFileUtils_getSearchResolutionsOrder, 0, JSPROP_PERMANENT );
+//    JS_DefineFunction(cx, tmpObj, "createDictionaryWithContentsOfFile", js_crossapp_FileUtils_createDictionaryWithContentsOfFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "getDataFromFile", js_crossapp_CCFileUtils_getDataFromFile, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "writeDataToFile", js_crossapp_CCFileUtils_writeDataToFile, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 
 //    JS_GetProperty(cx, ccObj, "EventListenerTouchOneByOne", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
@@ -7237,7 +6093,7 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 //    tmpObj = tmpVal.toObjectOrNull();
 //    JS_DefineFunction(cx, tmpObj, "create", JSB_CCCardinalSplineTo_actionWithDuration, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 //    tmpObj.set(jsb_cocos2d_CardinalSplineTo_prototype);
-//    JS_DefineFunction(cx, tmpObj, "initWithDuration", js_cocos2dx_CardinalSplineTo_initWithDuration, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "initWithDuration", js_crossapp_CardinalSplineTo_initWithDuration, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
 //    JS_GetProperty(cx, ccObj, "CatmullRomBy", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
@@ -7253,93 +6109,93 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
 //
 //    JS_GetProperty(cx, ccObj, "Sprite", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_Sprite_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "create", js_crossapp_Sprite_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 //    tmpObj.set(jsb_cocos2d_Sprite_prototype);
-//    JS_DefineFunction(cx, tmpObj, "initWithPolygon", js_cocos2dx_Sprite_initWithPolygon, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "setPolygonInfo", js_cocos2dx_Sprite_setPolygonInfo, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "textureLoaded", js_cocos2dx_Sprite_textureLoaded, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "initWithPolygon", js_crossapp_Sprite_initWithPolygon, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setPolygonInfo", js_crossapp_Sprite_setPolygonInfo, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "textureLoaded", js_crossapp_Sprite_textureLoaded, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    tmpObj.set(jsb_cocos2d_SpriteBatchNode_prototype);
-//    JS_DefineFunction(cx, tmpObj, "getDescendants", js_cocos2dx_SpriteBatchNode_getDescendants, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "getDescendants", js_crossapp_SpriteBatchNode_getDescendants, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    
 //    tmpObj.set(jsb_cocos2d_Action_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    tmpObj.set(jsb_cocos2d_Animation_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    tmpObj.set(jsb_cocos2d_SpriteFrame_prototype);
-//    JS_DefineFunction(cx, tmpObj, "retain", js_cocos2dx_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "release", js_cocos2dx_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "retain", js_crossapp_retain, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "release", js_crossapp_release, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    tmpObj.set(jsb_cocos2d_MenuItem_prototype);
-//    JS_DefineFunction(cx, tmpObj, "setCallback", js_cocos2dx_MenuItem_setCallback, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "setCallback", js_crossapp_MenuItem_setCallback, 2, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    tmpObj.set(jsb_cocos2d_TMXLayer_prototype);
-//    JS_DefineFunction(cx, tmpObj, "getTiles", js_cocos2dx_CCTMXLayer_getTiles, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "getTiles", js_crossapp_CCTMXLayer_getTiles, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    
 //    tmpObj.set(jsb_cocos2d_ActionInterval_prototype);
-//    JS_DefineFunction(cx, tmpObj, "repeat", js_cocos2dx_ActionInterval_repeat, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "repeatForever", js_cocos2dx_ActionInterval_repeatForever, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "_speed", js_cocos2dx_ActionInterval_speed, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "easing", js_cocos2dx_ActionInterval_easing, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "repeat", js_crossapp_ActionInterval_repeat, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "repeatForever", js_crossapp_ActionInterval_repeatForever, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "_speed", js_crossapp_ActionInterval_speed, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "easing", js_crossapp_ActionInterval_easing, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    
 //    tmpObj.set(jsb_cocos2d_RenderTexture_prototype);
-//    JS_DefineFunction(cx, tmpObj, "saveToFile", js_cocos2dx_RenderTexture_saveToFile, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "saveToFile", js_crossapp_RenderTexture_saveToFile, 4, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    
 //    JS_GetProperty(cx, ccObj, "Menu", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "_create", js_cocos2dx_CCMenu_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "_create", js_crossapp_CCMenu_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 //    JS_GetProperty(cx, ccObj, "MenuItem", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItem_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "create", js_crossapp_CCMenuItem_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 //    JS_GetProperty(cx, ccObj, "MenuItemSprite", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemSprite_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "create", js_crossapp_CCMenuItemSprite_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 //    JS_GetProperty(cx, ccObj, "MenuItemLabel", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemLabel_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "create", js_crossapp_CCMenuItemLabel_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 //    JS_GetProperty(cx, ccObj, "MenuItemAtlasFont", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemAtlasFont_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "create", js_crossapp_CCMenuItemAtlasFont_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 //    JS_GetProperty(cx, ccObj, "MenuItemFont", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCMenuItemFont_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "create", js_crossapp_CCMenuItemFont_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 //    JS_GetProperty(cx, ccObj, "MenuItemToggle", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "_create", js_cocos2dx_CCMenuItemToggle_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "_create", js_crossapp_CCMenuItemToggle_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 //    JS_GetProperty(cx, ccObj, "Sequence", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCSequence_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "create", js_crossapp_CCSequence_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 //    JS_GetProperty(cx, ccObj, "Spawn", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCSpawn_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "create", js_crossapp_CCSpawn_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 //    //JS_GetProperty(cx, ccObj, "Animation", &tmpVal);
 //    //tmpObj = tmpVal.toObjectOrNull();
-//    //JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCAnimation_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    //JS_DefineFunction(cx, tmpObj, "create", js_crossapp_CCAnimation_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 //    tmpObj.set(jsb_cocos2d_Scene_prototype);
-//    JS_DefineFunction(cx, tmpObj, "init", js_cocos2dx_CCScene_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE);
+//    JS_DefineFunction(cx, tmpObj, "init", js_crossapp_CCScene_init, 0, JSPROP_PERMANENT | JSPROP_ENUMERATE);
 //    JS_GetProperty(cx, ccObj, "LayerMultiplex", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCLayerMultiplex_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "create", js_crossapp_CCLayerMultiplex_create, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 //    
 //    JS_GetProperty(cx, ccObj, "CallFunc", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
 //    JS_DefineFunction(cx, tmpObj, "create", js_callFunc, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 //    tmpObj.set(jsb_cocos2d_CallFuncN_prototype);
-//    JS_DefineFunction(cx, tmpObj, "initWithFunction", js_cocos2dx_CallFunc_initWithFunction, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "initWithFunction", js_crossapp_CallFunc_initWithFunction, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
 //    JS_GetProperty(cx, ccObj, "GLProgram", &tmpVal);
 //    tmpObj = tmpVal.toObjectOrNull();
-//    JS_DefineFunction(cx, tmpObj, "create", js_cocos2dx_CCGLProgram_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "createWithString", js_cocos2dx_CCGLProgram_createWithString, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "create", js_crossapp_CCGLProgram_create, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "createWithString", js_crossapp_CCGLProgram_createWithString, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 //
 //    tmpObj.set(jsb_cocos2d_Camera_prototype);
-//    JS_DefineFunction(cx, tmpObj, "unproject", js_cocos2dx_Camera_unproject, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "isVisibleInFrustum", js_cocos2dx_Camera_isVisibleInFrustum, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "unproject", js_crossapp_Camera_unproject, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "isVisibleInFrustum", js_crossapp_Camera_isVisibleInFrustum, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    
 //    tmpObj.set(jsb_cocos2d_ClippingNode_prototype);
-//    JS_DefineFunction(cx, tmpObj, "init", js_cocos2dx_ClippingNode_init, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "init", js_crossapp_ClippingNode_init, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 //    
 //    tmpObj.set(jsb_cocos2d_ComponentJS_prototype);
-//    JS_DefineFunction(cx, tmpObj, "getScriptObject", js_cocos2dx_ComponentJS_getScriptObject, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "getScriptObject", js_crossapp_ComponentJS_getScriptObject, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
     
     tmpObj.set(jsb_CrossApp_CAButton_prototype);
     JS_DefineFunction(cx, tmpObj, "addTarget", js_crossapp_CAButton_addTarget, 3, JSPROP_ENUMERATE | JSPROP_PERMANENT);
@@ -7391,29 +6247,29 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     JS_DefineFunction(cx, tmpObj, "setAnimationDidStopSelector_2", js_crossapp_CAViewAnimation_setAnimationDidStopSelector_2, 2, JSPROP_READONLY | JSPROP_PERMANENT);
     
 //
-//    JS_DefineFunction(cx, ccObj, "glEnableVertexAttribs", js_cocos2dx_ccGLEnableVertexAttribs, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pAdd", js_cocos2dx_ccpAdd, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pDistanceSQ", js_cocos2dx_ccpDistanceSQ, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pDistance", js_cocos2dx_ccpDistance, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pSub", js_cocos2dx_ccpSub, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pNeg", js_cocos2dx_ccpNeg, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pMult", js_cocos2dx_ccpMult, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pMidpoint", js_cocos2dx_ccpMidpoint, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pDot", js_cocos2dx_ccpDot, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pCross", js_cocos2dx_ccpCross, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pPerp", js_cocos2dx_ccpPerp, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pRPerp", js_cocos2dx_ccpRPerp, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pProject", js_cocos2dx_ccpProject, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pRotate", js_cocos2dx_ccpRotate, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pNormalize", js_cocos2dx_ccpNormalize, 0, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pClamp", js_cocos2dx_ccpClamp, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pLengthSQ", js_cocos2dx_ccpLengthSQ, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "pLength", js_cocos2dx_ccpLength, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "glEnableVertexAttribs", js_crossapp_ccGLEnableVertexAttribs, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pAdd", js_crossapp_ccpAdd, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pDistanceSQ", js_crossapp_ccpDistanceSQ, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pDistance", js_crossapp_ccpDistance, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pSub", js_crossapp_ccpSub, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pNeg", js_crossapp_ccpNeg, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pMult", js_crossapp_ccpMult, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pMidpoint", js_crossapp_ccpMidpoint, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pDot", js_crossapp_ccpDot, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pCross", js_crossapp_ccpCross, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pPerp", js_crossapp_ccpPerp, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pRPerp", js_crossapp_ccpRPerp, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pProject", js_crossapp_ccpProject, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pRotate", js_crossapp_ccpRotate, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pNormalize", js_crossapp_ccpNormalize, 0, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pClamp", js_crossapp_ccpClamp, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pLengthSQ", js_crossapp_ccpLengthSQ, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "pLength", js_crossapp_ccpLength, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 
 
-//    JS_DefineFunction(cx, ccObj, "registerTargetedDelegate", js_cocos2dx_JSTouchDelegate_registerTargetedDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "registerStandardDelegate", js_cocos2dx_JSTouchDelegate_registerStandardDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, ccObj, "unregisterTouchDelegate", js_cocos2dx_JSTouchDelegate_unregisterTouchDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "registerTargetedDelegate", js_crossapp_JSTouchDelegate_registerTargetedDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "registerStandardDelegate", js_crossapp_JSTouchDelegate_registerStandardDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, ccObj, "unregisterTouchDelegate", js_crossapp_JSTouchDelegate_unregisterTouchDelegate, 1, JSPROP_READONLY | JSPROP_PERMANENT);
     
     
     
@@ -7429,19 +6285,19 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     
     
 //    get_or_create_js_obj(cx, ccObj, "math", &tmpObj);
-//    JS_DefineFunction(cx, tmpObj, "obbGetCorners", js_cocos2dx_ccobbGetCorners, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "obbIntersectsObb", js_cocos2dx_ccobbIntersects, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "rayIntersectsObb", js_cocos2dx_ccrayIntersectsObb, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "mat4CreateTranslation", js_cocos2dx_ccmat4CreateTranslation, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "mat4CreateRotation", js_cocos2dx_ccmat4CreateRotation, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "mat4Multiply", js_cocos2dx_ccmat4Multiply, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "mat4MultiplyVec3", js_cocos2dx_ccmat4MultiplyVec3, 2, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "mat4GetInversed", js_cocos2dx_ccmat4GetInversed, 1, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "mat4TransformVector", js_cocos2dx_ccmat4TransformVector, 3, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "mat4TransformPoint", js_cocos2dx_ccmat4TransformPoint, 3, JSPROP_READONLY | JSPROP_PERMANENT);
-//    JS_DefineFunction(cx, tmpObj, "quatMultiply", js_cocos2dx_ccquatMultiply, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "obbGetCorners", js_crossapp_ccobbGetCorners, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "obbIntersectsObb", js_crossapp_ccobbIntersects, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "rayIntersectsObb", js_crossapp_ccrayIntersectsObb, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "mat4CreateTranslation", js_crossapp_ccmat4CreateTranslation, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "mat4CreateRotation", js_crossapp_ccmat4CreateRotation, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "mat4Multiply", js_crossapp_ccmat4Multiply, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "mat4MultiplyVec3", js_crossapp_ccmat4MultiplyVec3, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "mat4GetInversed", js_crossapp_ccmat4GetInversed, 1, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "mat4TransformVector", js_crossapp_ccmat4TransformVector, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "mat4TransformPoint", js_crossapp_ccmat4TransformPoint, 3, JSPROP_READONLY | JSPROP_PERMANENT);
+//    JS_DefineFunction(cx, tmpObj, "quatMultiply", js_crossapp_ccquatMultiply, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
-//    js_register_cocos2dx_EventKeyboard(cx, ccObj);
+//    js_register_crossapp_EventKeyboard(cx, ccObj);
 
     get_or_create_js_obj(cx, global, "console", &tmpObj);
     JS_DefineFunction(cx, tmpObj, "log", js_console_log, 1, JSPROP_READONLY | JSPROP_PERMANENT);
@@ -7450,16 +6306,16 @@ void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject global)
     
 #if CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS
     tmpObj.set(jsb_cocos2d_Scene_prototype);
-    JS_DefineFunction(cx, tmpObj, "setPhysics3DDebugCamera", js_cocos2dx_Scene_setPhysics3DDebugCamera, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "initWithPhysics", js_cocos2dx_Scene_initWithPhysics, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-    JS_DefineFunction(cx, tmpObj, "getPhysics3DWorld", js_cocos2dx_Scene_getPhysics3DWorld, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "setPhysics3DDebugCamera", js_crossapp_Scene_setPhysics3DDebugCamera, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "initWithPhysics", js_crossapp_Scene_initWithPhysics, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+    JS_DefineFunction(cx, tmpObj, "getPhysics3DWorld", js_crossapp_Scene_getPhysics3DWorld, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 #endif //CC_ENABLE_BULLET_INTEGRATION && CC_USE_3D_PHYSICS
 
 #if CC_USE_NAVMESH
 	tmpObj.set(jsb_cocos2d_Scene_prototype);
-	JS_DefineFunction(cx, tmpObj, "getNavMesh", js_cocos2dx_Scene_getNavMesh, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, tmpObj, "setNavMeshDebugCamera", js_cocos2dx_Scene_setNavMeshDebugCamera, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
-	JS_DefineFunction(cx, tmpObj, "setNavMesh", js_cocos2dx_Scene_setNavMesh, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, tmpObj, "getNavMesh", js_crossapp_Scene_getNavMesh, 0, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, tmpObj, "setNavMeshDebugCamera", js_crossapp_Scene_setNavMeshDebugCamera, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
+	JS_DefineFunction(cx, tmpObj, "setNavMesh", js_crossapp_Scene_setNavMesh, 1, JSPROP_ENUMERATE | JSPROP_PERMANENT);
 #endif //CC_USE_NAVMESH
 }
 

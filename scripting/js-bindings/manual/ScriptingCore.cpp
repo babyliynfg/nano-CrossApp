@@ -1371,7 +1371,7 @@ int ScriptingCore::handleNodeEvent(void* data)
     
     if (action == kNodeOnEnter)
     {
-        if (isFunctionOverridedInJS(jstarget, "onEnter", js_cocos2dx_Node_onEnter))
+        if (isFunctionOverridedInJS(jstarget, "onEnter", js_crossapp_Node_onEnter))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnter", 1, &dataVal, &retval);
         }
@@ -1380,7 +1380,7 @@ int ScriptingCore::handleNodeEvent(void* data)
     else if (action == kNodeOnExit)
     {
 //        cleanupSchedulesAndActions(p);
-        if (isFunctionOverridedInJS(jstarget, "onExit", js_cocos2dx_Node_onExit))
+        if (isFunctionOverridedInJS(jstarget, "onExit", js_crossapp_Node_onExit))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExit", 1, &dataVal, &retval);
         }
@@ -1389,14 +1389,14 @@ int ScriptingCore::handleNodeEvent(void* data)
     }
     else if (action == kNodeOnEnterTransitionDidFinish)
     {
-        if (isFunctionOverridedInJS(jstarget, "onEnterTransitionDidFinish", js_cocos2dx_Node_onEnterTransitionDidFinish))
+        if (isFunctionOverridedInJS(jstarget, "onEnterTransitionDidFinish", js_crossapp_Node_onEnterTransitionDidFinish))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onEnterTransitionDidFinish", 0, &dataVal, &retval);
         }
     }
     else if (action == kNodeOnExitTransitionDidStart)
     {
-        if (isFunctionOverridedInJS(jstarget, "onExitTransitionDidStart", js_cocos2dx_Node_onExitTransitionDidStart))
+        if (isFunctionOverridedInJS(jstarget, "onExitTransitionDidStart", js_crossapp_Node_onExitTransitionDidStart))
         {
             ret = executeFunctionWithOwner(OBJECT_TO_JSVAL(p->obj), "onExitTransitionDidStart", 0, &dataVal, &retval);
         }

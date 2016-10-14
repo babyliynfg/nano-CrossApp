@@ -118,7 +118,7 @@ inline js_proxy_t *js_get_or_create_proxy(JSContext *cx, T *native_obj) {
 }
 
 JS::Value anonEvaluate(JSContext *cx, JS::HandleObject thisObj, const char* string);
-void register_cocos2dx_js_core(JSContext* cx, JS::HandleObject obj);
+void register_crossapp_js_core(JSContext* cx, JS::HandleObject obj);
 
 
 class JSCallbackWrapper: public CrossApp::CAObject {
@@ -339,16 +339,16 @@ private:
     static JSKeypadDelegateMap sJSKeypadDelegateMap;
 };
 
-bool js_cocos2dx_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Node_cleanup(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_Component_onExit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Node_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Node_onExit(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Node_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Node_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Node_cleanup(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Component_onEnter(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_Component_onExit(JSContext *cx, uint32_t argc, jsval *vp);
 
-bool js_cocos2dx_retain(JSContext *cx, uint32_t argc, jsval *vp);
-bool js_cocos2dx_release(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_retain(JSContext *cx, uint32_t argc, jsval *vp);
+bool js_crossapp_release(JSContext *cx, uint32_t argc, jsval *vp);
 
 void get_or_create_js_obj(JSContext* cx, JS::HandleObject obj, const std::string &name, JS::MutableHandleObject jsObj);
 
