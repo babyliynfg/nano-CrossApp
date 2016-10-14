@@ -369,6 +369,8 @@ public:
     
     static const std::set<CAImage*>& getImagesSet();
     
+    static void purgeCAImage();
+    
 protected:
     
     bool m_bPremultiplied;

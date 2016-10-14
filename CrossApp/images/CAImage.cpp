@@ -3087,4 +3087,19 @@ void CAImage::reloadAllImages()
         (*itr)->repremultipliedImageData();
     }
 }
+
+void CAImage::purgeCAImage()
+{
+    CC_SAFE_DELETE(s_white_image);
+    s_white_image = nullptr;
+    CC_SAFE_DELETE(s_shadow_left_image);
+    s_shadow_left_image = nullptr;
+    CC_SAFE_DELETE(s_shadow_right_image);
+    s_shadow_right_image = nullptr;
+    CC_SAFE_DELETE(s_shadow_top_image);
+    s_shadow_top_image = nullptr;
+    CC_SAFE_DELETE(s_shadow_bottom_image);
+    s_shadow_bottom_image = nullptr;
+}
+
 NS_CC_END

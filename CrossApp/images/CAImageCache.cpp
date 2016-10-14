@@ -198,6 +198,7 @@ CAImageCache::~CAImageCache()
 void CAImageCache::purgeSharedImageCache()
 {
     CC_SAFE_RELEASE_NULL(g_sharedImageCache);
+    CAImage::purgeCAImage();
 }
 
 const char* CAImageCache::description()
