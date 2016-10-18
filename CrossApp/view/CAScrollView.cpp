@@ -915,7 +915,7 @@ void CAScrollView::deaccelerateScrolling(float dt)
                 point.y = this->getScrollWindowNotOutVertical(point.y);
             }
         }
-
+        
         if (point.equals(m_pContainer->m_obPoint))
         {
             m_tInertia = DPointZero;
@@ -925,6 +925,8 @@ void CAScrollView::deaccelerateScrolling(float dt)
             this->showIndicator();
             this->setContainerPoint(point);
         }
+        
+        this->update(dt);
         
         if (fabsf(m_tInertia.x) > 16)
         {
@@ -949,7 +951,6 @@ void CAScrollView::deaccelerateScrolling(float dt)
             m_pScrollViewDelegate->scrollViewDidMoved(this);
         }
     }
-    this->update(dt);
 }
 
 void CAScrollView::initIndicator()
