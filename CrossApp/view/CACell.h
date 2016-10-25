@@ -40,6 +40,18 @@ public:
 
     CAView* getViewWithID(const std::string &tag);
     
+    void setControlState(const CAControlState& var);
+    
+    const CAControlState& getControlState();
+    
+    void setControlStateNormal();
+    
+    void setControlStateHighlighted();
+    
+    void setControlStateDisabled();
+    
+    void setControlStateSelected();
+
 public:
     
     virtual void mouseMoved(CATouch* pTouch, CAEvent* pEvent);
@@ -57,18 +69,6 @@ protected:
     virtual void disabledCell();
 
     virtual void recoveryCell(){};
-    
-    void setControlState(const CAControlState& var);
-
-    const CAControlState& getControlState();
-    
-    void setControlStateNormal();
-    
-    void setControlStateHighlighted();
-    
-    void setControlStateDisabled();
-    
-    void setControlStateSelected();
     
     void resetCell();
     

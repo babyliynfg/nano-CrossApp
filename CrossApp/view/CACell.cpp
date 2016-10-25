@@ -182,6 +182,7 @@ void CACell::resetCell()
 
 void CACell::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 {
+    CC_RETURN_IF(m_eControlState == CAControlStateDisabled);
     if (m_bAllowsSelected == false)
     {
         this->setControlStateHighlighted();
@@ -190,6 +191,7 @@ void CACell::mouseMoved(CATouch* pTouch, CAEvent* pEvent)
 
 void CACell::mouseMovedOutSide(CATouch* pTouch, CAEvent* pEvent)
 {
+    CC_RETURN_IF(m_eControlState == CAControlStateDisabled);
     if (m_bAllowsSelected == false)
     {
         this->setControlStateNormal();
