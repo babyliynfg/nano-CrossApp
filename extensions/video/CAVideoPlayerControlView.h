@@ -59,6 +59,9 @@ private:
 	CAButton *m_backButton;
 	CASlider *m_playSlider;
 	CALabel *m_playTimeLabel;
+    
+    bool m_bPlaying;
+    bool m_bChanged;
 };
 
 NS_CC_EXT_END

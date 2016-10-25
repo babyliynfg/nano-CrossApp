@@ -468,11 +468,13 @@ void CAButton::ccTouchEnded(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pEvent
         
         if (m_bAllowsSelected && m_bSelected)
         {
-            this->performSelector(callfunc_selector(CAButton::setControlStateSelected), 0.05f);
+            this->setControlStateSelected();
+            //this->performSelector(callfunc_selector(CAButton::setControlStateSelected), 0.05f);
         }
         else
         {
-            this->performSelector(callfunc_selector(CAButton::setControlStateNormal), 0.05f);
+            this->setControlStateNormal();
+            //this->performSelector(callfunc_selector(CAButton::setControlStateNormal), 0.05f);
         }
     }
     while (0);
@@ -499,11 +501,13 @@ void CAButton::ccTouchCancelled(CrossApp::CATouch *pTouch, CrossApp::CAEvent *pE
         
     if (m_bAllowsSelected && m_bSelected)
     {
-        this->performSelector(callfunc_selector(CAButton::setControlStateSelected), 0.05f);
+        this->setControlStateSelected();
+        //this->performSelector(callfunc_selector(CAButton::setControlStateSelected), 0.05f);
     }
     else
     {
-        this->performSelector(callfunc_selector(CAButton::setControlStateNormal), 0.05f);
+        this->setControlStateNormal();
+        //this->performSelector(callfunc_selector(CAButton::setControlStateNormal), 0.05f);
     }
     
     if (m_pTarget[CAControlEventTouchCancelled] && m_selTouch[CAControlEventTouchCancelled])
@@ -518,8 +522,8 @@ void CAButton::setControlState(const CAControlState& var)
 
     CC_RETURN_IF(var == CAControlStateAll);
     
-    this->cancelPreviousPerformRequests(callfunc_selector(CAButton::setControlStateSelected));
-    this->cancelPreviousPerformRequests(callfunc_selector(CAButton::setControlStateNormal));
+//    this->cancelPreviousPerformRequests(callfunc_selector(CAButton::setControlStateSelected));
+//    this->cancelPreviousPerformRequests(callfunc_selector(CAButton::setControlStateNormal));
     
     for (int i=0; i<CAControlStateAll; i++)
     {

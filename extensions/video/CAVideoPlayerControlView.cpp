@@ -10,6 +10,8 @@ CAVideoPlayerControlView::CAVideoPlayerControlView()
 , m_playSlider(NULL)
 , m_playTimeLabel(NULL)
 , m_bShowBackButton(false)
+, m_bChanged(false)
+, m_bPlaying(false)
 , m_pPlayerControlViewDelegate(NULL)
 , m_szTitle(UTF8("\u672a\u547d\u540d"))
 {
@@ -133,7 +135,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
     CAImage* backImage = CAImage::create("source_material/vdo_pause.png");
     CAImage* backImage_h = CAImage::create("source_material/vdo_pause_down.png");
     m_playButton = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(32, 56), DVerticalLayout_T_H(96, 56)), CAButtonTypeCustom);
-    m_playButton->setImageForState(CAControlStateAll, backImage);
+    m_playButton->setImageForState(CAControlStateNormal, backImage);
     m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
     m_playButton->addTarget(this, CAControl_selector(CAVideoPlayerControlView::onButtonPause), CAControlEventTouchUpInSide);
     bottomPanel->addSubview(m_playButton);
@@ -151,18 +153,20 @@ void CAVideoPlayerControlView::buildCtrlViews()
 
 void CAVideoPlayerControlView::updatePlayButton()
 {
+    CC_RETURN_IF(m_bChanged == false);
+    m_bChanged = false;
 	if (m_glView && m_glView->isPlaying()) 
 	{
 		CAImage* backImage = CAImage::create("source_material/vdo_pause.png");
 		CAImage* backImage_h = CAImage::create("source_material/vdo_pause_down.png");
-		m_playButton->setImageForState(CAControlStateAll, backImage);
+		m_playButton->setImageForState(CAControlStateNormal, backImage);
 		m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
 	} 
 	else 
 	{
 		CAImage* backImage = CAImage::create("source_material/vdo_play.png");
 		CAImage* backImage_h = CAImage::create("source_material/vdo_play_down.png");
-		m_playButton->setImageForState(CAControlStateAll, backImage);
+		m_playButton->setImageForState(CAControlStateNormal, backImage);
 		m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
 	}
 }
@@ -213,13 +217,17 @@ void CAVideoPlayerControlView::onButtonPause(CAControl* control, DPoint point)
 	if (m_glView == NULL)
 		return;
 
+    m_bChanged = true;
+    
 	if (m_glView->isPlaying())
 	{
 		m_glView->pause();
+        m_bPlaying = false;
 	}
 	else
 	{
 		m_glView->play();
+        m_bPlaying = true;
 	}
 	updatePlayButton();
 }
@@ -244,6 +252,23 @@ void CAVideoPlayerControlView::updatePlayUI(float t)
 	if (m_glView->isWaitSetPos())
 		return;
 	
+    if (m_glView && m_glView->isPlaying())
+    {
+        if (m_bPlaying == false)
+        {
+            m_bChanged = true;
+        }
+        m_bPlaying = true;
+    }
+    else
+    {
+        if (m_bPlaying == true)
+        {
+            m_bChanged = true;
+        }
+        m_bPlaying = false;
+    }
+    
 	updatePlayButton();
 
 	const float duration = m_glView->getDuration();
