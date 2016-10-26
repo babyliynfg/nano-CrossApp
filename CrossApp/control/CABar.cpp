@@ -244,11 +244,11 @@ void CANavigationBar::showLeftButton()
         
         if (i == 0)
         {
-            layout.horizontal.left = 20;
+            layout.horizontal.left = 3;
         }
         
         CAButton* button = CAButton::createWithLayout(layout, CAButtonTypeCustom);
-        button->setImageSize(DSize(42, 42));
+        button->setImageSize(DSize(44, 44));
         button->setTitleFontSize(32);
         m_pContentView->addSubview(button);
         
@@ -309,11 +309,11 @@ void CANavigationBar::showRightButton()
         
         if (i == 0)
         {
-            layout.horizontal.right = 20;
+            layout.horizontal.right = 3;
         }
         
         CAButton* button = CAButton::createWithLayout(layout, CAButtonTypeCustom);
-        button->setImageSize(DSize(42, 42));
+        button->setImageSize(DSize(44, 44));
         button->setTitleFontSize(32);
         m_pContentView->addSubview(button);
 
