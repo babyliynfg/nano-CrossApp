@@ -591,18 +591,18 @@ void CAButton::setControlState(const CAControlState& var)
     {
         DSize size = m_obContentSize;
         DSize iSize = image->getContentSize();
-        float scaleX = size.width / iSize.width * 0.5f;
-        float scaleY = size.height / iSize.height * 0.45f;
+        float scaleX = size.width / iSize.width * 0.6f;
+        float scaleY = size.height / iSize.height * 0.54f;
         float scale = MIN(scaleX, scaleY);
         iSize = ccpMult(iSize, scale);
         
         imageViewCenter.size = iSize;
         imageViewCenter.origin.x = size.width / 2;
-        imageViewCenter.origin.y = size.height * 0.35f;
+        imageViewCenter.origin.y = size.height * 0.4f;
         
-        labelSize = size.height * 0.25f;
+        labelSize = size.height * 0.2f;
         labelCenter.origin.x = size.width / 2;
-        labelCenter.origin.y = size.height * 0.75f;
+        labelCenter.origin.y = size.height * 0.81f;
     }
 
     m_pImageView->setColor(m_sImageColor[m_eControlState]);

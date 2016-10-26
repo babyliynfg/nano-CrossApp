@@ -552,7 +552,7 @@ void CATabBar::setItems(const CAVector<CATabBarItem*>& items)
             btn->setAllowsSelected(true);
             
             DRect badgeRect;
-            badgeRect.origin = rect.origin + DPoint(rect.size.width - 25, 25);
+            badgeRect.origin = rect.origin + DPoint(rect.size.width - 55, 25);
             
             CABadgeView* badgeView = new CABadgeView();
             badgeView->init();
@@ -605,7 +605,7 @@ void CATabBar::setContentSize(const DSize & var)
         m_pButtons.at(i)->setFrame(rect);
         
         DRect badgeRect;
-        badgeRect.origin = rect.origin + DPoint(rect.size.width - 25, 25);
+        badgeRect.origin = rect.origin + DPoint(rect.size.width - 55, 25);
         m_pBadgeViews.at(i)->setCenter(badgeRect);
     }
     
