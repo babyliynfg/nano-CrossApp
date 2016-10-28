@@ -77,13 +77,6 @@ static EAGLView *view;
 
     CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frameRect.size.width, frameRect.size.height);
     
-    NSRect bounds = frameRect;
-    bounds.origin = CGPointZero;
-    NSTrackingArea* trackingArea = [[NSTrackingArea alloc]
-                                    initWithRect:bounds
-                                    options: NSTrackingMouseMoved | NSTrackingActiveAlways
-                                    owner:self userInfo:nil];
-    [self addTrackingArea:trackingArea];
     [self lockOpenGLContext];
     
     return self;
@@ -92,6 +85,21 @@ static EAGLView *view;
 -(void) setFrame:(NSRect)frame
 {
     [super setFrame:frame];
+    
+    NSRect bounds = frame;
+    bounds.origin = CGPointZero;
+    
+    static NSTrackingArea* trackingArea = nil;
+    if (trackingArea)
+    {
+        [self removeTrackingArea:trackingArea];
+        trackingArea = nil;
+    }
+    trackingArea = [[NSTrackingArea alloc]
+                      initWithRect:bounds
+                      options: NSTrackingMouseMoved | NSTrackingActiveAlways
+                      owner:self userInfo:nil];
+    [self addTrackingArea:trackingArea];
     
     CrossApp::CCEGLView::sharedOpenGLView()->setFrameSize(frame.size.width, frame.size.height);
 }

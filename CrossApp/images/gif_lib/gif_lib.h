@@ -7,24 +7,19 @@ gif_lib.h - service library for decoding and encoding GIF images
 #ifndef _GIF_LIB_H_
 #define _GIF_LIB_H_ 1
 
-#include <sys/types.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
 #define GIFLIB_MAJOR 5
-#define GIFLIB_MINOR 0
-#define GIFLIB_RELEASE 0
+#define GIFLIB_MINOR 1
+#define GIFLIB_RELEASE 4
 
 #define GIF_ERROR   0
 #define GIF_OK      1
 
-#define gifbool unsigned char
-#define giftrue ((unsigned char)1)
-#define giffalse ((unsigned char)0)
-
-
+#include <stddef.h>
+#include <stdbool.h>
 
 #define GIF_STAMP "GIFVER"          /* First chars in file - GIF stamp.  */
 #define GIF_STAMP_LEN sizeof(GIF_STAMP) - 1
@@ -45,13 +40,13 @@ typedef struct GifColorType {
 typedef struct ColorMapObject {
     int ColorCount;
     int BitsPerPixel;
-    gifbool SortFlag;
+    bool SortFlag;
     GifColorType *Colors;    /* on malloc(3) heap */
 } ColorMapObject;
 
 typedef struct GifImageDesc {
     GifWord Left, Top, Width, Height;   /* Current image dimensions. */
-    gifbool Interlace;                     /* Sequential/Interlaced lines. */
+    bool Interlace;                     /* Sequential/Interlaced lines. */
     ColorMapObject *ColorMap;           /* The local color map */
 } GifImageDesc;
 
@@ -117,7 +112,7 @@ typedef struct GraphicsControlBlock {
 #define DISPOSE_DO_NOT            1       /* Leave image in place */
 #define DISPOSE_BACKGROUND        2       /* Set area too background color */
 #define DISPOSE_PREVIOUS          3       /* Restore to previous content */
-    gifbool UserInputFlag;      /* User confirmation required before disposal */
+    bool UserInputFlag;      /* User confirmation required before disposal */
     int DelayTime;           /* pre-display delay in 0.01sec units */
     int TransparentColor;    /* Palette index for transparency, -1 if none */
 #define NO_TRANSPARENT_COLOR	-1
@@ -129,13 +124,14 @@ typedef struct GraphicsControlBlock {
 
 /* Main entry points */
 GifFileType *EGifOpenFileName(const char *GifFileName,
-                              const gifbool GifTestExistence, int *Error);
+                              const bool GifTestExistence, int *Error);
 GifFileType *EGifOpenFileHandle(const int GifFileHandle, int *Error);
 GifFileType *EGifOpen(void *userPtr, OutputFunc writeFunc, int *Error);
 int EGifSpew(GifFileType * GifFile);
-char *EGifGetGifVersion(GifFileType *GifFile); /* new in 5.x */
-int EGifCloseFile(GifFileType * GifFile);
+const char *EGifGetGifVersion(GifFileType *GifFile); /* new in 5.x */
+int EGifCloseFile(GifFileType *GifFile, int *ErrorCode);
 
+#define E_GIF_SUCCEEDED          0
 #define E_GIF_ERR_OPEN_FAILED    1    /* And EGif possible errors. */
 #define E_GIF_ERR_WRITE_FAILED   2
 #define E_GIF_ERR_HAS_SCRN_DSCR  3
@@ -156,8 +152,9 @@ int EGifPutScreenDesc(GifFileType *GifFile,
 int EGifPutImageDesc(GifFileType *GifFile, 
 		     const int GifLeft, const int GifTop,
                      const int GifWidth, const int GifHeight, 
-		     const gifbool GifInterlace,
+		     const bool GifInterlace,
                      const ColorMapObject *GifColorMap);
+void EGifSetGifVersion(GifFileType *GifFile, const bool gif89);
 int EGifPutLine(GifFileType *GifFile, GifPixelType *GifLine,
                 int GifLineLen);
 int EGifPutPixel(GifFileType *GifFile, const GifPixelType GifPixel);
@@ -183,8 +180,9 @@ GifFileType *DGifOpenFileName(const char *GifFileName, int *Error);
 GifFileType *DGifOpenFileHandle(int GifFileHandle, int *Error);
 int DGifSlurp(GifFileType * GifFile);
 GifFileType *DGifOpen(void *userPtr, InputFunc readFunc, int *Error);    /* new one (TVT) */
-int DGifCloseFile(GifFileType * GifFile);
+    int DGifCloseFile(GifFileType * GifFile, int *ErrorCode);
 
+#define D_GIF_SUCCEEDED          0
 #define D_GIF_ERR_OPEN_FAILED    101    /* And DGif possible errors. */
 #define D_GIF_ERR_READ_FAILED    102
 #define D_GIF_ERR_NOT_GIF_FILE   103
@@ -227,7 +225,7 @@ int GifQuantizeBuffer(unsigned int Width, unsigned int Height,
 /******************************************************************************
  Error handling and reporting.
 ******************************************************************************/
-extern char *GifErrorString(int ErrorCode);     /* new in 2012 - ESR */
+extern const char *GifErrorString(int ErrorCode);     /* new in 2012 - ESR */
 
 /*****************************************************************************
  Everything below this point is new after version 1.2, supporting `slurp
@@ -245,6 +243,9 @@ extern ColorMapObject *GifUnionColorMap(const ColorMapObject *ColorIn1,
                                      const ColorMapObject *ColorIn2,
                                      GifPixelType ColorTransIn2[]);
 extern int GifBitSize(int n);
+
+extern void *
+reallocarray(void *optr, size_t nmemb, size_t size);
 
 /******************************************************************************
  Support for the in-core structures allocation (slurp mode).              

@@ -6,12 +6,8 @@ gif_hash.h - magfic constants and declarations for GIF LZW
 
 #ifndef _GIF_HASH_H_
 #define _GIF_HASH_H_
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-#ifndef _WIN32
+
 #include <unistd.h>
-#endif
 #include <stdint.h>
 
 #define HT_SIZE			8192	   /* 12bits = 4096 or twice as big! */
@@ -37,9 +33,7 @@ GifHashTableType *_InitHashTable(void);
 void _ClearHashTable(GifHashTableType *HashTable);
 void _InsertHashTable(GifHashTableType *HashTable, uint32_t Key, int Code);
 int _ExistsHashTable(GifHashTableType *HashTable, uint32_t Key);
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
+
 #endif /* _GIF_HASH_H_ */
 
 /* end */

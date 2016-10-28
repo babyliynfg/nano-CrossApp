@@ -398,6 +398,8 @@
 		D66BCD511D3DC27700587C65 /* CGSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = D66BCD4D1D3DC27700587C65 /* CGSpriteFrameCache.h */; };
 		D693E7C71D34F75F003D97A4 /* CAVec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D693E7C51D34F75F003D97A4 /* CAVec4.h */; };
 		D6B0C6411D6587ED00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */; };
+		D6D8A7821DC2F1EB00A47FC2 /* egif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */; };
+		D6D8A7831DC2F1EB00A47FC2 /* openbsd-reallocarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D6D8A7811DC2F1EB00A47FC2 /* openbsd-reallocarray.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -842,6 +844,8 @@
 		D693E7C51D34F75F003D97A4 /* CAVec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVec4.h; sourceTree = "<group>"; };
 		D693E7C61D34F75F003D97A4 /* CAVec4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVec4.cpp; sourceTree = "<group>"; };
 		D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
+		D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = egif_lib.c; sourceTree = "<group>"; };
+		D6D8A7811DC2F1EB00A47FC2 /* openbsd-reallocarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "openbsd-reallocarray.c"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1400,6 +1404,8 @@
 		B0A11D9B1AE8C5C500933BF6 /* gif_lib */ = {
 			isa = PBXGroup;
 			children = (
+				D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */,
+				D6D8A7811DC2F1EB00A47FC2 /* openbsd-reallocarray.c */,
 				B0A11D9C1AE8C5C500933BF6 /* dgif_lib.c */,
 				B0A11D9D1AE8C5C500933BF6 /* gif_err.c */,
 				B0A11D9E1AE8C5C500933BF6 /* gif_font.c */,
@@ -1946,6 +1952,7 @@
 				D65F35691D38C995004B56A9 /* matrix.c in Sources */,
 				D64A8C8B1D34870B00F75021 /* CAMathUtil.cpp in Sources */,
 				04EAB0931956D75600198A8E /* CAControl.cpp in Sources */,
+				D6D8A7821DC2F1EB00A47FC2 /* egif_lib.c in Sources */,
 				D649B2B71D3CD6A80020414A /* CGActionInterval.cpp in Sources */,
 				B0B05F9F1BB1483200B891CE /* CAAutoCollectionView.cpp in Sources */,
 				B048ADF41CC9BC0A0039C5BB /* CACell.cpp in Sources */,
@@ -2063,6 +2070,7 @@
 				3E2154531B8180340075448E /* json_reader.cpp in Sources */,
 				3E2154071B817AB80075448E /* DownloadManager.cpp in Sources */,
 				B0A11DAD1AE8C5C500933BF6 /* quantize.c in Sources */,
+				D6D8A7831DC2F1EB00A47FC2 /* openbsd-reallocarray.c in Sources */,
 				D64A8C9D1D34912200F75021 /* CAPoint3D.cpp in Sources */,
 				04EABB441956DD8E00198A8E /* CrossApp.cpp in Sources */,
 				B0C3BD431ADE70B8009BE71A /* CAClipboard.mm in Sources */,

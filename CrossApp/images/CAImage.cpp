@@ -22,6 +22,7 @@
 #include "shaders/CAGLProgram.h"
 #include "shaders/ccGLStateCache.h"
 #include "shaders/CAShaderCache.h"
+#include "view/CARenderImage.h"
 #include <ctype.h>
 #include <cctype>
 #include <png.h>
@@ -33,7 +34,6 @@
 #include "images/gif_lib/gif_lib.h"
 #include "images/gif_lib/gif_hash.h"
 #include "images/gif_lib/gif_lib_private.h"
-#include "images/gif_lib/GifUtils.h"
 
 NS_CC_BEGIN
 
@@ -1697,7 +1697,8 @@ bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
     m_pGIF = DGifOpen(NULL,&DecodeCallBackProc,&error);
     if (NULL == m_pGIF || DGifSlurp(m_pGIF) != GIF_OK)
     {
-        DGifCloseFile(m_pGIF);
+        int ErrorCode;
+        DGifCloseFile(m_pGIF, &ErrorCode);
         m_pGIF = NULL;
         return false;
     }

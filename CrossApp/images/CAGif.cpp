@@ -81,7 +81,8 @@ bool CAGif::initWithData(unsigned char* data, unsigned long lenght)
     
     if (nullptr == m_pGIF || DGifSlurp(m_pGIF) != GIF_OK)
     {
-        DGifCloseFile(m_pGIF);
+        int ErrorCode;
+        DGifCloseFile(m_pGIF, &ErrorCode);
         m_pGIF = nullptr;
         s_pData = nullptr;
         s_nDataMark = 0;
@@ -124,7 +125,7 @@ void CAGif::copyLine(unsigned char* dst, const unsigned char* src, const ColorMa
         }
     }
 }
-
+#include "ccTypeInfo.h"
 CAImage* CAGif::getImageWithIndex(int index)
 {
     index = MIN(index, m_pGIF->ImageCount - 1);
@@ -136,7 +137,7 @@ CAImage* CAGif::getImageWithIndex(int index)
         bgColor = ccc4(col.Red, col.Green, col.Blue, 0xFF);
     }
     
-    static CAColor4B paintingColor;
+    static char paintingColor[4] = {0, 0, 0, 0};
     
     const SavedImage* prev = &m_pGIF->SavedImages[index - 1];
     const SavedImage* curr = &m_pGIF->SavedImages[index];
@@ -146,53 +147,33 @@ CAImage* CAGif::getImageWithIndex(int index)
         bool trans;
         int disposal;
         this->getTransparencyAndDisposalMethod(curr, &trans, &disposal);
-        if (!trans && m_pGIF->SColorMap != NULL)
-        {
-            paintingColor = ccc4(0, 0, 0, 0);
-        }
     }
     else
     {
-        bool curTrans;
-        int curDisposal;
-        this->getTransparencyAndDisposalMethod(prev, &curTrans, &curDisposal);
+        bool prevTrans;
+        int prevDisposal;
+        this->getTransparencyAndDisposalMethod(prev, &prevTrans, &prevDisposal);
         
         bool currTrans;
         int currDisposal;
         this->getTransparencyAndDisposalMethod(curr, &currTrans, &currDisposal);
         
+        
         if (currTrans || !checkIfCover(curr, prev))
         {
-            if (curDisposal == 2)
+            if (prevDisposal == 2)
             {
-                unsigned char* dst = &m_pData[(prev->ImageDesc.Top * m_uPixelsWide + prev->ImageDesc.Left) * 4];
-                GifWord copyWidth = prev->ImageDesc.Width;
-                
-                if (prev->ImageDesc.Left + copyWidth > m_uPixelsWide)
+                for (int top = prev->ImageDesc.Top; top < MIN(m_uPixelsHigh, prev->ImageDesc.Top + prev->ImageDesc.Height); top++)
                 {
-                    copyWidth = m_uPixelsWide - prev->ImageDesc.Left;
-                }
-                
-                GifWord copyHeight = prev->ImageDesc.Height;
-                if (prev->ImageDesc.Top + copyHeight > m_uPixelsHigh)
-                {
-                    copyHeight = m_uPixelsHigh - prev->ImageDesc.Top;
-                }
-                
-                for (; copyHeight > 0; copyHeight--)
-                {
-                    for(int wIndex = 0; wIndex < m_uPixelsWide; wIndex++, dst+=4)
+                    for(int left = prev->ImageDesc.Left; left < MIN(m_uPixelsWide, prev->ImageDesc.Left + prev->ImageDesc.Width); left++)
                     {
-                        *dst     = paintingColor.r;
-                        *(dst+1) = paintingColor.g;
-                        *(dst+2) = paintingColor.b;
-                        *(dst+3) = paintingColor.a;
+                        unsigned char* dst = &m_pData[(top * m_uPixelsWide + left) * 4];
+                        *dst     = paintingColor[0];
+                        *(dst+1) = paintingColor[1];
+                        *(dst+2) = paintingColor[2];
+                        *(dst+3) = paintingColor[3];
                     }
                 }
-            }
-            else if (curDisposal == 3)
-            {
-                //swap;
             }
         }
     }
@@ -243,8 +224,10 @@ CAImage* CAGif::getImageWithIndex(int index)
             }
         }
     }
-
-    return CAImage::createWithRawDataNoCache(m_pData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
+    CAImage* image  = CAImage::createWithRawDataNoCache(m_pData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
+    std::string s = CrossApp::crossapp_format_string("/Users/liyuanfeng/Desktop/临时/%d.png", index);
+    image->saveToFile(s.c_str());
+    return image;
 }
 
 void CAGif::getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal)
@@ -306,7 +289,7 @@ float CAGif::getImageDelay(const SavedImage* image)
             //assert(size >= 4);
             if(size < 4) break;
             const uint8_t* b = (const uint8_t*)image->ExtensionBlocks[j].Bytes;
-            duration =  ((b[2] << 8) | b[1]) * 10;
+            duration =  ((b[2] << 8) | b[1]) * 5.5;
             break;
         }
     }
