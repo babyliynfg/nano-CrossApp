@@ -817,6 +817,7 @@ void CAScrollView::stopDeaccelerateScroll()
 
 void CAScrollView::startDeaccelerateScroll()
 {
+    CC_RETURN_IF(!m_bRunning);
     CAAnimation::unschedule(CAAnimation_selector(CAScrollView::closeToPoint), this);
     CAScheduler::unschedule(schedule_selector(CAScrollView::deaccelerateScrolling), this);
     CAScheduler::schedule(schedule_selector(CAScrollView::deaccelerateScrolling), this, 1/60.0f);
