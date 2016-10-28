@@ -32,8 +32,10 @@ public:
     bool initWithFilePath(const std::string& filePath);
     
     bool initWithData(unsigned char* data, unsigned long lenght);
-
-    CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CAImage*>, m_vImages, Images);
+    
+    void next();
+    
+    CC_SYNTHESIZE_READONLY(CAImage*, m_pImage, Image);
     
     CC_SYNTHESIZE_READONLY(float, m_fDelay, Delay);
     
@@ -41,6 +43,10 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh);
 
+    CC_SYNTHESIZE(int, m_iImageIndex, ImageIndex);
+    
+    CC_SYNTHESIZE(int, m_iImageCount, ImageCount);
+    
 protected:
     
     void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);

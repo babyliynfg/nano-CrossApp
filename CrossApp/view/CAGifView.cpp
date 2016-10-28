@@ -114,8 +114,14 @@ void CAGifView::setGif(CAGif* gif)
     m_pGif = gif;
     if (m_pGif)
     {
-        const CAVector<CAImage*>& images = m_pGif->getImages();
-        if(!images.empty())
+        this->setImage(m_pGif->getImage());
+        
+        DRect rect = DRectZero;
+        rect.size.width = m_pGif->getPixelsWide();
+        rect.size.height = m_pGif->getPixelsHigh();
+        this->setImageRect(rect);
+        
+        if(m_pGif->getImageCount() > 0)
         {
             CAScheduler::getScheduler()->scheduleSelectorUpdate(this, 0, !m_bRunning);
         }
@@ -166,23 +172,22 @@ void CAGifView::update(float delta)
     float ldelta = (uint32_t)(delta * 1000) * m_fTimes;
     m_fDurTime += ldelta;
     
-    const CAVector<CAImage*>& images = m_pGif->getImages();
     if(m_fDurTime > m_pGif->getDelay())
     {
-        CAImage* image = images.at(m_iCurrIndex);
-        this->setImage(image);
+        m_pGif->next();
+        this->setImage(m_pGif->getImage());
         
         DRect rect = DRectZero;
         rect.size.width = m_pGif->getPixelsWide();
         rect.size.height = m_pGif->getPixelsHigh();
         this->setImageRect(rect);
         
-        ++m_iCurrIndex;
-        m_iCurrIndex %= images.size();
+        m_iCurrIndex = m_pGif->getImageIndex();
+        
         m_fDurTime -= m_pGif->getDelay();
     }
     
-    if (!m_bIsRepeatForever && m_iCurrIndex >= images.size() - 1)
+    if (!m_bIsRepeatForever && m_iCurrIndex >= m_pGif->getImageIndex() - 1)
     {
         CAScheduler::getScheduler()->unscheduleUpdate(this);
     }

@@ -27,6 +27,9 @@ CAGif::CAGif()
 :m_fDelay(0.0f)
 ,m_pData(nullptr)
 ,m_uDataLenght(0)
+,m_iImageIndex(0)
+,m_iImageCount(0)
+,m_pImage(nullptr)
 {
 
 }
@@ -34,6 +37,7 @@ CAGif::CAGif()
 CAGif::~CAGif()
 {
     CC_SAFE_DELETE(m_pData);
+    CC_SAFE_RELEASE(m_pImage);
 }
 
 CAGif* CAGif::create(const std::string& filePath)
@@ -78,38 +82,30 @@ bool CAGif::initWithData(unsigned char* data, unsigned long lenght)
     
     int error = 0;
     m_pGIF = DGifOpen(nullptr, &DecodeCallBackProc, &error);
-    
+
     if (nullptr == m_pGIF || DGifSlurp(m_pGIF) != GIF_OK)
     {
         int ErrorCode;
         DGifCloseFile(m_pGIF, &ErrorCode);
-        m_pGIF = nullptr;
         s_pData = nullptr;
         s_nDataMark = 0;
+        m_pGIF = nullptr;
         return false;
     }
+    s_pData = nullptr;
+    s_nDataMark = 0;
     
     m_uPixelsWide = m_pGIF->SWidth;
     m_uPixelsHigh = m_pGIF->SHeight;
     m_pData = (unsigned char*)malloc(sizeof(unsigned char) * m_uPixelsWide * m_uPixelsHigh * 4);
     
-    for (unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
-    {
-        *(m_pData + i * 4)     = '\0';
-        *(m_pData + i * 4 + 1) = '\0';
-        *(m_pData + i * 4 + 2) = '\0';
-        *(m_pData + i * 4 + 3) = '\0';
-    }
-
-    m_fDelay = getImageDelay(&m_pGIF->SavedImages[0]);
+    m_fDelay = this->getImageDelay(&m_pGIF->SavedImages[0]);
     
-    for (int i=0; i<m_pGIF->ImageCount; ++i)
-    {
-        m_vImages.pushBack(this->getImageWithIndex(i));
-    }
+    m_iImageCount = m_pGIF->ImageCount;
     
-    s_pData = nullptr;
-    s_nDataMark = 0;
+    m_pImage = this->getImageWithIndex(m_iImageIndex);
+    
+    CC_SAFE_RETAIN(m_pImage);
     return true;
 }
 
@@ -125,7 +121,16 @@ void CAGif::copyLine(unsigned char* dst, const unsigned char* src, const ColorMa
         }
     }
 }
-#include "ccTypeInfo.h"
+
+void CAGif::next()
+{
+    CC_SAFE_RELEASE(m_pImage);
+    ++m_iImageIndex;
+    m_iImageIndex %= m_iImageCount;
+    m_pImage = this->getImageWithIndex(m_iImageIndex);
+    CC_SAFE_RETAIN(m_pImage);
+}
+
 CAImage* CAGif::getImageWithIndex(int index)
 {
     index = MIN(index, m_pGIF->ImageCount - 1);
@@ -147,6 +152,14 @@ CAImage* CAGif::getImageWithIndex(int index)
         bool trans;
         int disposal;
         this->getTransparencyAndDisposalMethod(curr, &trans, &disposal);
+        
+        for (unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
+        {
+            *(m_pData + i * 4)     = '\0';
+            *(m_pData + i * 4 + 1) = '\0';
+            *(m_pData + i * 4 + 2) = '\0';
+            *(m_pData + i * 4 + 3) = '\0';
+        }
     }
     else
     {
