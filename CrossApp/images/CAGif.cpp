@@ -224,10 +224,8 @@ CAImage* CAGif::getImageWithIndex(int index)
             }
         }
     }
-    CAImage* image  = CAImage::createWithRawDataNoCache(m_pData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
-    std::string s = CrossApp::crossapp_format_string("/Users/liyuanfeng/Desktop/临时/%d.png", index);
-    image->saveToFile(s.c_str());
-    return image;
+
+    return CAImage::createWithRawDataNoCache(m_pData, CAImage::PixelFormat_RGBA8888, m_uPixelsWide, m_uPixelsHigh);
 }
 
 void CAGif::getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal)
