@@ -65,8 +65,6 @@ protected:
 
     unsigned char*  m_pData;
     
-    unsigned long   m_uDataLenght;
-    
     GifFileType*    m_pGIF;
 };
 

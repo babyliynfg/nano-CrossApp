@@ -11,22 +11,17 @@
 
 NS_CC_BEGIN
 
-static int s_nDataMark = 0;
-static unsigned char* s_pData = nullptr;
-
-static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int lenght)
+static int memReadFuncGif(GifFileType* GifFile, GifByteType* buf, int count)
 {
-    for(int i=0; i<lenght; i++, s_nDataMark++)
-    {
-        bytes[i] = s_pData[s_nDataMark];
-    }
-    return lenght;
+    char* ptr = (char*)(GifFile->UserData);
+    memcpy(buf, ptr, count);
+    GifFile->UserData = ptr + count;
+    return count;
 }
 
 CAGif::CAGif()
 :m_fDelay(0.0f)
 ,m_pData(nullptr)
-,m_uDataLenght(0)
 ,m_iImageIndex(0)
 ,m_iImageCount(0)
 ,m_pImage(nullptr)
@@ -78,22 +73,17 @@ bool CAGif::initWithData(unsigned char* data, unsigned long lenght)
         return false;
     }
     
-    s_pData = data;
-    
     int error = 0;
-    m_pGIF = DGifOpen(nullptr, &DecodeCallBackProc, &error);
+    
+    m_pGIF = DGifOpen(data, &memReadFuncGif, &error);
 
     if (nullptr == m_pGIF || DGifSlurp(m_pGIF) != GIF_OK)
     {
         int ErrorCode;
         DGifCloseFile(m_pGIF, &ErrorCode);
-        s_pData = nullptr;
-        s_nDataMark = 0;
         m_pGIF = nullptr;
         return false;
     }
-    s_pData = nullptr;
-    s_nDataMark = 0;
     
     m_uPixelsWide = m_pGIF->SWidth;
     m_uPixelsHigh = m_pGIF->SHeight;
