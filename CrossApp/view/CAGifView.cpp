@@ -121,11 +121,12 @@ void CAGifView::setGif(CAGif* gif)
         rect.size.height = m_pGif->getPixelsHigh();
         this->setImageRect(rect);
         
+        this->updateGifSize();
+        
         if(m_pGif->getImageCount() > 0)
         {
             CAScheduler::getScheduler()->scheduleSelectorUpdate(this, 0, !m_bRunning);
         }
-        this->updateGifSize();
     }
 }
 
@@ -145,13 +146,15 @@ void CAGifView::updateGifSize()
         
         if (imageRatio > viewRatio)
         {
-            m_fTop = (viewSize.height - viewSize.width / imageRatio) / 2;
-            m_fBottom = m_fTop + viewSize.width / imageRatio;
+            float height = viewSize.width / imageRatio;
+            m_fTop = (viewSize.height - height) / 2;
+            m_fBottom = m_fTop + height;
         }
         else if (imageRatio < viewRatio)
         {
-            m_fLeft = (viewSize.width - viewSize.height * imageRatio) / 2;
-            m_fRight = m_fLeft + viewSize.height * imageRatio;
+            float width = viewSize.height * imageRatio;
+            m_fLeft = (viewSize.width - width) / 2;
+            m_fRight = m_fLeft + width;
         }
     }
 }
@@ -176,14 +179,7 @@ void CAGifView::update(float delta)
     {
         m_pGif->next();
         this->setImage(m_pGif->getImage());
-        
-        DRect rect = DRectZero;
-        rect.size.width = m_pGif->getPixelsWide();
-        rect.size.height = m_pGif->getPixelsHigh();
-        this->setImageRect(rect);
-        
         m_iCurrIndex = m_pGif->getImageIndex();
-        
         m_fDurTime -= m_pGif->getDelay();
     }
     
