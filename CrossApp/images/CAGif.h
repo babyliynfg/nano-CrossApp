@@ -47,6 +47,8 @@ public:
     
     CC_SYNTHESIZE(int, m_iImageCount, ImageCount);
     
+    const std::map<std::string, CAGif*>& getGIFs();
+    
 protected:
     
     void getTransparencyAndDisposalMethod(const SavedImage* frame, bool* trans, int* disposal);
@@ -66,6 +68,8 @@ protected:
     unsigned char*  m_pData;
     
     GifFileType*    m_pGIF;
+    
+    std::string     m_sFilePath;
 };
 
 NS_CC_END

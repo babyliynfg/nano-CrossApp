@@ -19,6 +19,13 @@ static int memReadFuncGif(GifFileType* GifFile, GifByteType* buf, int count)
     return count;
 }
 
+static std::map<std::string, CAGif*> s_pGIFs;
+
+const std::map<std::string, CAGif*>& CAGif::getGIFs()
+{
+    return s_pGIFs;
+}
+
 CAGif::CAGif()
 :m_fDelay(0.0f)
 ,m_pData(nullptr)
@@ -36,10 +43,17 @@ CAGif::~CAGif()
     
     CC_SAFE_DELETE(m_pData);
     CC_SAFE_RELEASE(m_pImage);
+    
+    s_pGIFs.erase(m_sFilePath);
 }
 
 CAGif* CAGif::create(const std::string& filePath)
 {
+    if (s_pGIFs.find(filePath) != s_pGIFs.end())
+    {
+        return s_pGIFs.at(filePath);
+    }
+    
     CAGif* gif = new CAGif();
     if(gif && gif->initWithFilePath(filePath))
     {
@@ -64,9 +78,22 @@ CAGif* CAGif::createWithData(unsigned char* data, unsigned long lenght)
 
 bool CAGif::initWithFilePath(const std::string& filePath)
 {
+    if (s_pGIFs.find(filePath) != s_pGIFs.end())
+    {
+        return false;
+    }
+    
     unsigned long lenght = 0;
     unsigned char* data = FileUtils::getInstance()->getFileData(filePath, "rb", &lenght);
-    return this->initWithData(data, lenght);
+    
+    if (this->initWithData(data, lenght))
+    {
+        m_sFilePath = filePath;
+        s_pGIFs.insert(std::make_pair(m_sFilePath, this));
+        return true;
+    }
+    
+    return false;
 }
 
 bool CAGif::initWithData(unsigned char* data, unsigned long lenght)

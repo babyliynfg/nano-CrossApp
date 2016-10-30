@@ -1004,6 +1004,12 @@ CAImage::~CAImage()
     CCLOGINFO("CrossApp: deallocing CAImage %u.", m_uName);
     CC_SAFE_RELEASE(m_pShaderProgram);
     
+    if (m_pGIF)
+    {
+        int ErrorCode;
+        DGifCloseFile(m_pGIF, &ErrorCode);
+    }
+    
     this->freeName();
 
     releaseData();

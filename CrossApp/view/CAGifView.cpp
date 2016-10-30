@@ -26,7 +26,7 @@ CAGifView::CAGifView()
 
 CAGifView::~CAGifView()
 {
-    CC_SAFE_DELETE(m_pGif);
+    CC_SAFE_RELEASE(m_pGif);
 }
 
 CAGifView* CAGifView::createWithFrame(const CrossApp::DRect &rect)
@@ -110,7 +110,7 @@ void CAGifView::updateImageRect()
 void CAGifView::setGif(CAGif* gif)
 {
     CC_SAFE_RETAIN(gif);
-    CC_SAFE_DELETE(m_pGif);
+    CC_SAFE_RELEASE(m_pGif);
     m_pGif = gif;
     if (m_pGif)
     {
