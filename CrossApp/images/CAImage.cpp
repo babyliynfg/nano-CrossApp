@@ -967,16 +967,13 @@ const std::set<CAImage*>& CAImage::getImagesSet()
     return s_pImages;
 }
 
-static const unsigned char* s_pData = NULL;
-static int  s_pDataMark = 0;
 
-static int DecodeCallBackProc(GifFileType* gif, GifByteType* bytes, int size)
+static int memReadFuncGif(GifFileType* GifFile, GifByteType* buf, int count)
 {
-    for(int i=0; i<size; i++, s_pDataMark++)
-    {
-        bytes[i] = s_pData[s_pDataMark];
-    }
-    return size;
+    char* ptr = (char*)(GifFile->UserData);
+    memcpy(buf, ptr, count);
+    GifFile->UserData = ptr + count;
+    return count;
 }
 
 CAImage::CAImage()
@@ -1095,72 +1092,61 @@ void CAImage::setGifImageWithIndex(unsigned int index)
         bgColor = ccc4(col.Red, col.Green, col.Blue, 0xFF);
     }
 
-    static CAColor4B paintingColor;
-    const SavedImage* cur = &m_pGIF->SavedImages[index];
+    static char paintingColor[4] = {0, 0, 0, 0};
+    
+    const SavedImage* curr = &m_pGIF->SavedImages[index];
     
     if (index == 0)
     {
         bool trans;
         int disposal;
-        this->getTransparencyAndDisposalMethod(cur, &trans, &disposal);
-        if (!trans && m_pGIF->SColorMap != NULL)
+        this->getTransparencyAndDisposalMethod(curr, &trans, &disposal);
+        
+        for (unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
         {
-            paintingColor = ccc4(0, 0, 0, 0);
+            *(m_pImageData + i * 4)     = '\0';
+            *(m_pImageData + i * 4 + 1) = '\0';
+            *(m_pImageData + i * 4 + 2) = '\0';
+            *(m_pImageData + i * 4 + 3) = '\0';
         }
     }
     else
     {
-        const SavedImage* prev = &m_pGIF->SavedImages[index-1];
+        const SavedImage* prev = &m_pGIF->SavedImages[index - 1];
         
-        bool curTrans;
-        int curDisposal;
-        this->getTransparencyAndDisposalMethod(prev, &curTrans, &curDisposal);
-        bool nextTrans;
-        int nextDisposal;
-        this->getTransparencyAndDisposalMethod(cur, &nextTrans, &nextDisposal);
+        bool prevTrans;
+        int prevDisposal;
+        this->getTransparencyAndDisposalMethod(prev, &prevTrans, &prevDisposal);
         
-        if (nextTrans || !checkIfCover(cur, prev))
+        bool currTrans;
+        int currDisposal;
+        this->getTransparencyAndDisposalMethod(curr, &currTrans, &currDisposal);
+        
+        
+        if (currTrans || !checkIfCover(curr, prev))
         {
-            if (curDisposal == 2)
+            if (prevDisposal == 2)
             {
-                unsigned char* dst = &m_pImageData[(prev->ImageDesc.Top * m_uPixelsWide + prev->ImageDesc.Left) * 4];
-                GifWord copyWidth = prev->ImageDesc.Width;
-                
-                if (prev->ImageDesc.Left + copyWidth > m_uPixelsWide)
+                for (int top = prev->ImageDesc.Top; top < MIN(m_uPixelsHigh, prev->ImageDesc.Top + prev->ImageDesc.Height); top++)
                 {
-                    copyWidth = m_uPixelsWide - prev->ImageDesc.Left;
-                }
-                
-                GifWord copyHeight = prev->ImageDesc.Height;
-                if (prev->ImageDesc.Top + copyHeight > m_uPixelsHigh)
-                {
-                    copyHeight = m_uPixelsHigh - prev->ImageDesc.Top;
-                }
-                
-                for (; copyHeight > 0; copyHeight--)
-                {
-                    for(int wIndex = 0; wIndex < m_uPixelsWide; wIndex++, dst+=4)
+                    for(int left = prev->ImageDesc.Left; left < MIN(m_uPixelsWide, prev->ImageDesc.Left + prev->ImageDesc.Width); left++)
                     {
-                        *dst     = paintingColor.r;
-                        *(dst+1) = paintingColor.g;
-                        *(dst+2) = paintingColor.b;
-                        *(dst+3) = paintingColor.a;
+                        unsigned char* dst = &m_pImageData[(top * m_uPixelsWide + left) * 4];
+                        *dst     = paintingColor[0];
+                        *(dst+1) = paintingColor[1];
+                        *(dst+2) = paintingColor[2];
+                        *(dst+3) = paintingColor[3];
                     }
                 }
-            }
-            else if (curDisposal == 3)
-            {
-                //bm->swap(backup);
             }
         }
     }
     
-    if (index == m_pGIF->ImageCount-1 || !this->checkIfWillBeCleared(cur))
     {
         int transparent = -1;
-        for (int i = 0; i < cur->ExtensionBlockCount; ++i)
+        for (int i = 0; i < curr->ExtensionBlockCount; ++i)
         {
-            ExtensionBlock* eb = cur->ExtensionBlocks + i;
+            ExtensionBlock* eb = curr->ExtensionBlocks + i;
             if (eb->Function == GRAPHICS_EXT_FUNC_CODE &&
                 eb->ByteCount == 4)
             {
@@ -1172,36 +1158,35 @@ void CAImage::setGifImageWithIndex(unsigned int index)
             }
         }
         
-        if (cur->ImageDesc.ColorMap != NULL)
+        if (curr->ImageDesc.ColorMap != NULL)
         {
-            m_pGIF->SColorMap = cur->ImageDesc.ColorMap;
+            m_pGIF->SColorMap = curr->ImageDesc.ColorMap;
         }
- 
+        
         if (m_pGIF->SColorMap && m_pGIF->SColorMap->ColorCount == (1 << m_pGIF->SColorMap->BitsPerPixel))
         {
-            unsigned char* src = (unsigned char*)cur->RasterBits;
-            unsigned char* dst = &m_pImageData[(cur->ImageDesc.Top * m_uPixelsWide + cur->ImageDesc.Left) * 4];
+            unsigned char* src = (unsigned char*)curr->RasterBits;
+            unsigned char* dst = &m_pImageData[(curr->ImageDesc.Top * m_uPixelsWide + curr->ImageDesc.Left) * 4];
             
-            GifWord copyWidth = cur->ImageDesc.Width;
-            if (cur->ImageDesc.Left + copyWidth > m_uPixelsWide)
+            GifWord copyWidth = curr->ImageDesc.Width;
+            if (curr->ImageDesc.Left + copyWidth > m_uPixelsWide)
             {
-                copyWidth = m_uPixelsWide - cur->ImageDesc.Left;
+                copyWidth = m_uPixelsWide - curr->ImageDesc.Left;
             }
             
-            GifWord copyHeight = cur->ImageDesc.Height;
-            if (cur->ImageDesc.Top + copyHeight > m_uPixelsHigh)
+            GifWord copyHeight = curr->ImageDesc.Height;
+            if (curr->ImageDesc.Top + copyHeight > m_uPixelsHigh)
             {
-                copyHeight = m_uPixelsHigh - cur->ImageDesc.Top;
+                copyHeight = m_uPixelsHigh - curr->ImageDesc.Top;
             }
             
             for (; copyHeight > 0; copyHeight--)
             {
                 copyLine(dst, src, m_pGIF->SColorMap, transparent, copyWidth);
-                src += cur->ImageDesc.Width;
+                src += curr->ImageDesc.Width;
                 dst += m_uPixelsWide*4;
             }
         }
-        
     }
 }
 
@@ -1691,10 +1676,8 @@ bool CAImage::initWithPngData(const unsigned char * data, unsigned long dataLen)
 
 bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
 {
-    s_pData = data;
-    s_pDataMark = 0;
     int error = 0;
-    m_pGIF = DGifOpen(NULL,&DecodeCallBackProc,&error);
+    m_pGIF = DGifOpen((unsigned char *)data, &memReadFuncGif, &error);
     if (NULL == m_pGIF || DGifSlurp(m_pGIF) != GIF_OK)
     {
         int ErrorCode;
@@ -1708,13 +1691,6 @@ bool CAImage::initWithGifData(const unsigned char * data, unsigned long dataLen)
     m_uPixelsHigh = m_pGIF->SHeight;
     m_uImageDataLenght = m_uPixelsWide * m_uPixelsHigh * 4;
     m_pImageData = (unsigned char*)malloc(sizeof(unsigned char) * m_uImageDataLenght);
-    for (unsigned int i = 0; i < m_uPixelsWide * m_uPixelsHigh; i++)
-    {
-        *(m_pImageData + i * 4)     = '\0';
-        *(m_pImageData + i * 4 + 1) = '\0';
-        *(m_pImageData + i * 4 + 2) = '\0';
-        *(m_pImageData + i * 4 + 3) = '\0';
-    }
     
     m_bHasPremultipliedAlpha = false;
     

@@ -31,6 +31,9 @@ CAGif::CAGif()
 
 CAGif::~CAGif()
 {
+    int ErrorCode;
+    DGifCloseFile(m_pGIF, &ErrorCode);
+    
     CC_SAFE_DELETE(m_pData);
     CC_SAFE_RELEASE(m_pImage);
 }
@@ -96,6 +99,7 @@ bool CAGif::initWithData(unsigned char* data, unsigned long lenght)
     m_pImage = this->getImageWithIndex(m_iImageIndex);
     
     CC_SAFE_RETAIN(m_pImage);
+    
     return true;
 }
 
@@ -134,7 +138,7 @@ CAImage* CAGif::getImageWithIndex(int index)
     
     static char paintingColor[4] = {0, 0, 0, 0};
     
-    const SavedImage* prev = &m_pGIF->SavedImages[index - 1];
+    
     const SavedImage* curr = &m_pGIF->SavedImages[index];
 
     if (index == 0)
@@ -153,6 +157,8 @@ CAImage* CAGif::getImageWithIndex(int index)
     }
     else
     {
+        const SavedImage* prev = &m_pGIF->SavedImages[index - 1];
+        
         bool prevTrans;
         int prevDisposal;
         this->getTransparencyAndDisposalMethod(prev, &prevTrans, &prevDisposal);
