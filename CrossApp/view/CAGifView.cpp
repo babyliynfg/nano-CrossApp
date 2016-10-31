@@ -123,7 +123,7 @@ void CAGifView::setGif(CAGif* gif)
         
         this->updateGifSize();
         
-        if(m_pGif->getImages().size() > 1)
+        if(m_pGif->getImages().size() > 0)
         {
             CAScheduler::getScheduler()->scheduleSelectorUpdate(this, 0, !m_bRunning);
         }
@@ -181,6 +181,12 @@ void CAGifView::update(float delta)
         m_iGifIndex %= m_pGif->getImages().size();
         this->setImage(m_pGif->getImageWithIndex(m_iGifIndex));
         m_fDurTime -= m_pGif->getDelay();
+        
+        DRect rect = DRectZero;
+        rect.size.width = m_pGif->getPixelsWide();
+        rect.size.height = m_pGif->getPixelsHigh();
+        this->setImageRect(rect);
+
     }
     
     if (!m_bIsRepeatForever && m_iGifIndex >= m_pGif->getImages().size() - 1)
