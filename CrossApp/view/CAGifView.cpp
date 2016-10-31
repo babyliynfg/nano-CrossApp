@@ -11,7 +11,7 @@
 NS_CC_BEGIN
 
 CAGifView::CAGifView()
-:m_iCurrIndex(0)
+:m_iGifIndex(0)
 ,m_fDurTime(0.0f)
 ,m_fTimes(1.0f)
 ,m_pGif(NULL)
@@ -114,7 +114,7 @@ void CAGifView::setGif(CAGif* gif)
     m_pGif = gif;
     if (m_pGif)
     {
-        this->setImage(m_pGif->getImage());
+        this->setImage(m_pGif->getImages().front());
         
         DRect rect = DRectZero;
         rect.size.width = m_pGif->getPixelsWide();
@@ -123,7 +123,7 @@ void CAGifView::setGif(CAGif* gif)
         
         this->updateGifSize();
         
-        if(m_pGif->getImageCount() > 0)
+        if(m_pGif->getImages().size() > 1)
         {
             CAScheduler::getScheduler()->scheduleSelectorUpdate(this, 0, !m_bRunning);
         }
@@ -177,13 +177,13 @@ void CAGifView::update(float delta)
     
     if(m_fDurTime > m_pGif->getDelay())
     {
-        m_pGif->next();
-        this->setImage(m_pGif->getImage());
-        m_iCurrIndex = m_pGif->getImageIndex();
+        ++m_iGifIndex;
+        m_iGifIndex %= m_pGif->getImages().size();
+        this->setImage(m_pGif->getImageWithIndex(m_iGifIndex));
         m_fDurTime -= m_pGif->getDelay();
     }
     
-    if (!m_bIsRepeatForever && m_iCurrIndex >= m_pGif->getImageIndex() - 1)
+    if (!m_bIsRepeatForever && m_iGifIndex >= m_pGif->getImages().size() - 1)
     {
         CAScheduler::getScheduler()->unscheduleUpdate(this);
     }

@@ -33,9 +33,9 @@ public:
     
     bool initWithData(unsigned char* data, unsigned long lenght);
     
-    void next();
+    CAImage* getImageWithIndex(unsigned int index);
     
-    CC_SYNTHESIZE_READONLY(CAImage*, m_pImage, Image);
+    CC_SYNTHESIZE_READONLY(CAVector<CAImage*>, m_vImages, Images);
     
     CC_SYNTHESIZE_READONLY(float, m_fDelay, Delay);
     
@@ -43,11 +43,7 @@ public:
     
     CC_SYNTHESIZE_READONLY(unsigned int, m_uPixelsHigh, PixelsHigh);
 
-    CC_SYNTHESIZE(int, m_iImageIndex, ImageIndex);
-    
-    CC_SYNTHESIZE(int, m_iImageCount, ImageCount);
-    
-    const std::map<std::string, CAGif*>& getGIFs();
+    static const std::map<std::string, CAGif*>& getGIFs();
     
 protected:
     
@@ -61,7 +57,7 @@ protected:
     
     float getImageDelay(const SavedImage* image);
 
-    CAImage* getImageWithIndex(int index);
+    CAImage* getImage(unsigned int index);
     
 protected:
 

@@ -29,9 +29,6 @@ const std::map<std::string, CAGif*>& CAGif::getGIFs()
 CAGif::CAGif()
 :m_fDelay(0.0f)
 ,m_pData(nullptr)
-,m_iImageIndex(0)
-,m_iImageCount(0)
-,m_pImage(nullptr)
 {
 
 }
@@ -41,8 +38,9 @@ CAGif::~CAGif()
     int ErrorCode;
     DGifCloseFile(m_pGIF, &ErrorCode);
     
+    m_vImages.clear();
+    
     CC_SAFE_DELETE(m_pData);
-    CC_SAFE_RELEASE(m_pImage);
     
     s_pGIFs.erase(m_sFilePath);
 }
@@ -121,12 +119,11 @@ bool CAGif::initWithData(unsigned char* data, unsigned long lenght)
     
     m_fDelay = this->getImageDelay(&m_pGIF->SavedImages[0]);
     
-    m_iImageCount = m_pGIF->ImageCount;
-    
-    m_pImage = this->getImageWithIndex(m_iImageIndex);
-    
-    CC_SAFE_RETAIN(m_pImage);
-    
+    for (int i=0; i<m_pGIF->ImageCount; ++i)
+    {
+        m_vImages.pushBack(this->getImage(i));
+    }
+        
     return true;
 }
 
@@ -143,16 +140,16 @@ void CAGif::copyLine(unsigned char* dst, const unsigned char* src, const ColorMa
     }
 }
 
-void CAGif::next()
+CAImage* CAGif::getImageWithIndex(unsigned int index)
 {
-    CC_SAFE_RELEASE(m_pImage);
-    ++m_iImageIndex;
-    m_iImageIndex %= m_iImageCount;
-    m_pImage = this->getImageWithIndex(m_iImageIndex);
-    CC_SAFE_RETAIN(m_pImage);
+    if (index < m_vImages.size())
+    {
+        return m_vImages.at(index);
+    }
+    return nullptr;
 }
 
-CAImage* CAGif::getImageWithIndex(int index)
+CAImage* CAGif::getImage(unsigned int index)
 {
     index = MIN(index, m_pGIF->ImageCount - 1);
  

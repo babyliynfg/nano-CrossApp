@@ -66,7 +66,7 @@ private:
 
     bool m_bIsRepeatForever;
     
-    int m_iCurrIndex;
+    int m_iGifIndex;
     
     float m_fDurTime;
     
