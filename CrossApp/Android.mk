@@ -59,6 +59,8 @@ dispatcher/CATouch.cpp \
 images/CAImage.cpp \
 images/CAImageCache.cpp \
 images/CAGif.cpp \
+images/gif_lib/egif_lib.c \
+images/gif_lib/openbsd-reallocarray.c \
 images/gif_lib/dgif_lib.c \
 images/gif_lib/gif_err.c \
 images/gif_lib/gif_font.c \
