@@ -229,13 +229,13 @@ void VPDecoder::setPosition(float seconds)
     _isEOF = false;
     
 	if (m_iVideoStream != -1) {
-		long long ts = (long long)(m_fPosition / m_fVideoTimeBase / 4);
+		long long ts = (long long)(m_fPosition / m_fVideoTimeBase / 1);
 		avformat_seek_file(m_pFormatCtx, m_iVideoStream, 0, ts, ts, AVSEEK_FLAG_FRAME);
 		avcodec_flush_buffers(m_pVideoCodecCtx);
     }
     
 	if (m_iAudioStream != -1) {
-		long long ts = (long long)(m_fPosition / m_fAudioTimeBase / 4);
+		long long ts = (long long)(m_fPosition / m_fAudioTimeBase / 1);
 		avformat_seek_file(m_pFormatCtx, m_fAudioTimeBase, 0, ts, ts, AVSEEK_FLAG_FRAME);
 		avcodec_flush_buffers(m_pAudioCodecCtx);
     }
