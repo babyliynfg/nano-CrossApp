@@ -398,6 +398,7 @@
 		D66BCD511D3DC27700587C65 /* CGSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = D66BCD4D1D3DC27700587C65 /* CGSpriteFrameCache.h */; };
 		D693E7C71D34F75F003D97A4 /* CAVec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D693E7C51D34F75F003D97A4 /* CAVec4.h */; };
 		D6B0C6411D6587ED00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */; };
+		D6B12EB61DC9C81500944576 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B12EB51DC9C81500944576 /* libwebsockets.a */; };
 		D6D8A7821DC2F1EB00A47FC2 /* egif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */; };
 		D6D8A7831DC2F1EB00A47FC2 /* openbsd-reallocarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D6D8A7811DC2F1EB00A47FC2 /* openbsd-reallocarray.c */; };
 /* End PBXBuildFile section */
@@ -844,6 +845,7 @@
 		D693E7C51D34F75F003D97A4 /* CAVec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAVec4.h; sourceTree = "<group>"; };
 		D693E7C61D34F75F003D97A4 /* CAVec4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVec4.cpp; sourceTree = "<group>"; };
 		D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
+		D6B12EB51DC9C81500944576 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../the_third_party/websockets/prebuilt/mac/libwebsockets.a; sourceTree = "<group>"; };
 		D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = egif_lib.c; sourceTree = "<group>"; };
 		D6D8A7811DC2F1EB00A47FC2 /* openbsd-reallocarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "openbsd-reallocarray.c"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -853,6 +855,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6B12EB61DC9C81500944576 /* libwebsockets.a in Frameworks */,
 				B0621A551AC3A28D005EBCA7 /* libjpeg.a in Frameworks */,
 				B0621A531AC3A24D005EBCA7 /* libpng.a in Frameworks */,
 				B0621A511AC3A23D005EBCA7 /* libtiff.a in Frameworks */,
@@ -1256,6 +1259,7 @@
 		1551A341158F2AB200E66CFE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D6B12EB51DC9C81500944576 /* libwebsockets.a */,
 				B09B73BD1BD1FACE001D82BC /* libSDL.a */,
 				B039AF801BC7B86A002C1FDB /* libiconv.2.dylib */,
 				B039AF7E1BC7B81F002C1FDB /* VideoToolbox.framework */,

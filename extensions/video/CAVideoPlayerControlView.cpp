@@ -132,8 +132,8 @@ void CAVideoPlayerControlView::buildCtrlViews()
     bottomPanel->addSubview(m_playSlider);
     
     // Play Pause Button
-    CAImage* backImage = CAImage::create("source_material/vdo_pause.png");
-    CAImage* backImage_h = CAImage::create("source_material/vdo_pause_down.png");
+    CAImage* backImage = CAImage::create("source_material/vdo_play.png");
+    CAImage* backImage_h = CAImage::create("source_material/vdo_play_down.png");
     m_playButton = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(32, 56), DVerticalLayout_T_H(96, 56)), CAButtonTypeCustom);
     m_playButton->setImageForState(CAControlStateNormal, backImage);
     m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);

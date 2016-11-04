@@ -57,13 +57,22 @@ EGifOpenFileName(const char *FileName, const bool TestExistence, int *Error)
     int FileHandle;
     GifFileType *GifFile;
 
+#if defined(ANDROID)
     if (TestExistence)
-        FileHandle = open(FileName, O_WRONLY | O_CREAT | O_EXCL, 
-			  S_IRUSR | S_IWUSR);
+        FileHandle = open(FileName, O_WRONLY | O_CREAT | O_EXCL,
+                          S_IRUSR | S_IWUSR);
     else
-        FileHandle = open(FileName, O_WRONLY | O_CREAT | O_TRUNC, 
-			  S_IRUSR | S_IWUSR);
-
+        FileHandle = open(FileName, O_WRONLY | O_CREAT | O_TRUNC,
+                          S_IRUSR | S_IWUSR);
+#else
+    if (TestExistence)
+        FileHandle = open(FileName, O_WRONLY | O_CREAT | O_EXCL,
+                          S_IREAD | S_IWRITE);
+    else
+        FileHandle = open(FileName, O_WRONLY | O_CREAT | O_TRUNC,
+                          S_IREAD | S_IWRITE);
+#endif
+    
     if (FileHandle == -1) {
         if (Error != NULL)
 	    *Error = E_GIF_ERR_OPEN_FAILED;
