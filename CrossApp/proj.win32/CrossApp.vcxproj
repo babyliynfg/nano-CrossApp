@@ -229,10 +229,12 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\images\CAImage.cpp" />
     <ClCompile Include="..\images\CAImageCache.cpp" />
     <ClCompile Include="..\images\gif_lib\dgif_lib.c" />
+    <ClCompile Include="..\images\gif_lib\egif_lib.c" />
     <ClCompile Include="..\images\gif_lib\gifalloc.c" />
     <ClCompile Include="..\images\gif_lib\gif_err.c" />
     <ClCompile Include="..\images\gif_lib\gif_font.c" />
     <ClCompile Include="..\images\gif_lib\gif_hash.c" />
+    <ClCompile Include="..\images\gif_lib\openbsd-reallocarray.c" />
     <ClCompile Include="..\images\gif_lib\quantize.c" />
     <ClCompile Include="..\math\CAAffineTransform.cpp" />
     <ClCompile Include="..\math\CAMat4.cpp" />
@@ -404,6 +406,9 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\images\CAGif.h" />
     <ClInclude Include="..\images\CAImage.h" />
     <ClInclude Include="..\images\CAImageCache.h" />
+    <ClInclude Include="..\images\gif_lib\gif_hash.h" />
+    <ClInclude Include="..\images\gif_lib\gif_lib.h" />
+    <ClInclude Include="..\images\gif_lib\gif_lib_private.h" />
     <ClInclude Include="..\math\CAAffineTransform.h" />
     <ClInclude Include="..\math\CAMat4.h" />
     <ClInclude Include="..\math\CAMath.h" />
@@ -440,6 +445,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\platform\win32\CCGL.h" />
     <ClInclude Include="..\platform\win32\CCPlatformDefine.h" />
     <ClInclude Include="..\platform\win32\CCStdC.h" />
+    <ClInclude Include="..\platform\win32\unistd.h" />
     <ClInclude Include="..\script_support\CCScriptSupport.h" />
     <ClInclude Include="..\script_support\JSViewController.h" />
     <ClInclude Include="..\shaders\CAGLProgram.h" />

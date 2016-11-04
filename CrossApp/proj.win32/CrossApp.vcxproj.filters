@@ -601,6 +601,12 @@
     <ClCompile Include="..\math\CAQuaternion.cpp">
       <Filter>math</Filter>
     </ClCompile>
+    <ClCompile Include="..\images\gif_lib\egif_lib.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\images\gif_lib\openbsd-reallocarray.c">
+      <Filter>images\gif_lib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1217,6 +1223,18 @@
     </ClInclude>
     <ClInclude Include="..\math\CAQuaternion.h">
       <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\gif_lib\gif_hash.h">
+      <Filter>images\gif_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\gif_lib\gif_lib.h">
+      <Filter>images\gif_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\images\gif_lib\gif_lib_private.h">
+      <Filter>images\gif_lib</Filter>
+    </ClInclude>
+    <ClInclude Include="..\platform\win32\unistd.h">
+      <Filter>platform\win32</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
