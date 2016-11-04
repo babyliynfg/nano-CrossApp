@@ -721,6 +721,13 @@ void CCDisplayLinkDirector::mainLoop(void)
     
     if (m_bPurgeDirecotorInNextLoop)
     {
+		if (!m_bPaused)
+		{
+			CAScheduler::getScheduler()->update(m_fDeltaTime);
+			CAObject::updateDelayTimers(m_fDeltaTime);
+		}
+		CAPoolManager::sharedPoolManager()->pop();
+
         m_bPurgeDirecotorInNextLoop = false;
         purgeDirector();
     }

@@ -72,6 +72,11 @@ public:
 	{
 
 	}
+
+	virtual ~CAViewAnimationModule()
+	{
+	
+	}
 };
 
 class CC_DLL CAViewAnimation: public CAObject

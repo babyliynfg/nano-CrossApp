@@ -1236,6 +1236,7 @@
     <ClInclude Include="..\platform\win32\unistd.h">
       <Filter>platform\win32</Filter>
     </ClInclude>
+    <ClInclude Include="..\CrossApp-Prefix.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\support\Json\lib_json\json_internalarray.inl">

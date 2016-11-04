@@ -377,6 +377,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\control\CASlider.h" />
     <ClInclude Include="..\control\CAStepper.h" />
     <ClInclude Include="..\control\CASwitch.h" />
+    <ClInclude Include="..\CrossApp-Prefix.h" />
     <ClInclude Include="..\CrossApp.h" />
     <ClInclude Include="..\dispatcher\CAIMEDelegate.h" />
     <ClInclude Include="..\dispatcher\CAIMEDispatcher.h" />

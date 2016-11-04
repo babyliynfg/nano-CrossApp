@@ -357,10 +357,28 @@ LRESULT CCEGLView::WindowProc(UINT message, WPARAM wParam, LPARAM lParam)
                 pt.x /= m_fFrameZoomFactor;
                 pt.y /= m_fFrameZoomFactor;
                 
-                CrossApp::CAEvent* event = new CrossApp::CAEvent();
-                event->setEventType(CrossApp::EventType::movedMouseEvent);
-                handleMouseMoved(pt.x, pt.y, event);
-                event->release();
+				if (MK_LBUTTON == wParam)
+				{
+					CrossApp::CAEvent* event = new CrossApp::CAEvent();
+					event->setEventType(CrossApp::EventType::leftMouseEvent);
+					handleTouchesMove(1, &id, &pt.x, &pt.y, event);
+					event->release();
+
+				}
+				else if (MK_RBUTTON == wParam)
+				{
+					CrossApp::CAEvent* event = new CrossApp::CAEvent();
+					event->setEventType(CrossApp::EventType::rightMouseEvent);
+					handleTouchesMove(1, &id, &pt.x, &pt.y, event);
+					event->release();
+				}
+				else
+				{
+					CrossApp::CAEvent* event = new CrossApp::CAEvent();
+					event->setEventType(CrossApp::EventType::movedMouseEvent);
+					handleMouseMoved(pt.x, pt.y, event);
+					event->release();
+				}
             }
             break;
             

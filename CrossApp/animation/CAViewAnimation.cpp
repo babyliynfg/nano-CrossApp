@@ -457,10 +457,8 @@ void CAViewAnimation::update(float dt)
 {
     CAVector<CAViewAnimationModule*> modules = CAVector<CAViewAnimationModule*>(m_vModules);
     m_vModules.clear();
-    CAVector<CAViewAnimationModule*>::iterator itr_module = modules.begin();
-    while (itr_module != modules.end())
+	for (auto& module : modules)
     {
-        CAViewAnimationModule* module = *itr_module;
         module->time += dt;
         float time = module->time - module->delay;
 
@@ -479,7 +477,7 @@ void CAViewAnimation::update(float dt)
                     module->willStartSel0 = NULL;
                 }
                 
-                CAMap<CAView*, CAObject*>& animations = (*itr_module)->animations;
+				CAMap<CAView*, CAObject*>& animations = module->animations;
                 CAMap<CAView*, CAObject*>::iterator itr_animation = animations.begin();
                 while (itr_animation != animations.end())
                 {
@@ -532,7 +530,7 @@ void CAViewAnimation::update(float dt)
             }
             
 
-            CAMap<CAView*, CAObject*>& animations = (*itr_module)->animations;
+			CAMap<CAView*, CAObject*>& animations = module->animations;
             CAMap<CAView*, CAObject*>::iterator itr_animation = animations.begin();
             while (itr_animation != animations.end())
             {
@@ -632,13 +630,10 @@ void CAViewAnimation::update(float dt)
                         ((CAObject *)module->didStopTarget->*module->didStopSel0)();
                     }
                 }
-                (*itr_module)->animations.clear();
-                ++itr_module;
                 continue;
             }
         }
-        m_vModules.pushBack(*itr_module);
-        ++itr_module;
+        m_vModules.pushBack(module);
     }
     modules.clear();
     
