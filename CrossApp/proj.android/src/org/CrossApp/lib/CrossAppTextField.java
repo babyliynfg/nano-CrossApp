@@ -576,7 +576,7 @@ import android.widget.TextView.OnEditorActionListener;
     }
     
     private static native void onByte(int key, byte[] buf, int wdith, int height);
-    
+
     public void getImage()
     {
     	context.runOnUiThread(new Runnable() 
@@ -654,6 +654,8 @@ import android.widget.TextView.OnEditorActionListener;
         });
     }
     
+    private static native void showImageView(int key);
+    
     public void resignFirstResponder()
     {
     	CrossAppActivity.setSingleTextField(null);
@@ -704,6 +706,7 @@ import android.widget.TextView.OnEditorActionListener;
                         public void run()
                         {
                         	onByte(mykey, imageData.array(), bmp.getWidth(), bmp.getHeight());
+                        	showImageView(mykey);
                         	imageData = null;
                         }
                     });

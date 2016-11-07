@@ -199,21 +199,30 @@ void textViewSetTextViewAlignJNI(int key, int type)
 
 extern "C"
 {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_showImageView(JNIEnv *env, jclass cls, jint key)
+    {
+        if (CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda)))
+        {
+            imageView->setVisible(true);
+        }
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_hideImageView(JNIEnv *env, jclass cls, jint key)
+    {
+        if (CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda)))
+        {
+            imageView->setVisible(false);
+        }
+    }
+    
 	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_onByte(JNIEnv *env, jclass cls, jint key, jbyteArray buf, jint width, jint height)
     {
         unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
         env->GetByteArrayRegion(buf, 0, width * height * 4, (jbyte *)data);
         CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat_RGBA8888, width, height);
-        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("textView"));
+        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
         imageView->setImage(image);
-        imageView->setVisible(true);
         free(data);
-    }
-    
-	JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextView_hideImageView(JNIEnv *env, jclass cls, jint key)
-    {
-        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTextTag("textView"));
-        imageView->setVisible(false);
     }
     
     //textView delegate
@@ -445,7 +454,7 @@ bool CATextView::init()
 	this->insertSubview(m_pBackgroundView, -1);
     
 	m_pShowImageView = CAImageView::createWithLayout(DLayoutFill);
-	m_pShowImageView->setTextTag("textView");
+	m_pShowImageView->setTag(0xbcda);
 	this->addSubview(m_pShowImageView);
 	
     return true;

@@ -460,6 +460,8 @@ import android.widget.TextView.OnEditorActionListener;
         });
     }
     
+    private static native void showImageView(int key);
+    
     public void resignFirstResponder()
     {
     	CrossAppActivity.setSingleTextView(null);
@@ -504,6 +506,7 @@ import android.widget.TextView.OnEditorActionListener;
                         public void run()
                         {
                         	onByte(mykey, imageData.array(), bmp.getWidth(), bmp.getHeight());
+                        	showImageView(mykey);
                         	imageData = null;
                         }
                     });

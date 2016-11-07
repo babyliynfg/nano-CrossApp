@@ -289,6 +289,22 @@ void setMaxLenghtJNI(int key, int type)
 
 extern "C"
 {
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_showImageView(JNIEnv *env, jclass cls, jint key)
+    {
+        if (CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda)))
+        {
+            imageView->setVisible(true);
+        }
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_hideImageView(JNIEnv *env, jclass cls, jint key)
+    {
+        if (CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda)))
+        {
+            imageView->setVisible(false);
+        }
+    }
+    
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_onByte(JNIEnv *env, jclass cls, jint key, jbyteArray buf, jint width, jint height)
     {
         unsigned char* data = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
@@ -296,19 +312,9 @@ extern "C"
         CAImage* image = CAImage::createWithRawDataNoCache(data, CAImage::PixelFormat_RGBA8888, width, height);
         CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
         imageView->setImage(image);
-        imageView->setVisible(true);
         free(data);
     }
-    
-    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_hideImageView(JNIEnv *env, jclass cls, jint key)
-    {
-        CAImageView* imageView = (CAImageView*)(s_map[(int)key]->getSubviewByTag(0xbcda));
-        if (imageView)
-        {
-            imageView->setVisible(false);
-        }
-    }
-    
+
     //textfield delegate
     JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppTextField_keyBoardHeightReturn(JNIEnv *env, jclass cls, jint key, jint height)
     {
@@ -457,10 +463,10 @@ bool CATextField::resignFirstResponder()
     resignFirstResponderID(m_u__ID);
     
     this->hideNativeTextField();
-
+    
     if (m_eClearBtn == WhileEditing)
     {
-        CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
+        CAImageView* ima = (CAImageView*)this->getSubviewByTag(0xbbbb);
         ima->setImage(NULL);
     }
 
@@ -482,7 +488,7 @@ bool CATextField::becomeFirstResponder()
 
 	if (m_eClearBtn == WhileEditing)
 	{
-        CAImageView* ima = (CAImageView*)this->getSubviewByTag(1011);
+        CAImageView* ima = (CAImageView*)this->getSubviewByTag(0xbbbb);
         ima->setImage(CAImage::create("source_material/clear_button.png"));
 	}
     
@@ -602,14 +608,11 @@ void CATextField::setContentSize(const DSize& contentSize)
 {
     CAControl::setContentSize(contentSize);
     
-    if (m_eClearBtn == WhileEditing)
+    if (m_eClearBtn == WhileEditing && this->isFirstResponder())
     {
-        if (m_eClearBtn == WhileEditing)
-        {
-            m_eClearBtn = None;
-            this->setMarginImageRight(DSize(contentSize.height, contentSize.height), "");
-            m_eClearBtn = WhileEditing;
-        }
+        m_eClearBtn = None;
+        this->setMarginImageRight(DSize(contentSize.height, contentSize.height), "source_material/clear_button.png");
+        m_eClearBtn = WhileEditing;
     }
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
@@ -736,11 +739,11 @@ void CATextField::setMarginImageRight(const DSize& imgSize, const std::string& f
     if (m_eClearBtn == None)
     {
         //setimage
-        CAImageView* rightMarginView = (CAImageView*)this->getSubviewByTag(1011);
+        CAImageView* rightMarginView = (CAImageView*)this->getSubviewByTag(0xbbbb);
         if (!rightMarginView)
         {
             rightMarginView = CAImageView::create();
-            rightMarginView->setTag(1011);
+            rightMarginView->setTag(0xbbbb);
             this->addSubview(rightMarginView);
         }
         DLayout layout;
