@@ -86,6 +86,15 @@ CADrawView::CADrawView()
 {
     m_sBlendFunc.src = CC_BLEND_SRC;
     m_sBlendFunc.dst = CC_BLEND_DST;
+    
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    // Listen this event to save render Image before come to background.
+    // Then it can be restored after coming to foreground on Android.
+    CANotificationCenter::getInstance()->addObserver(this,
+                                                     callfuncO_selector(CADrawView::listenBackToForeground),
+                                                     EVENT_COME_TO_FOREGROUND,
+                                                     NULL);
+#endif
 }
 
 CADrawView::~CADrawView()
@@ -102,6 +111,10 @@ CADrawView::~CADrawView()
     m_uVao = 0;
 #endif
 
+#if CC_TARGET_PLATFORM == CC_PLATFORM_ANDROID
+    CANotificationCenter::getInstance()->removeObserver(this, EVENT_COME_TO_FOREGROUND);
+#endif
+    
 }
 
 CADrawView* CADrawView::create()

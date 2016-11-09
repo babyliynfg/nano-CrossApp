@@ -80,7 +80,7 @@ void CARenderImage::listenToForeground(CrossApp::CAObject *obj)
     glGenFramebuffers(1, &m_uFBO);
     glBindFramebuffer(GL_FRAMEBUFFER, m_uFBO);
     
-    m_pImage->setAliasTexParameters();
+//    m_pImage->setAliasTexParameters();
     
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_pImage->getName(), 0);
     glBindFramebuffer(GL_FRAMEBUFFER, m_nOldFBO);

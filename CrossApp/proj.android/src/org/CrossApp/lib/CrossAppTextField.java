@@ -815,6 +815,11 @@ import android.widget.TextView.OnEditorActionListener;
 			{
 				// TODO Auto-generated method stub
 
+				if (isSetText)
+				{
+					return;
+				}
+				
 				String string = arg0.toString();
 				
 				String  changedText = "";

@@ -148,6 +148,12 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	}
 
 	@Override
+	protected void onDestroy() 
+	{
+		super.onDestroy();
+	}
+	
+	@Override
 	protected void onResume() 
 	{
 		super.onResume();
@@ -166,13 +172,38 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	}
 
 	@Override
-	protected void onPause() {
+	protected void onPause()
+	{
 		super.onPause();
 
 		CrossAppHelper.onPause();
 		this.mGLSurfaceView.onPause();
 	}
 
+	@Override
+	protected void onStop() 
+	{
+		super.onStop();
+	}
+	
+	@Override
+	protected void onStart() 
+	{
+		super.onStart();
+		CrossAppTextField.reload();
+		CrossAppTextView.reload();
+		mGLSurfaceView.getRenderer().crossAppRendererNativeInit();
+	}
+	
+	@Override
+	protected void onRestart()
+	{
+		super.onRestart();		
+	}
+	
+	
+	
+	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		

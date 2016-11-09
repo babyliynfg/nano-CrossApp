@@ -65,16 +65,20 @@ public class CrossAppRenderer implements GLSurfaceView.Renderer {
         }
 		
 		CrossAppRenderer.nativeChangedOrientation(orientation);
-		CrossAppRenderer.nativeInit(this.mScreenWidth, this.mScreenHeight);
+		this.crossAppRendererNativeInit();
 		
 		this.mLastTickInNanoSeconds = System.nanoTime();
+	}
+	
+	public void crossAppRendererNativeInit()
+	{
+		CrossAppRenderer.nativeInit(this.mScreenWidth, this.mScreenHeight);
 	}
 
 	@Override
 	public void onSurfaceChanged(final GL10 pGL10, final int pWidth, final int pHeight)
 	{
 
-    	Log.e("CrossApp", "onSurfaceChanged--w:" + pWidth + "--h:"  + pHeight);
 	}
 
 	@Override

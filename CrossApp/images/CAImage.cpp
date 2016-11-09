@@ -3060,14 +3060,14 @@ bool CAImage::isCompressed()
 
 void CAImage::reloadAllImages()
 {
-    for (std::set<CAImage*>::iterator itr=s_pImages.begin(); itr!=s_pImages.end(); itr++)
+    for (auto& image : s_pImages)
     {
-        (*itr)->freeName();
+        image->freeName();
     }
     
-    for (std::set<CAImage*>::iterator itr=s_pImages.begin(); itr!=s_pImages.end(); itr++)
+    for (auto& image : s_pImages)
     {
-        (*itr)->repremultipliedImageData();
+        image->repremultipliedImageData();
     }
 }
 

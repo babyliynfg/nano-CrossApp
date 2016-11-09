@@ -23,6 +23,11 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 	// Constructors
 	// ===========================================================
 
+	public CrossAppRenderer getRenderer()
+	{
+		return mRenderer;
+	}
+	
 	public CrossAppGLSurfaceView(final Context context)
 	{
 		super(context);
