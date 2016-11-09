@@ -1,18 +1,8 @@
 package org.CrossApp.lib;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import org.CrossApp.lib.CrossAppGLSurfaceView;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
-import org.CrossApp.lib.CrossAppGLSurfaceView;
-
-import android.R.integer;
-import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,16 +10,13 @@ import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
@@ -37,10 +24,7 @@ import android.provider.MediaStore.Images.ImageColumns;
 import android.provider.MediaStore.Images.Media;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
-import android.text.format.DateFormat;
 import android.util.Log;
-import android.view.WindowManager;
-import android.widget.Toast;
 
 
 @SuppressLint("SdCardPath")

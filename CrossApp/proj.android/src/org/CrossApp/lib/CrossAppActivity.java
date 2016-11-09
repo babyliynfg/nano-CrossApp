@@ -1,8 +1,6 @@
 
 package org.CrossApp.lib;
 
-import java.util.Iterator;
-import java.util.Set;
 import java.util.concurrent.Callable;
 
 import org.CrossApp.lib.CrossAppHelper.CrossAppHelperListener;
@@ -10,21 +8,16 @@ import org.CrossApp.lib.CrossAppHelper.CrossAppHelperListener;
 import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
 import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
-import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -45,9 +38,13 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	// ===========================================================
 	// Fields
 	// ===========================================================
-    private CrossAppWebViewHelper mWebViewHelper = null;
+    
+    
+    private static CrossAppActivity s_pActivity;
     
 	private CrossAppGLSurfaceView mGLSurfaceView;
+	
+	private CrossAppWebViewHelper mWebViewHelper = null;
 	
 	private CrossAppHandler mHandler;
 	
@@ -56,12 +53,8 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
     public static Handler msHandler;
    	
     public static Handler mLightHandler;
-    
-	private static CrossAppActivity s_pActivity;
-	
+
 	private static FrameLayout frame;
-	
-	private static View rootview;
 	
 	private int screenWidth = 0;
 	
@@ -90,11 +83,16 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		return CrossAppActivity.s_pActivity;
 	}
 	
+	public static CrossAppGLSurfaceView getGLSurfaceView()
+	{
+		return s_pActivity.mGLSurfaceView;
+	}
+	
 	public static FrameLayout getFrameLayout()
 	{
 		return CrossAppActivity.frame;
 	}
-	
+
 
 	// ===========================================================
 	// Constructors
@@ -123,15 +121,12 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
     	this.init();
 
 		this.exeHandler();
-
-		rootview = this.getWindow().getDecorView();
 		
 		 if(savedInstanceState == null)
 		 {
 			mWebViewHelper = new CrossAppWebViewHelper(frame);
-			
-			CrossAppTextField.initWithHandler();
-			
+				
+			CrossAppTextField.initWithHandler();		
 			CrossAppTextView.initWithHandler();			
 		 }
 		 else if (savedInstanceState != null)
@@ -299,6 +294,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	// ===========================================================
 	// Methods
 	// ===========================================================
+@SuppressWarnings("deprecation")
 public void init()
 	{
 		FrameLayout framelayout = new FrameLayout(this);
@@ -325,6 +321,8 @@ public void init()
         this.mGLSurfaceView.setCrossAppRenderer(mCrossAppRenderer);
         
         this.setContentView(framelayout);
+   
+//        framelayout.setBackgroundColor(Color.WHITE);
     }
 	
 	public static int dip2px(Context context, float dpValue) {

@@ -1,16 +1,12 @@
 
 package org.CrossApp.lib;
 
-import javax.microedition.khronos.opengles.GL10;
-
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 public class CrossAppGLSurfaceView extends GLSurfaceView {
@@ -238,7 +234,6 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 		*/
 		return true;
 	}
-
 	/*
 	 * This function is called before CrossAppRenderer.nativeInit(), so the
 	 * width and height is correct.
@@ -246,16 +241,18 @@ public class CrossAppGLSurfaceView extends GLSurfaceView {
 	@Override
 	protected void onSizeChanged(final int pNewSurfaceWidth, final int pNewSurfaceHeight, final int pOldSurfaceWidth, final int pOldSurfaceHeight) 
 	{
+		
         if(!this.isInEditMode())
         {
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-	        params.leftMargin = 0; 
-	    	params.rightMargin = 0;
-	    	params.topMargin = 0;
-	    	params.bottomMargin = 0;
+        	FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+ 	        params.leftMargin = 0; 
+ 	        params.topMargin = 0;
+ 	    	params.width = pNewSurfaceWidth;
+ 	    	params.height = pNewSurfaceHeight;
             setLayoutParams(params);
-            this.mRenderer.setScreenWidthAndHeight(pNewSurfaceWidth, pNewSurfaceHeight);
-            this.mRenderer.handleOnResume();
+            mRenderer.handleOnResume();
+        	mRenderer.setScreenWidthAndHeight(pNewSurfaceWidth, pNewSurfaceHeight);
+        	
             this.queueEvent(new Runnable() 
 	    	{
 	            @Override

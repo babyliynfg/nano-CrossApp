@@ -1,8 +1,5 @@
 package org.CrossApp.lib;
 
-import android.R.integer;
-
-
 public class CustomScanResult {
 	private String ssid;
 	private String mac;

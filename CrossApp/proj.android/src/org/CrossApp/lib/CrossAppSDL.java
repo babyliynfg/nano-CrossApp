@@ -1,25 +1,10 @@
 package org.CrossApp.lib;
 
-import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
-import android.app.*;
+
 import android.content.*;
-import android.content.res.AssetFileDescriptor;
-import android.view.*;
-import android.view.inputmethod.BaseInputConnection;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputConnection;
-import android.view.inputmethod.InputMethodManager;
-import android.os.*;
 import android.util.Log;
-import android.graphics.*;
 import android.media.*;
-import android.hardware.*;
 
 public class CrossAppSDL {
 	// ===========================================================

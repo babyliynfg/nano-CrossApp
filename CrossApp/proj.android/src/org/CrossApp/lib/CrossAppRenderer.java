@@ -1,16 +1,11 @@
 
 package org.CrossApp.lib;
 
-import java.io.UnsupportedEncodingException;
-
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
-
 import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout.LayoutParams;
 
 public class CrossAppRenderer implements GLSurfaceView.Renderer {
 	// ===========================================================

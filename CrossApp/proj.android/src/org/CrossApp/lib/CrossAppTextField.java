@@ -8,8 +8,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import android.R.bool;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;

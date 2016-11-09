@@ -1,10 +1,8 @@
 package org.CrossApp.lib;
 
-import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.nio.ByteBuffer;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
