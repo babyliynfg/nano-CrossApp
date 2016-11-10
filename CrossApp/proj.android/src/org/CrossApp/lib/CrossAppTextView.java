@@ -78,7 +78,7 @@ import android.widget.TextView.OnEditorActionListener;
     		dict = new HashMap<Integer, CrossAppTextView>();
     	}
 		
-		CrossAppTextField.reload();
+		CrossAppTextView.reload();
 	}
 
 	public static void reload()

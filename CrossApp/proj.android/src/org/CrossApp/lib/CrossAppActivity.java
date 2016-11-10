@@ -387,14 +387,14 @@ public void init()
             	CrossAppRenderer.nativeChanged(screenWidth, screenHeight);
             	CrossAppRenderer.nativeChangedOrientation(orientation);
          		
-            	s_pActivity.runOnUiThread(new Runnable() 
-             	{
-                     @Override
-                     public void run()
-                     {
-                 		//mWebViewHelper.setAllWebviews(mWebViewHelper.getAllWebviews());
-                     }
-             	});
+//            	s_pActivity.runOnUiThread(new Runnable() 
+//             	{
+//                     @Override
+//                     public void run()
+//                     {
+//                 		//mWebViewHelper.setAllWebviews(mWebViewHelper.getAllWebviews());
+//                     }
+//             	});
             }
         });  
 	}
