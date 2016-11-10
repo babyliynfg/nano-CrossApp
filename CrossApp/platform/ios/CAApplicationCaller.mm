@@ -1,7 +1,9 @@
 
 #import <Foundation/Foundation.h>
+#import <OpenGLES/EAGL.h>
 #import "CAApplicationCaller.h"
 #import "CAApplication.h"
+#import "EAGLView.h"
 
 static id s_sharedDirectorCaller;
 
@@ -69,6 +71,7 @@ static id s_sharedDirectorCaller;
                       
 -(void) doCaller: (id) sender
 {
+    [EAGLContext setCurrentContext: [[EAGLView sharedEGLView] context]];
     CrossApp::CAApplication::getApplication()->mainLoop();
 }
 

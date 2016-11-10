@@ -193,7 +193,10 @@ static EAGLView *view = 0;
 
     [EAGLContext setCurrentContext:context_];
     
-    CrossApp::CAApplication::getApplication()->drawScene();
+    if ([NSThread isMainThread])
+    {
+        CrossApp::CAApplication::getApplication()->drawScene();
+    }
 }
 
 - (void) swapBuffers
