@@ -127,7 +127,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 			mWebViewHelper = new CrossAppWebViewHelper(frame);
 				
 			CrossAppTextField.initWithHandler();		
-			CrossAppTextView.initWithHandler();			
+			CrossAppTextView.initWithHandler();		
 		 }
 		 else if (savedInstanceState != null)
 		 {
@@ -145,6 +145,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 			 }
 			 savedInstanceState.clear();
 		 }
+		 
 	}
 
 	@Override
@@ -157,6 +158,7 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 	protected void onResume() 
 	{
 		super.onResume();
+		
 		if (_sTextField != null) 
 		{
 			_sTextField.resume();
@@ -180,30 +182,6 @@ public abstract class CrossAppActivity extends Activity implements CrossAppHelpe
 		this.mGLSurfaceView.onPause();
 	}
 
-	@Override
-	protected void onStop() 
-	{
-		super.onStop();
-	}
-	
-	@Override
-	protected void onStart() 
-	{
-		super.onStart();
-		CrossAppTextField.reload();
-		CrossAppTextView.reload();
-		mGLSurfaceView.getRenderer().crossAppRendererNativeInit();
-	}
-	
-	@Override
-	protected void onRestart()
-	{
-		super.onRestart();		
-	}
-	
-	
-	
-	
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		

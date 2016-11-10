@@ -73,25 +73,12 @@ import android.widget.TextView.OnEditorActionListener;
 	
 	public static void initWithHandler()
 	{
-		if (handler == null)
-    	{
-    		handler = new Handler(Looper.myLooper());
-    	}
-		
 		if (dict == null)
     	{
     		dict = new HashMap<Integer, CrossAppTextView>();
     	}
 		
-		if (context == null)
-    	{
-    		context =  (CrossAppActivity)CrossAppActivity.getContext();
-    	}
-		
-		if (layout == null)
-    	{
-    		layout = CrossAppActivity.getFrameLayout();
-    	}
+		CrossAppTextField.reload();
 	}
 
 	public static void reload()
