@@ -167,15 +167,19 @@
 - (void) keyboardWillWasShown:(NSNotification *) notif
 {
     NSDictionary *info = [notif userInfo];
-    NSValue *value = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-    CGSize keyboardSize = [value CGRectValue].size;
     
-    CGFloat scale  = [[UIScreen mainScreen] scale];
-    int height = CrossApp::s_px_to_dip(keyboardSize.height * scale);
+    CGFloat keyBoardHeight = [[info objectForKey:@"UIKeyboardBoundsUserInfoKey"] CGRectValue].size.height;
+    CGRect begin = [[info objectForKey:@"UIKeyboardFrameBeginUserInfoKey"] CGRectValue];
+    CGRect end = [[info objectForKey:@"UIKeyboardFrameEndUserInfoKey"] CGRectValue];
     
-    if (_textField->getDelegate() && [self isFirstResponder])
+    if(begin.size.height > 0 && (begin.origin.y - end.origin.y > 0))
     {
-        _textField->getDelegate()->keyBoardHeight(_textField, height);
+        CGFloat scale  = [[UIScreen mainScreen] scale];
+        int height = CrossApp::s_px_to_dip(keyBoardHeight * scale);
+        if (_textField->getDelegate() && [self isFirstResponder])
+        {
+            _textField->getDelegate()->keyBoardHeight(_textField, height);
+        }
     }
 }
 
