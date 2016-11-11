@@ -556,6 +556,51 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     }
 }
 
+/************************************/
+
+void beginPushAnimation(float width, CAView* last, CAView* new_, CAObject* target, SEL_CAViewAnimation0 selector)
+{
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDelay(0.05f);
+    CAViewAnimation::setAnimationDuration(0.2f);
+    CAViewAnimation::setAnimationDelay(1/30.0f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    last->setFrameOrigin(DPoint(-width/3.0f, 0));
+    CAViewAnimation::commitAnimations();
+    
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDelay(0.05f);
+    CAViewAnimation::setAnimationDuration(0.2f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationDidStopSelector(target, selector);
+    new_->setFrameOrigin(DPointZero);
+    CAViewAnimation::commitAnimations();
+}
+
+void beginPopAnimation(const DRect& bounds, CAView* show, CAView* back, CAObject* target, SEL_CAViewAnimation0 selector)
+{
+    DRect rect = bounds;
+    rect.origin = DPoint(-bounds.size.width/3.0f, 0);
+    show->setFrame(rect);
+    
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDelay(0.05f);
+    CAViewAnimation::setAnimationDuration(0.2f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    show->setFrameOrigin(DPointZero);
+    CAViewAnimation::commitAnimations();
+    
+    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::setAnimationDelay(0.05f);
+    CAViewAnimation::setAnimationDuration(0.2f);
+    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationDidStopSelector(target, selector);
+    back->setFrameOrigin(DPoint(bounds.size.width + 10, 0));
+    CAViewAnimation::commitAnimations();
+}
+
+/************************************/
+
 void CANavigationController::replaceViewController(CrossApp::CAViewController *viewController, bool animated)
 {
     if (this->getView()->getSuperview() == NULL)
@@ -577,26 +622,15 @@ void CANavigationController::replaceViewController(CrossApp::CAViewController *v
     float x = this->getView()->getBounds().size.width;
 
     CAView* lastContainer = m_pContainers.back();
-    this->createWithContainer(viewController, DLayout(DHorizontalLayout_L_R(x, -x), DVerticalLayoutFill));
+    this->createWithContainer(viewController, DLayout(DHorizontalLayout_L_R(x + 10, -x - 10), DVerticalLayoutFill));
     CAView* newContainer = m_pContainers.back();
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     
     if (animated)
     {
-        CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationDelay(1/30.0f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        lastContainer->setFrameOrigin(DPoint(-x/3.0f, 0));
-        CAViewAnimation::commitAnimations();
-        
-        CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::replaceViewControllerFinish));
-        newContainer->setFrameOrigin(DPointZero);
-        CAViewAnimation::commitAnimations();
+        beginPushAnimation(x, lastContainer, newContainer,
+                           this, CAViewAnimation0_selector(CANavigationController::replaceViewControllerFinish));
     }
     else
     {
@@ -633,27 +667,15 @@ void CANavigationController::pushViewController(CAViewController* viewController
     float x = this->getView()->getBounds().size.width;
     
     CAView* lastContainer = m_pContainers.back();
-    this->createWithContainer(viewController, DLayout(DHorizontalLayout_L_R(x, -x), DVerticalLayoutFill));
+    this->createWithContainer(viewController, DLayout(DHorizontalLayout_L_R(x + 10, -x - 10), DVerticalLayoutFill));
     CAView* newContainer = m_pContainers.back();
     
     CAApplication::getApplication()->getTouchDispatcher()->setDispatchEventsFalse();
     
     if (animated)
     {
-        CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationDelay(1/30.0f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        lastContainer->setFrameOrigin(DPoint(-x/3.0f, 0));
-        CAViewAnimation::commitAnimations();
-        
-        CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::pushViewControllerFinish));
-        newContainer->setFrameOrigin(DPointZero);
-        CAViewAnimation::commitAnimations();
-        
+        beginPushAnimation(x, lastContainer, newContainer,
+                           this, CAViewAnimation0_selector(CANavigationController::pushViewControllerFinish));
     }
     else
     {
@@ -716,22 +738,8 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
     
     if (animated)
     {
-        DRect rect = this->getView()->getBounds();
-        rect.origin = DPoint(-x/3.0f, 0);
-        showContainer->setFrame(rect);
-        
-        CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        showContainer->setFrameOrigin(DPointZero);
-        CAViewAnimation::commitAnimations();
-        
-        CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::popViewControllerFinish));
-        backContainer->setFrameOrigin(DPoint(x, 0));
-        CAViewAnimation::commitAnimations();
+        beginPopAnimation(this->getView()->getBounds(), showContainer, backContainer,
+                          this, CAViewAnimation0_selector(CANavigationController::popViewControllerFinish));
     }
     else
     {
@@ -800,18 +808,8 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
     
     if (animated)
     {
-        CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        showContainer->setFrameOrigin(DPointZero);
-        CAViewAnimation::commitAnimations();
-        
-        CAViewAnimation::beginAnimations("", NULL);
-        CAViewAnimation::setAnimationDuration(0.2f);
-        CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-        CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CANavigationController::popToRootViewControllerFinish));
-        backContainer->setFrameOrigin(DPoint(x, 0));
-        CAViewAnimation::commitAnimations();
+        beginPopAnimation(this->getView()->getBounds(), showContainer, backContainer,
+                          this, CAViewAnimation0_selector(CANavigationController::popToRootViewControllerFinish));
     }
     else
     {
