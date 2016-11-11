@@ -544,7 +544,11 @@ void CAListView::reloadData()
     
 	this->loadCell();
     this->layoutPullToRefreshView();
-    this->startDeaccelerateScroll();
+    
+    if (!this->isScrollWindowNotOutSide())
+    {
+        this->startDeaccelerateScroll();
+    }
 }
 
 void CAListView::firstReloadData()

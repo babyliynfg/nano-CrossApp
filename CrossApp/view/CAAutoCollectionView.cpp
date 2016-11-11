@@ -789,7 +789,11 @@ void CAAutoCollectionView::reloadData()
     this->loadCollectionCell();
 	this->updateSectionHeaderAndFooterRects();
 	this->layoutPullToRefreshView();
-    this->startDeaccelerateScroll();
+    
+    if (!this->isScrollWindowNotOutSide())
+    {
+        this->startDeaccelerateScroll();
+    }
 }
 
 void CAAutoCollectionView::firstReloadData()

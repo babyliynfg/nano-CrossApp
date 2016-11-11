@@ -451,7 +451,11 @@ void CATableView::reloadData()
     this->loadTableCell();
     this->updateSectionHeaderAndFooterRects();
     this->layoutPullToRefreshView();
-    this->startDeaccelerateScroll();
+    
+    if (!this->isScrollWindowNotOutSide())
+    {
+        this->startDeaccelerateScroll();
+    }
 }
 
 void CATableView::firstReloadData()

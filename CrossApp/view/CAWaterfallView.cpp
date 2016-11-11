@@ -523,7 +523,11 @@ void CAWaterfallView::reloadData()
     this->loadWaterfallCell();
 	this->updateSectionHeaderAndFooterRects();
 	this->layoutPullToRefreshView();
-	this->startDeaccelerateScroll();
+	
+    if (!this->isScrollWindowNotOutSide())
+    {
+        this->startDeaccelerateScroll();
+    }
 }
 
 void CAWaterfallView::firstReloadData()

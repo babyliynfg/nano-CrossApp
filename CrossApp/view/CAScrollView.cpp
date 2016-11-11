@@ -1497,7 +1497,7 @@ void CAIndicator::switchPCMode(bool var)
     this->setPriorityScroll(m_bPCMode);
     this->setHaveNextResponder(!m_bPCMode);
     this->setMouseMovedEnabled(m_bPCMode);
-    this->setHide(false);
+    this->setHide(!m_bPCMode);
 }
 
 NS_CC_END
