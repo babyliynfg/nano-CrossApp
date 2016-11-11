@@ -330,6 +330,8 @@ private:
     bool m_bPCMode;
     
     bool m_bTouch;
+    
+    bool m_bHide;
 };
 
 

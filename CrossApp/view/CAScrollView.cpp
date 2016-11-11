@@ -1286,6 +1286,7 @@ CAIndicator::CAIndicator(const CAIndicatorType& type, CAScrollView* var)
 ,m_bPCMode(false)
 ,m_pMyScrollView(var)
 ,m_bTouch(false)
+,m_bHide(false)
 {
     this->setHaveNextResponder(false);
 }
@@ -1407,6 +1408,10 @@ void CAIndicator::setIndicator(const DSize& parentSize, const DRect& childrenFra
 
 void CAIndicator::setHide(bool var)
 {
+    CC_RETURN_IF(m_bHide == var);
+    m_bHide = var;
+    
+    CAViewAnimation::removeAnimations(m_s__StrID);
     if (var == false)
     {
         CC_RETURN_IF(fabs(1.0f-this->getAlpha()) < FLT_EPSILON);
@@ -1415,8 +1420,6 @@ void CAIndicator::setHide(bool var)
     }
     else
     {
-        CAViewAnimation::removeAnimations(m_s__StrID);
-        
         CC_RETURN_IF(1.0f-this->getAlpha() > FLT_EPSILON);
         CAViewAnimation::beginAnimations(m_s__StrID, NULL);
         CAViewAnimation::setAnimationDuration(0.3f);
@@ -1497,7 +1500,10 @@ void CAIndicator::switchPCMode(bool var)
     this->setPriorityScroll(m_bPCMode);
     this->setHaveNextResponder(!m_bPCMode);
     this->setMouseMovedEnabled(m_bPCMode);
-    this->setHide(!m_bPCMode);
+    if (m_bPCMode)
+    {
+        this->setHide(false);
+    }
 }
 
 NS_CC_END
