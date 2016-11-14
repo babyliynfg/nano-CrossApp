@@ -165,7 +165,7 @@ void CASegmentedControl::initWithView()
     m_pBackgroundView = CAScale9ImageView::createWithFrame(this->getBounds());
     m_pBackgroundView->setVisible(true);
     this->insertSubview(m_pBackgroundView, -2);
-    m_pBackgroundView->setImage(CAImage::create("source_material/btn_rounded_normal.png"));
+    m_pBackgroundView->setImage(CAImage::create("source_material/segmented_normal.png"));
     
     for (size_t i=0; i<(size_t)m_nItemsCount; i++)
     {
@@ -174,7 +174,7 @@ void CASegmentedControl::initWithView()
         m_vItemSelectedBackgrounds.pushBack(imageView);
     }
     
-    this->setSegmentItemBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"));
+    this->setSegmentItemBackgroundImage(CAImage::create("source_material/segmented_selected.png"));
     
     
     for (size_t i=0; i<(size_t)m_nItemsCount; i++)
