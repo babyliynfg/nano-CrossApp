@@ -116,12 +116,12 @@ void CAProgress::onEnterTransitionDidFinish()
     
     if (m_pProgressTrackImage == NULL)
     {
-        this->setProgressTrackImage(CAImage::create("source_material/btn_square_disabled.png"));
+        this->setProgressTrackImage(CAImage::create("source_material/progress_track.png"));
     }
     
     if (m_pProgressTintImage == NULL)
     {
-        this->setProgressTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
+        this->setProgressTintImage(CAImage::create("source_material/progress_tint.png"));
     }
 }
 

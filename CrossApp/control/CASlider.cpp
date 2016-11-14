@@ -116,12 +116,12 @@ bool CASlider::init()
     
     m_pMinTrackTintImageView = CAScale9ImageView::create();
     this->addSubview(m_pMinTrackTintImageView);
-    this->setMinTrackTintImage(CAImage::create("source_material/btn_square_highlighted.png"));
+    this->setMinTrackTintImage(CAImage::create("source_material/slider_min_track.png"));
     
     
     m_pMaxTrackTintImageView = CAScale9ImageView::create();
     this->addSubview(m_pMaxTrackTintImageView);
-    this->setMaxTrackTintImage(CAImage::create("source_material/btn_square_disabled.png"));
+    this->setMaxTrackTintImage(CAImage::create("source_material/slider_max_track.png"));
     
     
     m_pThumbTintImageView = CAImageView::create();

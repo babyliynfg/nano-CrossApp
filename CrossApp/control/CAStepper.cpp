@@ -40,8 +40,8 @@ CAStepper::CAStepper(const CAStepperOrientation& type)
     memset(m_pIncrementImage, 0x00, sizeof(m_pIncrementImage));
     memset(m_pDecrementImage, 0x00, sizeof(m_pDecrementImage));
     
-    setBackgroundImage(CAImage::create("source_material/btn_rounded_normal.png"), CAControlStateNormal);
-    setBackgroundImage(CAImage::create("source_material/btn_rounded_highlighted.png"), CAControlStateHighlighted);
+    setBackgroundImage(CAImage::create("source_material/stepper_normal.png"), CAControlStateNormal);
+    setBackgroundImage(CAImage::create("source_material/stepper_selected.png"), CAControlStateHighlighted);
     setIncrementImage(CAImage::create("source_material/stepper_inc_h.png"), CAControlStateAll);
     setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
     setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);
