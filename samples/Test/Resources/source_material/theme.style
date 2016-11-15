@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Theme>
+    <CAButton name="CAButton_SquareRect">
+        <BackgroundView backgroundView_normal="source_material/btn_square_normal.png"/>
+        <BackgroundView backgroundView_highlighted="source_material/btn_square_highlighted.png"/>
+        <BackgroundView backgroundView_selected="source_material/btn_square_selected.png"/>
+        <BackgroundView backgroundView_disabled="source_material/btn_square_disabled.png"/>
+        <Color titleColor_normal="0xff2ec0ff"/>
+        <Color titleColor_highlighted="0xffffffff"/>
+        <Color titleColor_selected="0xffffffff"/>
+        <Color titleColor_disabled="0xffffffff"/>
+        <Size height="60"/>
+    </CAButton>
+    <CAButton name="CAButton_RoundedRect">
+        <BackgroundView backgroundView_normal="source_material/btn_rounded_normal.png"/>
+        <BackgroundView backgroundView_highlighted="source_material/btn_rounded_highlighted.png"/>
+        <BackgroundView backgroundView_selected="source_material/btn_rounded_selected.png"/>
+        <BackgroundView backgroundView_disabled="source_material/btn_rounded_disabled.png"/>
+        <Color titleColor_normal="0xff2EC0FF"/>
+        <Color titleColor_highlighted="0xffffffff"/>
+        <Color titleColor_selected="0xffffffff"/>
+        <Color titleColor_disabled="0xffffffff"/>
+        <Size height="60"/>
+    </CAButton>
+    <CASegmentedControl name="CASegmentedControl">
+        <BackgroundView backgroundView_normal="source_material/segmented_normal.png"/>
+        <BackgroundView backgroundView_selected="source_material/segmented_selected.png"/>
+        <Color titleColor_normal="0xff36C3F0"/>
+        <Color titleColor_selected="0xffffffff"/>
+        <Color tintColor="0xff36C3F0"/>
+        <Size height="60"/>
+    </CASegmentedControl>
+    <CAActivityIndicatorView name="CAActivityIndicatorView">
+        <Image image_white="source_material/loading_white.png"/>
+        <Image image_gray="source_material/loading_black.png"/>
+    </CAActivityIndicatorView>
+    <CAProgress name="CAProgress">
+        <Image trackImage="source_material/progress_track.png"/>
+        <Image tintImage="source_material/progress_tint.png"/>
+        <Size height="6"/>
+    </CAProgress>
+    <CASlider name="CASlider">
+        <Image minTrackTintImage="source_material/slider_min_track.png"/>
+        <Image maxTrackTintImage="source_material/slider_max_track.png"/>
+        <Image thumbTintImage="source_material/slider_indicator.png"/>
+        <Size trackHeight="4"/>
+        <Size height="36"/>
+    </CASlider>
+    <CASwitch name="CASwitch">
+        <Image onImage="source_material/switch_on.png"/>
+        <Image offImage="source_material/switch_off.png"/>
+        <Image thumbTintImage="source_material/switch_indicator.png"/>
+        <Size width="102"/>
+        <Size height="56"/>
+    </CASwitch>
+    <CAStepper name="CAStepper">
+        <BackgroundView backgroundView_normal="source_material/stepper_normal.png"/>
+        <BackgroundView backgroundView_selected="source_material/stepper_selected.png"/>
+        <Image decImage_normal="source_material/stepper_dec_n.png"/>
+        <Image decImage_highlighted="source_material/stepper_dec_h.png"/>
+        <Image incImage_normal="source_material/stepper_inc_n.png"/>
+        <Image incImage_highlighted="source_material/stepper_inc_h.png"/>
+        <Color tintColor="0xff36C3F0"/>
+    </CAStepper>
+    <CATextField name="CATextField">
+        <BackgroundView backgroundView_normal="source_material/textField_bg.png"/>
+        <Size height="80"/>
+    </CATextField>
+    <CATabBar name="CATabBar">
+        <BackgroundView backgroundView_normal="source_material/tabBar_bg.png"/>
+        <BackgroundView backgroundView_selected="source_material/tabBar_selected_bg.png"/>
+        <Image bottomLine="source_material/tabBar_selected_indicator.png"/>
+        <Color titleColor_normal="0xffffffff"/>
+        <Color titleColor_selected="0xff32C1FF"/>
+    </CATabBar>
+    <CAPageControl name="CAPageControl">
+        <BackgroundView backgroundView_normal_custom="source_material/page_n.png"/>
+        <BackgroundView backgroundView_selected_custom="source_material/page_h.png"/>
+        <BackgroundView backgroundView_normal_round="source_material/page_round_n.png"/>
+        <BackgroundView backgroundView_selected_round="source_material/page_round_h.png"/>
+        <BackgroundView backgroundView_normal_rect="source_material/page_rect_n.png"/>
+        <BackgroundView backgroundView_selected_rect="source_material/page_rect_h.png"/>
+    </CAPageControl>
+    <CANavigationBar name="CANavigationBar">
+        <BackgroundView backgroundView="source_material/navigation_bg.png"/>
+        <Image leftButtonImage="source_material/btn_left_white.png"/>
+    </CANavigationBar>
+    <CABadgeView name="CABadgeView">
+        <Image badgeImage="source_material/bg_badge.png"/>
+    </CABadgeView>
+    <CACell name="CACell">
+        <BackgroundColor backgroundColor_normal="0xffffffff"/>
+        <BackgroundColor backgroundColor_highlighted="0xffF0F0F0"/>
+        <BackgroundColor backgroundColor_selected="0xff32C1FF"/>
+        <BackgroundColor backgroundColor_disabled="0xff7F7F7F"/>
+        <Color separatorColor="0xffefeef4"/>
+    </CACell>
+</Theme>

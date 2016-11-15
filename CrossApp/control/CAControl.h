@@ -32,8 +32,8 @@ typedef enum
 {
     CAControlStateNormal = 0,
     CAControlStateHighlighted,
-    CAControlStateDisabled,
     CAControlStateSelected,
+    CAControlStateDisabled,
     CAControlStateAll
 }CAControlState;
 
