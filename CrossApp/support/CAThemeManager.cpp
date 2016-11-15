@@ -12,6 +12,8 @@
 
 NS_CC_BEGIN
 
+const std::map<std::string, std::string> s_map_null;
+
 static CAThemeManager* s_pThemeManager = nullptr;
 
 CAThemeManager* CAThemeManager::getInstance()
@@ -82,6 +84,14 @@ CAThemeManager::~CAThemeManager()
 	CC_SAFE_DELETE(m_pMyDocument);
 }
 
+const std::map<std::string, std::string>& CAThemeManager::getThemeMap(const std::string& key)
+{
+    if (m_mPathss.count(key) == 0)
+    {
+        return s_map_null;
+    }
+    return m_mPathss.at(key);
+}
 
 
 NS_CC_END

@@ -23,6 +23,8 @@ public:
     
     static void destroyInstance();
     
+    const std::map<std::string, std::string>& getThemeMap(const std::string& key);
+    
 protected:
     
     CAThemeManager();
