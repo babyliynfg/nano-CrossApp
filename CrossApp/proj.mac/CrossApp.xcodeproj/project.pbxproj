@@ -399,6 +399,8 @@
 		D693E7C71D34F75F003D97A4 /* CAVec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D693E7C51D34F75F003D97A4 /* CAVec4.h */; };
 		D6B0C6411D6587ED00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */; };
 		D6B12EB61DC9C81500944576 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B12EB51DC9C81500944576 /* libwebsockets.a */; };
+		D6CC2DF51DD9BA8F007E8502 /* CAThemeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6CC2DF31DD9BA8F007E8502 /* CAThemeManager.cpp */; };
+		D6CC2DF61DD9BA8F007E8502 /* CAThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D6CC2DF41DD9BA8F007E8502 /* CAThemeManager.h */; };
 		D6D8A7821DC2F1EB00A47FC2 /* egif_lib.c in Sources */ = {isa = PBXBuildFile; fileRef = D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */; };
 		D6D8A7831DC2F1EB00A47FC2 /* openbsd-reallocarray.c in Sources */ = {isa = PBXBuildFile; fileRef = D6D8A7811DC2F1EB00A47FC2 /* openbsd-reallocarray.c */; };
 /* End PBXBuildFile section */
@@ -846,6 +848,8 @@
 		D693E7C61D34F75F003D97A4 /* CAVec4.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAVec4.cpp; sourceTree = "<group>"; };
 		D6B0C6401D6587ED00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
 		D6B12EB51DC9C81500944576 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../the_third_party/websockets/prebuilt/mac/libwebsockets.a; sourceTree = "<group>"; };
+		D6CC2DF31DD9BA8F007E8502 /* CAThemeManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThemeManager.cpp; sourceTree = "<group>"; };
+		D6CC2DF41DD9BA8F007E8502 /* CAThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThemeManager.h; sourceTree = "<group>"; };
 		D6D8A7801DC2F1EB00A47FC2 /* egif_lib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = egif_lib.c; sourceTree = "<group>"; };
 		D6D8A7811DC2F1EB00A47FC2 /* openbsd-reallocarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "openbsd-reallocarray.c"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1183,6 +1187,8 @@
 				04EAB01B1956D75500198A8E /* ccUtils.h */,
 				02150DBF1C06B81300BC3F9C /* CAUIEditorParser.cpp */,
 				02150DC01C06B81300BC3F9C /* CAUIEditorParser.h */,
+				D6CC2DF31DD9BA8F007E8502 /* CAThemeManager.cpp */,
+				D6CC2DF41DD9BA8F007E8502 /* CAThemeManager.h */,
 			);
 			path = support;
 			sourceTree = "<group>";
@@ -1671,6 +1677,7 @@
 				B0B05FBE1BB1483200B891CE /* CARenderImage.h in Headers */,
 				04EAB07C1956D75600198A8E /* ccTypes.h in Headers */,
 				D65F35621D38C995004B56A9 /* ray2.h in Headers */,
+				D6CC2DF61DD9BA8F007E8502 /* CAThemeManager.h in Headers */,
 				D65F35611D38C995004B56A9 /* quaternion.h in Headers */,
 				B0B05FAA1BB1483200B891CE /* CADrawingPrimitives.h in Headers */,
 				B01A29421994C95F00D42BA0 /* CACalendar.h in Headers */,
@@ -2077,6 +2084,7 @@
 				D6D8A7831DC2F1EB00A47FC2 /* openbsd-reallocarray.c in Sources */,
 				D64A8C9D1D34912200F75021 /* CAPoint3D.cpp in Sources */,
 				04EABB441956DD8E00198A8E /* CrossApp.cpp in Sources */,
+				D6CC2DF51DD9BA8F007E8502 /* CAThemeManager.cpp in Sources */,
 				B0C3BD431ADE70B8009BE71A /* CAClipboard.mm in Sources */,
 				040665C21956F40E003E0D62 /* CAGLProgram.cpp in Sources */,
 				D65F356A1D38C995004B56A9 /* mat3.c in Sources */,

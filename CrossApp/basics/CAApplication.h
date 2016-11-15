@@ -34,7 +34,7 @@ class CCActionManager;
 class CATouchDispatcher;
 class CAKeypadDispatcher;
 class CAAccelerometer;
-
+class CAThemeManager;
 
 class CC_DLL CAApplication : public CAObject, public TypeInfo
 {
@@ -111,6 +111,9 @@ public:
     
     inline const CAStatusBarStyle& getStatusBarStyle() { return m_eStatusBarStyle; }
     void setStatusBarStyle(const CAStatusBarStyle& var);
+    
+    inline CAThemeManager* getThemeManager() { return m_pThemeManager; }
+    void setThemeManager(CAThemeManager* var) { m_pThemeManager = var; }
     
     bool isStatusBarHidden();
     
@@ -320,6 +323,8 @@ protected:
     CAView *m_pNotificationNode;
     
     CAStatusBarStyle m_eStatusBarStyle;
+    
+    CAThemeManager* m_pThemeManager;
     
     int m_nDrawCount;
     

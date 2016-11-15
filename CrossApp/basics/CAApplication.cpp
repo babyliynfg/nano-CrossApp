@@ -27,6 +27,7 @@
 #include "support/netWork/HttpClient.h"
 #include "support/netWork/DownloadManager.h"
 #include "game/actions/CGActionManager.h"
+#include "support/CAThemeManager.h"
 
 NS_CC_BEGIN
 
@@ -98,6 +99,7 @@ bool CAApplication::init(void)
 
     m_fAdaptationRatio = CADensityDpi::getDensityDpi() / DPI_STANDARD;
     
+    m_pThemeManager = CAThemeManager::getInstance();
     
     return true;
 }
@@ -116,6 +118,7 @@ CAApplication::~CAApplication(void)
     CAPoolManager::sharedPoolManager()->pop();
     CAPoolManager::purgePoolManager();
     CAScheduler::destroyScheduler();
+    CAThemeManager::destroyInstance();
     
     // delete m_pLastUpdate
     CC_SAFE_DELETE(m_pLastUpdate);

@@ -148,7 +148,7 @@
 #include "support/sqlite3/sqlite3.h"
 #include "support/LocalStorage/LocalStorage.h"
 #include "support/device/CADevice.h"
-
+#include "support/CAThemeManager.h"
 
 // platform
 #include "platform/CACommon.h"

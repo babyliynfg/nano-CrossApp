@@ -17,6 +17,9 @@
 #include "animation/CAAnimation.h"
 #include "support/CAUIEditorParser.h"
 #include "support/device/CADevice.h"
+#include "script_support/CCScriptSupport.h"
+
+
 NS_CC_BEGIN
 
 CAViewController::CAViewController()

@@ -10,31 +10,28 @@
 #define CAUIEditorParser_h
 
 #include "basics/CAObject.h"
-#include "basics/CASTLContainer.h"
 #include "tinyxml2/tinyxml2.h"
-
+#include <map>
 
 NS_CC_BEGIN
-class CAViewController;
-CC_DLL class CAUIEditorParser : public CAObject
+
+CC_DLL class CAThemeManager : public CAObject
 {
 public:
     
-    CAUIEditorParser();
+    static CAThemeManager *getInstance();
     
-    virtual ~CAUIEditorParser();
-    
-    bool initWithPath(const std::string& filePath, CAView* superview);
-    
-	void parseViewControllItems(CAViewController* viewController);
-
-    CAMap<std::string, CAView*> m_mViews;
+    static void destroyInstance();
     
 protected:
     
-    CAView* m_pSupverview;
-
-	CAViewController* m_pViewController;
+    CAThemeManager();
+    
+    virtual ~CAThemeManager();
+    
+protected:
+    
+    std::map<std::string, std::map<std::string, std::string> > m_mPathss;
 
 	tinyxml2::XMLDocument* m_pMyDocument;
 };

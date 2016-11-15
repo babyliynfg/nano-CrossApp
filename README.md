@@ -38,3 +38,6 @@ QQ群：   1群：345156390
         3群：63254880
 
 官网：http://crossapp.9miao.com
+源码：
+github：https://github.com/babyliynfg/nano-CrossApp
+oschina: http://git.oschina.net/liyuanfeng/nano-CrossApp
