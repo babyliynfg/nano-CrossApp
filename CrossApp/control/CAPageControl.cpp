@@ -9,7 +9,9 @@
 #include "CAPageControl.h"
 #include "view/CAImageView.h"
 #include "images/CAImage.h"
-
+#include "basics/CAApplication.h"
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 CAPageControl::CAPageControl()
@@ -91,8 +93,9 @@ CAPageControl* CAPageControl::createWithLayout(const CrossApp::DLayout &layout)
 
 bool CAPageControl::init()
 {
-    setPageIndicatorImage(CAImage::create("source_material/page_n.png"));
-    setCurrIndicatorImage(CAImage::create("source_material/page_h.png"));
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPageControl");
+    setPageIndicatorImage(CAImage::create(map.at("backgroundView_normal_custom")));
+    setCurrIndicatorImage(CAImage::create(map.at("backgroundView_selected_custom")));
 
     return true;
 }
@@ -246,19 +249,19 @@ void CAPageControl::setStyle(const CAPageControlStyle &var)
 {
     if (m_style != var) {
         m_style = var;
-        
+        const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPageControl");
         switch (m_style) {
             case CAPageControlStyleDot:
-                setPageIndicatorImage(CAImage::create("source_material/page_n.png"));
-                setCurrIndicatorImage(CAImage::create("source_material/page_h.png"));
+                setPageIndicatorImage(CAImage::create(map.at("backgroundView_normal_custom")));
+                setCurrIndicatorImage(CAImage::create(map.at("backgroundView_selected_custom")));
                 break;
             case CAPageControlStyleRound:
-                setPageIndicatorImage(CAImage::create("source_material/page_round_n.png"));
-                setCurrIndicatorImage(CAImage::create("source_material/page_round_h.png"));
+                setPageIndicatorImage(CAImage::create(map.at("backgroundView_normal_round")));
+                setCurrIndicatorImage(CAImage::create(map.at("backgroundView_selected_round")));
                 break;
             case CAPageControlStyleRectangle:
-                setPageIndicatorImage(CAImage::create("source_material/page_rect_n.png"));
-                setCurrIndicatorImage(CAImage::create("source_material/page_rect_h.png"));
+                setPageIndicatorImage(CAImage::create(map.at("backgroundView_normal_rect")));
+                setCurrIndicatorImage(CAImage::create(map.at("backgroundView_selected_rect")));
                 break;
                 
             default:

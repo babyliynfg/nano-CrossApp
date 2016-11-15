@@ -13,7 +13,8 @@
 #include "support/CAPointExtension.h"
 #include "basics/CAApplication.h"
 #include "animation/CAViewAnimation.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 CAProgress::CAProgress()
@@ -113,15 +114,15 @@ bool CAProgress::init()
 void CAProgress::onEnterTransitionDidFinish()
 { 
     CAView::onEnterTransitionDidFinish();
-    
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAProgress");
     if (m_pProgressTrackImage == NULL)
     {
-        this->setProgressTrackImage(CAImage::create("source_material/progress_track.png"));
+        this->setProgressTrackImage(CAImage::create(map.at("trackImage")));
     }
     
     if (m_pProgressTintImage == NULL)
     {
-        this->setProgressTintImage(CAImage::create("source_material/progress_tint.png"));
+        this->setProgressTintImage(CAImage::create(map.at("tintImage")));
     }
 }
 
@@ -235,7 +236,11 @@ void CAProgress::animatedFinish()
 
 void CAProgress::setContentSize(const DSize & var)
 {
-    CAView::setContentSize(DSize(var.width, MAX(var.height, 6)));
+    DSize size = var;
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAProgress");
+    int h = atoi(map.at("height").c_str());
+    size.height = (h == 0) ? size.height : h;
+    CAView::setContentSize(size);
     
     m_pTarckImageView->setFrame(this->getBounds());
     DRect rect = DRect(0, 0, m_pIndicator->getFrameOrigin().x, this->getBounds().size.height);

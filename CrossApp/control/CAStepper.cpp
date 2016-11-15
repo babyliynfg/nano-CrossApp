@@ -15,7 +15,8 @@
 #include "view/CARenderImage.h"
 #include "basics/CAApplication.h"
 #include "platform/CADensityDpi.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 CAStepper::CAStepper(const CAStepperOrientation& type)
@@ -34,18 +35,18 @@ CAStepper::CAStepper(const CAStepperOrientation& type)
 , m_bTouchEffect(false)
 , m_pDividerImageView(NULL)
 , m_pCAStepperOrientation(type)
-,m_cTintColor(ccc4(54, 195, 240, 255))
 {
     memset(m_pBackgroundImage, 0x00, sizeof(m_pBackgroundImage));
     memset(m_pIncrementImage, 0x00, sizeof(m_pIncrementImage));
     memset(m_pDecrementImage, 0x00, sizeof(m_pDecrementImage));
-    
-    setBackgroundImage(CAImage::create("source_material/stepper_normal.png"), CAControlStateNormal);
-    setBackgroundImage(CAImage::create("source_material/stepper_selected.png"), CAControlStateHighlighted);
-    setIncrementImage(CAImage::create("source_material/stepper_inc_h.png"), CAControlStateAll);
-    setIncrementImage(CAImage::create("source_material/stepper_inc_n.png"), CAControlStateNormal);
-    setDecrementImage(CAImage::create("source_material/stepper_dec_h.png"), CAControlStateAll);
-    setDecrementImage(CAImage::create("source_material/stepper_dec_n.png"), CAControlStateNormal);
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAStepper");
+    setBackgroundImage(CAImage::create(map.at("backgroundView_normal")), CAControlStateNormal);
+    setBackgroundImage(CAImage::create(map.at("backgroundView_selected")), CAControlStateHighlighted);
+    setIncrementImage(CAImage::create(map.at("incImage_highlighted")), CAControlStateAll);
+    setIncrementImage(CAImage::create(map.at("incImage_normal")), CAControlStateNormal);
+    setDecrementImage(CAImage::create(map.at("decImage_highlighted")), CAControlStateAll);
+    setDecrementImage(CAImage::create(map.at("decImage_normal")), CAControlStateNormal);
+    m_cTintColor = ccc4Int(CrossApp::hex2Int(map.at("tintColor")));
 }
 
 CAStepper::~CAStepper()

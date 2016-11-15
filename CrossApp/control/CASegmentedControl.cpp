@@ -14,7 +14,8 @@
 #include "view/CADrawView.h"
 #include "view/CARenderImage.h"
 #include "platform/CADensityDpi.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -162,10 +163,11 @@ void CASegmentedControl::initWithData()
 
 void CASegmentedControl::initWithView()
 {
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASegmentedControl");
     m_pBackgroundView = CAScale9ImageView::createWithFrame(this->getBounds());
     m_pBackgroundView->setVisible(true);
     this->insertSubview(m_pBackgroundView, -2);
-    m_pBackgroundView->setImage(CAImage::create("source_material/segmented_normal.png"));
+    m_pBackgroundView->setImage(CAImage::create(map.at("backgroundView_normal")));
     
     for (size_t i=0; i<(size_t)m_nItemsCount; i++)
     {
@@ -174,9 +176,10 @@ void CASegmentedControl::initWithView()
         m_vItemSelectedBackgrounds.pushBack(imageView);
     }
     
-    this->setSegmentItemBackgroundImage(CAImage::create("source_material/segmented_selected.png"));
-    
-    
+    this->setSegmentItemBackgroundImage(CAImage::create(map.at("backgroundView_selected")));
+    m_cTintColor = ccc4Int(CrossApp::hex2Int(map.at("tintColor")));
+    m_cTextColor = ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal")));
+    m_cTextSelectedColor = ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected")));
     for (size_t i=0; i<(size_t)m_nItemsCount; i++)
     {
         CAView* view = new CAView();
@@ -197,8 +200,9 @@ void CASegmentedControl::setContentSize(const CrossApp::DSize &var)
 {
     DSize size = var;
     size.width = MAX(size.width, size.height);
-    //    size.height = MAX(size.height, 58);
-    //    size.width = MAX(size.width, size.height * 2);
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASegmentedControl");
+    int h = atoi(map.at("height").c_str());
+    size.height = (h == 0) ? size.height : h;
     CAControl::setContentSize(size);
     
     m_fSegmentWidth = size.width / m_nItemsCount;

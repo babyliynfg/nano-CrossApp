@@ -14,7 +14,8 @@
 #include "support/CAPointExtension.h"
 #include "dispatcher/CATouch.h"
 #include "animation/CAViewAnimation.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 #pragma CANavigationBar
@@ -156,7 +157,8 @@ void CANavigationBar::showBackground()
 {
     if (m_pBackgroundView == NULL)
     {
-        m_pBackgroundView = CAScale9ImageView::createWithImage(CAImage::create("source_material/navigation_bg.png"));
+        const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
+        m_pBackgroundView = CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView")));
         CC_SAFE_RETAIN(m_pBackgroundView);
     }
     m_pBackgroundView->setLayout(DLayoutFill);
@@ -254,7 +256,8 @@ void CANavigationBar::showLeftButton()
         
         if (item == NULL && m_pItem)
         {
-            button->setImageForState(CAControlStateAll, CAImage::create("source_material/btn_left_white.png"));
+            const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
+            button->setImageForState(CAControlStateAll, CAImage::create(map.at("leftButtonImage")));
             button->setImageColorForState(CAControlStateHighlighted, ccc4(255, 255, 200, 255));
             button->addTarget(this, CAControl_selector(CANavigationBar::goBack), CAControlEventTouchUpInSide);
         }
@@ -371,9 +374,10 @@ CABadgeView::~CABadgeView()
 
 bool CABadgeView::init()
 {
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CABadgeView");
     m_pBackground = CAScale9ImageView::createWithLayout(DLayout(DHorizontalLayout_W_C(46, 0.5f), DVerticalLayout_H_C(46, 0.5f)));
     m_pBackground->setCapInsets(DRect(22.5, 22.5, 1, 1));
-    m_pBackground->setImage(CAImage::create("source_material/bg_badge.png"));
+    m_pBackground->setImage(CAImage::create(map.at("badgeImage")));
     this->addSubview(m_pBackground);
     
     m_pTextView = CALabel::createWithLayout(DLayout(DHorizontalLayout_W_C(180, 0.5f), DVerticalLayout_H_C(46, 0.5f)));
@@ -422,21 +426,23 @@ CATabBar::CATabBar(bool clearance)
 ,m_pSelectedItem(NULL)
 ,m_cItemSize(DSizeZero)
 ,m_nSelectedIndex(-1)
-,m_sTitleColor(CAColor_white)
-,m_sSelectedTitleColor(ccc4(50, 193, 255, 255))
 ,m_bSelectedTitleBold(false)
 ,m_bShowIndicator(false)
 ,m_pDelegate(NULL)
 ,m_bClearance(clearance)
 {
-    m_pBackgroundImage = CAImage::create("source_material/tabBar_bg.png");
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATabBar");
+    m_pBackgroundImage = CAImage::create(map.at("backgroundView_normal"));
     CC_SAFE_RETAIN(m_pBackgroundImage);
     
-    m_pSelectedBackgroundImage = CAImage::create("source_material/tabBar_selected_bg.png");
+    m_pSelectedBackgroundImage = CAImage::create(map.at("backgroundView_selected"));
     CC_SAFE_RETAIN(m_pSelectedBackgroundImage);
     
-    m_pSelectedIndicatorImage = CAImage::create("source_material/tabBar_selected_indicator.png");
+    m_pSelectedIndicatorImage = CAImage::create(map.at("bottomLine"));
     CC_SAFE_RETAIN(m_pSelectedIndicatorImage);
+    
+    m_sTitleColor = ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal")));
+    m_sSelectedTitleColor = ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected")));
 }
 
 CATabBar::~CATabBar()

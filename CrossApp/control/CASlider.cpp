@@ -13,7 +13,8 @@
 #include "support/CAPointExtension.h"
 #include "view/CARenderImage.h"
 #include "basics/CAApplication.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 CASlider::CASlider()
@@ -32,6 +33,9 @@ CASlider::CASlider()
 {
     this->setPriorityScroll(true);
     this->setVerticalScrollEnabled(false);
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
+    int h = atoi(map.at("trackHeight").c_str());
+    m_fTrackHeight = (h == 0) ? m_fTrackHeight : h;
 }
 
 CASlider::~CASlider()
@@ -113,20 +117,20 @@ bool CASlider::init()
     {
         return false;
     }
-    
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
     m_pMinTrackTintImageView = CAScale9ImageView::create();
     this->addSubview(m_pMinTrackTintImageView);
-    this->setMinTrackTintImage(CAImage::create("source_material/slider_min_track.png"));
+    this->setMinTrackTintImage(CAImage::create(map.at("minTrackTintImage")));
     
     
     m_pMaxTrackTintImageView = CAScale9ImageView::create();
     this->addSubview(m_pMaxTrackTintImageView);
-    this->setMaxTrackTintImage(CAImage::create("source_material/slider_max_track.png"));
+    this->setMaxTrackTintImage(CAImage::create(map.at("maxTrackTintImage")));
     
     
     m_pThumbTintImageView = CAImageView::create();
     this->addSubview(m_pThumbTintImageView);
-    this->setThumbTintImage(CAImage::create("source_material/slider_indicator.png"));
+    this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
     
     return true;
 }
@@ -326,7 +330,11 @@ void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
 
 void CASlider::setContentSize(const DSize & var)
 {
-    CAControl::setContentSize(DSize(var.width, var.height));
+    DSize size = var;
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
+    int h = atoi(map.at("height").c_str());
+    size.height = (h == 0) ? size.height : h;
+    CAControl::setContentSize(size);
     
     this->layoutSubViews();
 }

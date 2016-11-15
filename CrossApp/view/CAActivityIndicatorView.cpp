@@ -11,7 +11,8 @@
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "CAScale9ImageView.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 CAActivityIndicatorView::CAActivityIndicatorView()
@@ -117,7 +118,7 @@ void CAActivityIndicatorView::visit()
 void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
 {
     m_style = style;
-    
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAActivityIndicatorView");
     if (m_style != CAActivityIndicatorViewStyleImage)
     {
         DRect center = this->getBounds();
@@ -128,24 +129,24 @@ void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
         {
             case CAActivityIndicatorViewStyleGray:
             {
-                image = CAImage::create("source_material/loading_black.png");
+                image = CAImage::create(map.at("image_gray"));
                 center.size = DSize(40, 40);
             }
                 break;
             case CAActivityIndicatorViewStyleWhite:
             {
-                image = CAImage::create("source_material/loading_write.png");
+                image = CAImage::create(map.at("image_white"));
                 center.size = DSize(40, 40);
             }                break;
             case CAActivityIndicatorViewStyleGrayLarge:
             {
-                image = CAImage::create("source_material/loading_black.png");
+                image = CAImage::create(map.at("image_gray"));
                 center.size = DSize(68, 68);
             }
                 break;
             case CAActivityIndicatorViewStyleWhiteLarge:
             {
-                image = CAImage::create("source_material/loading_write.png");
+                image = CAImage::create(map.at("image_white"));
                 center.size = DSize(68, 68);
             }
                 break;

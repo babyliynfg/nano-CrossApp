@@ -13,7 +13,8 @@
 #include "basics/CAScheduler.h"
 #import "EAGLView.h"
 #import <Cocoa/Cocoa.h>
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 #define textField_MAC ((MACTextField*)m_pTextField)
 
 #ifdef NSTextAlignmentLeft
@@ -565,7 +566,8 @@ CATextField* CATextField::createWithLayout(const DLayout& layout)
 
 bool CATextField::init()
 {
-    CAImage* image = CAImage::create("source_material/textField_bg.png");
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
     m_pBackgroundView->setLayout(DLayoutFill);
@@ -602,7 +604,11 @@ void CATextField::update(float dt)
 
 void CATextField::setContentSize(const DSize& contentSize)
 {
-    CAControl::setContentSize(contentSize);
+    DSize psize = contentSize;
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    int h = atoi(map.at("height").c_str());
+    psize.height = (h == 0) ? psize.height : h;
+    CAControl::setContentSize(psize);
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     

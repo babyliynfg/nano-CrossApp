@@ -17,6 +17,8 @@
 #include "basics/CAApplication.h"
 #include "basics/CAScheduler.h"
 #include "animation/CAViewAnimation.h"
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 CAButton::CAButton(const CAButtonType& buttonType)
@@ -173,21 +175,20 @@ bool CAButton::init()
 
 void CAButton::setBackgroundViewSquareRect()
 {
-    const char* fileName[CAControlStateAll] =
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
+    std::string fileName[CAControlStateAll] =
     {
-        "source_material/btn_square_normal.png",
-        "source_material/btn_square_highlighted.png",
-        "source_material/btn_square_disabled.png",
-        "source_material/btn_square_selected.png"
+        map.at("backgroundView_normal"),
+        map.at("backgroundView_highlighted"),
+        map.at("backgroundView_selected"),
+        map.at("backgroundView_disabled")
     };
-    
     CAColor4B color[CAControlStateAll] =
     {
-        ccc4( 46, 192, 255, 255),
-        ccc4(255, 255, 255, 255),
-        ccc4(255, 255, 255, 255),
-        ccc4(255, 255, 255, 255)
-        
+        ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))),
+        ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlighted"))),
+        ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected"))),
+        ccc4Int(CrossApp::hex2Int(map.at("titleColor_disabled")))
     };
     
     for (int i=0; i<CAControlStateAll; i++)
@@ -201,21 +202,21 @@ void CAButton::setBackgroundViewSquareRect()
 
 void CAButton::setBackgroundViewRoundedRect()
 {
-    const char* fileName[CAControlStateAll] =
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
+    std::string fileName[CAControlStateAll] =
     {
-        "source_material/btn_rounded_normal.png",
-        "source_material/btn_rounded_highlighted.png",
-        "source_material/btn_rounded_disabled.png",
-        "source_material/btn_rounded_selected.png"
+        map.at("backgroundView_normal"),
+        map.at("backgroundView_highlighted"),
+        map.at("backgroundView_selected"),
+        map.at("backgroundView_disabled")
     };
     
     CAColor4B color[CAControlStateAll] =
     {
-        ccc4( 46, 192, 255, 255),
-        ccc4(255, 255, 255, 255),
-        ccc4(255, 255, 255, 255),
-        ccc4(255, 255, 255, 255)
-        
+        ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal"))),
+        ccc4Int(CrossApp::hex2Int(map.at("titleColor_highlighted"))),
+        ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected"))),
+        ccc4Int(CrossApp::hex2Int(map.at("titleColor_disabled")))
     };
     
     for (int i=0; i<CAControlStateAll; i++)
@@ -750,11 +751,24 @@ void CAButton::setTouchLongPress()
 void CAButton::setContentSize(const DSize & var)
 {
     DSize size = var;
-//    if (m_eButtonType != CAButtonTypeCustom)
-//    {
-//        size.height = MAX(size.height, 60);
-//        size.width = MAX(size.width, 60);
-//    }
+    if (m_eButtonType != CAButtonTypeCustom)
+    {
+        if (m_eButtonType==CAButtonTypeSquareRect)
+        {
+            const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
+            int h = atoi(map.at("height").c_str());
+            if (h!=0) {
+                size.height = h;
+            }
+        }else if(m_eButtonType==CAButtonTypeRoundedRect)
+        {
+            const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
+            int h = atoi(map.at("height").c_str());
+            if (h!=0) {
+                size.height = h;
+            }
+        }
+    }
     CAView::setContentSize(size);
     
     this->updateWithPreferredSize();

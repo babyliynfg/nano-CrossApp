@@ -6,6 +6,8 @@
 #include "dispatcher/CATouch.h"
 #include "animation/CAViewAnimation.h"
 #include "platform/CADensityDpi.h"
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 #pragma CAListView
@@ -24,7 +26,8 @@ CAListView::CAListView()
 , m_obSeparatorColor(ccc4Int(0xffefeef4))
 , m_nSeparatorViewHeight(1)
 {
-    
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
+    m_obSeparatorColor = ccc4Int(CrossApp::hex2Int(map.at("separatorColor")));
 }
 
 
@@ -713,28 +716,32 @@ CAListViewCell* CAListViewCell::create(const std::string& reuseIdentifier)
 
 void CAListViewCell::normalListViewCell()
 {
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(ccc4(255, 255, 255, 255));
+    m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_normal"))));
 }
 
 void CAListViewCell::highlightedListViewCell()
 {
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(ccc4(240, 240, 240, 255));
+    m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_highlighted"))));
 }
 
 
 void CAListViewCell::selectedListViewCell()
 {
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(ccc4(50, 193, 255, 255));
+    m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_selected"))));
 }
 
 
 void CAListViewCell::disabledListViewCell()
 {
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
-    m_pBackgroundView->setColor(ccc4(127, 127, 127, 255));
+    m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_disabled"))));
 }
 
 void CAListViewCell::normalCell()

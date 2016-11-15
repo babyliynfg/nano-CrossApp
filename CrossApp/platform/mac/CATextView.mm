@@ -4,7 +4,8 @@
 #include "basics/CAScheduler.h"
 #import "EAGLView.h"
 #import <Cocoa/Cocoa.h>
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 #define textView_Mac ((MacTextView*)m_pTextView)
 
 #ifdef NSTextAlignmentLeft
@@ -258,7 +259,8 @@ CATextView* CATextView::createWithLayout(const DLayout& layout)
 
 bool CATextView::init()
 {
-    CAImage* image = CAImage::create("source_material/textField_bg.png");
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
     m_pBackgroundView->setLayout(DLayoutFill);

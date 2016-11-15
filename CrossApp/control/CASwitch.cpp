@@ -14,7 +14,8 @@
 #include "view/CARenderImage.h"
 #include "basics/CAApplication.h"
 #include "animation/CAViewAnimation.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 CASwitch::CASwitch()
@@ -27,9 +28,10 @@ CASwitch::CASwitch()
     , m_pOffImageView(NULL)
     , m_pThumbTintImageView(NULL)
 {
-    this->setOnImage(CAImage::create("source_material/switch_on.png"));
-    this->setOffImage(CAImage::create("source_material/switch_off.png"));
-    this->setThumbTintImage(CAImage::create("source_material/switch_indicator.png"));
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch");
+    this->setOnImage(CAImage::create(map.at("onImage")));
+    this->setOffImage(CAImage::create(map.at("offImage")));
+    this->setThumbTintImage(CAImage::create(map.at("thumbTintImage")));
 }
 
 CASwitch::~CASwitch()
@@ -280,7 +282,13 @@ void CASwitch::removeTarget(CAObject* target, SEL_CAControl selector)
 
 void CASwitch::setContentSize(const DSize & var)
 {
-    CAControl::setContentSize(DSize(102, 56));
+    DSize size = var;
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch");
+    int h = atoi(map.at("height").c_str());
+    int w = atoi(map.at("width").c_str());
+    size.height = (h == 0) ? size.height : h;
+    size.width  = (w == 0) ? size.width : w;
+    CAControl::setContentSize(size);
     DRect bounds = this->getBounds();
     m_pOnImageView->setFrame(bounds);
     m_pOffImageView->setFrame(bounds);
