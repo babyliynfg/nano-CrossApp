@@ -1,8 +1,7 @@
 
 #include "ccUtils.h"
-#include<iostream>
-#include<string>
-#include<cstdlib>
+#include <iostream>
+#include <cstdlib>
 
 namespace CrossApp {
 
