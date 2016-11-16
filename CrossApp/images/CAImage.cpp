@@ -1296,77 +1296,16 @@ CAImage* CAImage::createWithRawData(const unsigned char * data,
     return image;
 }
 
-bool CAImage::initWithImageFile(const std::string& file)
+bool CAImage::initWithImageFile(const std::string& file, bool isOpenGLThread)
 {
-    std::string fullPath = FileUtils::getInstance()->fullPathForFilename(file.c_str());
     unsigned long pSize = 0;
-    unsigned char* data = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &pSize);
-    bool bRet = initWithImageData(data, pSize);
+    unsigned char* data = FileUtils::getInstance()->getFileData(file.c_str(), "rb", &pSize);
+    bool bRet = initWithImageData(data, pSize, isOpenGLThread);
 	delete[]data;
 	return bRet;
 }
 
-bool CAImage::initWithImageFileThreadSafe(const std::string& fullPath)
-{
-    unsigned long pSize = 0;
-    unsigned char* data = FileUtils::getInstance()->getFileData(fullPath.c_str(), "rb", &pSize);
-    bool ret = false;
-    
-    do
-    {
-        CC_BREAK_IF(! data || pSize <= 0);
-        
-        unsigned char* unpackedData = NULL;
-        unsigned long unpackedLen = 0;
-        
-        unpackedData = const_cast<unsigned char*>(data);
-        unpackedLen = pSize;
-        
-        Format type = this->detectFormat(unpackedData, unpackedLen);
-        
-        switch (type)
-        {
-            case JPG:
-                ret = this->initWithJpgData(unpackedData, unpackedLen);
-                break;
-            case PNG:
-                ret = this->initWithPngData(unpackedData, unpackedLen);
-                break;
-            case GIF:
-                ret = this->initWithGifData(unpackedData, unpackedLen);
-                break;
-            case TIFF:
-                ret = this->initWithTiffData(unpackedData, unpackedLen);
-                break;
-            case WEBP:
-                ret = this->initWithWebpData(unpackedData, unpackedLen);
-                break;
-            case ETC:
-                ret = this->initWithETCData(unpackedData, unpackedLen);
-                break;
-            default:
-            {
-                ret = false;
-                break;
-            }
-        }
-        
-        if (ret)
-        {
-            this->convertToRawData();
-        }
-        
-        if(unpackedData != data)
-        {
-            free(unpackedData);
-        }
-        
-    } while (0);
-    
-    return ret;
-}
-
-bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLen)
+bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLen, bool isOpenGLThread)
 {
     bool ret = false;
     
@@ -1420,7 +1359,16 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
         if (ret)
         {
             this->convertToRawData();
-            this->premultipliedImageData();
+            
+            if (isOpenGLThread == false)
+            {
+                this->premultipliedImageData();
+            }
+        }
+        
+        if(unpackedData != data)
+        {
+            free(unpackedData);
         }
     }
     while (0);

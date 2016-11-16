@@ -64,6 +64,7 @@
     </CAStepper>
     <CATextField name="CATextField">
         <BackgroundView backgroundView_normal="source_material/textField_bg.png"/>
+        <Image clearImage="source_material/clear_button.png"/>
         <Size height="80"/>
     </CATextField>
     <CATabBar name="CATabBar">
@@ -95,4 +96,22 @@
         <BackgroundColor backgroundColor_disabled="0xff7F7F7F"/>
         <Color separatorColor="0xffefeef4"/>
     </CACell>
+    <CAAlertView name="CAAlertView">
+        <BackgroundView backgroundView="source_material/alert_back.png"/>
+    </CAAlertView>
+    <CAIndicator name="CAIndicator">
+        <BackgroundView backgroundView="source_material/indicator.png"/>
+    </CAIndicator>
+    <CAPullToRefreshView name="CAPullToRefreshView">
+        <image header="source_material/grayArrow_header.png"/>
+        <image footer="source_material/grayArrow_footer.png"/>
+    </CAPullToRefreshView>
+    <CAVideoPlayer name="CAVideoPlayer">
+        <image bottomPanel="source_material/vdo_panel_bottom_bg.png"/>
+        <image barImage="source_material/grayvdo_progress_bar.png"/>
+        <image pauseImage="source_material/vdo_pause.png"/>
+        <image pauseImage_h="source_material/vdo_pause_down.png"/>
+        <image playImage="source_material/vdo_play.png"/>
+        <image playImage_h="source_material/vdo_play_down.png"/>
+    </CAVideoPlayer>
 </Theme>
