@@ -13,7 +13,8 @@
 #include "jni/JniHelper.h"
 #include <jni.h>
 #include "control/CAButton.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 #define CLASS_NAME "org/CrossApp/lib/CrossAppTextField"
 #define GET_CLASS "(I)Lorg/CrossApp/lib/CrossAppTextField;"
 #define CAColorToJavaColor(color) (color.b + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000)
@@ -485,11 +486,11 @@ bool CATextField::becomeFirstResponder()
     becomeFirstResponderID(m_u__ID);
     
     this->showNativeTextField();
-
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
 	if (m_eClearBtn == WhileEditing)
 	{
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(0xbbbb);
-        ima->setImage(CAImage::create("source_material/clear_button.png"));
+        ima->setImage(CAImage::create(map.at("clearImage")));
 	}
     
     if (CAViewAnimation::areBeginAnimationsWithID(m_s__StrID + "showImage"))
@@ -576,7 +577,8 @@ CATextField* CATextField::createWithLayout(const DLayout& layout)
 
 bool CATextField::init()
 {
-    CAImage* image = CAImage::create("source_material/textField_bg.png");
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
     m_pBackgroundView->setLayout(DLayoutFill);
@@ -607,11 +609,11 @@ void CATextField::update(float dt)
 void CATextField::setContentSize(const DSize& contentSize)
 {
     CAControl::setContentSize(contentSize);
-    
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
     if (m_eClearBtn == WhileEditing && this->isFirstResponder())
     {
         m_eClearBtn = None;
-        this->setMarginImageRight(DSize(contentSize.height, contentSize.height), "source_material/clear_button.png");
+        this->setMarginImageRight(DSize(contentSize.height, contentSize.height), map.at("clearImage"));
         m_eClearBtn = WhileEditing;
     }
     

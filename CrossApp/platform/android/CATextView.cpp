@@ -12,7 +12,8 @@
 #include "basics/CAScheduler.h"
 #include "jni/JniHelper.h"
 #include <jni.h>
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 #define CLASS_TEXTVIEW "org/CrossApp/lib/CrossAppTextView"
 #define GET_CLASS "(I)Lorg/CrossApp/lib/CrossAppTextView;"
 #define CAColorToJavaColor(color) (color.b + color.g * 0x100 + color.r * 0x10000 + color.a * 0x1000000)
@@ -445,7 +446,8 @@ CATextView* CATextView::createWithLayout(const DLayout& layout)
 
 bool CATextView::init()
 {
-    CAImage* image = CAImage::create("source_material/textField_bg.png");
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
 
 	m_pBackgroundView = CAScale9ImageView::createWithImage(image);

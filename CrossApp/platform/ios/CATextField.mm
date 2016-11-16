@@ -10,6 +10,8 @@
 #include "platform/CADensityDpi.h"
 #include "animation/CAViewAnimation.h"
 #include "basics/CAScheduler.h"
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 #import "EAGLView.h"
 #import <UIKit/UIKit.h>
 
@@ -389,7 +391,8 @@ CATextField* CATextField::createWithLayout(const DLayout& layout)
 
 bool CATextField::init()
 {
-    CAImage* image = CAImage::create("source_material/textField_bg.png");
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
     m_pBackgroundView->setLayout(DLayoutFill);
