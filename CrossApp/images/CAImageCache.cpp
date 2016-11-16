@@ -108,7 +108,7 @@ static void loadImageData(AsyncStruct *pAsyncStruct)
         //delete pAsyncStruct;
     }
     CAImage* image = new CAImage();
-    if (image && !image->initWithImageFileThreadSafe(filename))
+    if (image && !image->initWithImageFile(filename, false))
     {
         CC_SAFE_RELEASE(image);
         return;

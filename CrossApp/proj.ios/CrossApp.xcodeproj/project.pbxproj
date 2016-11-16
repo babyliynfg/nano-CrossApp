@@ -248,8 +248,6 @@
 		46A393F816E5D01B00210B16 /* CAUserDefault.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46A393F416E5D01B00210B16 /* CAUserDefault.mm */; };
 		48A94CE61D62DB1F0069A3EC /* CCScriptSupport.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 48A94CE41D62DB1E0069A3EC /* CCScriptSupport.cpp */; };
 		48A94CE71D62DB1F0069A3EC /* CCScriptSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 48A94CE51D62DB1F0069A3EC /* CCScriptSupport.h */; };
-		62606BD31DDC2CE300845D1C /* CAThemeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62606BD11DDC2CE300845D1C /* CAThemeManager.cpp */; };
-		62606BD41DDC2CE400845D1C /* CAThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 62606BD21DDC2CE300845D1C /* CAThemeManager.h */; };
 		B01D4BF819A5E8240071F6A3 /* CADrawerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */; };
 		B01D4BF919A5E8240071F6A3 /* CADrawerController.h in Headers */ = {isa = PBXBuildFile; fileRef = B01D4BF719A5E8240071F6A3 /* CADrawerController.h */; };
 		B01E807C1AD5113400301FC2 /* etc1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B01E80791AD5113400301FC2 /* etc1.cpp */; };
@@ -437,6 +435,8 @@
 		D6B0368F1D95270200388A90 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0D7FA7D1B21506B004B2B86 /* libssl.a */; };
 		D6B0C63F1D6587DD00D0E1BE /* CrossApp-Prefix.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B0C63E1D6587DD00D0E1BE /* CrossApp-Prefix.h */; };
 		D6B12EB31DC9C7D300944576 /* libwebsockets.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D6B12EB21DC9C7D300944576 /* libwebsockets.a */; };
+		D6B485C11DDC282000255D79 /* CAThemeManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D6B485BF1DDC282000255D79 /* CAThemeManager.cpp */; };
+		D6B485C21DDC282000255D79 /* CAThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D6B485C01DDC282000255D79 /* CAThemeManager.h */; };
 		E0AAB3651CCA3E3A00353011 /* CAAccelerometerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */; };
 		E0AAB3681CCA3E7500353011 /* CAAccelerometer.h in Headers */ = {isa = PBXBuildFile; fileRef = E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */; };
 		E0AAB3691CCA3E7500353011 /* CAAccelerometer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */; };
@@ -675,8 +675,6 @@
 		46A393F416E5D01B00210B16 /* CAUserDefault.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAUserDefault.mm; sourceTree = "<group>"; };
 		48A94CE41D62DB1E0069A3EC /* CCScriptSupport.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CCScriptSupport.cpp; sourceTree = "<group>"; };
 		48A94CE51D62DB1F0069A3EC /* CCScriptSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScriptSupport.h; sourceTree = "<group>"; };
-		62606BD11DDC2CE300845D1C /* CAThemeManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThemeManager.cpp; sourceTree = "<group>"; };
-		62606BD21DDC2CE300845D1C /* CAThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThemeManager.h; sourceTree = "<group>"; };
 		B01D4BF619A5E8240071F6A3 /* CADrawerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CADrawerController.cpp; sourceTree = "<group>"; };
 		B01D4BF719A5E8240071F6A3 /* CADrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CADrawerController.h; sourceTree = "<group>"; };
 		B01E80791AD5113400301FC2 /* etc1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = etc1.cpp; sourceTree = "<group>"; };
@@ -873,6 +871,8 @@
 		D6A7E7791DC20BF700F863DF /* openbsd-reallocarray.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "openbsd-reallocarray.c"; sourceTree = "<group>"; };
 		D6B0C63E1D6587DD00D0E1BE /* CrossApp-Prefix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CrossApp-Prefix.h"; sourceTree = "<group>"; };
 		D6B12EB21DC9C7D300944576 /* libwebsockets.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwebsockets.a; path = ../the_third_party/websockets/prebuilt/ios/libwebsockets.a; sourceTree = "<group>"; };
+		D6B485BF1DDC282000255D79 /* CAThemeManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CAThemeManager.cpp; sourceTree = "<group>"; };
+		D6B485C01DDC282000255D79 /* CAThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAThemeManager.h; sourceTree = "<group>"; };
 		E0AAB3641CCA3E3A00353011 /* CAAccelerometerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometerDelegate.h; sourceTree = "<group>"; };
 		E0AAB3661CCA3E7500353011 /* CAAccelerometer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CAAccelerometer.h; sourceTree = "<group>"; };
 		E0AAB3671CCA3E7500353011 /* CAAccelerometer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CAAccelerometer.mm; sourceTree = "<group>"; };
@@ -1337,8 +1337,8 @@
 		1551A5E7158F2ADE00E66CFE /* support */ = {
 			isa = PBXGroup;
 			children = (
-				62606BD11DDC2CE300845D1C /* CAThemeManager.cpp */,
-				62606BD21DDC2CE300845D1C /* CAThemeManager.h */,
+				D6B485BF1DDC282000255D79 /* CAThemeManager.cpp */,
+				D6B485C01DDC282000255D79 /* CAThemeManager.h */,
 				02150DC91C07172900BC3F9C /* CAUIEditorParser.cpp */,
 				02150DCA1C07172900BC3F9C /* CAUIEditorParser.h */,
 				B0340824199211B3005DB179 /* md5.cpp */,
@@ -1791,7 +1791,7 @@
 				1551A820158F2ADF00E66CFE /* ccShader_PositionTexture_frag.h in Headers */,
 				1551A821158F2ADF00E66CFE /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				02150DCC1C07172900BC3F9C /* CAUIEditorParser.h in Headers */,
-				62606BD41DDC2CE400845D1C /* CAThemeManager.h in Headers */,
+				D6B485C21DDC282000255D79 /* CAThemeManager.h in Headers */,
 				1551A822158F2ADF00E66CFE /* ccShader_PositionTexture_uColor_vert.h in Headers */,
 				B0ADAE981B2E7F1B00BE8FA3 /* CAView.h in Headers */,
 				1551A823158F2ADF00E66CFE /* ccShader_PositionTexture_vert.h in Headers */,
@@ -1972,7 +1972,7 @@
 				B0ADAE991B2E7F1B00BE8FA3 /* CAWebView.cpp in Sources */,
 				02150DCB1C07172900BC3F9C /* CAUIEditorParser.cpp in Sources */,
 				D64B49661D40982E00081862 /* CGActionProgressTimer.cpp in Sources */,
-				62606BD31DDC2CE300845D1C /* CAThemeManager.cpp in Sources */,
+				D6B485C11DDC282000255D79 /* CAThemeManager.cpp in Sources */,
 				B0A02FF71A8E04A80005CB8F /* CATempTypeFont.cpp in Sources */,
 				D64B49781D40982E00081862 /* CGSpriteFrame.cpp in Sources */,
 				B048ADF91CC9C7380039C5BB /* CACell.cpp in Sources */,

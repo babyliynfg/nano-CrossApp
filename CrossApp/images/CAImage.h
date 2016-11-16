@@ -169,11 +169,9 @@ public:
                                       unsigned int pixelsHigh,
                                       const std::string& key);
     
-    bool initWithImageFile(const std::string& file);
+    bool initWithImageFile(const std::string& file, bool isOpenGLThread = true);
     
-    bool initWithImageFileThreadSafe(const std::string& fullPath);
-    
-    bool initWithImageData(const unsigned char * data, unsigned long dataLen);
+    bool initWithImageData(const unsigned char * data, unsigned long dataLen, bool isOpenGLThread = true);
     
     bool initWithRawData(const unsigned char * data,
                          const CAImage::PixelFormat& pixelFormat,
