@@ -1,6 +1,4 @@
 #include "CAVideoPlayerControlView.h"
-#include "support/CAThemeManager.h"
-#include "support/ccUtils.h"
 NS_CC_EXT_BEGIN
 
 
