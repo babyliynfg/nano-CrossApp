@@ -1,5 +1,8 @@
 
 #include "ccUtils.h"
+#include<iostream>
+#include<string>
+#include<cstdlib>
 
 namespace CrossApp {
 
@@ -45,10 +48,10 @@ CC_DLL unsigned int hex2Int(const std::string& hexStr)
     {
         if(hexStr[0] == '0' && hexStr[1] == 'x')
         {
-            return strtol(hexStr.c_str(), &offset, 0);
+            return (unsigned int)strtol(hexStr.c_str(), &offset, 0);
         }
     }
-    return strtol(hexStr.c_str(), &offset, 16);
+    return (unsigned int)strtol(hexStr.c_str(), &offset, 16);
 }
 
 }
