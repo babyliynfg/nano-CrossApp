@@ -17,7 +17,8 @@
 #include "view/CAScrollView.h"
 #include "shaders/CAShaderCache.h"
 #include "support/ccUTF8.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 
@@ -735,8 +736,8 @@ bool CATextView::init()
 		return false;
 	}
 	this->setColor(CAColor_clear);
-
-    CAImage* image = CAImage::create("source_material/textField_bg.png");
+	const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
 
 	m_pBackgroundView = CAScale9ImageView::createWithImage(image);

@@ -17,7 +17,8 @@
 #include "../CAFreeTypeFont.h"
 #include "../ccUTF8.h"
 #include "../CAFTFontCache.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 
@@ -689,10 +690,10 @@ bool CATextField::becomeFirstResponder()
 	}
 
 	bool result = CAControl::becomeFirstResponder();
-
+	const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
 	if (m_eClearBtn == WhileEditing)
 	{
-		setMarginImageRight(DSize(getBounds().size.height, getBounds().size.height), "source_material/clearbtn.png");
+		setMarginImageRight(DSize(getBounds().size.height, getBounds().size.height), map.at("clearImage"));
 	}
     return result;
 }
@@ -769,7 +770,8 @@ bool CATextField::init()
 	}
 	this->setColor(CAColor_clear);
 
-	CAImage* image = CAImage::create("source_material/textField_bg.png");
+	const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+	CAImage* image = CAImage::create(map.at("backgroundView_normal"));
 	m_pBackgroundView = CAScale9ImageView::createWithFrame(DRect(0, 0, 1, 1));
 	m_pBackgroundView->setLayout(DLayoutFill);
 	m_pBackgroundView->setCapInsets(DRect(image->getPixelsWide() / 2, image->getPixelsHigh() / 2, 1, 1));
