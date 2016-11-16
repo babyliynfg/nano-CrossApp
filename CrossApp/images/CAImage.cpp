@@ -1360,7 +1360,7 @@ bool CAImage::initWithImageData(const unsigned char * data, unsigned long dataLe
         {
             this->convertToRawData();
             
-            if (isOpenGLThread == false)
+            if (isOpenGLThread)
             {
                 this->premultipliedImageData();
             }

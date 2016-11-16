@@ -757,14 +757,17 @@ void CAButton::setContentSize(const DSize & var)
         {
             const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
             int h = atoi(map.at("height").c_str());
-            if (h!=0) {
+            if (h!=0)
+            {
                 size.height = h;
             }
-        }else if(m_eButtonType==CAButtonTypeRoundedRect)
+        }
+        else if(m_eButtonType==CAButtonTypeRoundedRect)
         {
             const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
             int h = atoi(map.at("height").c_str());
-            if (h!=0) {
+            if (h!=0)
+            {
                 size.height = h;
             }
         }
