@@ -18,7 +18,8 @@
 #include "support/CAUIEditorParser.h"
 #include "support/device/CADevice.h"
 #include "script_support/CCScriptSupport.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -291,7 +292,8 @@ CANavigationController::CANavigationController()
     m_pView->setDisplayRange(false);
     this->setTouchMoved(true);
     this->setVerticalScrollEnabled(false);
-    this->setNavigationBarBackgroundImage(CAImage::create("source_material/navigation_bg.png"));
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
+    this->setNavigationBarBackgroundImage(CAImage::create(map.at("backgroundView")));
 }
 
 CANavigationController::~CANavigationController()
@@ -1150,11 +1152,16 @@ CATabBarController::CATabBarController()
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
     
-    this->setTabBarBackgroundImage(CAImage::create("source_material/tabBar_bg.png"));
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATabBar");
     
-    this->setTabBarSelectedBackgroundImage(CAImage::create("source_material/tabBar_selected_bg.png"));
+    this->setTabBarBackgroundImage(CAImage::create(map.at("backgroundView_normal")));
     
-    this->setTabBarSelectedIndicatorImage(CAImage::create("source_material/tabBar_selected_indicator.png"));
+    this->setTabBarSelectedBackgroundImage(CAImage::create(map.at("backgroundView_selected")));
+    
+    this->setTabBarSelectedIndicatorImage(CAImage::create(map.at("bottomLine")));
+    
+    m_sTabBarTitleColor = ccc4Int(CrossApp::hex2Int(map.at("titleColor_normal")));
+    m_sTabBarSelectedTitleColor = ccc4Int(CrossApp::hex2Int(map.at("titleColor_selected")));
 }
 
 CATabBarController::~CATabBarController()

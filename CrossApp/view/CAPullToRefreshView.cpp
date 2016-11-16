@@ -11,7 +11,8 @@
 #include "basics/CAScheduler.h"
 #include "support/CAPointExtension.h"
 #include "animation/CAViewAnimation.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 #pragma CAPullToRefreshView
 
 NS_CC_BEGIN
@@ -54,11 +55,13 @@ CAPullToRefreshView* CAPullToRefreshView::create(const PullToRefreshType& type)
 
 bool CAPullToRefreshView::init()
 {
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPullToRefreshView");
     switch (m_eType)
     {
         case CAPullToRefreshTypeHeader:
         {
-            this->setPullToImage(CAImage::create("source_material/grayArrow_header.png"));
+            
+            this->setPullToImage(CAImage::create(map.at("header")));
             this->setPullToRefreshText("下拉可以刷新");
             this->setReleaseToRefreshText("松开立即刷新");
             this->setRefreshingText("正在帮你刷新...");
@@ -66,7 +69,7 @@ bool CAPullToRefreshView::init()
             break;
         case CAPullToRefreshTypeFooter:
         {
-            this->setPullToImage(CAImage::create("source_material/grayArrow_footer.png"));
+            this->setPullToImage(CAImage::create(map.at("footer")));
             this->setPullToRefreshText("上拉可以加载更多数据");
             this->setReleaseToRefreshText("松开立即加载更多数据");
             this->setRefreshingText("正在帮你加载数据...");

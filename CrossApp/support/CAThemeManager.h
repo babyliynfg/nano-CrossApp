@@ -6,8 +6,8 @@
 //  Copyright © 2015年 http://www.9miao.com. All rights reserved.
 //
 
-#ifndef CAUIEditorParser_h
-#define CAUIEditorParser_h
+#ifndef CAThemeManager_h
+#define CAThemeManager_h
 
 #include "basics/CAObject.h"
 #include "tinyxml2/tinyxml2.h"
@@ -39,4 +39,4 @@ protected:
 };
 
 NS_CC_END
-#endif /* CAUIEditorParser_h */
+#endif /* CAThemeManager_h */

@@ -7,7 +7,8 @@
 #include "support/ccUTF8.h"
 #include "platform/CCPlatformMacros.h"
 #include "CAWindow.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 
 NS_CC_BEGIN
 
@@ -90,8 +91,9 @@ void CATextToolBarView::show(CAView* pView)
 	this->setTextTag("CATextToolBarView");
 	m_pBackView->setAlphaThreshold(0.5f);
 
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAAlertView");
 	CAScale9ImageView *BackgroundImageView = CAScale9ImageView::createWithFrame(m_pBackView->getBounds());
-	BackgroundImageView->setImage(CAImage::create("source_material/alert_back.png"));
+	BackgroundImageView->setImage(CAImage::create(map.at("backgroundView")));
 	m_pBackView->addSubview(BackgroundImageView);
 	m_pBackView->setStencil(BackgroundImageView->copy());
 

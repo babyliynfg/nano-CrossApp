@@ -9,6 +9,8 @@
 #include "view/CARenderImage.h"
 #include "animation/CAViewAnimation.h"
 #include "platform/CADensityDpi.h"
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 static CAVector<CAAlertView*> s_vAlertViewCaches;
@@ -210,7 +212,8 @@ void CAAlertView::showAlertView() {
     m_pBackView->setAlphaThreshold(0.5f);
     
     CAScale9ImageView *backgroundImageView = CAScale9ImageView::createWithFrame(m_pBackView->getBounds());
-    backgroundImageView->setImage(CAImage::create("source_material/alert_back.png"));
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAAlertView");
+    backgroundImageView->setImage(CAImage::create(map.at("backgroundView")));
     m_pBackView->addSubview(backgroundImageView);
     
     m_pBackView->setStencil(backgroundImageView->copy());

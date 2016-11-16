@@ -1,5 +1,6 @@
 #include "CAVideoPlayerControlView.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_EXT_BEGIN
 
 
@@ -95,22 +96,22 @@ void CAVideoPlayerControlView::buildCtrlViews()
 {
     m_glView = CAVideoPlayerView::createWithLayout(DLayoutFill);
 	this->addSubview(m_glView);
-
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAVideoPlayer");
 	// Bottom Panel Back
 	CAImageView* bottomPanel = CAImageView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 188)));
-    bottomPanel->setImage(CAImage::create("source_material/vdo_panel_bottom_bg.png"));
+    bottomPanel->setImage(CAImage::create(map.at("bottomPanel")));
     m_glView->addSubview(bottomPanel);
 
     // Slider
-    CAImage* barImage = CAImage::create("source_material/vdo_progress_bar.png");
+    CAImage* barImage = CAImage::create(map.at("barImage"));
     m_playSlider = CASlider::createWithLayout(DLayout(DHorizontalLayout_L_R(32, 32), DVerticalLayout_T_H(25, 56)));
     m_playSlider->setThumbTintImage(barImage);
     m_playSlider->addTargetForTouchUpSide(this, CAControl_selector(CAVideoPlayerControlView::onSlideChanged));
     bottomPanel->addSubview(m_playSlider);
 
     // Play Pause Button
-    CAImage* backImage = CAImage::create("source_material/vdo_pause.png");
-    CAImage* backImage_h = CAImage::create("source_material/vdo_pause_down.png");
+    CAImage* backImage = CAImage::create(map.at("pauseImage"));
+    CAImage* backImage_h = CAImage::create(map.at("pauseImage_h"));
     m_playButton = CAButton::createWithLayout(DLayout(DHorizontalLayout_L_W(32, 56), DVerticalLayout_T_H(96, 56)), CAButtonTypeCustom);
     m_playButton->setImageForState(CAControlStateAll, backImage);
     m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
@@ -176,17 +177,18 @@ void CAVideoPlayerControlView::buildCtrlViews()
 
 void CAVideoPlayerControlView::updatePlayButton()
 {
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAVideoPlayer");
 	if (m_glView && m_glView->isPlaying()) 
 	{
-		CAImage* backImage = CAImage::create("source_material/vdo_pause.png");
-		CAImage* backImage_h = CAImage::create("source_material/vdo_pause_down.png");
+		CAImage* backImage = CAImage::create(map.at("pauseImage"));
+		CAImage* backImage_h = CAImage::create(map.at("pauseImage_h"));
 		m_playButton->setImageForState(CAControlStateAll, backImage);
 		m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
 	} 
 	else 
 	{
-		CAImage* backImage = CAImage::create("source_material/vdo_play.png");
-		CAImage* backImage_h = CAImage::create("source_material/vdo_play_down.png");
+		CAImage* backImage = CAImage::create(map.at("playImage"));
+		CAImage* backImage_h = CAImage::create(map.at("playImage_h"));
 		m_playButton->setImageForState(CAControlStateAll, backImage);
 		m_playButton->setImageForState(CAControlStateHighlighted, backImage_h);
 	}

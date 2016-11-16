@@ -621,7 +621,7 @@ void CATextField::setContentSize(const DSize& contentSize)
     if (m_eClearBtn == WhileEditing)
     {
         m_eClearBtn = None;
-        this->setMarginImageRight(DSize(contentSize.height, contentSize.height), "source_material/clear_button.png");
+        this->setMarginImageRight(DSize(contentSize.height, contentSize.height), map.at("clearImage"));
         DSize worldContentSize = this->convertToWorldSize(DSize(m_iMarginRight, 0));
         [textField_MAC setMarginRight:worldContentSize.width];
         m_eClearBtn = WhileEditing;
@@ -863,10 +863,10 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
     if (var == WhileEditing)
     {
         this->setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
-        
+        const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
         CAButton* rightMarginView = (CAButton*)this->getSubviewByTag(1011);
-        rightMarginView->setImageForState(CAControlStateAll, CAImage::create("source_material/clear_button.png"));
-        rightMarginView->setImageColorForState(CAControlStateHighlighted, CAColor_blue);
+        rightMarginView->setImageForState(CAControlStateAll, CAImage::create(map.at("clearImage")));
+        rightMarginView->setImageColorForState(CAControlStateHighlighted, ccc4Int(0xff666666));
         rightMarginView->addTarget(this, CAControl_selector(CATextField::clearBtnCallBack), CAControlEventTouchUpInSide);
 
         DSize worldContentSize = this->convertToWorldSize(DSize(m_iMarginRight, 0));

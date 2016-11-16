@@ -249,7 +249,7 @@ void CAActivityIndicatorView::setActivityIndicatorView(CrossApp::CAView *var)
     m_pImageView = var;
     if (m_pImageView)
     {
-        if (m_pBackView->getLayoutType() <= 1)
+        if (m_pBackView || (m_pBackView && m_pBackView->getLayoutType() <= 1))
         {
             m_pImageView->setCenterOrigin(m_obContentSize/2);
         }

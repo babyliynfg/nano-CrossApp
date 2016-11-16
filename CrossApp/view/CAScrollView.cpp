@@ -18,7 +18,8 @@
 #include "animation/CAViewAnimation.h"
 #include "animation/CAAnimation.h"
 #include "shaders/CAShaderCache.h"
-
+#include "support/CAThemeManager.h"
+#include "support/ccUtils.h"
 NS_CC_BEGIN
 
 #pragma CAScrollView
@@ -1326,7 +1327,8 @@ bool CAIndicator::init()
         return false;
     }
     this->setColor(CAColor_clear);
-    CAImage* image = CAImage::create("source_material/indicator.png");
+    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAIndicator");
+    CAImage* image = CAImage::create(map.at("backgroundView"));
     
     DSize size = image->getContentSize();
     m_pIndicator = CAScale9ImageView::createWithImage(image);
