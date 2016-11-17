@@ -38,7 +38,7 @@ CATableView::CATableView()
 ,m_bAlwaysTopSectionHeader(true)
 ,m_bAlwaysBottomSectionFooter(true)
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     m_obSeparatorColor = ccc4Int(CrossApp::hex2Int(map.at("separatorColor")));
 }
 
@@ -692,14 +692,14 @@ CATableViewCell* CATableViewCell::create(const std::string& reuseIdentifier)
 }
 void CATableViewCell::normalTableViewCell()
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_normal"))));
 }
 
 void CATableViewCell::highlightedTableViewCell()
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_highlighted"))));
 }
@@ -707,7 +707,7 @@ void CATableViewCell::highlightedTableViewCell()
 
 void CATableViewCell::selectedTableViewCell()
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_selected"))));
 }
@@ -715,7 +715,7 @@ void CATableViewCell::selectedTableViewCell()
 
 void CATableViewCell::disabledTableViewCell()
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CACell");
     CC_RETURN_IF(m_pBackgroundView == NULL);
     m_pBackgroundView->setColor(ccc4Int(CrossApp::hex2Int(map.at("backgroundColor_disabled"))));
 }

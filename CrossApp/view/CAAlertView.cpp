@@ -212,7 +212,7 @@ void CAAlertView::showAlertView() {
     m_pBackView->setAlphaThreshold(0.5f);
     
     CAScale9ImageView *backgroundImageView = CAScale9ImageView::createWithFrame(m_pBackView->getBounds());
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAAlertView");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAAlertView");
     backgroundImageView->setImage(CAImage::create(map.at("backgroundView")));
     m_pBackView->addSubview(backgroundImageView);
     

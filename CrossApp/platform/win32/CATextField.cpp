@@ -770,7 +770,7 @@ bool CATextField::init()
 	}
 	this->setColor(CAColor_clear);
 
-	const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
 	CAImage* image = CAImage::create(map.at("backgroundView_normal"));
 	m_pBackgroundView = CAScale9ImageView::createWithFrame(DRect(0, 0, 1, 1));
 	m_pBackgroundView->setLayout(DLayoutFill);

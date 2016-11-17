@@ -1327,13 +1327,20 @@ bool CAIndicator::init()
         return false;
     }
     this->setColor(CAColor_clear);
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAIndicator");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAIndicator");
     CAImage* image = CAImage::create(map.at("backgroundView"));
     
-    DSize size = image->getContentSize();
-    m_pIndicator = CAScale9ImageView::createWithImage(image);
-    ((CAScale9ImageView*)m_pIndicator)->setCapInsets(DRect(size.width / 2 - 1, size.height / 2 - 1, 2, 2));
-    this->addSubview(m_pIndicator);
+    
+    CAScale9ImageView* indicator = CAScale9ImageView::createWithImage(image);
+    if (image)
+    {
+        DSize size = image->getContentSize();
+        indicator->setImage(image);
+        indicator->setCapInsets(DRect(size.width / 2 - 1, size.height / 2 - 1, 2, 2));
+    }
+    this->addSubview(indicator);
+    m_pIndicator = indicator;
+    
     this->setAlpha(0.0f);
     
     return true;

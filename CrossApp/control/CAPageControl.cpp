@@ -93,7 +93,7 @@ CAPageControl* CAPageControl::createWithLayout(const CrossApp::DLayout &layout)
 
 bool CAPageControl::init()
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPageControl");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPageControl");
     setPageIndicatorImage(CAImage::create(map.at("backgroundView_normal_custom")));
     setCurrIndicatorImage(CAImage::create(map.at("backgroundView_selected_custom")));
 
@@ -249,7 +249,7 @@ void CAPageControl::setStyle(const CAPageControlStyle &var)
 {
     if (m_style != var) {
         m_style = var;
-        const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPageControl");
+        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPageControl");
         switch (m_style) {
             case CAPageControlStyleDot:
                 setPageIndicatorImage(CAImage::create(map.at("backgroundView_normal_custom")));

@@ -9,7 +9,7 @@
         <Color titleColor_highlighted="0xffffffff"/>
         <Color titleColor_selected="0xffffffff"/>
         <Color titleColor_disabled="0xffffffff"/>
-        <Size height="60"/>
+        <Size height="0"/>
     </CAButton>
     <CAButton name="CAButton_RoundedRect">
         <BackgroundView backgroundView_normal="source_material/btn_rounded_normal.png"/>
@@ -20,7 +20,7 @@
         <Color titleColor_highlighted="0xffffffff"/>
         <Color titleColor_selected="0xffffffff"/>
         <Color titleColor_disabled="0xffffffff"/>
-        <Size height="60"/>
+        <Size height="0"/>
     </CAButton>
     <CASegmentedControl name="CASegmentedControl">
         <BackgroundView backgroundView_normal="source_material/segmented_normal.png"/>
@@ -28,7 +28,7 @@
         <Color titleColor_normal="0xff36C3F0"/>
         <Color titleColor_selected="0xffffffff"/>
         <Color tintColor="0xff36C3F0"/>
-        <Size height="60"/>
+        <Size height="0"/>
     </CASegmentedControl>
     <CAActivityIndicatorView name="CAActivityIndicatorView">
         <Image image_white="source_material/loading_white.png"/>
@@ -44,7 +44,7 @@
         <Image maxTrackTintImage="source_material/slider_max_track.png"/>
         <Image thumbTintImage="source_material/slider_indicator.png"/>
         <Size trackHeight="4"/>
-        <Size height="36"/>
+        <Size height="48"/>
     </CASlider>
     <CASwitch name="CASwitch">
         <Image onImage="source_material/switch_on.png"/>
@@ -106,12 +106,4 @@
         <image header="source_material/grayArrow_header.png"/>
         <image footer="source_material/grayArrow_footer.png"/>
     </CAPullToRefreshView>
-    <CAVideoPlayer name="CAVideoPlayer">
-        <image bottomPanel="source_material/vdo_panel_bottom_bg.png"/>
-        <image barImage="source_material/grayvdo_progress_bar.png"/>
-        <image pauseImage="source_material/vdo_pause.png"/>
-        <image pauseImage_h="source_material/vdo_pause_down.png"/>
-        <image playImage="source_material/vdo_play.png"/>
-        <image playImage_h="source_material/vdo_play_down.png"/>
-    </CAVideoPlayer>
 </Theme>

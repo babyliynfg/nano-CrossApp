@@ -292,7 +292,7 @@ CANavigationController::CANavigationController()
     m_pView->setDisplayRange(false);
     this->setTouchMoved(true);
     this->setVerticalScrollEnabled(false);
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
     this->setNavigationBarBackgroundImage(CAImage::create(map.at("backgroundView")));
 }
 
@@ -1152,7 +1152,7 @@ CATabBarController::CATabBarController()
     m_pView->setColor(CAColor_clear);
     m_pView->setDisplayRange(false);
     
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATabBar");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATabBar");
     
     this->setTabBarBackgroundImage(CAImage::create(map.at("backgroundView_normal")));
     

@@ -175,7 +175,7 @@ bool CAButton::init()
 
 void CAButton::setBackgroundViewSquareRect()
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
     std::string fileName[CAControlStateAll] =
     {
         map.at("backgroundView_normal"),
@@ -202,7 +202,7 @@ void CAButton::setBackgroundViewSquareRect()
 
 void CAButton::setBackgroundViewRoundedRect()
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
     std::string fileName[CAControlStateAll] =
     {
         map.at("backgroundView_normal"),
@@ -755,13 +755,13 @@ void CAButton::setContentSize(const DSize & var)
     {
         if (m_eButtonType==CAButtonTypeSquareRect)
         {
-            const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
+            const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_SquareRect");
             int h = atoi(map.at("height").c_str());
             size.height = (h == 0) ? size.height : h;
         }
         else if(m_eButtonType==CAButtonTypeRoundedRect)
         {
-            const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
+            const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAButton_RoundedRect");
             int h = atoi(map.at("height").c_str());
             size.height = (h == 0) ? size.height : h;
         }

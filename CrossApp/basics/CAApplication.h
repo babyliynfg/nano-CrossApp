@@ -113,7 +113,7 @@ public:
     void setStatusBarStyle(const CAStatusBarStyle& var);
     
     inline CAThemeManager* getThemeManager() { return m_pThemeManager; }
-    void setThemeManager(CAThemeManager* var) { m_pThemeManager = var; }
+    void setThemeManager(CAThemeManager* var);
     
     bool isStatusBarHidden();
     

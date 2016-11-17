@@ -40,17 +40,17 @@ CC_DLL std::vector<std::string> Parse2StrVector(const std::string& str, const st
 	return strVector;
 }
     
-CC_DLL unsigned int hex2Int(const std::string& hexStr)
+CC_DLL long hex2Int(const std::string& hexStr)
 {
     char *offset;
     if(hexStr.length() > 2)
     {
         if(hexStr[0] == '0' && hexStr[1] == 'x')
         {
-            return (unsigned int)strtol(hexStr.c_str(), &offset, 0);
+            return strtol(hexStr.c_str(), &offset, 0);
         }
     }
-    return (unsigned int)strtol(hexStr.c_str(), &offset, 16);
+    return strtol(hexStr.c_str(), &offset, 16);
 }
 
 }

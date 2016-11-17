@@ -157,7 +157,7 @@ void CANavigationBar::showBackground()
 {
     if (m_pBackgroundView == NULL)
     {
-        const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
+        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
         m_pBackgroundView = CAScale9ImageView::createWithImage(CAImage::create(map.at("backgroundView")));
         CC_SAFE_RETAIN(m_pBackgroundView);
     }
@@ -256,7 +256,7 @@ void CANavigationBar::showLeftButton()
         
         if (item == NULL && m_pItem)
         {
-            const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
+            const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
             button->setImageForState(CAControlStateAll, CAImage::create(map.at("leftButtonImage")));
             button->setImageColorForState(CAControlStateHighlighted, ccc4(255, 255, 200, 255));
             button->addTarget(this, CAControl_selector(CANavigationBar::goBack), CAControlEventTouchUpInSide);
@@ -374,7 +374,7 @@ CABadgeView::~CABadgeView()
 
 bool CABadgeView::init()
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CABadgeView");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CABadgeView");
     m_pBackground = CAScale9ImageView::createWithLayout(DLayout(DHorizontalLayout_W_C(46, 0.5f), DVerticalLayout_H_C(46, 0.5f)));
     m_pBackground->setCapInsets(DRect(22.5, 22.5, 1, 1));
     m_pBackground->setImage(CAImage::create(map.at("badgeImage")));
@@ -431,7 +431,7 @@ CATabBar::CATabBar(bool clearance)
 ,m_pDelegate(NULL)
 ,m_bClearance(clearance)
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATabBar");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATabBar");
     m_pBackgroundImage = CAImage::create(map.at("backgroundView_normal"));
     CC_SAFE_RETAIN(m_pBackgroundImage);
     
