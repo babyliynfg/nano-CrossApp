@@ -147,17 +147,22 @@ void CAPageControl::onEnter()
         for (int i=0; i<m_numberOfPages; i++)
         {
             CAImageView* view;
+            float w = getFrame().size.width/m_numberOfPages;
+            if (m_style == CAPageControlStyleDot) {
+                w = 14;
+            }else{
+                w -= 10;
+            }
             if (i == m_currentPage)
             {
                 view = CAImageView::createWithImage(m_pSelectPageImage);
                 view->setColor(m_currentPageIndicatorTintColor);
-                view->setFrame(DRect(0,0,14,14));
+                view->setFrame(DRect(0,0,w,14));
             } else {
                 view = CAImageView::createWithImage(m_pPageImage);        
                 view->setColor(m_pageIndicatorTintColor);
-                view->setFrame(DRect(0,0,14,14));
+                view->setFrame(DRect(0,0,w,14));
             }
-            
             DRect rect;
             float width = getFrame().size.width/m_numberOfPages;
             rect.origin.x = i * width + width/2;
