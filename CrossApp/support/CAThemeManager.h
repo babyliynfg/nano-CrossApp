@@ -50,11 +50,15 @@ public:
     
     const stringMap& getThemeMap(const std::string& key);
     
+    std::string fullPath(const std::string& filePath);
+    
 protected:
     
     std::map<std::string, stringMap> m_mPathss;
 
 	tinyxml2::XMLDocument* m_pMyDocument;
+    
+    std::string m_sThemePath;
 };
 
 NS_CC_END

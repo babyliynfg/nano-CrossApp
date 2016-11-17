@@ -24,9 +24,10 @@ CAThemeManager* CAThemeManager::create(const std::string& filePath)
 
 CAThemeManager::CAThemeManager(const std::string& filePath)
 :m_pMyDocument(NULL)
+,m_sThemePath(filePath)
 {
     unsigned long size = 0;
-    const char* data = (const char*)FileUtils::getInstance()->getFileData(filePath + "/theme.style", "rb", &size);
+    const char* data = (const char*)FileUtils::getInstance()->getFileData(m_sThemePath + "/theme.style", "rb", &size);
     if (size > 0)
     {
         std::string str;
@@ -89,5 +90,10 @@ const CAThemeManager::stringMap& CAThemeManager::getThemeMap(const std::string& 
     return m_mPathss.at(key);
 }
 
+
+std::string CAThemeManager::fullPath(const std::string& filePath)
+{
+    return m_sThemePath + filePath;
+}
 
 NS_CC_END
