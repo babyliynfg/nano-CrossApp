@@ -148,11 +148,7 @@ void CAPageControl::onEnter()
         {
             CAImageView* view;
             float w = getFrame().size.width/m_numberOfPages;
-            if (m_style == CAPageControlStyleDot) {
-                w = 14;
-            }else{
-                w -= 10;
-            }
+            w = (m_style == CAPageControlStyleDot) ? 14 : (w-10);
             if (i == m_currentPage)
             {
                 view = CAImageView::createWithImage(m_pSelectPageImage);
