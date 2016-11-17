@@ -114,7 +114,7 @@ bool CAProgress::init()
 void CAProgress::onEnterTransitionDidFinish()
 { 
     CAView::onEnterTransitionDidFinish();
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAProgress");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAProgress");
     if (m_pProgressTrackImage == NULL)
     {
         this->setProgressTrackImage(CAImage::create(map.at("trackImage")));
@@ -237,7 +237,7 @@ void CAProgress::animatedFinish()
 void CAProgress::setContentSize(const DSize & var)
 {
     DSize size = var;
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAProgress");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAProgress");
     int h = atoi(map.at("height").c_str());
     size.height = (h == 0) ? size.height : h;
     CAView::setContentSize(size);

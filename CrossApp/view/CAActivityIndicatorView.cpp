@@ -118,7 +118,7 @@ void CAActivityIndicatorView::visit()
 void CAActivityIndicatorView::setStyle(CAActivityIndicatorViewStyle style)
 {
     m_style = style;
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAActivityIndicatorView");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAActivityIndicatorView");
     if (m_style != CAActivityIndicatorViewStyleImage)
     {
         DRect center = this->getBounds();

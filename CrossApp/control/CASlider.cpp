@@ -33,7 +33,7 @@ CASlider::CASlider()
 {
     this->setPriorityScroll(true);
     this->setVerticalScrollEnabled(false);
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
     int h = atoi(map.at("trackHeight").c_str());
     m_fTrackHeight = (h == 0) ? m_fTrackHeight : h;
 }
@@ -117,7 +117,7 @@ bool CASlider::init()
     {
         return false;
     }
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
     m_pMinTrackTintImageView = CAScale9ImageView::create();
     this->addSubview(m_pMinTrackTintImageView);
     this->setMinTrackTintImage(CAImage::create(map.at("minTrackTintImage")));
@@ -331,7 +331,7 @@ void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
 void CASlider::setContentSize(const DSize & var)
 {
     DSize size = var;
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
     int h = atoi(map.at("height").c_str());
     size.height = (h == 0) ? size.height : h;
     CAControl::setContentSize(size);

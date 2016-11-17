@@ -39,7 +39,7 @@ CAStepper::CAStepper(const CAStepperOrientation& type)
     memset(m_pBackgroundImage, 0x00, sizeof(m_pBackgroundImage));
     memset(m_pIncrementImage, 0x00, sizeof(m_pIncrementImage));
     memset(m_pDecrementImage, 0x00, sizeof(m_pDecrementImage));
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAStepper");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAStepper");
     setBackgroundImage(CAImage::create(map.at("backgroundView_normal")), CAControlStateNormal);
     setBackgroundImage(CAImage::create(map.at("backgroundView_selected")), CAControlStateHighlighted);
     setIncrementImage(CAImage::create(map.at("incImage_highlighted")), CAControlStateAll);

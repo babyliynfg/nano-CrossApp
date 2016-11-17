@@ -566,7 +566,7 @@ CATextField* CATextField::createWithLayout(const DLayout& layout)
 
 bool CATextField::init()
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
     CAImage* image = CAImage::create(map.at("backgroundView_normal"));
     DRect capInsets = DRect(image->getPixelsWide()/2 ,image->getPixelsHigh()/2 , 1, 1);
     m_pBackgroundView = CAScale9ImageView::createWithImage(image);
@@ -605,7 +605,7 @@ void CATextField::update(float dt)
 void CATextField::setContentSize(const DSize& contentSize)
 {
     DSize psize = contentSize;
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
     int h = atoi(map.at("height").c_str());
     psize.height = (h == 0) ? psize.height : h;
     CAControl::setContentSize(psize);
@@ -863,7 +863,7 @@ void CATextField::setClearButtonMode(const ClearButtonMode &var)
     if (var == WhileEditing)
     {
         this->setMarginImageRight(DSize(m_obContentSize.height, m_obContentSize.height), "");
-        const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
         CAButton* rightMarginView = (CAButton*)this->getSubviewByTag(1011);
         rightMarginView->setImageForState(CAControlStateAll, CAImage::create(map.at("clearImage")));
         rightMarginView->setImageColorForState(CAControlStateHighlighted, ccc4Int(0xff666666));

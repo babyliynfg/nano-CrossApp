@@ -99,7 +99,8 @@ bool CAApplication::init(void)
 
     m_fAdaptationRatio = CADensityDpi::getDensityDpi() / DPI_STANDARD;
     
-    m_pThemeManager = CAThemeManager::getInstance();
+    m_pThemeManager = nullptr;
+    this->setThemeManager(CAThemeManager::create("source_material"));
     
     return true;
 }
@@ -112,13 +113,13 @@ CAApplication::~CAApplication(void)
     CC_SAFE_RELEASE(m_pNotificationNode);
     CC_SAFE_RELEASE(m_pTouchDispatcher);
     CC_SAFE_RELEASE(m_pKeypadDispatcher);
+    CC_SAFE_RELEASE(m_pThemeManager);
     CC_SAFE_DELETE(m_pAccelerometer);
 
     // pop the autorelease pool
     CAPoolManager::sharedPoolManager()->pop();
     CAPoolManager::purgePoolManager();
     CAScheduler::destroyScheduler();
-    CAThemeManager::destroyInstance();
     
     // delete m_pLastUpdate
     CC_SAFE_DELETE(m_pLastUpdate);
@@ -403,6 +404,14 @@ const CAInterfaceOrientation& CAApplication::getStatusBarOrientation()
 {
     return CCEGLView::sharedOpenGLView()->getStatusBarOrientation();
 }
+
+void CAApplication::setThemeManager(CAThemeManager* var)
+{
+    CC_SAFE_RETAIN(var);
+    CC_SAFE_RELEASE(m_pThemeManager);
+    m_pThemeManager = var;
+}
+
 
 void CAApplication::setDepthTest(bool bOn)
 {

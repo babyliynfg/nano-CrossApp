@@ -19,21 +19,40 @@ CC_DLL class CAThemeManager : public CAObject
 {
 public:
     
-    static CAThemeManager *getInstance();
+    struct stringMap
+    {
+        stringMap(std::map<std::string, std::string> var)
+        {
+            map = var;
+        }
+        
+        const std::string& at(const std::string& key) const
+        {
+            if (map.find(key) == map.end())
+            {
+                return string_null;
+            }
+            return map.at(key);
+        }
+        
+        std::map<std::string, std::string> map;
+        
+        std::string string_null;
+    };
     
-    static void destroyInstance();
+public:
     
-    const std::map<std::string, std::string>& getThemeMap(const std::string& key);
-    
-protected:
-    
-    CAThemeManager();
+    CAThemeManager(const std::string& filePath);
     
     virtual ~CAThemeManager();
     
+    static CAThemeManager *create(const std::string& filePath);
+    
+    const stringMap& getThemeMap(const std::string& key);
+    
 protected:
     
-    std::map<std::string, std::map<std::string, std::string> > m_mPathss;
+    std::map<std::string, stringMap> m_mPathss;
 
 	tinyxml2::XMLDocument* m_pMyDocument;
 };

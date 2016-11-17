@@ -8,34 +8,25 @@
 
 #include "CAThemeManager.h"
 #include "platform/CAFileUtils.h"
-
+#include "CACommon.h"
 
 NS_CC_BEGIN
 
-const std::map<std::string, std::string> s_map_null;
+static CAThemeManager::stringMap s_map_null = CAThemeManager::stringMap(std::map<std::string, std::string>());
 
-static CAThemeManager* s_pThemeManager = nullptr;
-
-CAThemeManager* CAThemeManager::getInstance()
+CAThemeManager* CAThemeManager::create(const std::string& filePath)
 {
-    if (s_pThemeManager == nullptr)
-    {
-        s_pThemeManager = new CAThemeManager();
-    }
-    
-    return  s_pThemeManager;
+    CAThemeManager* themeManager = new CAThemeManager(filePath);
+    themeManager->init();
+    themeManager->autorelease();
+    return  themeManager;
 }
 
-void CAThemeManager::destroyInstance()
-{
-    
-}
-
-CAThemeManager::CAThemeManager()
+CAThemeManager::CAThemeManager(const std::string& filePath)
 :m_pMyDocument(NULL)
 {
     unsigned long size = 0;
-    const char* data = (const char*)FileUtils::getInstance()->getFileData("source_material/theme.style", "rb", &size);
+    const char* data = (const char*)FileUtils::getInstance()->getFileData(filePath + "/theme.style", "rb", &size);
     if (size > 0)
     {
         std::string str;
@@ -63,14 +54,19 @@ CAThemeManager::CAThemeManager()
                 pathXml = (tinyxml2::XMLElement*)pathXml->NextSiblingElement();
             }
             
-            m_mPathss.insert(std::make_pair(controlXml->Attribute("name"), map));
+            m_mPathss.insert(std::make_pair(controlXml->Attribute("name"), stringMap(map)));
             controlXml = controlXml->NextSiblingElement();
         }
+    }
+    else
+    {
+        CAMessageBox("警告", "主题配置文件缺失");
+        return;
     }
     
     for (auto& var : m_mPathss)
     {
-        std::map<std::string, std::string>& map = var.second;
+        std::map<std::string, std::string>& map = var.second.map;
         for (auto& it : map)
         {
             CCLog("name: %s, value: %s", it.first.c_str(), it.second.c_str());
@@ -84,7 +80,7 @@ CAThemeManager::~CAThemeManager()
 	CC_SAFE_DELETE(m_pMyDocument);
 }
 
-const std::map<std::string, std::string>& CAThemeManager::getThemeMap(const std::string& key)
+const CAThemeManager::stringMap& CAThemeManager::getThemeMap(const std::string& key)
 {
     if (m_mPathss.count(key) == 0)
     {

@@ -55,7 +55,7 @@ CAPullToRefreshView* CAPullToRefreshView::create(const PullToRefreshType& type)
 
 bool CAPullToRefreshView::init()
 {
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPullToRefreshView");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAPullToRefreshView");
     switch (m_eType)
     {
         case CAPullToRefreshTypeHeader:

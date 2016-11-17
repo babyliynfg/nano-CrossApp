@@ -91,7 +91,7 @@ void CATextToolBarView::show(CAView* pView)
 	this->setTextTag("CATextToolBarView");
 	m_pBackView->setAlphaThreshold(0.5f);
 
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAAlertView");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAAlertView");
 	CAScale9ImageView *BackgroundImageView = CAScale9ImageView::createWithFrame(m_pBackView->getBounds());
 	BackgroundImageView->setImage(CAImage::create(map.at("backgroundView")));
 	m_pBackView->addSubview(BackgroundImageView);

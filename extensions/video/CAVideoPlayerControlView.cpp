@@ -116,7 +116,7 @@ void CAVideoPlayerControlView::buildCtrlViews()
 {
     m_glView = CAVideoPlayerView::createWithLayout(DLayoutFill);
     this->addSubview(m_glView);
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAVideoPlayer");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAVideoPlayer");
     // Bottom Panel Back
     CAImageView* bottomPanel = CAImageView::createWithLayout(DLayout(DHorizontalLayoutFill, DVerticalLayout_B_H(0, 188)));
     bottomPanel->setImage(CAImage::create(map.at("bottomPanel")));
@@ -154,7 +154,7 @@ void CAVideoPlayerControlView::updatePlayButton()
 {
     CC_RETURN_IF(m_bChanged == false);
     m_bChanged = false;
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAVideoPlayer");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAVideoPlayer");
 	if (m_glView && m_glView->isPlaying()) 
 	{
 		CAImage* backImage = CAImage::create(map.at("pauseImage"));
