@@ -602,7 +602,7 @@ void CACollectionView::reloadData()
 	this->updateSectionHeaderAndFooterRects();
 	this->layoutPullToRefreshView();
 	
-    if (!this->isScrollWindowNotOutSide())
+    if (this->isScrollWindowNotOutSide())
     {
         this->startDeaccelerateScroll();
     }
