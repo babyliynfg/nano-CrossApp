@@ -122,12 +122,16 @@ bool CAPageControl::initWithCenter(const DRect& rect)
 
 void CAPageControl::updateCurrentPageDisplay()
 {
-    for (int i=0; i<m_numberOfPages; i++) {
+    for (int i=0; i<m_numberOfPages; i++)
+    {
         CAImageView* view = m_pIndicators.at(i);
-        if (i == m_currentPage) {
+        if (i == m_currentPage)
+        {
             view->setImage(m_pSelectPageImage);
             view->setColor(m_currentPageIndicatorTintColor);
-        } else {
+        }
+        else
+        {
             view->setImage(m_pPageImage);
             view->setColor(m_pageIndicatorTintColor);
         }

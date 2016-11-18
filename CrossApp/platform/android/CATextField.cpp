@@ -608,8 +608,15 @@ void CATextField::update(float dt)
 
 void CATextField::setContentSize(const DSize& contentSize)
 {
-    CAControl::setContentSize(contentSize);
+    DSize size = contentSize;
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    if (m_bRecSpe)
+    {
+        int h = atoi(map.at("height").c_str());
+        size.height = (h == 0) ? size.height : h;
+    }
+    CAControl::setContentSize(size);
+    
     if (m_eClearBtn == WhileEditing && this->isFirstResponder())
     {
         m_eClearBtn = None;
@@ -619,10 +626,10 @@ void CATextField::setContentSize(const DSize& contentSize)
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     
-    DSize size;
-    size.width = s_dip_to_px(worldContentSize.width);
-    size.height =  s_dip_to_px(worldContentSize.height);
-    setTextFieldSizeJNI(m_u__ID, size.width, size.height);
+    DSize nssize;
+    nssize.width = s_dip_to_px(worldContentSize.width);
+    nssize.height =  s_dip_to_px(worldContentSize.height);
+    setTextFieldSizeJNI(m_u__ID, nssize.width, nssize.height);
 }
 
 bool CATextField::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)

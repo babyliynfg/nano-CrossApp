@@ -751,7 +751,7 @@ void CAButton::setTouchLongPress()
 void CAButton::setContentSize(const DSize & var)
 {
     DSize size = var;
-    if (m_eButtonType != CAButtonTypeCustom)
+    if (m_bRecSpe && m_eButtonType != CAButtonTypeCustom)
     {
         if (m_eButtonType==CAButtonTypeSquareRect)
         {

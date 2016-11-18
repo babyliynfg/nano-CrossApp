@@ -604,19 +604,22 @@ void CATextField::update(float dt)
 
 void CATextField::setContentSize(const DSize& contentSize)
 {
-    DSize psize = contentSize;
+    DSize size = contentSize;
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
-    int h = atoi(map.at("height").c_str());
-    psize.height = (h == 0) ? psize.height : h;
-    CAControl::setContentSize(psize);
+    if (m_bRecSpe)
+    {
+        int h = atoi(map.at("height").c_str());
+        size.height = (h == 0) ? size.height : h;
+    }
+    CAControl::setContentSize(size);
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
     
     CGFloat scale = MAC_SCALE;
-    NSSize size;
-    size.width = s_dip_to_px(worldContentSize.width) / scale;
-    size.height =  s_dip_to_px(worldContentSize.height) / scale;
-    [textField_MAC setContentSize:size];
+    NSSize nssize;
+    nssize.width = s_dip_to_px(worldContentSize.width) / scale;
+    nssize.height =  s_dip_to_px(worldContentSize.height) / scale;
+    [textField_MAC setContentSize:nssize];
 
     if (m_eClearBtn == WhileEditing)
     {

@@ -13,6 +13,7 @@ NS_CC_BEGIN
 CAControl::CAControl()
 :m_eControlState(CAControlStateNormal)
 ,m_bControlStateLocked(false)
+,m_bRecSpe(true)
 {
     for (int i=0; i<CAControlEventMax; i++)
     {
@@ -72,6 +73,20 @@ void CAControl::removeAllTargets()
         m_pTarget[i] = NULL;
         m_selTouch[i] = NULL;
     }
+}
+
+void CAControl::setRecSpe(bool var)
+{
+    m_bRecSpe = var;
+    if (m_bRunning && m_eLayoutType == 2)
+    {
+        this->setLayout(m_obLayout);
+    }
+}
+
+bool CAControl::isRecSpe()
+{
+    return m_bRecSpe;
 }
 
 NS_CC_END

@@ -283,11 +283,14 @@ void CASwitch::removeTarget(CAObject* target, SEL_CAControl selector)
 void CASwitch::setContentSize(const DSize & var)
 {
     DSize size = var;
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch");
-    int h = atoi(map.at("height").c_str());
-    int w = atoi(map.at("width").c_str());
-    size.height = (h == 0) ? size.height : h;
-    size.width  = (w == 0) ? size.width : w;
+    if (m_bRecSpe)
+    {
+        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASwitch");
+        int h = atoi(map.at("height").c_str());
+        int w = atoi(map.at("width").c_str());
+        size.height = (h == 0) ? size.height : h;
+        size.width  = (w == 0) ? size.width : w;
+    }
     CAControl::setContentSize(size);
     DRect bounds = this->getBounds();
     m_pOnImageView->setFrame(bounds);

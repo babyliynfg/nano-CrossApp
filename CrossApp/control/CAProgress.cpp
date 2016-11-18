@@ -26,6 +26,9 @@ CAProgress::CAProgress()
 ,m_pProgressImageView(NULL)
 ,m_pTarckImageView(NULL)
 {
+    this->setHaveNextResponder(true);
+    this->setMultipleTouchEnabled(true);
+    
     m_pIndicator = CAView::create();
     m_pIndicator->retain();
 	m_pIndicator->setFrameOrigin(DPointZero);
@@ -237,9 +240,12 @@ void CAProgress::animatedFinish()
 void CAProgress::setContentSize(const DSize & var)
 {
     DSize size = var;
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAProgress");
-    int h = atoi(map.at("height").c_str());
-    size.height = (h == 0) ? size.height : h;
+    if (m_bRecSpe)
+    {
+        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAProgress");
+        int h = atoi(map.at("height").c_str());
+        size.height = (h == 0) ? size.height : h;
+    }
     CAView::setContentSize(size);
     
     m_pTarckImageView->setFrame(this->getBounds());

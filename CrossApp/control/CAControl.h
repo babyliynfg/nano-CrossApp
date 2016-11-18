@@ -65,6 +65,8 @@ public:
     
     CC_SYNTHESIZE(bool, m_bControlStateLocked, ControlStateLocked);
     
+    CC_PROPERTY_IS(bool, m_bRecSpe, RecSpe);
+    
 protected:
     
     virtual void addTarget(CAObject* target, SEL_CAControl selector, CAControlEvents event);

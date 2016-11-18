@@ -10,7 +10,7 @@
 #define __project__CASlider__
 
 #include <iostream>
-#include "view/CAView.h"
+#include "control/CAControl.h"
 #include "view/CAScale9ImageView.h"
 #include "view/CARenderImage.h"
 
@@ -22,7 +22,7 @@ typedef enum
     CAProgressStyleBar
 }CAProgressStyle;
 
-class CC_DLL CAProgress :public CAView
+class CC_DLL CAProgress : public CAControl
 {
 public:
     

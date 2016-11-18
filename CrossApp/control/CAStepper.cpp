@@ -545,8 +545,13 @@ void CAStepper::removeAllTargets()
 
 void CAStepper::setContentSize(const DSize & var)
 {
+    if (m_bRecSpe)
+    {
+        
+    }
     CAControl::setContentSize(var);
-    if (m_pBackgroundImageView) {
+    if (m_pBackgroundImageView)
+    {
         m_pBackgroundImageView->setFrame(this->getBounds());
     }
     

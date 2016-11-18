@@ -331,9 +331,12 @@ void CASlider::removeTarget(CAObject* target, SEL_CAControl selector)
 void CASlider::setContentSize(const DSize & var)
 {
     DSize size = var;
-    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
-    int h = atoi(map.at("height").c_str());
-    size.height = (h == 0) ? size.height : h;
+    if (m_bRecSpe)
+    {
+        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CASlider");
+        int h = atoi(map.at("height").c_str());
+        size.height = (h == 0) ? size.height : h;
+    }
     CAControl::setContentSize(size);
     
     this->layoutSubViews();
