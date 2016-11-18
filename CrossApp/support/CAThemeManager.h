@@ -49,9 +49,7 @@ public:
     static CAThemeManager *create(const std::string& filePath);
     
     const stringMap& getThemeMap(const std::string& key);
-    
-    std::string fullPath(const std::string& filePath);
-    
+
 protected:
     
     std::map<std::string, stringMap> m_mPathss;

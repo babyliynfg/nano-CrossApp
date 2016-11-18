@@ -486,7 +486,7 @@ bool CATextField::becomeFirstResponder()
     becomeFirstResponderID(m_u__ID);
     
     this->showNativeTextField();
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
 	if (m_eClearBtn == WhileEditing)
 	{
         CAImageView* ima = (CAImageView*)this->getSubviewByTag(0xbbbb);
@@ -609,7 +609,7 @@ void CATextField::update(float dt)
 void CATextField::setContentSize(const DSize& contentSize)
 {
     CAControl::setContentSize(contentSize);
-    const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
     if (m_eClearBtn == WhileEditing && this->isFirstResponder())
     {
         m_eClearBtn = None;

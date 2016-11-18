@@ -1,109 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Theme>
     <CAButton name="CAButton_SquareRect">
-        <BackgroundView backgroundView_normal="source_material/btn_square_normal.png"/>
-        <BackgroundView backgroundView_highlighted="source_material/btn_square_highlighted.png"/>
-        <BackgroundView backgroundView_selected="source_material/btn_square_selected.png"/>
-        <BackgroundView backgroundView_disabled="source_material/btn_square_disabled.png"/>
-        <Color titleColor_normal="0xff2ec0ff"/>
-        <Color titleColor_highlighted="0xffffffff"/>
-        <Color titleColor_selected="0xffffffff"/>
-        <Color titleColor_disabled="0xffffffff"/>
-        <Size height="0"/>
+        <BackgroundView name="backgroundView_normal" path="1" value="btn_square_normal.png"/>
+        <BackgroundView name="backgroundView_highlighted" path="1" value="btn_square_highlighted.png"/>
+        <BackgroundView name="backgroundView_selected" path="1" value="btn_square_selected.png"/>
+        <BackgroundView name="backgroundView_disabled" path="1" value="btn_square_disabled.png"/>
+        <Color name="titleColor_normal" path="0" value="0xff2ec0ff"/>
+        <Color name="titleColor_highlighted" path="0" value="0xffffffff"/>
+        <Color name="titleColor_selected" path="0" value="0xffffffff"/>
+        <Color name="titleColor_disabled" path="0" value="0xffffffff"/>
+        <Size name="height" path="0" value="60"/>
     </CAButton>
     <CAButton name="CAButton_RoundedRect">
-        <BackgroundView backgroundView_normal="source_material/btn_rounded_normal.png"/>
-        <BackgroundView backgroundView_highlighted="source_material/btn_rounded_highlighted.png"/>
-        <BackgroundView backgroundView_selected="source_material/btn_rounded_selected.png"/>
-        <BackgroundView backgroundView_disabled="source_material/btn_rounded_disabled.png"/>
-        <Color titleColor_normal="0xff2EC0FF"/>
-        <Color titleColor_highlighted="0xffffffff"/>
-        <Color titleColor_selected="0xffffffff"/>
-        <Color titleColor_disabled="0xffffffff"/>
-        <Size height="0"/>
+        <BackgroundView name="backgroundView_normal" path="1" value="btn_rounded_normal.png" />
+        <BackgroundView name="backgroundView_highlighted" path="1" value="btn_rounded_highlighted.png"/>
+        <BackgroundView name="backgroundView_selected" path="1" value="btn_rounded_selected.png"/>
+        <BackgroundView name="backgroundView_disabled" path="1" value="btn_rounded_disabled.png"/>
+        <Color name="titleColor_normal" path="0" value="0xff2EC0FF"/>
+        <Color name="titleColor_highlighted" path="0" value="0xffffffff"/>
+        <Color name="titleColor_selected" path="0" value="0xffffffff"/>
+        <Color name="titleColor_disabled" path="0" value="0xffffffff"/>
+        <Size name="height" path="0" value="60"/>
     </CAButton>
     <CASegmentedControl name="CASegmentedControl">
-        <BackgroundView backgroundView_normal="source_material/segmented_normal.png"/>
-        <BackgroundView backgroundView_selected="source_material/segmented_selected.png"/>
-        <Color titleColor_normal="0xff36C3F0"/>
-        <Color titleColor_selected="0xffffffff"/>
-        <Color tintColor="0xff36C3F0"/>
-        <Size height="0"/>
+        <BackgroundView name="backgroundView_normal" path="1" value="segmented_normal.png"/>
+        <BackgroundView name="backgroundView_selected" path="1" value="segmented_selected.png"/>
+        <Color name="titleColor_normal" path="0" value="0xff36C3F0"/>
+        <Color name="titleColor_selected" path="0" value="0xffffffff"/>
+        <Color name="tintColor" path="0" value="0xff36C3F0"/>
+        <Size name="height" path="0" value="60"/>
     </CASegmentedControl>
     <CAActivityIndicatorView name="CAActivityIndicatorView">
-        <Image image_white="source_material/loading_white.png"/>
-        <Image image_gray="source_material/loading_black.png"/>
+        <Image name="image_white" path="1" value="loading_white.png"/>
+        <Image name="image_gray" path="1" value="loading_black.png"/>
     </CAActivityIndicatorView>
     <CAProgress name="CAProgress">
-        <Image trackImage="source_material/progress_track.png"/>
-        <Image tintImage="source_material/progress_tint.png"/>
-        <Size height="6"/>
+        <Image name="trackImage" path="1" value="progress_track.png"/>
+        <Image name="tintImage" path="1" value="progress_tint.png"/>
+        <Size name="height" path="0" value="6"/>
     </CAProgress>
     <CASlider name="CASlider">
-        <Image minTrackTintImage="source_material/slider_min_track.png"/>
-        <Image maxTrackTintImage="source_material/slider_max_track.png"/>
-        <Image thumbTintImage="source_material/slider_indicator.png"/>
-        <Size trackHeight="4"/>
-        <Size height="48"/>
+        <Image name="minTrackTintImage" path="1" value="slider_min_track.png"/>
+        <Image name="maxTrackTintImage" path="1" value="slider_max_track.png"/>
+        <Image name="thumbTintImage" path="1" value="slider_indicator.png"/>
+        <Size name="trackHeight" path="0" value="4"/>
+        <Size name="height" path="0" value="48"/>
     </CASlider>
     <CASwitch name="CASwitch">
-        <Image onImage="source_material/switch_on.png"/>
-        <Image offImage="source_material/switch_off.png"/>
-        <Image thumbTintImage="source_material/switch_indicator.png"/>
-        <Size width="102"/>
-        <Size height="56"/>
+        <Image name="onImage" path="1" value="switch_on.png"/>
+        <Image name="offImage" path="1" value="switch_off.png"/>
+        <Image name="thumbTintImage" path="1" value="switch_indicator.png"/>
+        <Size name="width" path="0" value="102"/>
+        <Size name="height" path="0" value="56"/>
     </CASwitch>
     <CAStepper name="CAStepper">
-        <BackgroundView backgroundView_normal="source_material/stepper_normal.png"/>
-        <BackgroundView backgroundView_selected="source_material/stepper_selected.png"/>
-        <Image decImage_normal="source_material/stepper_dec_n.png"/>
-        <Image decImage_highlighted="source_material/stepper_dec_h.png"/>
-        <Image incImage_normal="source_material/stepper_inc_n.png"/>
-        <Image incImage_highlighted="source_material/stepper_inc_h.png"/>
-        <Color tintColor="0xff36C3F0"/>
+        <BackgroundView name="backgroundView_normal" path="1" value="stepper_normal.png"/>
+        <BackgroundView name="backgroundView_selected" path="1" value="stepper_selected.png"/>
+        <Image name="decImage_normal" path="1" value="stepper_dec_n.png"/>
+        <Image name="decImage_highlighted" path="1" value="stepper_dec_h.png"/>
+        <Image name="incImage_normal" path="1" value="stepper_inc_n.png"/>
+        <Image name="incImage_highlighted" path="1" value="stepper_inc_h.png"/>
+        <Color name="tintColor" path="0" value="0xff36C3F0"/>
     </CAStepper>
     <CATextField name="CATextField">
-        <BackgroundView backgroundView_normal="source_material/textField_bg.png"/>
-        <Image clearImage="source_material/clear_button.png"/>
-        <Size height="80"/>
+        <BackgroundView name="backgroundView_normal" path="1" value="textField_bg.png"/>
+        <Image name="clearImage" path="1" value="clear_button.png"/>
+        <Size name="height" path="0" value="80"/>
     </CATextField>
     <CATabBar name="CATabBar">
-        <BackgroundView backgroundView_normal="source_material/tabBar_bg.png"/>
-        <BackgroundView backgroundView_selected="source_material/tabBar_selected_bg.png"/>
-        <Image bottomLine="source_material/tabBar_selected_indicator.png"/>
-        <Color titleColor_normal="0xffffffff"/>
-        <Color titleColor_selected="0xff32C1FF"/>
+        <BackgroundView name="backgroundView_normal" path="1" value="tabBar_bg.png"/>
+        <BackgroundView name="backgroundView_selected" path="1" value="tabBar_selected_bg.png"/>
+        <Image name="bottomLine" path="1" value="tabBar_selected_indicator.png"/>
+        <Color name="titleColor_normal" path="0" value="0xffffffff"/>
+        <Color name="titleColor_selected" path="0" value="0xff32CFF"/>
     </CATabBar>
     <CAPageControl name="CAPageControl">
-        <BackgroundView backgroundView_normal_custom="source_material/page_n.png"/>
-        <BackgroundView backgroundView_selected_custom="source_material/page_h.png"/>
-        <BackgroundView backgroundView_normal_round="source_material/page_round_n.png"/>
-        <BackgroundView backgroundView_selected_round="source_material/page_round_h.png"/>
-        <BackgroundView backgroundView_normal_rect="source_material/page_rect_n.png"/>
-        <BackgroundView backgroundView_selected_rect="source_material/page_rect_h.png"/>
+        <BackgroundView name="backgroundView_normal_custom" path="1" value="page_n.png"/>
+        <BackgroundView name="backgroundView_selected_custom" path="1" value="page_h.png"/>
+        <BackgroundView name="backgroundView_normal_round" path="1" value="page_round_n.png"/>
+        <BackgroundView name="backgroundView_selected_round" path="1" value="page_round_h.png"/>
+        <BackgroundView name="backgroundView_normal_rect" path="1" value="page_rect_n.png"/>
+        <BackgroundView name="backgroundView_selected_rect" path="1" value="page_rect_h.png"/>
     </CAPageControl>
     <CANavigationBar name="CANavigationBar">
-        <BackgroundView backgroundView="source_material/navigation_bg.png"/>
-        <Image leftButtonImage="source_material/btn_left_white.png"/>
+        <BackgroundView name="backgroundView" path="1" value="navigation_bg.png"/>
+        <Image name="leftButtonImage" path="1" value="btn_left_white.png"/>
     </CANavigationBar>
     <CABadgeView name="CABadgeView">
-        <Image badgeImage="source_material/bg_badge.png"/>
+        <Image name="badgeImage" path="1" value="bg_badge.png"/>
     </CABadgeView>
     <CACell name="CACell">
-        <BackgroundColor backgroundColor_normal="0xffffffff"/>
-        <BackgroundColor backgroundColor_highlighted="0xffF0F0F0"/>
-        <BackgroundColor backgroundColor_selected="0xff32C1FF"/>
-        <BackgroundColor backgroundColor_disabled="0xff7F7F7F"/>
-        <Color separatorColor="0xffefeef4"/>
+        <BackgroundColor name="backgroundColor_normal" path="0" value="0xffffffff"/>
+        <BackgroundColor name="backgroundColor_highlighted" path="0" value="0xffF0F0F0"/>
+        <BackgroundColor name="backgroundColor_selected" path="0" value="0xff32CFF"/>
+        <BackgroundColor name="backgroundColor_disabled" path="0" value="0xff7F7F7F"/>
+        <Color name="separatorColor" path="0" value="0xffefeef4"/>
     </CACell>
     <CAAlertView name="CAAlertView">
-        <BackgroundView backgroundView="source_material/alert_back.png"/>
+        <BackgroundView name="backgroundView" path="1" value="alert_back.png"/>
     </CAAlertView>
     <CAIndicator name="CAIndicator">
-        <BackgroundView backgroundView="source_material/indicator.png"/>
+        <BackgroundView name="backgroundView" path="1" value="indicator.png"/>
     </CAIndicator>
     <CAPullToRefreshView name="CAPullToRefreshView">
-        <image header="source_material/grayArrow_header.png"/>
-        <image footer="source_material/grayArrow_footer.png"/>
+        <image name="header" path="1" value="grayArrow_header.png"/>
+        <image name="footer" path="1" value="grayArrow_footer.png"/>
     </CAPullToRefreshView>
 </Theme>

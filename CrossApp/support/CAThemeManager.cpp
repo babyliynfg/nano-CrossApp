@@ -26,9 +26,9 @@ CAThemeManager::CAThemeManager(const std::string& filePath)
 :m_pMyDocument(NULL)
 ,m_sThemePath(filePath)
 {
-    std::string last = &m_sThemePath.back();
-    if (last.compare("/")!=0) {
-        m_sThemePath+="/";
+    if (m_sThemePath.back() != '/')
+    {
+        m_sThemePath += "/";
     }
     unsigned long size = 0;
     const char* data = (const char*)FileUtils::getInstance()->getFileData(m_sThemePath + "/theme.style", "rb", &size);
@@ -54,11 +54,13 @@ CAThemeManager::CAThemeManager(const std::string& filePath)
             while (pathXml)
             {
                 std::string pathType = pathXml->Attribute("path");
-                if (pathType.compare("0")==0) {
-                    map.insert(std::make_pair(pathXml->Attribute("name"), pathXml->Attribute("value")));
-                }else if(pathType.compare("1")==0)
+                if (pathType.compare("0")==0)
                 {
-                    map.insert(std::make_pair(pathXml->Attribute("name"), fullPath(pathXml->Attribute("value"))));
+                    map.insert(std::make_pair(pathXml->Attribute("name"), pathXml->Attribute("value")));
+                }
+                else if(pathType.compare("1")==0)
+                {
+                    map.insert(std::make_pair(pathXml->Attribute("name"), (m_sThemePath + pathXml->Attribute("value"))));
                 }
                 pathXml = (tinyxml2::XMLElement*)pathXml->NextSiblingElement();
             }
@@ -96,12 +98,6 @@ const CAThemeManager::stringMap& CAThemeManager::getThemeMap(const std::string& 
         return s_map_null;
     }
     return m_mPathss.at(key);
-}
-
-
-std::string CAThemeManager::fullPath(const std::string& filePath)
-{
-    return m_sThemePath + filePath;
 }
 
 NS_CC_END
