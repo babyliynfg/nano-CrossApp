@@ -8,7 +8,7 @@
 
 #include "CAThemeManager.h"
 #include "platform/CAFileUtils.h"
-#include "CACommon.h"
+#include "platform/CACommon.h"
 
 NS_CC_BEGIN
 
