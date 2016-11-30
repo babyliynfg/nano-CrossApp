@@ -168,9 +168,18 @@
             
             NSDate *birthday = (NSDate*)ABRecordCopyValue(person, kABPersonBirthdayProperty);
             
+            //用于格式化NSDate对象
+            NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+            
+            //设置格式：zzz表示时区
+            [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            
+            //NSDate转NSString
+            NSString *currentDateString = [dateFormatter stringFromDate:birthday];
+            
             if(birthday != nil)
                 
-                address.birthday = [department cStringUsingEncoding:NSUTF8StringEncoding];
+                address.birthday = [currentDateString cStringUsingEncoding:NSUTF8StringEncoding];
             
             //读取note备忘录
             
