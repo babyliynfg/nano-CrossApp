@@ -371,6 +371,16 @@ void JAVAStopUpdateLocation()
     }
 }
     
+void JAVAGetAddressBook()
+{
+    JniMethodInfo jmi;
+    if(JniHelper::getStaticMethodInfo(jmi, "org/CrossApp/lib/CrossAppDevice", "getPersonList", "()V"))
+    {
+        jmi.env->CallStaticVoidMethod(jmi.classID, jmi.methodID);
+        jmi.env->DeleteLocalRef(jmi.classID);
+    }
+}
+
 class ToMainThread:public CAObject
 {
 public:
@@ -396,6 +406,7 @@ static const char *_path = NULL;
 static CAWifiDelegate *wifidelegate = NULL;
 static CAAccelerometerDelegate* accelerometerDelegate = NULL;
 static CAGyroDelegate* gyroscopeDelegate = NULL;
+static CAPersonListDelegate* personListDelegate = NULL;
 static std::vector<CAAddressBookRecord> _addressBookArr;
 
 void openCamera(CAMediaDelegate* target)
@@ -419,54 +430,16 @@ void openAlbum(CAMediaDelegate* target)
     JAVAOpenAlbum(1);
 }
     
-std::vector<CAAddressBookRecord> getAddressBook()
+//std::vector<CAAddressBookRecord> getAddressBook()
+//{
+//    
+//}
+    
+void getAddressBook(CAPersonListDelegate* delegate)
 {
-    if (_addressBookArr.size() > 0 )
-    {
-        return _addressBookArr;
-    }
+    personListDelegate = delegate;
     
-    CSJson::Reader read;
-    CSJson::Value root;
-    
-    if (read.parse(ShowAddress(), root))
-    {
-        CSJson::Value personlist;
-        personlist = root["person"];
-        
-        for (int i=0; i<personlist.size(); i++)
-        {
-            CSJson::Value person;
-            person = personlist[i];
-            CAAddressBookRecord addrec;
-            
-            addrec.fullname = person["name"].asString();
-            
-            CSJson::Value phonelist = person["phone"];
-            
-            for (int i=0; i<1; i++)
-            {
-                addrec.phoneNumber = phonelist[i].asString();
-            }
-            
-            addrec.email = person["email"].asString();
-            
-            addrec.street = person["address_street"].asString();
-            
-            addrec.province = person["address_region"].asString();
-            
-            addrec.city = person["address_city"].asString();
-            
-            addrec.nickname = person["nickname"].asString();
-            
-            addrec.zip = person["address_postCode"].asString();
-            
-            _addressBookArr.push_back(addrec);
-            
-        }
-    }
-
-    return _addressBookArr;
+    JAVAGetAddressBook();
 }
     
 float getScreenBrightness()
@@ -648,6 +621,62 @@ extern "C"
         {
             wifidelegate->getWifiListFunc(wfinfo);
         }
+    }
+    
+    void onGetPersonList(const char* personList)
+    {
+        
+    }
+    
+    JNIEXPORT void JNICALL Java_org_CrossApp_lib_CrossAppPersonList_getPersonList(JNIEnv *env,jobject obj,jstring arg1)
+    {
+        const char *sPersonList = env->GetStringUTFChars(arg1,false);
+        
+        CSJson::Reader read;
+        CSJson::Value root;
+        
+        if (read.parse(sPersonList, root))
+        {
+            CSJson::Value personlist;
+            personlist = root["person"];
+            
+            for (int i=0; i<personlist.size(); i++)
+            {
+                CSJson::Value person;
+                person = personlist[i];
+                CAAddressBookRecord addrec;
+                
+                addrec.fullname = person["name"].asString();
+                
+                CSJson::Value phonelist = person["phone"];
+                
+                for (int i=0; i<1; i++)
+                {
+                    addrec.phoneNumber = phonelist[i].asString();
+                }
+                
+                addrec.email = person["email"].asString();
+                
+                addrec.street = person["address_street"].asString();
+                
+                addrec.province = person["address_region"].asString();
+                
+                addrec.city = person["address_city"].asString();
+                
+                addrec.nickname = person["nickname"].asString();
+                
+                addrec.zip = person["address_postCode"].asString();
+                
+                _addressBookArr.push_back(addrec);
+                
+            }
+        }
+        
+        if(personListDelegate)
+        {
+            personListDelegate->getPersonList(_addressBookArr);
+        }
+        
     }
 }
 

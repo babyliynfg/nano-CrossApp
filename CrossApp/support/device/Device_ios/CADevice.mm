@@ -22,8 +22,6 @@ NS_CC_BEGIN
 namespace CADevice
 {
 
-static std::vector<CAAddressBookRecord> _addressBookArr;
-    
 const char* getSystemVersionWithIOS()
 {
     return [[[UIDevice currentDevice]systemVersion] UTF8String];
@@ -55,16 +53,14 @@ void writeToSavedPhotosAlbum(CAImage* image, const std::string &imageName)
     [[[CAAlbumController alloc] init] writeImageToPhoto:image];
 }
     
-std::vector<CAAddressBookRecord> getAddressBook()
+void getAddressBook(CAPersonListDelegate* delegate)
 {
-    if (_addressBookArr.size()>0) {
-        return _addressBookArr;
-    }
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
     CAAddress *address = [[CAAddress alloc] init];
-    _addressBookArr =  [address getAddressBook];
+    [address addDelegate:delegate];
+    [address getAddressBook];
 #endif
-    return _addressBookArr;
+
 }
 
 void OpenURL(const std::string &url)

@@ -20,14 +20,29 @@
     return self;
 }
 
--(std::vector<CrossApp::CAAddressBookRecord>)getAddressBook
+- (void) dealloc
 {
+    [super dealloc];
+    _personListDelegate = NULL;
+}
+
+-(void)addDelegate:(CrossApp::CAPersonListDelegate*)delegate;
+{
+    _personListDelegate = delegate;
+}
+
+-(void)getAddressBook
+{
+    if(_personListDelegate == NULL)
+    {
+        return;
+    }
     
     CFErrorRef *error = nil;
     ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(NULL, error);
     __block BOOL accessGranted = NO;
     
-    if (ABAddressBookRequestAccessWithCompletion != NULL)
+    if (&ABAddressBookRequestAccessWithCompletion != NULL)
     { // we're on iOS 6
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);
         
@@ -62,17 +77,21 @@
             ABRecordRef person = CFArrayGetValueAtIndex(results, i);
             CrossApp::CAAddressBookRecord address;
             
-            NSString *_firstName = (NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+            NSString *firstName = (NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
             
-            if (_firstName != nil)
-                address.firstName = [_firstName cStringUsingEncoding:NSUTF8StringEncoding];
+            if (firstName != nil)
+                address.firstName = [firstName cStringUsingEncoding:NSUTF8StringEncoding];
+            else
+                firstName = @"";
             
             NSString *lastName = (NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
             
             if (lastName != nil)
                 address.lastName = [lastName cStringUsingEncoding:NSUTF8StringEncoding];
+            else
+                lastName = @"";
             
-            NSString *st = [NSString stringWithFormat:@"%@%@",lastName,_firstName];
+            NSString *st = [NSString stringWithFormat:@"%@%@",lastName,firstName];
             address.fullname =[st cStringUsingEncoding:NSUTF8StringEncoding];
             
             NSString *middlename = (NSString*)ABRecordCopyValue(person, kABPersonMiddleNameProperty);
@@ -177,7 +196,7 @@
             
             ABMultiValueRef email = ABRecordCopyValue(person, kABPersonEmailProperty);
             
-            int emailcount = ABMultiValueGetCount(email);
+            int emailcount = (int)ABMultiValueGetCount(email);
             
             for (int x = 0; x < emailcount; x++)
             {
@@ -192,7 +211,7 @@
             
             ABMultiValueRef addresses = ABRecordCopyValue(person, kABPersonAddressProperty);
             
-            int count = ABMultiValueGetCount(addresses);
+            int count = (int)ABMultiValueGetCount(addresses);
             
             
             
@@ -251,6 +270,9 @@
 
     }
     
-    return arr;
+    if(_personListDelegate)
+    {
+        _personListDelegate->getPersonList(arr);
+    }
 }
 @end
