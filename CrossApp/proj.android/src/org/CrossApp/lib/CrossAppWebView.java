@@ -10,12 +10,16 @@ import android.net.http.SslError;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+//import android.webkit.SslErrorHandler;
+//import android.webkit.WebChromeClient;
+//import android.webkit.WebView;
+//import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
-
+//使用QQ浏览器x5内核
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 public class CrossAppWebView extends WebView {
     private static final String TAG = CrossAppWebViewHelper.class.getSimpleName();
 
@@ -106,7 +110,8 @@ public class CrossAppWebView extends WebView {
             CrossAppWebViewHelper._didFailLoading(viewTag, failingUrl);
         }
 
-	@Override
+//	x5内核不提供
+//	@Override
 	public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
 		handler.proceed();
 	}
