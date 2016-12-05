@@ -545,11 +545,21 @@ void CAStepper::removeAllTargets()
 
 void CAStepper::setContentSize(const DSize & var)
 {
+    DSize size = var;
     if (m_bRecSpe)
     {
-        
+        const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAStepper");
+        int w = atoi(map.at("width").c_str());
+        int h = atoi(map.at("height").c_str());
+        if (m_pCAStepperOrientation==CAStepperOrientationHorizontal) {
+            size.width = (w == 0) ? size.width : w;
+            size.height = (h == 0) ? size.height : h;
+        }else{
+            size.width = (h == 0) ? size.width : h;
+            size.height = (w == 0) ? size.height : w;
+        }
     }
-    CAControl::setContentSize(var);
+    CAControl::setContentSize(size);
     if (m_pBackgroundImageView)
     {
         m_pBackgroundImageView->setFrame(this->getBounds());
