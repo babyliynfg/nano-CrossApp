@@ -113,9 +113,15 @@ public abstract class CrossAppDevice  extends Activity  {
     /*
      *  CrossAppPersonList
      * */
-    public static String getPersonList()
+    public static void getPersonList()
     {
-    	return CrossAppPersonList.getPersonList();
+    	s_pContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run()
+            {
+            	CrossAppPersonList.getPersonList();
+            }
+        });
     }
     
 	public static void CAImageCapture(int type)

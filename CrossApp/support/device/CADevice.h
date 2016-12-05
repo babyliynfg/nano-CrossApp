@@ -49,47 +49,6 @@ struct CABlueToothUnit
     std::string name;
 };
 
-class CC_DLL CAMediaDelegate
-{
-public:
-    virtual ~CAMediaDelegate(){};
-    
-    virtual void getSelectedImage(CAImage *image) = 0;
-};
-
-
-struct CALocationInfo
-{
-	std::string sLongitude;
-	std::string sLatitude;
-	std::string sAltitude;
-	std::string sSpeed;
-	std::string sBearing;
-};
-
-class CC_DLL CABlueToothDelegate
-{
-public:
-    virtual ~CABlueToothDelegate(){};
-    
-    virtual void getBlueToothState(CABlueToothState state) {};
-    
-    virtual void getSearchBlueToothDevice(CABlueToothUnit unit){};
-    
-    virtual void startDiscoveryBlueToothDevice(){};
-    
-    virtual void finishedDiscoveryBlueToothDevice(){};
-};
-
-class CC_DLL CAWifiDelegate
-{
-public:
-    virtual ~CAWifiDelegate(){};
-    
-    virtual void getWifiListFunc(std::vector<CAWifiInfo> _wifiInfoList) = 0;
-};
-
-
 struct CC_DLL CAAddressBookRecord
 {
     std::string firstName;
@@ -128,14 +87,62 @@ typedef enum
 
 typedef enum
 {
-	CAVolumeMusic = 0,
-	CAVolumeSystem,
-	CAVolumeRing,
-	CAVolumeVoicCall,
-	CAVolumeAlarm,
-	CAVolumeNotification
-
+    CAVolumeMusic = 0,
+    CAVolumeSystem,
+    CAVolumeRing,
+    CAVolumeVoicCall,
+    CAVolumeAlarm,
+    CAVolumeNotification
+    
 }CAVolumeType;
+
+struct CALocationInfo
+{
+    std::string sLongitude;
+    std::string sLatitude;
+    std::string sAltitude;
+    std::string sSpeed;
+    std::string sBearing;
+};
+
+class CC_DLL CAMediaDelegate
+{
+public:
+    virtual ~CAMediaDelegate(){};
+    
+    virtual void getSelectedImage(CAImage *image) = 0;
+};
+
+class CC_DLL CAPersonListDelegate
+{
+public:
+    virtual ~CAPersonListDelegate(){};
+
+    virtual void getPersonList(std::vector<CAAddressBookRecord> addressBookRecord) = 0;
+};
+
+class CC_DLL CABlueToothDelegate
+{
+public:
+    virtual ~CABlueToothDelegate(){};
+    
+    virtual void getBlueToothState(CABlueToothState state) {};
+    
+    virtual void getSearchBlueToothDevice(CABlueToothUnit unit){};
+    
+    virtual void startDiscoveryBlueToothDevice(){};
+    
+    virtual void finishedDiscoveryBlueToothDevice(){};
+};
+
+class CC_DLL CAWifiDelegate
+{
+public:
+    virtual ~CAWifiDelegate(){};
+    
+    virtual void getWifiListFunc(std::vector<CAWifiInfo> _wifiInfoList) = 0;
+};
+
 
 namespace CADevice
 {
@@ -151,7 +158,7 @@ namespace CADevice
     
     CC_DLL void setScreenBrightness(float brightness);
 
-    CC_DLL std::vector<CAAddressBookRecord> getAddressBook();
+    CC_DLL void getAddressBook(CAPersonListDelegate* delegate);
     
     CC_DLL void updateVersion(const std::string &url
                               ,unsigned int versionNumber

@@ -13,7 +13,11 @@
 
 @interface CAAddress : NSObject
 {
-    
+    CrossApp::CAPersonListDelegate* _personListDelegate;
 }
--(std::vector<CrossApp::CAAddressBookRecord>)getAddressBook;
+
+-(void)getAddressBook;
+
+-(void)addDelegate:(CrossApp::CAPersonListDelegate*)delegate;
+
 @end

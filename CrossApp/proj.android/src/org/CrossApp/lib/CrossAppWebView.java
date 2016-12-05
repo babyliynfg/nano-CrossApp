@@ -1,8 +1,10 @@
 package org.CrossApp.lib;
 
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Method;
 import java.net.URI;
 import java.nio.ByteBuffer;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,11 +12,16 @@ import android.net.http.SslError;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
-import android.webkit.SslErrorHandler;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+//import android.webkit.SslErrorHandler;
+//import android.webkit.WebChromeClient;
+//import android.webkit.WebView;
+//import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
+import com.tencent.smtt.sdk.WebChromeClient;
+import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 public class CrossAppWebView extends WebView {
     private static final String TAG = CrossAppWebViewHelper.class.getSimpleName();
@@ -25,6 +32,8 @@ public class CrossAppWebView extends WebView {
 
     public CrossAppWebView(Context context) {
         this(context, -1);
+
+
     }
     
     @SuppressLint("SetJavaScriptEnabled")
@@ -37,11 +46,14 @@ public class CrossAppWebView extends WebView {
         this.setFocusable(true);
         this.setFocusableInTouchMode(true);
 
-        this.getSettings().setSupportZoom(false);
+        this.getSettings().setSupportZoom(true);
         this.getSettings().setBuiltInZoomControls(true);
         this.getSettings().setJavaScriptEnabled(true);
         this.addJavascriptInterface(new InJavaScriptLocalObj(), "local_obj");
         this.getSettings().setUseWideViewPort(true);
+        
+        this.getSettings().setLayoutAlgorithm(LayoutAlgorithm.SINGLE_COLUMN);
+        this.getSettings().setLoadWithOverviewMode(true);
         
         // `searchBoxJavaBridge_` has big security risk. http://jvn.jp/en/jp/JVN53768697
         try {
@@ -105,11 +117,10 @@ public class CrossAppWebView extends WebView {
             super.onReceivedError(view, errorCode, description, failingUrl);
             CrossAppWebViewHelper._didFailLoading(viewTag, failingUrl);
         }
-
-	@Override
-	public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-		handler.proceed();
-	}
+//        @Override
+        public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+        	handler.proceed();
+        }
     }
     
     final class InJavaScriptLocalObj {
