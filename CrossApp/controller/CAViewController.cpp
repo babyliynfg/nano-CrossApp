@@ -576,6 +576,7 @@ void beginPushAnimation(float width, CAView* last, CAView* new_, CAObject* targe
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDelay(0.05f);
     CAViewAnimation::setAnimationDuration(0.2f);
+    CAViewAnimation::setAnimationDelay(1/30.0f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
     CAViewAnimation::setAnimationDidStopSelector(target, selector);
     new_->setFrameOrigin(DPointZero);
