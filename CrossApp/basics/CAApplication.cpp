@@ -391,6 +391,13 @@ void CAApplication::setStatusBarStyle(const CAStatusBarStyle &var)
     
 }
 
+void CAApplication::setStatusBarHidden(bool isStatusBarHidden)
+{
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+    CCApplication::sharedApplication()->setStatusBarHidden(isStatusBarHidden);
+#endif
+}
+
 bool CAApplication::isStatusBarHidden()
 {
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
