@@ -54,6 +54,8 @@ public:
 
     void setStatusBarStyle(const CAStatusBarStyle& var);
     
+    void setStatusBarHidden(bool isStatusBarHidden);
+    
     bool isStatusBarHidden();
     
 protected:

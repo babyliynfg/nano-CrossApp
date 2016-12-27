@@ -129,6 +129,11 @@ void CCApplication::setStatusBarStyle(const CAStatusBarStyle& var)
     }
 }
 
+void CCApplication::setStatusBarHidden(bool isStatusBarHidden)
+{
+    [[UIApplication sharedApplication] setStatusBarHidden:isStatusBarHidden];
+}
+
 bool CCApplication::isStatusBarHidden()
 {
     return [[UIApplication sharedApplication] isStatusBarHidden];
