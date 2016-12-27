@@ -404,6 +404,8 @@ std::string FileUtilsApple::getFullPathForDirectoryAndFilename(const std::string
                                                    ofType:nil
                                               inDirectory:[NSString stringWithUTF8String:directory.c_str()]];
         if (fullpath != nil) {
+//            NSString *str = [fullpath stringByReplacingOccurrencesOfString:@"Test.app/Contents/" withString:@""];
+//            return [str UTF8String];
             return [fullpath UTF8String];
         }
     }
