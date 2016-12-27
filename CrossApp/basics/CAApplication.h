@@ -115,6 +115,7 @@ public:
     inline CAThemeManager* getThemeManager() { return m_pThemeManager; }
     void setThemeManager(CAThemeManager* var);
     
+    void setStatusBarHidden(bool isStatusBarHidden);
     bool isStatusBarHidden();
     
     const CAInterfaceOrientation& getStatusBarOrientation();

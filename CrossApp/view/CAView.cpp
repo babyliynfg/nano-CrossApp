@@ -1019,7 +1019,7 @@ void CAView::updateDraw()
         CC_RETURN_IF(v->isVisible());
     }
     SET_DIRTY_RECURSIVELY(m_pobBatchView);
-    m_bTransformDirty = m_bInverseDirty = m_bInverseDirty = true;
+    m_bTransformDirty = m_bInverseDirty = true;
     CAApplication::getApplication()->updateDraw();
 }
 
