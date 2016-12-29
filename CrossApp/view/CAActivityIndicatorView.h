@@ -48,7 +48,9 @@ public:
     void setTimesOneCycle(float times);
     void setCycleTime(float time);
     // sizes the view according to the style
-    virtual void setStyle(CAActivityIndicatorViewStyle style);
+    void setStyle(CAActivityIndicatorViewStyle style);
+    
+    void setActivityIndicatorOffset(const DSize& offset);
     
     // will set CAActivityIndicatorViewStyleImage when call this func
     CC_PROPERTY(CAView*, m_pImageView, ActivityIndicatorView);
@@ -78,6 +80,7 @@ private:
     CAObject* m_pTarget;
     SEL_CallFunc m_pCallFunc;
     CAImageView* m_pImageBG;
+    DSize m_obActivityIndicatorOffset;
     
 private:
     std::vector<float> m_vRotate;
