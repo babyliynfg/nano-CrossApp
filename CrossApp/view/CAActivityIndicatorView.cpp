@@ -29,6 +29,7 @@ CAActivityIndicatorView::CAActivityIndicatorView()
 , m_pCallFunc(NULL)
 , m_nTimesOneCycle(12)
 , m_fCycleTime(1.0f)
+, m_obActivityIndicatorOffset(DSizeZero)
 {
     
 }
@@ -239,20 +240,25 @@ void CAActivityIndicatorView::animation(float dt)
     while (0);
 }
 
+void CAActivityIndicatorView::setActivityIndicatorOffset(const DSize& offset)
+{
+    m_obActivityIndicatorOffset = offset;
+    
+    if (m_pImageView)
+    {
+        m_pImageView->setCenterOrigin(m_obContentSize/2 + offset);
+    }
+}
+
 void CAActivityIndicatorView::setActivityIndicatorView(CrossApp::CAView *var)
 {
-    m_style = CAActivityIndicatorViewStyleImage;
-    
     this->removeSubview(m_pImageView);
     CC_SAFE_RETAIN(var);
     CC_SAFE_RELEASE_NULL(m_pImageView);
     m_pImageView = var;
     if (m_pImageView)
     {
-        if (m_pBackView || (m_pBackView && m_pBackView->getLayoutType() <= 1))
-        {
-            m_pImageView->setCenterOrigin(m_obContentSize/2);
-        }
+        m_pImageView->setCenterOrigin(m_obContentSize/2 + m_obActivityIndicatorOffset);
         this->insertSubview(m_pImageView, 1);
     }
     
@@ -294,11 +300,11 @@ void CAActivityIndicatorView::setContentSize(const DSize & var)
     
     if (m_pBackView)
     {
-        m_pBackView->setCenterOrigin(getBounds().size/2);
+        m_pBackView->setCenterOrigin(m_obContentSize/2);
     }
     if (m_pImageView)
     {
-        m_pImageView->setCenterOrigin(getBounds().size/2);
+        m_pImageView->setCenterOrigin(m_obContentSize/2 + m_obActivityIndicatorOffset);
     }
 }
 
