@@ -34,6 +34,10 @@ CABarButtonItem::CABarButtonItem()
 ,m_selCallFunc(NULL)
 ,m_pCustomView(NULL)
 ,m_uItemWidth(80)
+,m_uImageWidth(44)
+,m_uLabelWidth(80)
+,m_iImageOffsetX(0)
+,m_iLabelOffsetX(0)
 {
 
 }

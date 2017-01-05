@@ -61,6 +61,14 @@ public:
     
     CC_SYNTHESIZE(unsigned int, m_uItemWidth, ItemWidth);
     
+    CC_SYNTHESIZE(unsigned int, m_uImageWidth, ImageWidth);
+    
+    CC_SYNTHESIZE(int, m_iImageOffsetX, ImageOffsetX);
+    
+    CC_SYNTHESIZE(unsigned int, m_uLabelWidth, LabelWidth);
+    
+    CC_SYNTHESIZE(int, m_iLabelOffsetX, LabelOffsetX);
+    
     CC_SYNTHESIZE_READONLY(CAView*, m_pCustomView, CustomView);
     
     void setTarget(CAObject* target, SEL_CAControl callfunc);
@@ -106,7 +114,7 @@ public:
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CAObject*>, m_vLeftButtonItems, LeftButtonItems);
     
     CC_SYNTHESIZE_READONLY_PASS_BY_REF(CAVector<CAObject*>, m_vRightButtonItems,RightButtonItems);
-    
+
     CC_PROPERTY_IS(bool, m_bShowGoBackButton, ShowGoBackButton);
 
 };
