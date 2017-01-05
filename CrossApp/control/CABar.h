@@ -71,6 +71,10 @@ public:
     
     CC_SYNTHESIZE_READONLY(CANavigationBarItem*, m_pItem, Item);
 
+    virtual void setGoBackBarButtonItem(CABarButtonItem* item);
+    
+    CC_SYNTHESIZE_READONLY(CABarButtonItem*, m_pGoBackBarButtonItem, GoBackBarButtonItem);
+    
 protected:
     
     virtual bool init();

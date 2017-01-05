@@ -28,6 +28,7 @@ CANavigationBar::CANavigationBar(bool clearance)
 ,m_cTitleColor(CAColor_white)
 ,m_cButtonColor(CAColor_white)
 ,m_pItem(NULL)
+,m_pGoBackBarButtonItem(nullptr)
 ,m_bClearance(clearance)
 {
 
@@ -36,6 +37,7 @@ CANavigationBar::CANavigationBar(bool clearance)
 CANavigationBar::~CANavigationBar()
 {
     CC_SAFE_RELEASE_NULL(m_pItem);
+    CC_SAFE_RELEASE_NULL(m_pGoBackBarButtonItem);
     CC_SAFE_RELEASE(m_pBackgroundView);
 }
 
@@ -83,6 +85,13 @@ bool CANavigationBar::init()
     m_pContentView->release();
     
     this->enabledBottomShadow(true);
+    
+    const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
+    
+    m_pGoBackBarButtonItem = CABarButtonItem::create("", CAImage::create(map.at("leftButtonImage")), nullptr);
+    m_pGoBackBarButtonItem->setItemWidth(80);
+    m_pGoBackBarButtonItem->retain();
+    
     return true;
 }
 
@@ -116,6 +125,14 @@ void CANavigationBar::setItem(CANavigationBarItem* item)
     CC_SAFE_RETAIN(item);
     CC_SAFE_RELEASE_NULL(m_pItem);
     m_pItem = item;
+    this->updateNavigationBar();
+}
+
+void CANavigationBar::setGoBackBarButtonItem(CABarButtonItem* item)
+{
+    CC_SAFE_RETAIN(item);
+    CC_SAFE_RELEASE_NULL(m_pGoBackBarButtonItem);
+    m_pGoBackBarButtonItem = item;
     this->updateNavigationBar();
 }
 
@@ -242,30 +259,64 @@ void CANavigationBar::showLeftButton()
     {
         CABarButtonItem* item = dynamic_cast<CABarButtonItem*>(buttonItems.at(i));
         
-        layout.horizontal.width = item ? item->getItemWidth() : 80;
-        
         if (i == 0)
         {
             layout.horizontal.left = 3;
+            layout.horizontal.width = item ? item->getItemWidth() : m_pGoBackBarButtonItem->getItemWidth();
+        }
+        else
+        {
+            layout.horizontal.width = item->getItemWidth();
         }
         
         CAButton* button = CAButton::createWithLayout(layout, CAButtonTypeCustom);
-        button->setImageSize(DSize(44, 44));
-        button->setTitleFontSize(32);
         m_pContentView->addSubview(button);
+        button->setTitleFontSize(32);
         
-        if (item == NULL && m_pItem)
+        if (i == 0 && item == NULL)
         {
-            const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
-            button->setImageForState(CAControlStateAll, CAImage::create(map.at("leftButtonImage")));
-            button->setImageColorForState(CAControlStateHighlighted, ccc4(255, 255, 200, 255));
+            CAImage* image = m_pGoBackBarButtonItem->getImage();
+
+            if (image)
+            {
+                float ratio = image->getAspectRatio();
+                button->setImageSize(DSize(m_pGoBackBarButtonItem->getImageWidth(), m_pGoBackBarButtonItem->getImageWidth() / ratio));
+                button->setImageOffset(DSize(m_pGoBackBarButtonItem->getImageOffsetX(), 0));
+                button->setImageForState(CAControlStateAll, image);
+                
+                if (m_pGoBackBarButtonItem->getHighlightedImage())
+                {
+                    button->setImageForState(CAControlStateHighlighted, m_pGoBackBarButtonItem->getHighlightedImage());
+                }
+                else
+                {
+                    button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
+                }            }
+            
+            std::string title = m_pGoBackBarButtonItem->getTitle();
+            if (!title.empty())
+            {
+                button->setTitleForState(CAControlStateAll, title);
+                button->setTitleLabelSize(DSize(m_pGoBackBarButtonItem->getLabelWidth(), 44));
+                button->setTitleOffset(DSize(m_pGoBackBarButtonItem->getLabelOffsetX(), 0));
+                button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
+                button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
+            }
+            
+            
             button->addTarget(this, CAControl_selector(CANavigationBar::goBack), CAControlEventTouchUpInSide);
         }
         else if (item)
         {
-            if (item->getImage())
+            CAImage* image = item->getImage();
+            
+            if (image)
             {
-                button->setImageForState(CAControlStateAll, item->getImage());
+                float ratio = image->getAspectRatio();
+                button->setImageSize(DSize(item->getImageWidth(), item->getImageWidth() / ratio));
+                button->setImageOffset(DSize(item->getImageOffsetX(), 0));
+                button->setImageForState(CAControlStateAll, image);
+                
                 if (item->getHighlightedImage())
                 {
                     button->setImageForState(CAControlStateHighlighted, item->getHighlightedImage());
@@ -275,11 +326,16 @@ void CANavigationBar::showLeftButton()
                     button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
                 }
             }
-            else
+            
+            std::string title = item->getTitle();
+            if (!title.empty())
             {
+                button->setTitleForState(CAControlStateAll, title);
+                button->setTitleLabelSize(DSize(item->getLabelWidth(), 44));
+                button->setTitleOffset(DSize(item->getLabelOffsetX(), 0));
                 button->setTitleForState(CAControlStateNormal, item->getTitle());
-                button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
                 button->setTitleForState(CAControlStateHighlighted, item->getTitle());
+                button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
                 button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
             
@@ -316,15 +372,20 @@ void CANavigationBar::showRightButton()
         }
         
         CAButton* button = CAButton::createWithLayout(layout, CAButtonTypeCustom);
-        button->setImageSize(DSize(44, 44));
-        button->setTitleFontSize(32);
         m_pContentView->addSubview(button);
-
+        button->setTitleFontSize(32);
+        
         if (item)
         {
-            if (item->getImage())
+            CAImage* image = item->getImage();
+            
+            if (image)
             {
-                button->setImageForState(CAControlStateAll, item->getImage());
+                float ratio = image->getAspectRatio();
+                button->setImageSize(DSize(item->getImageWidth(), item->getImageWidth() / ratio));
+                button->setImageOffset(DSize(item->getImageOffsetX(), 0));
+                button->setImageForState(CAControlStateAll, image);
+                
                 if (item->getHighlightedImage())
                 {
                     button->setImageForState(CAControlStateHighlighted, item->getHighlightedImage());
@@ -334,11 +395,16 @@ void CANavigationBar::showRightButton()
                     button->setImageColorForState(CAControlStateHighlighted, ccc4(127, 127, 127, 255));
                 }
             }
-            else
+            
+            std::string title = item->getTitle();
+            if (!title.empty())
             {
+                button->setTitleForState(CAControlStateAll, title);
+                button->setTitleLabelSize(DSize(item->getLabelWidth(), 44));
+                button->setTitleOffset(DSize(item->getLabelOffsetX(), 0));
                 button->setTitleForState(CAControlStateNormal, item->getTitle());
-                button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
                 button->setTitleForState(CAControlStateHighlighted, item->getTitle());
+                button->setTitleColorForState(CAControlStateNormal, m_cButtonColor);
                 button->setTitleColorForState(CAControlStateHighlighted, ccc4(m_cButtonColor.r/2, m_cButtonColor.g/2, m_cButtonColor.b/2, 255));
             }
             

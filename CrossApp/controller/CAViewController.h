@@ -181,6 +181,8 @@ public:
 
     CC_PROPERTY_PASS_BY_REF(CAColor4B, m_sNavigationBarButtonColor, NavigationBarButtonColor);
     
+    CC_PROPERTY(CABarButtonItem*, m_pNavigationBarGoBackBarButtonItem, NavigationBarGoBackBarButtonItem);
+    
     virtual bool isReachBoundaryLeft();
     
     virtual bool isReachBoundaryRight() {return true;}

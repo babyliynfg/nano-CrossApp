@@ -285,6 +285,7 @@ CANavigationController::CANavigationController()
 ,m_sNavigationBarBackgroundColor(CAColor_white)
 ,m_sNavigationBarTitleColor(CAColor_white)
 ,m_sNavigationBarButtonColor(CAColor_white)
+,m_pNavigationBarGoBackBarButtonItem(nullptr)
 ,m_fProgress(1.0f)
 ,m_bClearance(false)
 {
@@ -399,6 +400,25 @@ void CANavigationController::setNavigationBarButtonColor(const CAColor4B &var)
 const CAColor4B& CANavigationController::getNavigationBarButtonColor()
 {
     return m_sNavigationBarButtonColor;
+}
+
+void CANavigationController::setNavigationBarGoBackBarButtonItem(CrossApp::CABarButtonItem *var)
+{
+    m_pNavigationBarGoBackBarButtonItem = var;
+
+    if (m_pNavigationBarGoBackBarButtonItem && !m_pNavigationBars.empty())
+    {
+        CADeque<CANavigationBar*>::iterator itr;
+        for (itr=m_pNavigationBars.begin(); itr!=m_pNavigationBars.end(); itr++)
+        {
+            (*itr)->setGoBackBarButtonItem(m_pNavigationBarGoBackBarButtonItem);
+        }
+    }
+}
+
+CABarButtonItem* CANavigationController::getNavigationBarGoBackBarButtonItem()
+{
+    return m_pNavigationBarGoBackBarButtonItem;
 }
 
 bool CANavigationController::initWithRootViewController(CAViewController* viewController)
@@ -535,6 +555,12 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
     {
         navigationBar->setBackgroundView(CAView::create());
     }
+    
+    if (m_pNavigationBarGoBackBarButtonItem)
+    {
+        navigationBar->setGoBackBarButtonItem(m_pNavigationBarGoBackBarButtonItem);
+    }
+    
     navigationBar->getBackgroundView()->setColor(m_sNavigationBarBackgroundColor);
     navigationBar->setTitleColor(m_sNavigationBarTitleColor);
     navigationBar->setTitleColor(m_sNavigationBarTitleColor);
