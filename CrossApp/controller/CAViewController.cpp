@@ -463,6 +463,26 @@ void CANavigationController::updateItem(CAViewController* viewController)
     m_pNavigationBars.at(index)->setTitleColor(m_sNavigationBarTitleColor);
     m_pNavigationBars.at(index)->setTitleColor(m_sNavigationBarTitleColor);
     m_pNavigationBars.at(index)->setItem(viewController->getNavigationBarItem());
+    
+    DLayout navLayout;
+    navLayout.horizontal = DHorizontalLayoutFill;
+    navLayout.vertical.height = m_iNavigationBarHeight;
+    
+    if (viewController->getNavigationBarItem() && viewController->getNavigationBarItem()->isNagigationBarHidden())
+    {
+        navLayout.vertical.top = -m_iNavigationBarHeight;
+    }
+    else
+    {
+        navLayout.vertical.top = 0;
+    }
+    m_pNavigationBars.at(index)->setLayout(navLayout);
+    
+    DLayout secondLayout;
+    secondLayout.horizontal = DHorizontalLayoutFill;
+    secondLayout.vertical = DVerticalLayout_T_B(navLayout.vertical.top + navLayout.vertical.height, 0);
+
+    m_pSecondContainers.at(index)->setLayout(secondLayout);
 }
 
 void CANavigationController::viewDidLoad()
