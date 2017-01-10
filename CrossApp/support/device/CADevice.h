@@ -193,6 +193,8 @@ namespace CADevice
     CC_DLL void setGyroInterval(float interval);
     
     CC_DLL void stopGyroscope();
+    
+    CC_DLL void setIdleTimerDisabled(bool isIdleTimerDisabled);
 };
 
 NS_CC_END

@@ -381,6 +381,16 @@ void JAVAGetAddressBook()
     }
 }
 
+void JAVASetIdleTimerDisabled(int type)
+{
+    JniMethodInfo jmi;
+    if(JniHelper::getStaticMethodInfo(jmi , "org/CrossApp/lib/CrossAppDevice" , "setIdleTimerDisabled" , "(I)V"))
+    {
+        jmi.env->CallStaticVoidMethod(jmi.classID , jmi.methodID,type);
+        jmi.env->DeleteLocalRef(jmi.classID);
+    }
+}
+    
 class ToMainThread:public CAObject
 {
 public:
@@ -470,6 +480,12 @@ void setGyroInterval(float interval)
 void stopGyroscope()
 {
 	JAVAStopGyroscope();
+}
+    
+void setIdleTimerDisabled(bool isIdleTimerDisabled)
+{
+    int type = isIdleTimerDisabled ? 1 : 0;
+    JAVASetIdleTimerDisabled(type);
 }
 
 ToMainThread::ToMainThread()

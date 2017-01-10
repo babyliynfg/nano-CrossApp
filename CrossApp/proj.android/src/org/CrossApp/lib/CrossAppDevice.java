@@ -21,6 +21,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
+import android.view.WindowManager;
 
 @SuppressLint("SimpleDateFormat")
 public abstract class CrossAppDevice  extends Activity  {
@@ -123,6 +124,24 @@ public abstract class CrossAppDevice  extends Activity  {
             }
         });
     }
+    
+	public static void setIdleTimerDisabled(final int type)
+	{
+		s_pContext.runOnUiThread(new Runnable() {
+            @Override
+            public void run()
+            {
+        		if(type == 1)
+        		{
+        			s_pContext.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        		}
+        		else {
+        			
+        			s_pContext.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        		}
+            }
+        });
+	}
     
 	public static void CAImageCapture(int type)
 	{
