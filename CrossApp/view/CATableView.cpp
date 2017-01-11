@@ -768,12 +768,9 @@ void CATableViewCell::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         layout.horizontal.right = MAX(0, layout.horizontal.right - p_off.x);
         layout.horizontal.left = MAX(-(int)m_nDraggingLength, layout.horizontal.left);
         layout.horizontal.right = MIN((int)m_nDraggingLength, layout.horizontal.right);
-        
-        this->setDragging((bool) layout.horizontal.left < FLT_MIN);
-        
-        
         m_pContentView->setLayout(layout);
         
+        this->setDragging((bool) (layout.horizontal.left < 0));
 
         if (m_pTarget->isAllowsSelection() && this->getControlState() == CAControlStateHighlighted)
         {
