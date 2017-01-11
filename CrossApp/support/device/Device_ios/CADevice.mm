@@ -229,6 +229,12 @@ void stopGyroscope()
     [[CAGyroscope sharedGyroscope] stopUpdatingGyroscope];
     [[CAGyroscope sharedGyroscope] release];
 }
+    
+void setIdleTimerDisabled(bool isIdleTimerDisabled)
+{
+    [[UIApplication sharedApplication] setIdleTimerDisabled:isIdleTimerDisabled] ;
+}
+    
 }
 
 NS_CC_END

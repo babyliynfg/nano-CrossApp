@@ -325,6 +325,8 @@ void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAView
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
+    CC_SAFE_RETAIN(target);
+    CC_SAFE_RELEASE(animation->m_vWillModules.back()->willStartTarget);
     animation->m_vWillModules.back()->willStartTarget = target;
     animation->m_vWillModules.back()->willStartSel0 = selector;
 }
@@ -333,6 +335,8 @@ void CAViewAnimation::setAnimationWillStartSelector(CAObject* target, SEL_CAView
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
+    CC_SAFE_RETAIN(target);
+    CC_SAFE_RELEASE(animation->m_vWillModules.back()->willStartTarget);
     animation->m_vWillModules.back()->willStartTarget = target;
     animation->m_vWillModules.back()->willStartSel2 = selector;
 }
@@ -341,6 +345,8 @@ void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAn
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
+    CC_SAFE_RETAIN(target);
+    CC_SAFE_RELEASE(animation->m_vWillModules.back()->didStopTarget);
     animation->m_vWillModules.back()->didStopTarget = target;
     animation->m_vWillModules.back()->didStopSel0 = selector;
 }
@@ -349,6 +355,8 @@ void CAViewAnimation::setAnimationDidStopSelector(CAObject* target, SEL_CAViewAn
 {
     CAViewAnimation* animation = CAViewAnimation::getInstance();
     CC_RETURN_IF(animation->m_vWillModules.empty());
+    CC_SAFE_RETAIN(target);
+    CC_SAFE_RELEASE(animation->m_vWillModules.back()->didStopTarget);
     animation->m_vWillModules.back()->didStopTarget = target;
     animation->m_vWillModules.back()->didStopSel2 = selector;
 }
@@ -476,6 +484,7 @@ void CAViewAnimation::update(float dt)
                     ((CAObject *)module->willStartTarget->*module->willStartSel0)();
                     module->willStartSel0 = NULL;
                 }
+                CC_SAFE_RELEASE_NULL(module->willStartTarget);
                 
 				CAMap<CAView*, CAObject*>& animations = module->animations;
                 CAMap<CAView*, CAObject*>::iterator itr_animation = animations.begin();
@@ -629,6 +638,7 @@ void CAViewAnimation::update(float dt)
                     {
                         ((CAObject *)module->didStopTarget->*module->didStopSel0)();
                     }
+                    CC_SAFE_RELEASE_NULL(module->didStopTarget);
                 }
                 continue;
             }
