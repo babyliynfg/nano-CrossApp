@@ -719,11 +719,7 @@ void CAScrollView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         m_bTracking = false;
         
         this->detectionFromPullToRefreshView();
-        
-        if (m_bTouchEnabledAtSubviews)
-        {
-            m_pContainer->setTouchEnabled(true);
-        }
+
     }
     else if (m_vTouches.size() == 2)
     {

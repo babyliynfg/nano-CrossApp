@@ -837,7 +837,10 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                     CAIndexPath2E indexPath2 = *m_pTarget->m_pSelectedTableCells.begin();
                     if (m_pTarget->m_mpUsedTableCells.count(indexPath2) > 0)
                     {
-                        m_pTarget->m_mpUsedTableCells.at(indexPath2)->setControlState(CAControlStateNormal);
+                        if (CATableViewCell* cell = m_pTarget->m_mpUsedTableCells.at(indexPath2))
+                        {
+                            cell->setControlState(CAControlStateNormal);
+                        }
                     }
                     m_pTarget->m_pSelectedTableCells.clear();
                     if (m_pTarget->getTableViewDelegate())
