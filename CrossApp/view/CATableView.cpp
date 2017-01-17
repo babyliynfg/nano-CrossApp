@@ -668,6 +668,7 @@ CATableViewCell::CATableViewCell()
 :m_nSection(UINT_NONE)
 ,m_nRow(UINT_NONE)
 ,m_nDraggingLength(0)
+,m_bDragging(false)
 {
     this->setHaveNextResponder(false);
     this->setVerticalScrollEnabled(false);
@@ -747,7 +748,7 @@ bool CATableViewCell::ccTouchBegan(CATouch *pTouch, CAEvent *pEvent)
     
     if (m_pTarget->m_pDraggingOutCell)
     {
-        m_pTarget->m_pDraggingOutCell->draggingIn();
+        m_pTarget->m_pDraggingOutCell->dragInAnimation();
         m_pTarget->m_pDraggingOutCell = NULL;
     }
     return true;
@@ -769,6 +770,8 @@ void CATableViewCell::ccTouchMoved(CATouch *pTouch, CAEvent *pEvent)
         layout.horizontal.right = MIN((int)m_nDraggingLength, layout.horizontal.right);
         m_pContentView->setLayout(layout);
         
+        this->setDragging((bool) (layout.horizontal.left < 0));
+
         if (m_pTarget->isAllowsSelection() && this->getControlState() == CAControlStateHighlighted)
         {
             if (m_pTarget->isAllowsMultipleSelection())
@@ -834,7 +837,10 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
                     CAIndexPath2E indexPath2 = *m_pTarget->m_pSelectedTableCells.begin();
                     if (m_pTarget->m_mpUsedTableCells.count(indexPath2) > 0)
                     {
-                        m_pTarget->m_mpUsedTableCells.at(indexPath2)->setControlState(CAControlStateNormal);
+                        if (CATableViewCell* cell = m_pTarget->m_mpUsedTableCells.at(indexPath2))
+                        {
+                            cell->setControlState(CAControlStateNormal);
+                        }
                     }
                     m_pTarget->m_pSelectedTableCells.clear();
                     if (m_pTarget->getTableViewDelegate())
@@ -870,11 +876,11 @@ void CATableViewCell::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         if (((int)layout.horizontal.right) >= ((int)m_nDraggingLength) / 3)
         {
             m_pTarget->m_pDraggingOutCell = this;
-            this->draggingOut();
+            this->dragOutAnimation();
         }
         else
         {
-            this->draggingIn();
+            this->dragInAnimation();
         }
     }
 }
@@ -908,17 +914,18 @@ void CATableViewCell::ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent)
     }
 }
 
-void CATableViewCell::draggingIn()
+void CATableViewCell::dragInAnimation()
 {
     CAViewAnimation::removeAnimations("dragging" + m_s__StrID);
     CAViewAnimation::beginAnimations("dragging" + m_s__StrID, NULL);
     CAViewAnimation::setAnimationDuration(0.15f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CATableViewCell::dragInAnimationEnd));
     m_pContentView->setLayout(DLayoutFill);
     CAViewAnimation::commitAnimations();
 }
 
-void CATableViewCell::draggingOut()
+void CATableViewCell::dragOutAnimation()
 {
     CAViewAnimation::removeAnimations("dragging" + m_s__StrID);
     CAViewAnimation::beginAnimations("dragging" + m_s__StrID, NULL);
@@ -926,6 +933,27 @@ void CATableViewCell::draggingOut()
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
     m_pContentView->setLayout(DLayout(DHorizontalLayout_L_R(-(int)m_nDraggingLength, (int)m_nDraggingLength), DVerticalLayoutFill));
     CAViewAnimation::commitAnimations();
+}
+
+void CATableViewCell::dragInAnimationEnd()
+{
+    this->setDragging(false);
+}
+
+void CATableViewCell::setDragging(bool var)
+{
+    if (m_bDragging != var)
+    {
+        m_bDragging = var;
+        if (m_bDragging)
+        {
+            this->dragOutAtCell();
+        }
+        else
+        {
+            this->dragInAtCell();
+        }
+    }
 }
 
 void CATableViewCell::normalCell()

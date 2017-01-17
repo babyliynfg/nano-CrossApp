@@ -304,6 +304,10 @@ protected:
     
     virtual void disabledCell();
     
+    virtual void dragInAtCell(){};
+    
+    virtual void dragOutAtCell(){};
+    
     virtual void recoveryCell();
     
     CC_DEPRECATED_ATTRIBUTE virtual void normalTableViewCell();
@@ -324,9 +328,15 @@ protected:
     
     virtual void ccTouchCancelled(CATouch *pTouch, CAEvent *pEvent);
 
-    void draggingIn();
+    void dragInAnimation();
     
-    void draggingOut();
+    void dragOutAnimation();
+    
+    void dragInAnimationEnd();
+    
+    void setDragging(bool var);
+    
+    bool m_bDragging;
     
     CATableView* m_pTarget;
     

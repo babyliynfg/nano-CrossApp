@@ -66,7 +66,6 @@ CAImage* CAFTRichFont::initWithString(std::vector<LabelElement>& labels, const D
 	return image;
 }
 
-
 void CAFTRichFont::newLine()
 {
 	m_pCurrentLine = new FTLineInfoEx();
