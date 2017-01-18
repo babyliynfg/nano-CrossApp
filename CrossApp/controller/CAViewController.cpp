@@ -295,6 +295,7 @@ CANavigationController::CANavigationController()
     this->setVerticalScrollEnabled(false);
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CANavigationBar");
     this->setNavigationBarBackgroundImage(CAImage::create(map.at("backgroundView")));
+    m_sNavigationBarTitleColor = ccc4Int(CrossApp::hex2Int(map.at("titleColor")));
 }
 
 CANavigationController::~CANavigationController()
