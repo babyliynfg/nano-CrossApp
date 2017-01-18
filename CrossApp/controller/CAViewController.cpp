@@ -612,20 +612,12 @@ void CANavigationController::createWithContainer(CAViewController* viewControlle
 
 void beginPushAnimation(float width, CAView* last, CAView* new_, CAObject* target, SEL_CAViewAnimation0 selector)
 {
-    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::beginAnimations("navgationController-push", NULL);
     CAViewAnimation::setAnimationDelay(0.05f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationDelay(1/30.0f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
     last->setFrameOrigin(DPoint(-width/3.0f, 0));
-    CAViewAnimation::commitAnimations();
-    
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDelay(0.05f);
-    CAViewAnimation::setAnimationDuration(0.2f);
-    CAViewAnimation::setAnimationDelay(1/30.0f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-    CAViewAnimation::setAnimationDidStopSelector(target, selector);
     new_->setFrameOrigin(DPointZero);
     CAViewAnimation::commitAnimations();
 }
@@ -636,18 +628,11 @@ void beginPopAnimation(const DRect& bounds, CAView* show, CAView* back, CAObject
     rect.origin = DPoint(-bounds.size.width/3.0f, 0);
     show->setFrame(rect);
     
-    CAViewAnimation::beginAnimations("", NULL);
+    CAViewAnimation::beginAnimations("navgationController-pop", NULL);
     CAViewAnimation::setAnimationDelay(0.05f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
     show->setFrameOrigin(DPointZero);
-    CAViewAnimation::commitAnimations();
-    
-    CAViewAnimation::beginAnimations("", NULL);
-    CAViewAnimation::setAnimationDelay(0.05f);
-    CAViewAnimation::setAnimationDuration(0.2f);
-    CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
-    CAViewAnimation::setAnimationDidStopSelector(target, selector);
     back->setFrameOrigin(DPoint(bounds.size.width + 10, 0));
     CAViewAnimation::commitAnimations();
 }
@@ -657,6 +642,16 @@ void beginPopAnimation(const DRect& bounds, CAView* show, CAView* back, CAObject
 void CANavigationController::replaceViewController(CrossApp::CAViewController *viewController, bool animated)
 {
     if (this->getView()->getSuperview() == NULL)
+    {
+        return;
+    }
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-push"))
+    {
+        return;
+    }
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-pop"))
     {
         return;
     }
@@ -716,6 +711,16 @@ void CANavigationController::pushViewController(CAViewController* viewController
     {
         return;
     }
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-push"))
+    {
+        return;
+    }
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-pop"))
+    {
+        return;
+    }
 
     float x = this->getView()->getBounds().size.width;
     
@@ -754,10 +759,18 @@ CAViewController* CANavigationController::popViewControllerAnimated(bool animate
 {
     if (m_pViewControllers.size() == 1)
     {
-        return NULL;
+        return nullptr;
     }
-
-    float x = this->getView()->getBounds().size.width;
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-push"))
+    {
+        return nullptr;
+    }
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-pop"))
+    {
+        return nullptr;
+    }
     
     CAViewController* backViewController = m_pViewControllers.back();
     CAView* backContainer = m_pContainers.back();
@@ -828,6 +841,16 @@ void CANavigationController::popToRootViewControllerAnimated(bool animated)
     if (m_pViewControllers.size() == 1)
     {
         return ;
+    }
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-push"))
+    {
+        return;
+    }
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-pop"))
+    {
+        return;
     }
     
     float x = this->getView()->getBounds().size.width;
@@ -934,7 +957,17 @@ CAViewController* CANavigationController::popViewControllerAtIndex(int index)
 {
     if (index >= m_pViewControllers.size() || index < 0)
     {
-        return NULL;
+        return nullptr;
+    }
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-push"))
+    {
+        return nullptr;
+    }
+    
+    if (CAViewAnimation::areBeginAnimationsWithID("navgationController-pop"))
+    {
+        return nullptr;
     }
     
     if (index == m_pViewControllers.size() - 1)
