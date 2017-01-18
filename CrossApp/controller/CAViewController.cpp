@@ -617,6 +617,7 @@ void beginPushAnimation(float width, CAView* last, CAView* new_, CAObject* targe
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationDelay(1/30.0f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationDidStopSelector(target, selector);
     last->setFrameOrigin(DPoint(-width/3.0f, 0));
     new_->setFrameOrigin(DPointZero);
     CAViewAnimation::commitAnimations();
@@ -632,6 +633,7 @@ void beginPopAnimation(const DRect& bounds, CAView* show, CAView* back, CAObject
     CAViewAnimation::setAnimationDelay(0.05f);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
+    CAViewAnimation::setAnimationDidStopSelector(target, selector);
     show->setFrameOrigin(DPointZero);
     back->setFrameOrigin(DPoint(bounds.size.width + 10, 0));
     CAViewAnimation::commitAnimations();
