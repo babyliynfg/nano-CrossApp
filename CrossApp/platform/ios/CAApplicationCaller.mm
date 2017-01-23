@@ -41,7 +41,6 @@ static id s_sharedDirectorCaller;
 
 -(void) dealloc
 {
-    [displayLink release];
     [super dealloc];
 }
 
@@ -52,7 +51,7 @@ static id s_sharedDirectorCaller;
         displayLink = nil;
         
         displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-        [displayLink setFrameInterval: self.interval];
+        [displayLink setPreferredFramesPerSecond: self.interval];
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
@@ -65,13 +64,20 @@ static id s_sharedDirectorCaller;
         self.interval = 60.0 * intervalNew;
         
         displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-        [displayLink setFrameInterval: self.interval];
+        [displayLink setPreferredFramesPerSecond: self.interval];
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
                       
 -(void) doCaller: (id) sender
 {
-    [EAGLContext setCurrentContext: [[EAGLView sharedEGLView] context]];
+    if ([EAGLView sharedEGLView])
+    {
+        [EAGLContext setCurrentContext: [[EAGLView sharedEGLView] context]];
+    }
+    else
+    {
+        [displayLink release];
+    }
     CrossApp::CAApplication::getApplication()->mainLoop();
 }
 
