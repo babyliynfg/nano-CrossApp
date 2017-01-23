@@ -182,6 +182,7 @@ static EAGLView *view = 0;
 
 - (void) dealloc
 {
+    view = nil;
     [renderer_ release];
     [super dealloc];
 }
