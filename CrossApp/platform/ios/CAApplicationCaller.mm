@@ -51,7 +51,7 @@ static id s_sharedDirectorCaller;
         displayLink = nil;
         
         displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-        [displayLink setPreferredFramesPerSecond: self.interval];
+        [displayLink setFrameInterval: self.interval];
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
@@ -64,7 +64,7 @@ static id s_sharedDirectorCaller;
         self.interval = 60.0 * intervalNew;
         
         displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(doCaller:)];
-        [displayLink setPreferredFramesPerSecond: self.interval];
+        [displayLink setFrameInterval: self.interval];
         [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
                       
