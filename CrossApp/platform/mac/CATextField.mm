@@ -711,8 +711,6 @@ const std::string& CATextField::getPlaceHolderText()
 
 void CATextField::setPlaceHolderColor(const CAColor4B &var)
 {
-    CC_RETURN_IF(CAColor4BEqual(m_cPlaceHdolderColor, var));
-    
     m_cPlaceHdolderColor = var;
     
 //    NSColor* color = [NSColor colorWithRed:var.r/255.f green:var.g/255.f blue:var.b/255.f alpha:var.a];
