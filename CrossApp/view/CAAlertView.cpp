@@ -206,17 +206,17 @@ void CAAlertView::showAlertView() {
 
 	DSize winSize = this->getBounds().size;
     
-    m_pBackView = CAClippingView::create();
-    m_pBackView->setLayout(DLayout(DHorizontalLayout_W_C(ALERT_VIEW_WIDTH, 0.5f), DVerticalLayout_H_C(m_fAlertViewHeight, 0.5f)));
-    this->addSubview(m_pBackView);
-    m_pBackView->setAlphaThreshold(0.5f);
-    
-    CAScale9ImageView *backgroundImageView = CAScale9ImageView::createWithFrame(m_pBackView->getBounds());
+    m_pScale9BackView = CAScale9ImageView::createWithLayout(DLayout(DHorizontalLayout_W_C(ALERT_VIEW_WIDTH, 0.5f), DVerticalLayout_H_C(m_fAlertViewHeight, 0.5f)));
     const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CAAlertView");
-    backgroundImageView->setImage(CAImage::create(map.at("backgroundView")));
-    m_pBackView->addSubview(backgroundImageView);
+    m_pScale9BackView->setImage(CAImage::create(map.at("backgroundView")));
+    this->addSubview(m_pScale9BackView);
     
-    m_pBackView->setStencil(backgroundImageView->copy());
+    m_pBackView = CAClippingView::create();
+    m_pBackView->setLayout(DLayoutFill);
+    m_pScale9BackView->addSubview(m_pBackView);
+    m_pBackView->setAlphaThreshold(0.1f);
+    
+    m_pBackView->setStencil(m_pScale9BackView->copy());
 	
 	float alertViewSpaceHeight = 36;
 
@@ -413,12 +413,12 @@ void CAAlertView::show()
     showAlertView();
     
     this->setAlpha(0);
-    m_pBackView->setScale(0.5f);
+    m_pScale9BackView->setScale(0.5f);
     CAViewAnimation::beginAnimations("", NULL);
     CAViewAnimation::setAnimationDuration(0.2f);
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseOut);
     this->setAlpha(1.0f);
-    m_pBackView->setScale(1.0f);
+    m_pScale9BackView->setScale(1.0f);
     CAViewAnimation::commitAnimations();
 }
 
@@ -431,7 +431,7 @@ void CAAlertView::hide()
     CAViewAnimation::setAnimationCurve(CAViewAnimationCurveEaseIn);
     CAViewAnimation::setAnimationDidStopSelector(this, CAViewAnimation0_selector(CAAlertView::removeFromSuperview));
     this->setAlpha(0.0f);
-    m_pBackView->setScale(0.5f);
+    m_pScale9BackView->setScale(0.5f);
     CAViewAnimation::commitAnimations();
 }
 

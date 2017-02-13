@@ -48,6 +48,11 @@ namespace CADevice
         
     }
     
+    void getAddressBook(CAPersonListDelegate* delegate)
+    {
+        
+    }
+    
     void updateVersion(const std::string &url
                        ,unsigned int versionNumber
                        ,const std::string &appId)

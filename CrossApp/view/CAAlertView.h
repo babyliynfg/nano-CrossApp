@@ -124,6 +124,8 @@ private:
 	float m_fAlertViewLineHeight;
 
 	CAClippingView *m_pBackView;
+    
+    CAScale9ImageView *m_pScale9BackView;
 };
 
 NS_CC_END
