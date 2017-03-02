@@ -355,6 +355,7 @@ void CAPageView::ccTouchEnded(CATouch *pTouch, CAEvent *pEvent)
         if (m_pPageViewDelegate)
         {
             DPoint point = this->convertTouchToNodeSpace(pTouch);
+            m_pPageViewDelegate->pageViewDidSelectedPageAtIndex(this, this->getCurrPage(), point);
             m_pPageViewDelegate->pageViewDidSelectPageAtIndex(this, this->getCurrPage(), point);
         }
         this->runAnimation(true);

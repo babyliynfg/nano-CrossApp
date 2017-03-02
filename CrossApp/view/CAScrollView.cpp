@@ -1283,7 +1283,7 @@ CAIndicator::CAIndicator(const CAIndicatorType& type, CAScrollView* var)
 ,m_bPCMode(false)
 ,m_pMyScrollView(var)
 ,m_bTouch(false)
-,m_bHide(false)
+,m_bHide(true)
 {
     this->setHaveNextResponder(false);
 }

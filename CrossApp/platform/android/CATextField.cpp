@@ -617,11 +617,17 @@ void CATextField::setContentSize(const DSize& contentSize)
     }
     CAControl::setContentSize(size);
     
-    if (m_eClearBtn == WhileEditing && this->isFirstResponder())
+    if (m_eClearBtn == CATextField::ClearButtonMode::WhileEditing)
     {
-        m_eClearBtn = None;
-        this->setMarginImageRight(DSize(contentSize.height, contentSize.height), map.at("clearImage"));
-        m_eClearBtn = WhileEditing;
+        if (CAImageView* rightMarginView = dynamic_cast<CAImageView*>(this->getSubviewByTag(0xbbbb)))
+        {
+            DLayout layout;
+            layout.horizontal.right = 0;
+            layout.horizontal.width = m_obContentSize.height;
+            layout.vertical.height = m_obContentSize.height;
+            layout.vertical.center = 0.5f;
+            rightMarginView->setLayout(layout);
+        }
     }
     
     DSize worldContentSize = this->convertToWorldSize(m_obContentSize);
