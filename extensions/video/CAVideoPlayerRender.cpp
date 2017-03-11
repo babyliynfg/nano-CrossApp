@@ -287,23 +287,7 @@ VPFrameRender::~VPFrameRender()
 
 bool VPFrameRender::loadShaders()
 {
-	CAGLProgram* pProgram = CAShaderCache::sharedShaderCache()->programForKey("CAVideoPlayerRenderYUV");
-    if (!pProgram) {
-        pProgram = new CAGLProgram();
-        pProgram->initWithVertexShaderByteArray(vertexShaderString, yuvFragmentShaderString);
-        CHECK_GL_ERROR_DEBUG();
-        pProgram->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
-        pProgram->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
-        pProgram->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
-        CHECK_GL_ERROR_DEBUG();
-        pProgram->link();
-        CHECK_GL_ERROR_DEBUG();
-        pProgram->updateUniforms();
-        CAShaderCache::sharedShaderCache()->addProgram(pProgram, "CAVideoPlayerRenderYUV");
-        pProgram->release();
-    }
-    
-	pProgram = CAShaderCache::sharedShaderCache()->programForKey("CAVideoPlayerRenderRGB");
+    CAGLProgram* pProgram = CAShaderCache::sharedShaderCache()->programForKey("CAVideoPlayerRenderRGB");
     if (!pProgram) {
         pProgram = new CAGLProgram();
         pProgram->initWithVertexShaderByteArray(vertexShaderString, rgbFragmentShaderString);
@@ -316,6 +300,22 @@ bool VPFrameRender::loadShaders()
         CHECK_GL_ERROR_DEBUG();
         pProgram->updateUniforms();
         CAShaderCache::sharedShaderCache()->addProgram(pProgram, "CAVideoPlayerRenderRGB");
+        pProgram->release();
+    }
+    
+	pProgram = CAShaderCache::sharedShaderCache()->programForKey("CAVideoPlayerRenderYUV");
+    if (!pProgram) {
+        pProgram = new CAGLProgram();
+        pProgram->initWithVertexShaderByteArray(vertexShaderString, yuvFragmentShaderString);
+        CHECK_GL_ERROR_DEBUG();
+        pProgram->addAttribute(kCCAttributeNamePosition, kCCVertexAttrib_Position);
+        pProgram->addAttribute(kCCAttributeNameColor, kCCVertexAttrib_Color);
+        pProgram->addAttribute(kCCAttributeNameTexCoord, kCCVertexAttrib_TexCoords);
+        CHECK_GL_ERROR_DEBUG();
+        pProgram->link();
+        CHECK_GL_ERROR_DEBUG();
+        pProgram->updateUniforms();
+        CAShaderCache::sharedShaderCache()->addProgram(pProgram, "CAVideoPlayerRenderYUV");
         pProgram->release();
     }
     

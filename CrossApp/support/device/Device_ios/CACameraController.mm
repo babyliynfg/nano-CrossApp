@@ -101,8 +101,7 @@
         {
             [self.view removeFromSuperview];
             CAApplication::getApplication()->getTouchDispatcher()->setDispatchEvents(true);
-        }
-    ];
+        }      ];
 }
 - (UIImage *) scaleFromImage: (UIImage *) image toSize: (CGSize) size
 {
