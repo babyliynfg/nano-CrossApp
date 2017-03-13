@@ -15,7 +15,7 @@
 
 NS_CC_BEGIN
 
-CC_DLL class CAThemeManager : public CAObject
+class CC_DLL CAThemeManager : public CAObject
 {
 public:
     
