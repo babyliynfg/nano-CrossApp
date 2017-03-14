@@ -607,6 +607,9 @@
     <ClCompile Include="..\images\gif_lib\openbsd-reallocarray.c">
       <Filter>images\gif_lib</Filter>
     </ClCompile>
+    <ClCompile Include="..\support\CAThemeManager.cpp">
+      <Filter>support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\cocoa\CCNS.h">
@@ -1237,6 +1240,9 @@
       <Filter>platform\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\CrossApp-Prefix.h" />
+    <ClInclude Include="..\support\CAThemeManager.h">
+      <Filter>support</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\support\Json\lib_json\json_internalarray.inl">

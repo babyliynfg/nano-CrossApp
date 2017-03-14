@@ -100,7 +100,12 @@ bool CAApplication::init(void)
     m_fAdaptationRatio = CADensityDpi::getDensityDpi() / DPI_STANDARD;
     
     m_pThemeManager = nullptr;
-    this->setThemeManager(CAThemeManager::create("source_material"));
+
+#if CC_TARGET_PLATFORM == CC_PLATFORM_WIN32
+	this->setThemeManager(CAThemeManager::create("../../Resources/source_material"));
+#else
+	this->setThemeManager(CAThemeManager::create("source_material"));
+#endif
     
     return true;
 }

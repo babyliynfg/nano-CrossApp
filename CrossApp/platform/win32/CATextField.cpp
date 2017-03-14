@@ -690,7 +690,7 @@ bool CATextField::becomeFirstResponder()
 	}
 
 	bool result = CAControl::becomeFirstResponder();
-	const std::map<std::string, std::string>& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
+	const CAThemeManager::stringMap& map = CAApplication::getApplication()->getThemeManager()->getThemeMap("CATextField");
 	if (m_eClearBtn == WhileEditing)
 	{
 		setMarginImageRight(DSize(getBounds().size.height, getBounds().size.height), map.at("clearImage"));

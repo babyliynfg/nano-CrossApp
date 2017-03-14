@@ -273,6 +273,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClCompile Include="..\support\CANotificationCenter.cpp" />
     <ClCompile Include="..\support\CAPointExtension.cpp" />
     <ClCompile Include="..\support\CAProfiling.cpp" />
+    <ClCompile Include="..\support\CAThemeManager.cpp" />
     <ClCompile Include="..\support\CAUIEditorParser.cpp" />
     <ClCompile Include="..\support\ccUTF8.cpp" />
     <ClCompile Include="..\support\ccUtils.cpp" />
@@ -474,6 +475,7 @@ xcopy /Y /Q "$(ProjectDir)..\support\sqlite3\win32\*.*" "$(OutDir)"</Command>
     <ClInclude Include="..\support\CANotificationCenter.h" />
     <ClInclude Include="..\support\CAPointExtension.h" />
     <ClInclude Include="..\support\CAProfiling.h" />
+    <ClInclude Include="..\support\CAThemeManager.h" />
     <ClInclude Include="..\support\CAUIEditorParser.h" />
     <ClInclude Include="..\support\ccUTF8.h" />
     <ClInclude Include="..\support\ccUtils.h" />
